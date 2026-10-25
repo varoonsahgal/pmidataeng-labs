@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Hour 1 instructor guide · Project HORIZON lab guides</title>
+<meta name="description" content="Instructor guide for Lab 1 (No vibe pipelines): what each table is, what every number means, and what to say and click at each step. Project HORIZON is fictional and training-only.">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#0C2040">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230C2040'/%3E%3Crect x='6' y='6' width='9' height='9' rx='2' fill='%23FF4A00'/%3E%3Crect x='17' y='17' width='9' height='9' rx='2' fill='%2300C9A7'/%3E%3C/svg%3E">
+<style>
+  /* Instructor-only helpers, built from the site's tokens */
+  .say { border-left-color: var(--teal); background: var(--teal-soft); }
+  .say > .k { color: var(--teal-ink); }
+  .say p { font-size: 1.05rem; line-height: 1.55; color: var(--head); }
+  .say p + p { margin-top: 0.5rem; }
+  .do { border-left-color: var(--blue); background: var(--blue-soft); }
+  .do > .k { color: var(--blue); }
+  .seen { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; margin: 0 0 1rem; max-width: var(--measure); }
+  .seen > b { font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 500; margin-right: 0.2rem; }
+  .tables3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin: 0 0 1.5rem; }
+  .tcard { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius); padding: 1rem 1.1rem 1.1rem; display: grid; gap: 0.45rem; align-content: start; box-shadow: var(--shadow); }
+  .tcard .nm { font-family: var(--f-mono); font-size: 0.85rem; color: var(--accent-ink); font-weight: 500; }
+  .tcard .big { font-family: var(--f-display); font-weight: 700; font-size: 2.1rem; line-height: 1; color: var(--head); letter-spacing: -0.02em; }
+  .tcard .big small { font-size: 0.9rem; font-weight: 500; color: var(--muted); letter-spacing: 0; margin-left: 0.3rem; }
+  .tcard p { margin: 0; font-size: 0.95rem; line-height: 1.5; }
+  .tcard .like { font-size: 0.92rem; color: var(--muted); font-style: italic; }
+  @media (max-width: 760px) { .tables3 { grid-template-columns: minmax(0, 1fr); } }
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="mast-in">
+    <nav class="sitenav" aria-label="Lab guides">
+      <a class="brand" href="index.html">Project HORIZON</a>
+      <a href="index.html">Start here</a>
+      <a href="hour1.html">Hour 1</a>
+      <a href="hour2.html">Hour 2</a>
+      <a href="hour3.html">Hour 3</a>
+      <a href="hour4.html">Hour 4</a>
+      <a href="glossary.html">Glossary</a>
+    </nav>
+    <div class="mast-grid">
+      <div class="mast-copy">
+        <div class="eyebrow">Instructor guide · Hour 1 · WA3903 · 0:12 to 1:05</div>
+        <h1>No vibe pipelines, <span>for the instructor</span><small>What each table is, what every number means, and what to say and click at each step.</small></h1>
+        <p class="lede">The student guide is <a href="hour1.html">hour1.html</a>. This page sits next to it: read it once the night before, keep it open on a second screen during class. <strong>Every number on it was checked against the HORIZON warehouse.</strong></p>
+        <div class="meta"><span>53 min</span><span>27 hands-on</span><span>Claude Desktop · Sonnet + Opus</span><span>dbt · SQLTools</span></div>
+      </div>
+      <div class="mfd" role="img" aria-label="The five numbers that carry Hour 1: 794 Italy conversion events; 2.51 consent rows per consumer; 1,988 rows from a draft that joins the ledger directly; 31 events stamped with a consent from after the event; 8 events with no consent in force, coalesced to false; 7 tests pass.">
+        <div class="hd"><b>The five numbers that carry the hour</b><b>value</b></div>
+        <div class="row"><span class="lbl">Italy conversion events (the truth)</span><span class="val">794</span></div>
+        <div class="row"><span class="lbl">consent rows per consumer</span><span class="val">2.51</span></div>
+        <div class="row"><span class="lbl">rows if you join the ledger directly</span><span class="was">1,988</span></div>
+        <div class="row"><span class="lbl">"latest consent" from after the event</span><span class="was">31</span></div>
+        <div class="row"><span class="lbl">no consent in force → false</span><span class="val">8</span></div>
+        <div class="row"><span class="lbl">dbt tests at the end</span><span class="now">7 PASS</span></div>
+        <div class="ft">If you remember nothing else: <span class="blink">794 in, 794 out, and the right 794.</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="frame">
+  <details class="toc" id="toc" open>
+    <summary>On this page</summary>
+    <ol>
+      <li class="grp">Understand it</li>
+      <li><a href="#breath">The hour in one breath</a></li>
+      <li><a href="#tables">The three tables, simply</a></li>
+      <li><a href="#problem">The problem, in plain words</a></li>
+      <li><a href="#numbers">Every number, and what it means</a></li>
+      <li class="grp">Teach it</li>
+      <li><a href="#before">Before class</a></li>
+      <li><a href="#run">Run of show, with script</a></li>
+      <li class="sub"><a href="#t012">0:12 Opener</a></li>
+      <li class="sub"><a href="#t018">0:18 Scenario and theme</a></li>
+      <li class="sub"><a href="#t029">0:29 Models and the data</a></li>
+      <li class="sub"><a href="#t033">0:33 Step 1 · Draft</a></li>
+      <li class="sub"><a href="#t041">0:41 Step 2 · Prove</a></li>
+      <li class="sub"><a href="#t050">0:50 Step 2b · Plan</a></li>
+      <li class="sub"><a href="#t055">0:55 Step 3 · Lock</a></li>
+      <li class="sub"><a href="#t100">1:00 Debrief</a></li>
+      <li><a href="#shape">If your demo draft comes back right</a></li>
+      <li><a href="#answers">Chat questions and the answers</a></li>
+      <li class="grp">Rescue it</li>
+      <li><a href="#trouble">When something breaks</a></li>
+      <li><a href="#behind">If you are behind</a></li>
+      <li><a href="#canned">Canned SQL to paste</a></li>
+    </ol>
+  </details>
+
+  <main id="main">
+
+    <section class="part" id="breath">
+      <div class="part-h">
+        <span class="eyebrow">Understand it · 1 minute</span>
+        <h2>The hour in <span>one breath</span></h2>
+      </div>
+      <ol class="steps">
+        <li><b>The request:</b> "Claude drafted the Italy conversions-with-consent model in a minute. It runs. Can we ship it?"</li>
+        <li><b>The catch:</b> the consent table has several rows per person, and the prompt never said which one counts. So the draft guesses, and every guess runs without an error.</li>
+        <li><b>What students do:</b> draft it with Claude, prove it against the warehouse with a few counts, have Claude plan and apply the fix, then lock it with 7 dbt tests.</li>
+        <li><b>What they leave with:</b> a tested dbt model, <code>analytics.italy_conversion_events</code>: 794 rows, one per conversion, each carrying the consent that was in force on the day.</li>
+      </ol>
+      <p class="rule-line">The line to repeat all hour: <span class="w">the assistant drafts, the warehouse decides, you sign.</span></p>
+    </section>
+
+    <section class="part" id="tables">
+      <div class="part-h">
+        <span class="eyebrow">Understand it · 3 minutes</span>
+        <h2>The three tables, <span>simply</span></h2>
+        <p class="dek">Only three tables matter this hour. Two are joined in the model; the third only appears in the last test.</p>
+      </div>
+
+      <div class="tables3">
+        <div class="tcard">
+          <span class="nm">clr.lifecycle_events</span>
+          <span class="big">794 <small>Italy conversions</small></span>
+          <p><b>What it is:</b> a diary of what each consumer did. One row = one step in their journey: registration → trial → <b>conversion</b> → retention → churn.</p>
+          <p><b>What we use:</b> only the rows where <code>market_code = 'IT'</code> and <code>lifecycle_stage = 'conversion'</code>. That is 794 rows, and 794 different people (nobody in Italy converts twice).</p>
+          <p class="like">Like a sales ledger: one line per thing that happened, with a date.</p>
+        </div>
+        <div class="tcard">
+          <span class="nm">mpl.consent_records</span>
+          <span class="big">2.51 <small>rows per person</small></span>
+          <p><b>What it is:</b> marketing permission slips. One row = one consumer's yes or no for <b>one channel</b> (email, sms, push or postal), with the date it was recorded.</p>
+          <p><b>The trap:</b> 15,052 rows for 6,000 people. Each person has 1 to 4 slips, so <code>consumer_id</code> is <b>not unique</b> here.</p>
+          <p class="like">Like a drawer of signed permission slips. The question is always: which slip was in the drawer on the day?</p>
+        </div>
+        <div class="tcard">
+          <span class="nm">clr.consumers</span>
+          <span class="big">6,000 <small>people</small></span>
+          <p><b>What it is:</b> who each consumer is. One row per person, including <code>age_band</code>.</p>
+          <p><b>Where it shows up:</b> only in Step 3, in the under-25 test. Italian law forbids marketing to 18 to 24 year olds, so a correct model never marks an Italian <code>'18-24'</code> consumer as allowed.</p>
+          <p class="like">Like the customer master file: one row per person, safe to join.</p>
+        </div>
+      </div>
+
+      <div class="box tidbit">
+        <span class="k">The two columns that decide everything</span>
+        <p><code>event_date</code> on the diary (when they converted) and <code>consent_date</code> on the slip (when the yes or no was recorded). Both are type <code>date</code>. The whole lab is about comparing those two dates correctly.</p>
+      </div>
+    </section>
+
+    <section class="part" id="problem">
+      <div class="part-h">
+        <span class="eyebrow">Understand it · 3 minutes</span>
+        <h2>The problem, in <span>plain words</span></h2>
+        <p class="dek">If you can explain consumer 3552, you can teach this hour.</p>
+      </div>
+
+      <figure class="hero wide">
+        <img src="images/one-consumer.svg" alt="Consumer 3552: email granted 10 November, push granted 16 November, conversion 17 November, postal withdrawn 19 November. A plain join gives 3 rows; latest on file gives false; latest on or before 17 November gives true." loading="lazy">
+        <figcaption>Consumer 3552 converted on 17 Nov 2024 and has three permission slips. Three ways of attaching consent give three different answers. Only the teal one is right.</figcaption>
+      </figure>
+
+      <div class="tbl stack wrap">
+        <table>
+          <thead><tr><th>How the SQL attaches consent</th><th>What consumer 3552's conversion gets</th><th>In plain words</th></tr></thead>
+          <tbody>
+            <tr><td data-label="The SQL">join on <code>consumer_id</code>, nothing else</td><td data-label="Result"><span class="expect bad">3 rows</span></td><td data-label="Plain words">"One conversion now looks like three." Across Italy: 794 becomes 1,988. This is a <b>fan-out</b>.</td></tr>
+            <tr><td data-label="The SQL">each person's latest slip on file</td><td data-label="Result"><span class="expect bad">false</span></td><td data-label="Plain words">"We used a slip signed two days <em>after</em> they converted." Across Italy: 31 events. This breaks <b>point-in-time</b>.</td></tr>
+            <tr><td data-label="The SQL">the latest slip dated on or before 17 Nov</td><td data-label="Result"><span class="expect ok">true</span></td><td data-label="Plain words">"The slip that was in the drawer that day." One row. Correct.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>And the third problem: 8 Italian consumers had <b>no slip at all</b> before they converted (all their slips came later). With the correct rule they get NULL, which means "unknown". NULL silently drops out of both <code>= true</code> and <code>= false</code> filters, so a report counting "allowed" plus "not allowed" comes up 8 short. The fix is <code>coalesce(marketing_allowed, false)</code> with a comment: unknown is treated as not allowed.</p>
+
+      <div class="box analogy">
+        <span class="k">Joins, in one sentence for the room</span>
+        <p>A join pairs each row on the left with <b>every</b> match on the right. If the right side has one row per person, you get one row. If it has three, you get three, and nothing warns you. If it has none, an INNER join drops the person and a LEFT join keeps them with a blank.</p>
+      </div>
+
+      <div class="box trap">
+        <span class="k">Why the AI gets it wrong (and why that is not its fault)</span>
+        <p>The prompt says "attach each event's marketing_allowed from <b>the</b> consent record". There is no single consent record; there are up to four. Claude only sees the prompt, so it guesses. Modern models often guess right (see <a href="#shape">If your demo draft comes back right</a>). The lesson is not "the AI is bad". It is: <b>you cannot tell which guess you got by reading. You find out by counting.</b></p>
+      </div>
+    </section>
+
+    <section class="part" id="numbers">
+      <div class="part-h">
+        <span class="eyebrow">Understand it · reference</span>
+        <h2>Every number, and <span>what it means</span></h2>
+        <p class="dek">In the order they come up. The "say it as" column is the plain sentence for the room.</p>
+      </div>
+      <div class="tbl stack wrap">
+        <table>
+          <thead><tr><th>Number</th><th>What it is</th><th>Comes up</th><th>Say it as</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Number"><b>15,597</b></td><td data-label="What it is">all rows in <code>clr.lifecycle_events</code>, every market, every stage</td><td data-label="Comes up">pre-flight</td><td data-label="Say it as">"The warehouse is loaded."</td></tr>
+            <tr><td data-label="Number"><b>794</b></td><td data-label="What it is">Italy conversion events; also 794 different consumers</td><td data-label="Comes up">Step 2 prediction, check 2</td><td data-label="Say it as">"The right answer has 794 rows. Not one more, not one less."</td></tr>
+            <tr><td data-label="Number"><b>6,000</b> · <b>15,052</b></td><td data-label="What it is">consumers · consent rows</td><td data-label="Comes up">check 1</td><td data-label="Say it as">"Six thousand people, fifteen thousand permission slips."</td></tr>
+            <tr><td data-label="Number"><b>2.51</b></td><td data-label="What it is">consent rows per consumer (15,052 ÷ 6,000), 1 to 4 each, one per channel</td><td data-label="Comes up">check 1</td><td data-label="Say it as">"Everyone has about two and a half slips. That is the whole problem."</td></tr>
+            <tr><td data-label="Number"><b>1,988</b></td><td data-label="What it is">rows a draft returns if it joins the consent table directly (shape A)</td><td data-label="Comes up">check 2</td><td data-label="Say it as">"794 conversions became 1,988 rows. Every Italy KPI built on this is inflated 2.5 times, and nothing errored."</td></tr>
+            <tr><td data-label="Number"><b>31</b></td><td data-label="What it is">conversions whose consumer's latest slip was recorded <em>after</em> the conversion</td><td data-label="Comes up">check 3</td><td data-label="Say it as">"31 events, about 4%, get a permission that did not exist yet. Too small for a smoke test, big enough for an audit."</td></tr>
+            <tr><td data-label="Number"><b>8</b></td><td data-label="What it is">conversions with no slip dated on or before the conversion</td><td data-label="Comes up">check 4, check 5, Step 3 <code>not_null</code></td><td data-label="Say it as">"Eight people we knew nothing about on the day. Unknown is not yes."</td></tr>
+            <tr><td data-label="Number"><b>786</b></td><td data-label="What it is">rows if the correct rule uses an INNER join: the 8 vanish</td><td data-label="Comes up">only if a draft uses INNER</td><td data-label="Say it as">"Eight conversions disappeared without an error."</td></tr>
+            <tr><td data-label="Number"><b>826</b> · <b>32</b></td><td data-label="What it is">rows from a <code>max(consent_date)</code>-then-rejoin draft (shape B) · events with two slips on that same date</td><td data-label="Comes up">check 2, Step 3 <code>unique</code></td><td data-label="Say it as">"Two slips signed the same day. That is why the tie-break on <code>consent_id</code> exists."</td></tr>
+            <tr><td data-label="Number"><b>472 · 314 · 8</b></td><td data-label="What it is">allowed · not allowed · NULL, for a correct point-in-time draft with no <code>coalesce</code> (shape D)</td><td data-label="Comes up">the real draft in Step 1</td><td data-label="Say it as">"Right grain, right dates, eight blanks left for us to decide."</td></tr>
+            <tr><td data-label="Number"><b>0 / 0 / 0</b></td><td data-label="What it is">check 5 on the finished model: wrongly allowed / wrongly not allowed / NULL</td><td data-label="Comes up">check 5 after Step 2b</td><td data-label="Say it as">"Right count and right values."</td></tr>
+            <tr><td data-label="Number"><b>9 / 10 / 0</b></td><td data-label="What it is">check 5 on a "latest per consumer" draft (shape C). Exact values can shift by one or two, because same-day ties are broken arbitrarily</td><td data-label="Comes up">check 5, if a student got shape C</td><td data-label="Say it as">"794 rows, the count looks perfect, and nine people are marked marketable who were not on the day."</td></tr>
+            <tr><td data-label="Number"><b>74</b> · <b>720</b></td><td data-label="What it is">conversions in campaign 1 (the Q3 2025 email campaign) · conversions with no campaign (NULL)</td><td data-label="Comes up"><code>campaign_bucket</code></td><td data-label="Say it as">"NULL is not 1, so the 720 fall into 'other'. Correct."</td></tr>
+            <tr><td data-label="Number"><b>0</b></td><td data-label="What it is">Italian 18 to 24 year olds marked allowed, in any correct model</td><td data-label="Comes up">Step 3 singular test</td><td data-label="Say it as">"The law, written as a test."</td></tr>
+            <tr><td data-label="Number"><b>7</b></td><td data-label="What it is">dbt tests that pass at the end: 6 generic + 1 singular</td><td data-label="Comes up">Step 3</td><td data-label="Say it as">"Seven contracts. Break any one and the build fails."</td></tr>
+            <tr><td data-label="Number"><b>278</b> · <b>45 vs 29</b></td><td data-label="What it is">conversions where the person's channels disagree on the day · campaign 1 events allowed by any channel vs by email only</td><td data-label="Comes up">"Look closer" box, optional</td><td data-label="Say it as">"Which channel counts is a question for the data owner, not for SQL. That is Hour 3."</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="part" id="before">
+      <div class="part-h">
+        <span class="eyebrow">Teach it · 10 minutes before 0:00</span>
+        <h2>Before <span>class</span></h2>
+      </div>
+      <ol class="steps">
+        <li><b>On the VM you will demo from:</b> VS Code → File → Open Folder → <code>C:\Users\labadmin\Downloads\setup\horizon_dbt</code>. In the terminal, <code>dbt debug</code> must end in <span class="expect ok">All checks passed!</span> If not, create <code>C:\Users\labadmin\.dbt\profiles.yml</code> (<a href="index.html#dbt-connection">the student pre-flight has the exact file</a>).</li>
+        <li><b>Same folder:</b> check there is a sources file in <code>models</code> and a <code>macros/generate_schema_name.sql</code>. Without the macro the model lands in <code>analytics_analytics</code> and every check fails with "relation does not exist" (<a href="index.html#pf2b">pre-flight step 2b</a>).</li>
+        <li><b>Clean slate:</b> if <code>models/analytics/italy_conversion_events.sql</code>, <code>models/analytics/schema.yml</code> or <code>tests/no_underage_marketing_italy.sql</code> exist from a rehearsal, delete them so the room sees you start from nothing.</li>
+        <li><b>SQLTools:</b> connect <b>HORIZON</b> and run <code>select count(*) from clr.lifecycle_events;</code> → <span class="expect">15597</span>. Keep one SQL file open with the <a href="#canned-checks">five checks</a> pasted in, ready to run one at a time.</li>
+        <li><b>Claude Desktop:</b> New chat, picker on <b>Sonnet</b>. Click the picker once and note whether <b>Opus</b> is offered (under <b>More models</b> too). If it is not, tell the room at 0:29 that the plan step stays on Sonnet.</li>
+        <li><b>Have the fallback ready:</b> the <a href="#canned-flawed">canned shape-A draft</a> below, in case your live draft comes back correct. On your Mac, <code>make s1-flawed</code> builds the same draft and prints 1,988.</li>
+        <li><b>Windows:</b> Claude Desktop and VS Code side by side, so the room sees the copy-paste loop without window switching.</li>
+      </ol>
+    </section>
+
+    <section class="part" id="run">
+      <div class="part-h">
+        <span class="eyebrow">Teach it · 0:12 to 1:05</span>
+        <h2>Run of show, <span>with script</span></h2>
+        <p class="dek">Each block: what you do, what you say (word for word if you like), what the room should see, and the chat moment. Times match the playbook.</p>
+      </div>
+
+      <div class="step" id="t012">
+        <span class="step-n">0:12</span>
+        <div class="step-t"><span class="step-k">Opener · 6 min</span><h3>The room plays the language model</h3></div>
+        <span class="step-min">6 min</span>
+      </div>
+      <div class="box chat"><span class="k">Chat</span><p><strong>"Finish this line and type the next word, just one: <code>select count(*) from ___</code>. Do not think about it."</strong></p></div>
+      <div class="box say"><span class="k">Say</span>
+        <p>"Look at the chat. Different answers, some far more popular than others, none of them wrong. You just did what the model does on every token: a spread of likely next words, then a pick."</p>
+        <p>"Four facts, then we build. It predicts the next token: plausible is its job, correct is yours. It only knows its window: no memory of our warehouse. It samples: same prompt, different SQL. And it comes in sizes: we will use two of them."</p>
+      </div>
+      <div class="box do"><span class="k">Do</span><p>Type the same fragment into the <a href="https://poloclub.github.io/transformer-explainer/">Transformer Explainer</a>; move the temperature slider once.</p></div>
+
+      <div class="step" id="t018">
+        <span class="step-n">0:18</span>
+        <div class="step-t"><span class="step-k">Scenario and theme · 11 min</span><h3>"It runs clean. Can we ship it?"</h3></div>
+        <span class="step-min">11 min</span>
+      </div>
+      <div class="box say"><span class="k">Say, as the team lead</span><p>"The AI assistant drafted the Italy consumer-events-to-consent model in under a minute. It runs clean, no errors. Can we ship it this afternoon?"</p></div>
+      <div class="box chat"><span class="k">Chat · one word</span><p><strong>"What is your first move before it lands?"</strong><span class="opts">looking for: count rows · check the join · NULLs · grain · read it</span></p></div>
+      <div class="box say"><span class="k">Say</span><p>"'Vibe coding' was Collins' Word of the Year 2025: programming by vibes, not variables. Fine for a weekend app. Not for a model that stamps marketing permission on real people in a regulated market. Nothing today is about whether AI is good at SQL. It is very good at SQL. It is about who signs."</p></div>
+
+      <div class="step" id="t029">
+        <span class="step-n">0:29</span>
+        <div class="step-t"><span class="step-k">Models, then the data · 4 min</span><h3>Premium planning, thrifty execution, and the permission slips</h3></div>
+        <span class="step-min">4 min</span>
+      </div>
+      <div class="box say"><span class="k">Say · 2 min on models</span><p>"Same vendor, three sizes. Opus is $4 in, $20 out per million tokens; Sonnet is $2 and $10. Output costs five times input, and a plan is twenty lines where code is two hundred. So: the cheap model drafts, the expensive model plans the fix, the cheap model types it. The picker is here, next to Send." <em>(Point at it on screen.)</em></p></div>
+      <div class="box do"><span class="k">Do · 2 min on the data</span><p>Open the student guide at <a href="hour1.html#one-consumer">One consumer, drawn out</a> and put the diagram on screen.</p></div>
+      <div class="box say"><span class="k">Say</span>
+        <p>"Two tables. A diary of what people did, and a drawer of permission slips: one slip per person per channel, about two and a half each. Consumer 3552 converted on 17 November. Three slips. Join naively: their one conversion becomes three rows. Take their latest slip: we use a withdrawal signed two days <em>after</em> they converted. The right answer is the slip that was in the drawer on the day."</p>
+        <p>"Hold that picture. Now let us see which of these Claude picks."</p>
+      </div>
+
+      <div class="step" id="t033">
+        <span class="step-n">0:33</span>
+        <div class="step-t"><span class="step-k">Step 1 · Draft · 8 min</span><h3>Claude drafts; nobody runs anything yet</h3></div>
+        <span class="step-min">8 min</span>
+      </div>
+      <div class="box do"><span class="k">Do</span>
+        <ol>
+          <li>Claude Desktop, New chat, Sonnet. Paste the <a href="hour1.html#step1">Step 1 prompt</a>.</li>
+          <li>VS Code: right-click <code>models</code> → New File → <code>analytics/italy_conversion_events.sql</code>. Copy Claude's block, paste, check the <code>config</code> line appears once and there is no trailing <code>;</code>. Save.</li>
+          <li>Read the SQL aloud <em>as if accepting it</em>. Do not critique it yet.</li>
+        </ol>
+      </div>
+      <div class="box say"><span class="k">Say</span>
+        <p>"Notice what our prompt said: attach marketing_allowed from <em>the</em> consent record. There is no 'the'. There are up to four. So Claude had to guess. Every guess runs."</p>
+        <p>"The paste is you, signing. Nothing lands in the repo unless you put it there." <em>(Say this once today, here.)</em></p>
+      </div>
+      <div class="box chat"><span class="k">Chat · one word</span><p><strong>"What worries you in this draft?"</strong><span class="opts">ledger · latest · NULL · grain · nothing</span></p></div>
+      <div class="box chat"><span class="k">Chat</span><p><strong>"Look at the shapes table in your guide. Which shape is your draft?"</strong><span class="opts">A · B · C · D · not sure</span></p></div>
+      <p>Point at the <a href="hour1.html#shapes">shapes table</a>. You are looking for the join: a plain <code>join ... on consumer_id</code> is A; a <code>max(consent_date)</code> is B; <code>distinct on (consumer_id)</code> or "latest" with no date condition is C; anything with <code>consent_date &lt;= event_date</code> and one row per event is D. Do not resolve it; Step 2 will.</p>
+
+      <div class="step" id="t041">
+        <span class="step-n">0:41</span>
+        <div class="step-t"><span class="step-k">Step 2 · Prove · 9 min</span><h3>Predict, build, count</h3></div>
+        <span class="step-min">9 min</span>
+      </div>
+      <div class="box chat"><span class="k">Chat · predict before running</span><p><strong>"There are 794 Italy conversion events. How many rows will the model return?"</strong><span class="opts">794 · more · fewer</span></p></div>
+      <div class="box do"><span class="k">Do</span><p>Terminal: <code>dbt run --select italy_conversion_events</code> → <span class="expect ok">1 of 1 OK created sql view model analytics.italy_conversion_events</span>. Say "green". Then SQLTools: select one check at a time and press <kbd>Ctrl+E</kbd> <kbd>Ctrl+E</kbd>.</p></div>
+
+      <div class="tbl stack wrap">
+        <table>
+          <thead><tr><th>Check</th><th>The question it answers</th><th>Expect</th><th>Say</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Check"><b>1 · ledger</b></td><td data-label="Question">Is consent one row per person?</td><td data-label="Expect"><span class="expect">15,052 / 6,000 / 2.51</span></td><td data-label="Say">"No. Two and a half slips each. Everything else follows from this."</td></tr>
+            <tr><td data-label="Check"><b>2 · grain</b></td><td data-label="Question">Rows in = rows out?</td><td data-label="Expect"><span class="expect">794</span> vs model: <span class="expect bad">1,988</span> (A) · <span class="expect bad">826</span> (B) · <span class="expect note">794</span> (C, D)</td><td data-label="Say">A: "Green run, 2.5 times too many rows." C or D: "794. Looks perfect. Is it?"</td></tr>
+            <tr><td data-label="Check"><b>3 · latest</b></td><td data-label="Question">If we took each person's latest slip, how many conversions get a slip from the future?</td><td data-label="Expect"><span class="expect bad">31 of 794</span></td><td data-label="Say">"31 permissions that did not exist yet, stamped on history."</td></tr>
+            <tr><td data-label="Check"><b>4 · NULL</b></td><td data-label="Question">How many conversions had no slip at all on the day?</td><td data-label="Expect"><span class="expect bad">8 of 794</span></td><td data-label="Say">"Eight unknowns. They vanish from both 'allowed' and 'not allowed'."</td></tr>
+            <tr><td data-label="Check"><b>5 · values</b></td><td data-label="Question">Row by row, does our model match the slip in force on the day?</td><td data-label="Expect">D: <span class="expect note">0 / 0 / 8</span> · C: <span class="expect bad">9 / 10 / 0</span></td><td data-label="Say">"794 = 794 is necessary, not sufficient. This one grades the values."</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="box say"><span class="k">Say, to land Step 2</span><p>"Three sentences you should be able to say now. Grain: the model returns ___ rows for 794 events, because ___. Consent: an event carries the permission in force on its date, not the latest one. NULL: unknown is not allowed."</p></div>
+      <p><b>PMI hook, if there is a compliance person in the room:</b> consent is point-in-time under GDPR (Italy), UU PDP (Indonesia) and APPI (Japan). A model that cannot answer "what permission did we have on the day" fails the regulator's first question.</p>
+
+      <div class="step" id="t050">
+        <span class="step-n">0:50</span>
+        <div class="step-t"><span class="step-k">Step 2b · Plan on Opus, implement on Sonnet · 5 min</span><h3>The expensive model writes twenty lines</h3></div>
+        <span class="step-min">5 min</span>
+      </div>
+      <div class="box do"><span class="k">Do</span>
+        <ol>
+          <li>Same chat. Picker → <b>Opus</b>. Paste the <a href="hour1.html#step2b">planning prompt</a>. If your draft was shape D, swap facts 1 and 2 for the one-line "keep that logic" fact (it is in the guide).</li>
+          <li>Read the plan aloud like a reviewer. Tick off: one consent per event with a <code>consent_id</code> tie-break · <code>coalesce(..., false)</code> with a comment · grain stated · tests named.</li>
+          <li>Picker → <b>Sonnet</b>. Paste the implement prompt. Paste the SQL over the model file, save, <code>dbt run --select italy_conversion_events</code>, re-run checks 2 and 5: <span class="expect ok">794 = 794</span> <span class="expect ok">0 / 0 / 0</span></li>
+        </ol>
+      </div>
+      <div class="box trap"><span class="k">If the plan says "latest consent per consumer"</span><p>Reject it aloud: "No. Consent must be the latest row dated on or before each event's event_date. Revise the plan." Then: "The premium model is better at this, not infallible."</p></div>
+      <div class="box say"><span class="k">Say</span><p>"You reviewed twenty lines of plan instead of two hundred lines of SQL, and the expensive model wrote the twenty. And we fixed the draft by telling the assistant precisely what was wrong, in writing. The correction is reviewable too."</p></div>
+      <div class="box chat"><span class="k">Chat · one word</span><p><strong>"What did the plan contain that the draft did not?"</strong><span class="opts">tie-break · comment · grain · test</span></p></div>
+
+      <div class="step" id="t055">
+        <span class="step-n">0:55</span>
+        <div class="step-t"><span class="step-k">Step 3 · Lock · 5 min</span><h3>Seven tests, seven contracts</h3></div>
+        <span class="step-min">5 min</span>
+      </div>
+      <div class="box do"><span class="k">Do</span>
+        <ol>
+          <li>Still Sonnet. Paste the <a href="hour1.html#step3">test prompt</a>. Two code blocks come back.</li>
+          <li>Right-click <code>models/analytics</code> → New File → <code>schema.yml</code>, paste the YAML. Right-click the empty Explorer space → New File → <code>tests/no_underage_marketing_italy.sql</code>, paste the SQL, remove any trailing <code>;</code>.</li>
+          <li><code>dbt run --select italy_conversion_events</code> then <code>dbt test --select italy_conversion_events</code> → <span class="expect ok">Done. PASS=7</span></li>
+        </ol>
+      </div>
+      <div class="box chat"><span class="k">Unmute</span><p><strong>"Which of the seven tests would have caught the bug you found in Step 2?"</strong></p></div>
+      <div class="box say"><span class="k">The answer to land</span><p>"<code>unique</code> on event_id catches the fan-out. <code>not_null</code> on marketing_allowed catches the blanks. And the future-consent bug? <b>No test here catches it.</b> Only reading the SQL and check 5 did. Tests lock in what you already understood; they do not understand it for you."</p></div>
+
+      <div class="step" id="t100">
+        <span class="step-n">1:00</span>
+        <div class="step-t"><span class="step-k">Debrief and bridge · 5 min</span><h3>Both ran green. Only one is right.</h3></div>
+        <span class="step-min">5 min</span>
+      </div>
+      <div class="box say"><span class="k">Say</span>
+        <p>"Sixty seconds to draft, twenty-five minutes to engineer. Both columns ran without an error. Only one is correct, and only one will stay correct. Takeaway one: a runnable draft is not a correct one."</p>
+        <p>"We caught this one before it shipped. What about the models that shipped months ago and run green every night?" <em>(Bridge to Hour 2.)</em></p>
+      </div>
+      <div class="box chat"><span class="k">Chat</span><p><strong>"Which transformation in your work would you let an assistant draft next, and what is the one contract rule it would most likely miss?"</strong></p></div>
+    </section>
+
+    <section class="part" id="shape">
+      <div class="part-h">
+        <span class="eyebrow">Teach it · the likely surprise</span>
+        <h2>If your demo draft comes <span>back right</span></h2>
+        <p class="dek">Current Claude models often draft shape D: correct grain, correct dates, 8 NULLs. In rehearsal on 2026-10-24 that is exactly what came back. Plan for it.</p>
+      </div>
+      <div class="tbl stack wrap">
+        <table>
+          <thead><tr><th>Your live draft is…</th><th>What happens in Step 2</th><th>What to do</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Draft"><b>A</b> · plain join</td><td data-label="Step 2">check 2 shows 1,988</td><td data-label="Do">Run the hour exactly as scripted. This is the textbook reveal.</td></tr>
+            <tr><td data-label="Draft"><b>B</b> · max-then-rejoin</td><td data-label="Step 2">check 2 shows 826</td><td data-label="Do">"32 too many: two slips on the same day." The <code>unique</code> test will fail in Step 3 if it survives. Fix the model, never the test.</td></tr>
+            <tr><td data-label="Draft"><b>C</b> · latest per person</td><td data-label="Step 2">check 2 shows 794, check 5 shows about 9 / 10 / 0</td><td data-label="Do">The best teaching moment of the hour: "794. Perfect count. Wrong people." Spend an extra minute here.</td></tr>
+            <tr><td data-label="Draft"><b>D</b> · point-in-time, no coalesce</td><td data-label="Step 2">check 2 shows 794, check 5 shows 0 / 0 / 8</td><td data-label="Do">Celebrate it: "Would you have known it was right without checking?" Walk through <a href="hour1.html#real-draft">the annotated real draft</a> in the guide: the 8 NULLs are a decision Claude correctly handed back to us. Then, for the 1,988 moment, paste the <a href="#canned-flawed">canned shape-A draft</a> over the file: "This is what it gave the courseware authors." Run check 2 again.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="box tidbit"><span class="k">The sentence that works for every shape</span><p>"Your draft and your neighbour's are different, and both ran green. The only way to know which one is right is to count."</p></div>
+    </section>
+
+    <section class="part" id="answers">
+      <div class="part-h">
+        <span class="eyebrow">Teach it · cheat sheet</span>
+        <h2>Chat questions and <span>the answers</span></h2>
+      </div>
+      <div class="tbl stack wrap">
+        <table>
+          <thead><tr><th>When</th><th>Question</th><th>What you are hoping to see</th></tr></thead>
+          <tbody>
+            <tr><td data-label="When">0:12</td><td data-label="Question"><code>select count(*) from ___</code></td><td data-label="Hoping for">a spread of table names; the point is the spread</td></tr>
+            <tr><td data-label="When">0:18</td><td data-label="Question">first move before it lands?</td><td data-label="Hoping for">count rows · check the join · NULLs · grain</td></tr>
+            <tr><td data-label="When">0:33</td><td data-label="Question">what worries you in this draft?</td><td data-label="Hoping for">ledger · latest · NULL · grain (and some "nothing": that is the point)</td></tr>
+            <tr><td data-label="When">0:33</td><td data-label="Question">which shape is yours?</td><td data-label="Hoping for">a mix; many "not sure", which is why Step 2 exists</td></tr>
+            <tr><td data-label="When">0:41</td><td data-label="Question">794, more or fewer?</td><td data-label="Hoping for">most say 794; the warehouse usually wins this one (score it)</td></tr>
+            <tr><td data-label="When">0:50</td><td data-label="Question">what did the plan have that the draft did not?</td><td data-label="Hoping for">tie-break · comment · grain · test</td></tr>
+            <tr><td data-label="When">0:55</td><td data-label="Question">which test would have caught it?</td><td data-label="Hoping for"><code>unique</code> (fan-out), <code>not_null</code> (NULL); nothing for the future consent</td></tr>
+            <tr><td data-label="When">1:00</td><td data-label="Question">what would you let an assistant draft next?</td><td data-label="Hoping for">real examples from their work; read two aloud</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="part" id="trouble">
+      <div class="part-h">
+        <span class="eyebrow">Rescue it</span>
+        <h2>When something <span>breaks</span></h2>
+      </div>
+      <div class="tbl stack wrap">
+        <table>
+          <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Symptom"><code>dbt debug</code>: <code>profiles.yml file [ERROR not found]</code></td><td data-label="Cause">no HORIZON connection for dbt on this VM</td><td data-label="Fix">create <code>C:\Users\labadmin\.dbt\profiles.yml</code> from the <a href="index.html#dbt-connection">pre-flight</a></td></tr>
+            <tr><td data-label="Symptom"><code>dbt_project.yml file [ERROR not found]</code></td><td data-label="Cause">terminal in the wrong folder</td><td data-label="Fix"><code>cd C:\Users\labadmin\Downloads\setup\horizon_dbt</code></td></tr>
+            <tr><td data-label="Symptom">dbt run says <code>created ... analytics_analytics.italy_conversion_events</code>; SQLTools says relation does not exist</td><td data-label="Cause">no <code>generate_schema_name</code> macro</td><td data-label="Fix">add <code>macros/generate_schema_name.sql</code> (<a href="index.html#pf2b">pre-flight 2b</a>) and run again. In a pinch, query <code>analytics_analytics.italy_conversion_events</code> instead</td></tr>
+            <tr><td data-label="Symptom"><code>depends on a source named '...' which was not found</code></td><td data-label="Cause">no sources file in <code>models</code></td><td data-label="Fix">create <code>models/sources.yml</code> (pre-flight 2b)</td></tr>
+            <tr><td data-label="Symptom">dbt run: syntax error at or near <code>;</code> or <code>{{</code></td><td data-label="Cause">nine times in ten: a trailing semicolon, or the <code>config</code> line pasted twice</td><td data-label="Fix">point at the landing checklist in the guide rather than debugging on screen</td></tr>
+            <tr><td data-label="Symptom"><kbd>Ctrl+E</kbd> <kbd>Ctrl+E</kbd> does nothing</td><td data-label="Cause">no query selected, or SQLTools not connected</td><td data-label="Fix">select the query text first; right-click HORIZON → Connect; or click "Run on active connection" above the query</td></tr>
+            <tr><td data-label="Symptom">Opus missing from the picker</td><td data-label="Cause">plan or org setting</td><td data-label="Fix">check under More models; otherwise stay on Sonnet for the plan and say the idea in one sentence</td></tr>
+            <tr><td data-label="Symptom">Claude puts the code in a side panel</td><td data-label="Cause">artifact view</td><td data-label="Fix">use the panel's Copy button, or reply "Put it in a code block in the chat."</td></tr>
+            <tr><td data-label="Symptom"><code>not_null_..._marketing_allowed</code> fails with 8 rows</td><td data-label="Cause">the NULL was never coalesced (shape D without Step 2b)</td><td data-label="Fix">"The test is doing its job." Add <code>coalesce(marketing_allowed, false)</code> with the comment</td></tr>
+            <tr><td data-label="Symptom"><code>unique_..._event_id</code> fails</td><td data-label="Cause">a <code>max(consent_date)</code> rejoin (shape B)</td><td data-label="Fix">pick one row per event in one pass with the <code>consent_id</code> tie-break. Fix the model, not the test</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Students who fall behind can always rejoin at Step 2: it is pure SQLTools, and the queries work against whatever model they have.</p>
+    </section>
+
+    <section class="part" id="behind">
+      <div class="part-h">
+        <span class="eyebrow">Rescue it</span>
+        <h2>If you are <span>behind</span></h2>
+      </div>
+      <ol class="steps">
+        <li><b>Cut first:</b> the Opus switch in Step 2b. Paste the <a href="hour1.html#shortcut">canned corrections prompt</a> on Sonnet and say the idea in one sentence: "plan on the premium model, type on the thrifty one."</li>
+        <li><b>Cut second:</b> checks 3 and 4. Narrate their numbers (31, 8) and run only checks 1, 2 and 5.</li>
+        <li><b>Never cut:</b> the 0:12 "finish this line" beat (two minutes, it pays for the whole day), the prediction, check 2 on screen, and <code>dbt test</code> going green.</li>
+      </ol>
+    </section>
+
+    <section class="part" id="canned">
+      <div class="part-h">
+        <span class="eyebrow">Rescue it · copy and paste</span>
+        <h2>Canned <span>SQL</span></h2>
+        <p class="dek">Everything you might need to paste live, in one place.</p>
+      </div>
+
+      <h3 id="canned-checks">The five checks, as one SQLTools file</h3>
+      <p>Paste the whole block into one SQLTools file before class. During Step 2, select one query at a time and press <kbd>Ctrl+E</kbd> <kbd>Ctrl+E</kbd>. Checks 2 and 5 read the model, so run them after <code>dbt run</code>.</p>
+      <div class="prompt sql">
+        <pre><code class="language-sql">-- 1) The consent ledger is NOT one row per consumer          expect 15,052 / 6,000 / 2.51
+select count(*) as consent_rows, count(distinct consumer_id) as consumers,
+       round(count(*)::numeric / count(distinct consumer_id), 2) as rows_per_consumer
+from mpl.consent_records;
+
+-- 2) Source events vs model rows                              expect 794 vs 1,988 (A) / 826 (B) / 794 (C, D, fixed)
+select (select count(*) from clr.lifecycle_events
+         where market_code = 'IT' and lifecycle_stage = 'conversion') as source_events,
+       (select count(*) from analytics.italy_conversion_events)      as model_rows;
+
+-- 3) "Latest consent" stamped from after the event            expect 31 of 794
+with latest as (
+  select distinct on (consumer_id) consumer_id, consent_date
+  from mpl.consent_records order by consumer_id, consent_date desc)
+select count(*) as conversion_events,
+       count(*) filter (where e.event_date &lt; l.consent_date) as stamped_with_future_consent
+from clr.lifecycle_events e join latest l using (consumer_id)
+where e.market_code = 'IT' and e.lifecycle_stage = 'conversion';
+
+-- 4) No consent in force on the event date                    expect 8
+select count(*) as events_with_no_consent_in_effect
+from clr.lifecycle_events e
+where e.market_code = 'IT' and e.lifecycle_stage = 'conversion'
+  and not exists (select 1 from mpl.consent_records c
+                  where c.consumer_id = e.consumer_id and c.consent_date &lt;= e.event_date);
+
+-- 5) Grade the model's values                                 expect D 0/0/8 · C ~9/10/0 · fixed 0/0/0
+with in_force as (
+  select e.event_id,
+         (select c.marketing_allowed from mpl.consent_records c
+           where c.consumer_id = e.consumer_id and c.consent_date &lt;= e.event_date
+           order by c.consent_date desc, c.consent_id desc limit 1) as allowed_on_the_day
+  from clr.lifecycle_events e
+  where e.market_code = 'IT' and e.lifecycle_stage = 'conversion')
+select count(*) filter (where m.marketing_allowed and not coalesce(f.allowed_on_the_day, false)) as marked_allowed_but_was_not,
+       count(*) filter (where not m.marketing_allowed and f.allowed_on_the_day)                  as marked_not_allowed_but_was,
+       count(*) filter (where m.marketing_allowed is null)                                       as left_null
+from analytics.italy_conversion_events m
+join in_force f using (event_id);
+
+-- Consumer 3552, for the picture                              expect email t 11-10 · push t 11-16 · postal f 11-19
+select consent_id, comm_channel, consent_status, marketing_allowed, consent_date
+from mpl.consent_records where consumer_id = 3552 order by consent_date;</code></pre>
+      </div>
+
+      <h3 id="canned-flawed">The canned shape-A draft ("what it gave the courseware authors")</h3>
+      <p>Paste over <code>models/analytics/italy_conversion_events.sql</code>, save, <code>dbt run --select italy_conversion_events</code>, then check 2: <span class="expect bad">1,988</span></p>
+      <div class="prompt file" data-label="Paste into models/analytics/italy_conversion_events.sql">
+        <pre><code>{{ config(materialized='view', schema='analytics') }}
+
+select
+    e.event_id,
+    e.consumer_id,
+    e.market_code,
+    e.product_code,
+    e.lifecycle_stage,
+    e.event_date,
+    e.campaign_id,
+    m.marketing_allowed,
+    case when e.campaign_id = 1 then 'q3_campaign' else 'other' end as campaign_bucket
+from {{ source('clr', 'lifecycle_events') }} e
+left join {{ source('mpl', 'consent_records') }} m
+    on m.consumer_id = e.consumer_id
+where e.market_code = 'IT'
+  and e.lifecycle_stage = 'conversion'</code></pre>
+      </div>
+
+      <h3 id="canned-fixed">The reference corrected model</h3>
+      <p>If a student, or you, needs to jump to the end: paste this, <code>dbt run</code>, and check 2 shows <span class="expect ok">794</span>, check 5 shows <span class="expect ok">0 / 0 / 0</span>.</p>
+      <div class="prompt file" data-label="Paste into models/analytics/italy_conversion_events.sql">
+        <pre><code>-- italy_conversion_events: grain = ONE ROW PER CONVERSION EVENT (event_id).
+-- Consent is point-in-time: the latest consent row dated on or before the event.
+-- A missing/unknown permission is treated as NOT allowed (coalesce to false).
+{{ config(materialized='view', schema='analytics') }}
+
+with events as (
+    select event_id, consumer_id, market_code, product_code, lifecycle_stage, event_date, campaign_id
+    from {{ source('clr', 'lifecycle_events') }}
+    where market_code = 'IT'
+      and lifecycle_stage = 'conversion'
+),
+
+consent_as_of_event as (
+    -- exactly one consent row per event, resolved in a single pass
+    select distinct on (e.event_id)
+        e.event_id,
+        m.marketing_allowed
+    from events e
+    join {{ source('mpl', 'consent_records') }} m
+        on m.consumer_id = e.consumer_id
+       and m.consent_date &lt;= e.event_date
+    order by e.event_id, m.consent_date desc, m.consent_id desc
+)
+
+select
+    e.event_id,
+    e.consumer_id,
+    e.market_code,
+    e.product_code,
+    e.lifecycle_stage,
+    e.event_date,
+    e.campaign_id,
+    coalesce(c.marketing_allowed, false) as marketing_allowed,
+    case when e.campaign_id = 1 then 'q3_campaign' else 'other' end as campaign_bucket
+from events e
+left join consent_as_of_event c using (event_id)</code></pre>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <nav aria-label="All guides">
+        <a href="index.html">Start here</a>
+        <a href="hour1.html">Hour 1 · No vibe pipelines</a>
+        <a href="hour2.html">Hour 2 · Green is not right</a>
+        <a href="hour3.html">Hour 3 · Shift left</a>
+        <a href="hour4.html">Hour 4 · You are the gate</a>
+        <a href="glossary.html">Glossary</a>
+      </nav>
+      <p>Instructor guide for the PMI Data Engineer Future Skills class · Project HORIZON is fictional and training-only</p>
+    </footer>
+  </main>
+</div>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>
