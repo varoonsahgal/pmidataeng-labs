@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" width="100%" class="hz" role="img" aria-labelledby="ctx-title ctx-desc">
+<title id="ctx-title">The context window is finite: a focused 300-token prompt scores high, the same facts buried in 113k tokens score low</title>
+<desc id="ctx-desc">A model box with a context window bar. Scenario A: a focused prompt of about 300 tokens (schema, grain, scope) fills a small part of the bar and scores high. Scenario B: the same facts are buried inside about 113k tokens of pasted rows and chat history and score low (Chroma, Context Rot, 18 models). Lesson: aggregate in SQL; give the model 20 rows, not 35,113.</desc>
+<style>
+.hz{
+  --navy:#102B53; --navy2:#0C2040; --orange:#FF4A00; --teal:#00C9A7; --ink:#1C2B40;
+  --tint:#F4F6FA; --muted:#5A6B80; --red:#C8402A;
+  --card:#FFFFFF; --line:#C9D3E0; --grid:#E4E9F1; --code:#F4F6FA;
+  --claude:#102B53; --on-claude:#FFFFFF;
+  --teal-ink:#00805F; --teal-soft:#D6F5EE;
+  --orange-ink:#D63D00; --orange-soft:#FFE6DA;
+  --red-ink:#B5361F; --red-soft:#FAE3DE;
+  --navy-soft:#E4EAF4; --mutedfill:#C3CDDA;
+}
+@media (prefers-color-scheme: dark){
+  .hz{
+    --ink:#F4F6FA; --muted:#AFBDD0; --card:#13305F; --line:#3C5884; --grid:#25416C; --code:#0B1B36;
+    --claude:#2F5FB4; --on-claude:#FFFFFF;
+    --teal-ink:#1FD9B9; --teal-soft:#0F3F3A;
+    --orange-ink:#FF8A5B; --orange-soft:#4B2514;
+    --red:#E8604A; --red-ink:#FF8B78; --red-soft:#4E1D17;
+    --navy-soft:#1B3B6E; --mutedfill:#4E6686; --tint:#0C2040;
+  }
+}
+.hz text{font-family:"Space Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;fill:var(--ink);font-size:16px}
+.hz .mono{font-family:"DM Mono",ui-monospace,Menlo,Consolas,monospace;font-size:14px}
+.hz .b{font-weight:700}
+.hz .i{font-style:italic}
+.hz .muted{fill:var(--muted)}
+.hz .teal-ink{fill:var(--teal-ink)}
+.hz .orange-ink{fill:var(--orange-ink)}
+.hz .red-ink{fill:var(--red-ink)}
+.hz .on{fill:var(--on-claude)}
+.hz .card{fill:var(--card);stroke:var(--line);stroke-width:1.5}
+.hz .soft-navy{fill:var(--navy-soft);stroke:var(--line);stroke-width:1.5}
+.hz .soft-teal{fill:var(--teal-soft);stroke:var(--teal);stroke-width:1.5}
+.hz .soft-orange{fill:var(--orange-soft);stroke:var(--orange);stroke-width:1.5}
+.hz .soft-red{fill:var(--red-soft);stroke:var(--red);stroke-width:1.5}
+.hz .claude{fill:var(--claude);stroke:none}
+.hz .code{fill:var(--code);stroke:var(--line);stroke-width:1}
+.hz .ln{stroke:var(--muted);stroke-width:2;fill:none}
+.hz .ln-ink{stroke:var(--ink);stroke-width:2;fill:none}
+.hz .ln-teal{stroke:var(--teal);stroke-width:2.5;fill:none}
+.hz .ln-orange{stroke:var(--orange);stroke-width:2.5;fill:none}
+.hz .ln-red{stroke:var(--red);stroke-width:2.5;fill:none}
+.hz .ln-claude{stroke:var(--claude);stroke-width:2;fill:none}
+.hz .dash{stroke-dasharray:7 6}
+.hz .grid{stroke:var(--grid);stroke-width:1;fill:none}
+.hz .f-teal{fill:var(--teal)}
+.hz .f-orange{fill:var(--orange)}
+.hz .f-red{fill:var(--red)}
+.hz .f-muted{fill:var(--mutedfill)}
+.hz .f-card{fill:var(--card)}
+.hz .f-line{fill:var(--line)}
+.hz .f-ink{fill:var(--ink)}
+.hz .f-navy{fill:var(--claude)}
+.hz .f-code{fill:var(--code)}
+.hz .f-teal-soft{fill:var(--teal-soft)}
+.hz .f-orange-soft{fill:var(--orange-soft)}
+.hz .f-red-soft{fill:var(--red-soft)}
+.hz .f-navy-soft{fill:var(--navy-soft)}
+.hz .mk-muted{fill:var(--muted)}
+.hz .mk-ink{fill:var(--ink)}
+.hz .mk-teal{fill:var(--teal)}
+.hz .mk-orange{fill:var(--orange)}
+.hz .mk-red{fill:var(--red)}
+.hz .mk-claude{fill:var(--claude)}
+</style>
+<defs>
+<marker id="ctx-ar-muted" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-muted"/></marker>
+<marker id="ctx-ar-ink" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-ink"/></marker>
+<marker id="ctx-ar-teal" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-teal"/></marker>
+<marker id="ctx-ar-orange" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-orange"/></marker>
+<marker id="ctx-ar-red" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-red"/></marker>
+<marker id="ctx-ar-claude" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-claude"/></marker>
+</defs>
+<rect x="60" y="44" width="800" height="420" rx="16" class="card" stroke="#102B53" stroke-width="2"/>
+<text x="82" y="76" class="b" style="font-size:18px">the model</text>
+<text x="82" y="98" class="muted" style="font-size:15px">its context window is finite: an attention budget, not a hard drive</text>
+<text x="90" y="130" class="b" style="font-size:15px">A · a focused prompt</text>
+<rect x="90" y="140" width="740" height="58" rx="8" class="code"/>
+<rect x="90" y="140" width="60" height="58" rx="8" class="f-teal"/>
+<text x="166" y="165" class="b" style="font-size:15px">~300 tokens: schema · grain · scope · one task</text>
+<text x="166" y="185" class="muted" style="font-size:15px">the fact the model needs is right there; the rest of the window is empty</text>
+<text x="90" y="260" class="b" style="font-size:15px">B · the same facts, buried</text>
+<rect x="90" y="270" width="740" height="58" rx="8" class="code"/>
+<rect x="90" y="270" width="720" height="58" rx="8" class="f-muted"/>
+<rect x="520" y="270" width="5" height="58" rx="1" class="f-teal"/>
+<text x="106" y="295" class="b" style="font-size:15px">~113k tokens: pasted rows, logs, earlier chat</text>
+<text x="106" y="315" class="muted" style="font-size:15px">the same three facts are in here somewhere</text>
+<text x="534" y="260" class="b teal-ink" style="font-size:15px">the fact</text>
+<line x1="522" y1="264" x2="522" y2="269" class="ln-teal"/>
+<text x="82" y="398" class="mono muted" style="font-size:14px">pasting det.device_telemetry into a chat: 35,113 rows, about 2 MB of text,</text>
+<text x="82" y="418" class="mono muted" style="font-size:14px">well over half a million tokens; the window fills before the question is asked</text>
+<text x="82" y="446" class="muted" style="font-size:15px">the model reads the whole window every turn; more text means thinner attention per token (context rot)</text>
+<line x1="860" y1="169.0" x2="894" y2="169.0" class="ln" marker-end="url(#ctx-ar-muted)"/>
+<text x="900" y="150" class="muted" style="font-size:15px">answer quality</text>
+<rect x="900" y="160" width="260" height="18" rx="9" class="code"/>
+<rect x="900" y="160" width="229" height="18" rx="9" class="f-teal"/>
+<text x="900" y="204" class="b teal-ink" style="font-size:18px">high and steady</text>
+<line x1="860" y1="299.0" x2="894" y2="299.0" class="ln" marker-end="url(#ctx-ar-muted)"/>
+<text x="900" y="280" class="muted" style="font-size:15px">answer quality</text>
+<rect x="900" y="290" width="260" height="18" rx="9" class="code"/>
+<rect x="900" y="290" width="88" height="18" rx="9" class="f-red"/>
+<text x="900" y="334" class="b red-ink" style="font-size:18px">low and uneven</text>
+<text x="900" y="362" class="muted" style="font-size:15px">Chroma, “Context Rot” (2025):</text>
+<text x="900" y="380" class="muted" style="font-size:15px">18 models, performance falls as</text>
+<text x="900" y="398" class="muted" style="font-size:15px">input grows, even on simple tasks</text>
+<rect x="40" y="478" width="1120" height="36" rx="8" class="soft-teal"/>
+<text x="600" y="502" text-anchor="middle" style="font-size:16px"><tspan class="b teal-ink">Lesson: </tspan><tspan class="b">aggregate in SQL. Give the model 20 rows, not 35,113.</tspan></text>
+</svg>

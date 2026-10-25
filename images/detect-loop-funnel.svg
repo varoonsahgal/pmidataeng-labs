@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" width="100%" class="hz" role="img" aria-labelledby="loop-title loop-desc">
+<title id="loop-title">Detect, Diagnose, Correct, Prevent; and the funnel where 105 rows fell out while the tests stayed green</title>
+<desc id="loop-desc">Left: a four-step cycle Detect, Diagnose, Correct, Prevent, with the Detect arrow labelled reconcile to the source and the centre reading GREEN is not RIGHT. Right: a funnel. 1,050 Japan sell-through rows enter, a join condition and channel_type &lt;&gt; 'ecommerce' lets 945 through to a pipe marked with a green check (dbt run OK, no tests yet) while 105 rows fall out the side.</desc>
+<style>
+.hz{
+  --navy:#102B53; --navy2:#0C2040; --orange:#FF4A00; --teal:#00C9A7; --ink:#1C2B40;
+  --tint:#F4F6FA; --muted:#5A6B80; --red:#C8402A;
+  --card:#FFFFFF; --line:#C9D3E0; --grid:#E4E9F1; --code:#F4F6FA;
+  --claude:#102B53; --on-claude:#FFFFFF;
+  --teal-ink:#00805F; --teal-soft:#D6F5EE;
+  --orange-ink:#D63D00; --orange-soft:#FFE6DA;
+  --red-ink:#B5361F; --red-soft:#FAE3DE;
+  --navy-soft:#E4EAF4; --mutedfill:#C3CDDA;
+}
+@media (prefers-color-scheme: dark){
+  .hz{
+    --ink:#F4F6FA; --muted:#AFBDD0; --card:#13305F; --line:#3C5884; --grid:#25416C; --code:#0B1B36;
+    --claude:#2F5FB4; --on-claude:#FFFFFF;
+    --teal-ink:#1FD9B9; --teal-soft:#0F3F3A;
+    --orange-ink:#FF8A5B; --orange-soft:#4B2514;
+    --red:#E8604A; --red-ink:#FF8B78; --red-soft:#4E1D17;
+    --navy-soft:#1B3B6E; --mutedfill:#4E6686; --tint:#0C2040;
+  }
+}
+.hz text{font-family:"Space Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;fill:var(--ink);font-size:16px}
+.hz .mono{font-family:"DM Mono",ui-monospace,Menlo,Consolas,monospace;font-size:14px}
+.hz .b{font-weight:700}
+.hz .i{font-style:italic}
+.hz .muted{fill:var(--muted)}
+.hz .teal-ink{fill:var(--teal-ink)}
+.hz .orange-ink{fill:var(--orange-ink)}
+.hz .red-ink{fill:var(--red-ink)}
+.hz .on{fill:var(--on-claude)}
+.hz .card{fill:var(--card);stroke:var(--line);stroke-width:1.5}
+.hz .soft-navy{fill:var(--navy-soft);stroke:var(--line);stroke-width:1.5}
+.hz .soft-teal{fill:var(--teal-soft);stroke:var(--teal);stroke-width:1.5}
+.hz .soft-orange{fill:var(--orange-soft);stroke:var(--orange);stroke-width:1.5}
+.hz .soft-red{fill:var(--red-soft);stroke:var(--red);stroke-width:1.5}
+.hz .claude{fill:var(--claude);stroke:none}
+.hz .code{fill:var(--code);stroke:var(--line);stroke-width:1}
+.hz .ln{stroke:var(--muted);stroke-width:2;fill:none}
+.hz .ln-ink{stroke:var(--ink);stroke-width:2;fill:none}
+.hz .ln-teal{stroke:var(--teal);stroke-width:2.5;fill:none}
+.hz .ln-orange{stroke:var(--orange);stroke-width:2.5;fill:none}
+.hz .ln-red{stroke:var(--red);stroke-width:2.5;fill:none}
+.hz .ln-claude{stroke:var(--claude);stroke-width:2;fill:none}
+.hz .dash{stroke-dasharray:7 6}
+.hz .grid{stroke:var(--grid);stroke-width:1;fill:none}
+.hz .f-teal{fill:var(--teal)}
+.hz .f-orange{fill:var(--orange)}
+.hz .f-red{fill:var(--red)}
+.hz .f-muted{fill:var(--mutedfill)}
+.hz .f-card{fill:var(--card)}
+.hz .f-line{fill:var(--line)}
+.hz .f-ink{fill:var(--ink)}
+.hz .f-navy{fill:var(--claude)}
+.hz .f-code{fill:var(--code)}
+.hz .f-teal-soft{fill:var(--teal-soft)}
+.hz .f-orange-soft{fill:var(--orange-soft)}
+.hz .f-red-soft{fill:var(--red-soft)}
+.hz .f-navy-soft{fill:var(--navy-soft)}
+.hz .mk-muted{fill:var(--muted)}
+.hz .mk-ink{fill:var(--ink)}
+.hz .mk-teal{fill:var(--teal)}
+.hz .mk-orange{fill:var(--orange)}
+.hz .mk-red{fill:var(--red)}
+.hz .mk-claude{fill:var(--claude)}
+</style>
+<defs>
+<marker id="loop-ar-muted" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-muted"/></marker>
+<marker id="loop-ar-ink" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-ink"/></marker>
+<marker id="loop-ar-teal" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-teal"/></marker>
+<marker id="loop-ar-orange" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-orange"/></marker>
+<marker id="loop-ar-red" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-red"/></marker>
+<marker id="loop-ar-claude" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-claude"/></marker>
+</defs>
+<path d="M411.1,134.5 A204,164 0 0 1 476.7,190.0" class="ln-ink" marker-end="url(#loop-ar-ink)"/>
+<path d="M471.1,361.3 A204,164 0 0 1 402.0,414.0" class="ln-ink" marker-end="url(#loop-ar-ink)"/>
+<path d="M188.9,409.5 A204,164 0 0 1 123.3,354.0" class="ln-ink" marker-end="url(#loop-ar-ink)"/>
+<path d="M128.9,182.7 A204,164 0 0 1 198.0,130.0" class="ln-ink" marker-end="url(#loop-ar-ink)"/>
+<rect x="212.0" y="93.0" width="176" height="58" rx="12" class="soft-navy"/>
+<text x="300" y="120" text-anchor="middle" class="b" style="font-size:18px">Detect</text>
+<text x="300" y="140" text-anchor="middle" class="muted" style="font-size:15px">is it right?</text>
+<rect x="402.0" y="243.0" width="176" height="58" rx="12" class="soft-navy"/>
+<text x="490" y="270" text-anchor="middle" class="b" style="font-size:18px">Diagnose</text>
+<text x="490" y="290" text-anchor="middle" class="muted" style="font-size:15px">find the predicate</text>
+<rect x="212.0" y="393.0" width="176" height="58" rx="12" class="soft-navy"/>
+<text x="300" y="420" text-anchor="middle" class="b" style="font-size:18px">Correct</text>
+<text x="300" y="440" text-anchor="middle" class="muted" style="font-size:15px">945 → 1,050 rows</text>
+<rect x="22.0" y="243.0" width="176" height="58" rx="12" class="soft-navy"/>
+<text x="110" y="270" text-anchor="middle" class="b" style="font-size:18px">Prevent</text>
+<text x="110" y="290" text-anchor="middle" class="muted" style="font-size:15px">a test that bites</text>
+<text x="300" y="266" text-anchor="middle" class="b" style="font-size:20px">GREEN ≠ RIGHT</text>
+<text x="300" y="288" text-anchor="middle" class="muted" style="font-size:15px">a passing test is not</text>
+<text x="300" y="306" text-anchor="middle" class="muted" style="font-size:15px">a correct pipeline</text>
+<text x="466.2497833620557" y="144.03448788540624" class="b teal-ink" style="font-size:15px">reconcile to the source:</text>
+<text x="466.2497833620557" y="162.03448788540624" class="teal-ink" style="font-size:15px">count per key, source vs output</text>
+<text x="40" y="500" class="muted" style="font-size:15px">Hour 2 in one loop: detect by reconciling, diagnose the predicate, correct the SQL, prevent with a test.</text>
+<text x="890" y="56" text-anchor="middle" class="b" style="font-size:20px">1,050 source rows</text>
+<text x="890" y="78" text-anchor="middle" class="muted" style="font-size:15px">rst.sell_through · market JP · 2024 to 2025</text>
+<path d="M660,96 L1120,96 L980,208 L800,208 Z" class="soft-navy"/>
+<line x1="740" y1="112" x2="807.5" y2="196" class="ln" marker-end="url(#loop-ar-muted)"/>
+<line x1="815" y1="112" x2="848.75" y2="196" class="ln" marker-end="url(#loop-ar-muted)"/>
+<line x1="890" y1="112" x2="890.0" y2="196" class="ln" marker-end="url(#loop-ar-muted)"/>
+<line x1="965" y1="112" x2="931.25" y2="196" class="ln" marker-end="url(#loop-ar-muted)"/>
+<line x1="1040" y1="112" x2="972.5" y2="196" class="ln" marker-end="url(#loop-ar-muted)"/>
+<rect x="730" y="212" width="320" height="46" rx="8" class="soft-red"/>
+<text x="890" y="241" text-anchor="middle" class="mono b red-ink" style="font-size:13px">join ... and channel_type &lt;&gt; 'ecommerce'</text>
+<rect x="850" y="258" width="80" height="152" rx="0" class="soft-navy"/>
+<line x1="890" y1="268" x2="890" y2="404" class="ln" marker-end="url(#loop-ar-muted)"/>
+<circle cx="890" cy="340" r="22" class="f-teal"/>
+<path d="M880.2222222222222,340 L887.5555555555555,347.3333333333333 L901.0,331.44444444444446" fill="none" stroke="#FFFFFF" stroke-width="3.666666666666667" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="834" y="334" text-anchor="end" class="b teal-ink" style="font-size:15px">green: dbt run OK (no tests yet)</text>
+<text x="834" y="354" text-anchor="end" class="muted" style="font-size:15px">the model built, 945 rows</text>
+<text x="834" y="374" text-anchor="end" class="muted" style="font-size:15px">the dashboard refreshed</text>
+<path d="M1050,240 C1095,244 1040,280 998,300" class="ln-red dash" marker-end="url(#loop-ar-red)"/>
+<text x="950" y="330" class="b red-ink" style="font-size:15px">105 rows fall out</text>
+<text x="950" y="350" class="red-ink" style="font-size:15px">JP Ecommerce Distributor 3</text>
+<text x="950" y="370" class="mono red-ink" style="font-size:14px">source 105 · staged 0</text>
+<text x="950" y="390" class="muted" style="font-size:15px">no error, no warning</text>
+<rect x="780" y="418" width="220" height="50" rx="10" class="card"/>
+<text x="890" y="440" text-anchor="middle" class="b" style="font-size:17px">945 rows out</text>
+<text x="890" y="458" text-anchor="middle" class="mono red-ink" style="font-size:14px">silent suppression</text>
+</svg>

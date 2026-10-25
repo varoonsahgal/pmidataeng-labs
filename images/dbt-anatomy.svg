@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 490" width="100%" class="hz" role="img" aria-labelledby="dbt-title dbt-desc">
+<title id="dbt-title">How dbt works: a model file becomes a view with dbt run, and tests check it with dbt test</title>
+<desc id="dbt-desc">Left: a raw source table, clr.lifecycle_events, which dbt is told about. Middle: the files you write in VS Code: the model models/analytics/italy_conversion_events.sql (one SELECT that reads the source with {{ source('clr','lifecycle_events') }}); models/analytics/schema.yml with generic tests not_null, unique, relationships and accepted_values; and tests/no_underage_marketing_italy.sql, a singular test that returns rows only when something is wrong. Right: dbt run builds the model as the view analytics.italy_conversion_events; dbt test runs the tests against it and reports PASS when 0 bad rows come back and FAIL when rows come back.</desc>
+<style>
+.hz{
+  --navy:#102B53; --navy2:#0C2040; --orange:#FF4A00; --teal:#00C9A7; --ink:#1C2B40;
+  --tint:#F4F6FA; --muted:#5A6B80; --red:#C8402A;
+  --card:#FFFFFF; --line:#C9D3E0; --grid:#E4E9F1; --code:#F4F6FA;
+  --claude:#102B53; --on-claude:#FFFFFF;
+  --teal-ink:#00805F; --teal-soft:#D6F5EE;
+  --orange-ink:#D63D00; --orange-soft:#FFE6DA;
+  --red-ink:#B5361F; --red-soft:#FAE3DE;
+  --navy-soft:#E4EAF4; --mutedfill:#C3CDDA;
+}
+@media (prefers-color-scheme: dark){
+  .hz{
+    --ink:#F4F6FA; --muted:#AFBDD0; --card:#13305F; --line:#3C5884; --grid:#25416C; --code:#0B1B36;
+    --claude:#2F5FB4; --on-claude:#FFFFFF;
+    --teal-ink:#1FD9B9; --teal-soft:#0F3F3A;
+    --orange-ink:#FF8A5B; --orange-soft:#4B2514;
+    --red:#E8604A; --red-ink:#FF8B78; --red-soft:#4E1D17;
+    --navy-soft:#1B3B6E; --mutedfill:#4E6686; --tint:#0C2040;
+  }
+}
+.hz text{font-family:"Space Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;fill:var(--ink);font-size:16px}
+.hz .mono{font-family:"DM Mono",ui-monospace,Menlo,Consolas,monospace;font-size:14px}
+.hz .b{font-weight:700}
+.hz .i{font-style:italic}
+.hz .muted{fill:var(--muted)}
+.hz .teal-ink{fill:var(--teal-ink)}
+.hz .orange-ink{fill:var(--orange-ink)}
+.hz .red-ink{fill:var(--red-ink)}
+.hz .on{fill:var(--on-claude)}
+.hz .card{fill:var(--card);stroke:var(--line);stroke-width:1.5}
+.hz .soft-navy{fill:var(--navy-soft);stroke:var(--line);stroke-width:1.5}
+.hz .soft-teal{fill:var(--teal-soft);stroke:var(--teal);stroke-width:1.5}
+.hz .soft-orange{fill:var(--orange-soft);stroke:var(--orange);stroke-width:1.5}
+.hz .soft-red{fill:var(--red-soft);stroke:var(--red);stroke-width:1.5}
+.hz .claude{fill:var(--claude);stroke:none}
+.hz .code{fill:var(--code);stroke:var(--line);stroke-width:1}
+.hz .ln{stroke:var(--muted);stroke-width:2;fill:none}
+.hz .ln-ink{stroke:var(--ink);stroke-width:2;fill:none}
+.hz .ln-teal{stroke:var(--teal);stroke-width:2.5;fill:none}
+.hz .ln-orange{stroke:var(--orange);stroke-width:2.5;fill:none}
+.hz .ln-red{stroke:var(--red);stroke-width:2.5;fill:none}
+.hz .ln-claude{stroke:var(--claude);stroke-width:2;fill:none}
+.hz .dash{stroke-dasharray:7 6}
+.hz .grid{stroke:var(--grid);stroke-width:1;fill:none}
+.hz .f-teal{fill:var(--teal)}
+.hz .f-orange{fill:var(--orange)}
+.hz .f-red{fill:var(--red)}
+.hz .f-muted{fill:var(--mutedfill)}
+.hz .f-card{fill:var(--card)}
+.hz .f-line{fill:var(--line)}
+.hz .f-ink{fill:var(--ink)}
+.hz .f-navy{fill:var(--claude)}
+.hz .f-code{fill:var(--code)}
+.hz .f-teal-soft{fill:var(--teal-soft)}
+.hz .f-orange-soft{fill:var(--orange-soft)}
+.hz .f-red-soft{fill:var(--red-soft)}
+.hz .f-navy-soft{fill:var(--navy-soft)}
+.hz .mk-muted{fill:var(--muted)}
+.hz .mk-ink{fill:var(--ink)}
+.hz .mk-teal{fill:var(--teal)}
+.hz .mk-orange{fill:var(--orange)}
+.hz .mk-red{fill:var(--red)}
+.hz .mk-claude{fill:var(--claude)}
+</style>
+<defs>
+<marker id="dbt-ar-muted" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-muted"/></marker>
+<marker id="dbt-ar-teal" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-teal"/></marker>
+<marker id="dbt-ar-orange" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-orange"/></marker>
+<marker id="dbt-ar-red" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-red"/></marker>
+<marker id="dbt-ar-claude" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-claude"/></marker>
+</defs>
+<text x="40" y="36" class="mono b orange-ink" style="font-size:13px" letter-spacing="1.5">IN THE WAREHOUSE (RAW)</text>
+<text x="340" y="36" class="mono b orange-ink" style="font-size:13px" letter-spacing="1.5">FILES YOU WRITE IN VS CODE</text>
+<text x="830" y="36" class="mono b orange-ink" style="font-size:13px" letter-spacing="1.5">WHAT DBT GIVES BACK</text>
+<path d="M60,78 L60,148 A105,12 0 0 0 270,148 L270,78 A105,12 0 0 0 60,78 Z" class="soft-teal"/>
+<ellipse cx="165" cy="78" rx="105" ry="12" class="soft-teal"/>
+<text x="165" y="120" text-anchor="middle" class="mono b" style="font-size:14px">clr.lifecycle_events</text>
+<text x="165" y="186" text-anchor="middle" class="b" style="font-size:15px">a source</text>
+<text x="165" y="206" text-anchor="middle" class="muted" style="font-size:14px">a raw table dbt is told about</text>
+<rect x="340" y="56" width="420" height="132" rx="12" class="card"/>
+<text x="360" y="84" class="mono b" style="font-size:13px">models/analytics/italy_conversion_events.sql</text>
+<rect x="360" y="98" width="380" height="50" rx="8" class="code"/>
+<text x="372" y="118" class="mono" style="font-size:12.5px">select e.event_id, ...</text>
+<text x="372" y="137" class="mono" style="font-size:12.5px">from {{ source('clr','lifecycle_events') }} e</text>
+<text x="360" y="175" class="muted" style="font-size:14px">a model: one SELECT saved as a file</text>
+<line x1="270" y1="118" x2="336" y2="118" class="ln" marker-end="url(#dbt-ar-muted)"/>
+<line x1="760" y1="122" x2="826" y2="122" class="ln-orange" marker-end="url(#dbt-ar-orange)"/>
+<text x="793" y="110" text-anchor="middle" class="mono b orange-ink" style="font-size:13px">dbt run</text>
+<rect x="830" y="56" width="330" height="132" rx="12" class="soft-navy"/>
+<text x="850" y="90" class="mono b" style="font-size:14px">analytics.italy_conversion_events</text>
+<text x="850" y="122" class="b" style="font-size:16px">a view in the warehouse</text>
+<text x="850" y="146" class="muted" style="font-size:14px">a saved query you can select from</text>
+<text x="850" y="168" class="muted" style="font-size:14px">in SQLTools; it holds no data itself</text>
+<rect x="340" y="236" width="420" height="88" rx="12" class="card"/>
+<text x="360" y="264" class="mono b" style="font-size:13px">models/analytics/schema.yml</text>
+<text x="360" y="288" class="b" style="font-size:15px">generic tests, one line each</text>
+<text x="360" y="310" class="mono muted" style="font-size:12.5px">not_null · unique · relationships · accepted_values</text>
+<rect x="340" y="338" width="420" height="88" rx="12" class="card"/>
+<text x="360" y="366" class="mono b" style="font-size:13px">tests/no_underage_marketing_italy.sql</text>
+<text x="360" y="390" class="b" style="font-size:15px">a singular test: a SELECT for bad rows</text>
+<text x="360" y="412" class="muted" style="font-size:14px">it returns rows only when something is wrong</text>
+<path d="M760,280 L775,280 L775,331 L846,331" class="ln-orange" marker-end="url(#dbt-ar-orange)"/>
+<path d="M760,382 L775,382 L775,331" class="ln-orange"/>
+<text x="812" y="320" text-anchor="middle" class="mono b orange-ink" style="font-size:13px">dbt test</text>
+<line x1="995" y1="188" x2="995" y2="246" class="ln dash" marker-end="url(#dbt-ar-muted)"/>
+<text x="1005" y="222" class="muted" style="font-size:13px">tests run against the built view</text>
+<rect x="850" y="250" width="310" height="176" rx="12" class="card"/>
+<rect x="868" y="270" width="274" height="62" rx="10" class="soft-teal"/>
+<text x="886" y="297" class="b teal-ink" style="font-size:18px">PASS</text>
+<text x="886" y="319" style="font-size:14px">the test found 0 bad rows</text>
+<rect x="868" y="344" width="274" height="62" rx="10" class="soft-red"/>
+<text x="886" y="371" class="b red-ink" style="font-size:18px">FAIL</text>
+<text x="886" y="393" style="font-size:14px">bad rows came back: read them</text>
+<text x="40" y="470" class="muted" style="font-size:15px">Anything inside {{ }} is an instruction to dbt, replaced before the SQL runs. dbt run builds the view; dbt test checks it.</text>
+
+</svg>

@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Hour 2 · Green ≠ right · Project HORIZON lab guides</title>
+<meta name="description" content="Lab guides for the PMI Data Engineer Future Skills class. Project HORIZON is fictional and training-only.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#0C2040">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230C2040'/%3E%3Crect x='6' y='6' width='9' height='9' rx='2' fill='%23FF4A00'/%3E%3Crect x='17' y='17' width='9' height='9' rx='2' fill='%2300C9A7'/%3E%3C/svg%3E">
+</head>
+<body>
+
+
+<header class="mast">
+  <div class="mast-in">
+    <nav class="sitenav" aria-label="Lab guides">
+      <a class="brand" href="index.html">Project HORIZON</a>
+      <a href="index.html">Start here</a>
+      <a href="hour1.html">Hour 1</a>
+      <a href="hour2.html" aria-current="page">Hour 2</a>
+      <a href="hour3.html">Hour 3</a>
+      <a href="hour4.html">Hour 4</a>
+      <a href="glossary.html">Glossary</a>
+    </nav>
+    <div class="mast-grid">
+      <div class="mast-copy">
+        <div class="eyebrow">PMI · DI&amp;A Future Skills · Data Engineer track · Project HORIZON</div>
+        <h1>Hour 2 · <span>Green ≠ right</span><small>Accountability in Automation</small></h1>
+        <p class="lede">The nightly job has been green for weeks. No error, no alert, a plausible row count. One distributor's sales are still missing. <strong>Automation does the work. You own the outcome.</strong></p>
+        <div class="meta"><span>1:08 to 1:55</span><span>VS Code + SQLTools</span><span>dbt CLI</span><span>Claude Desktop on <b>Sonnet</b></span></div>
+      </div>
+      <div class="mfd" role="img" aria-label="Hour 2 numbers: Japan staged rows 945 before the fix, 1,050 after; JP Ecommerce Distributor 3 has 105 source rows and 0 staged; IT Partner Distributor 2 has 210 source rows and 0 staged; campaign_id &lt;&gt; 1 returns 0, IS DISTINCT FROM 1 returns 15,523.">
+        <div class="hd"><b>Hour 2 · reconcile to the source</b><b>rows</b></div>
+        <div class="row"><span class="lbl">rst.sell_through, JP</span><span class="val">1,050</span></div>
+        <div class="row"><span class="lbl">analytics.japan_sell_through</span><span class="was">945</span><span class="now">1,050</span></div>
+        <div class="row"><span class="lbl">JP Ecommerce Distributor 3 staged</span><span class="was">0</span><span class="now">105</span></div>
+        <div class="row"><span class="lbl">IT Partner Distributor 2 staged</span><span class="val">0 of 210</span></div>
+        <div class="row"><span class="lbl">campaign_id &lt;&gt; 1</span><span class="val">0</span></div>
+        <div class="row"><span class="lbl">campaign_id is distinct from 1</span><span class="val">15,523</span></div>
+        <div class="ft">Job status every night: green. <span class="blink">Green tells you the code ran, not that the number is right.</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="frame">
+  <details class="toc" id="toc" open>
+    <summary>On this page</summary>
+    <ol>
+      <li class="grp">The brief</li>
+      <li><a href="#request">The request</a></li>
+      <li><a href="#words">Words you will hear</a></li>
+      <li><a href="#before">Before you start</a></li>
+      <li><a href="#opener">Opener · the query that ran green</a></li>
+      <li class="grp">Hands-on</li>
+      <li><a href="#step1">Step 1 · Detect</a></li>
+      <li><a href="#step2">Step 2 · Diagnose</a></li>
+      <li><a href="#step3">Step 3 · Correct, then Prevent</a></li>
+      <li class="sub"><a href="#correct">Correct</a></li>
+      <li class="sub"><a href="#prevent">Prevent</a></li>
+      <li class="sub"><a href="#bites">Prove the guard bites</a></li>
+      <li><a href="#stretch">Stretch · anomaly threshold</a></li>
+      <li class="grp">Wrap-up</li>
+      <li><a href="#recap">What just happened</a></li>
+      <li><a href="#takeaway">Takeaway #2</a></li>
+    </ol>
+  </details>
+
+  <main id="main">
+<section class="part" id="request">
+  <div class="part-h">
+    <span class="eyebrow">Hour 2 · Accountability in Automation (WA3904)</span>
+    <h2>Green <span>≠</span> right</h2>
+    <p class="dek">The nightly job has been green for weeks. No error, no alert, a plausible row count. And one distributor's sales have been missing from every dashboard since the day the filter shipped.</p>
+  </div>
+
+  <p class="rule-line">Automation does the work. <span class="w">You own the outcome.</span></p>
+  <p>The loop for this hour: <strong>Detect → Diagnose → Correct → Prevent.</strong></p>
+
+  <p><strong>The request that just landed:</strong></p>
+  <blockquote class="request">
+    <p>"The Italy retail sell-through number on our dashboard looks too low. The pipeline has been green for weeks and no alert has fired. Can you confirm it is fine?"</p>
+    <cite>Marketing query · Project HORIZON</cite>
+  </blockquote>
+
+  <p>Hands-on: you will harden the <strong>Japan</strong> pipeline with the instructor. Italy is the story; Japan is the one nobody noticed.</p>
+
+  <div class="box note">
+    <span class="k">How this lab works with Claude Desktop</span>
+    <p>Claude Desktop is a chat window. It cannot create or edit files on your VM. The loop all hour is: paste a prompt into Claude Desktop → Claude replies with SQL in a code block → you copy it → you paste it into a file in VS Code → you run dbt or SQLTools and read the number. <strong>The paste is you, signing. Nothing lands in the repo unless you put it there.</strong></p>
+  </div>
+
+  <div class="box tidbit">
+    <span class="k">Model: Sonnet all hour</span>
+    <p>Stay on <strong>Sonnet</strong> for the whole hour (the model picker is next to the Send button). Hour 1's "premium planning" is for judgment with a long implementation behind it. Today's fix is one line and the tests come from a precise list: that is typing, so the thrifty model is the right tool.</p>
+  </div>
+
+  <div class="box trap">
+    <span class="k">Prompt hygiene, once</span>
+    <p>Everything you paste into Claude leaves the VM. Schema and column names: yes. Real rows, passwords, connection strings: never.</p>
+  </div>
+</section>
+
+<section class="part" id="words">
+  <div class="part-h">
+    <span class="eyebrow">Before the first query</span>
+    <h2>Words you <span>will hear</span></h2>
+    <p class="dek">Every term this hour uses, in plain English. Each one links to its entry in the glossary.</p>
+  </div>
+
+  <div class="words wide">
+    <div class="k">Words you will hear <a href="glossary.html">Full glossary →</a></div>
+    <table>
+      <thead><tr><th>Term</th><th>Plain English</th></tr></thead>
+      <tbody>
+        <tr><td><a href="glossary.html#sell-through">Sell-through</a></td><td>Retail sales from a distributor or retailer to the end consumer. The opposite of <em>sell-in</em>, which is PMI's shipments <em>to</em> the distributor. In HORIZON, <code>rst.sell_through</code> holds one row per distributor, product and week, and every <code>sale_date</code> is a Monday.</td></tr>
+        <tr><td><a href="glossary.html#distributor">Distributor · channel type</a></td><td>The trading partner that sells to consumers. Each one has a <code>channel_type</code>: <code>branded_retail</code> (PMI's own stores), <code>partner_retail</code> (third-party retail) or <code>ecommerce</code>. Both bugs today are channel filters that drop a whole distributor.</td></tr>
+        <tr><td><a href="glossary.html#dbt">dbt</a></td><td>Data build tool. A SQL SELECT saved as a file is a <strong>model</strong>; <code>dbt run</code> builds it in the warehouse as a view; <code>dbt test</code> checks it. A <strong>source</strong> is a raw table you declare once and then write as <code>{{ source('rst','sell_through') }}</code>.</td></tr>
+        <tr><td><a href="glossary.html#view">View</a></td><td>A saved query that behaves like a table. Nothing is copied; the SELECT runs when you read it. All HORIZON models are views in the <code>analytics</code> schema.</td></tr>
+        <tr><td><a href="glossary.html#staged">Source vs staged</a></td><td><em>Source</em> is the raw table the feed loads (<code>rst.sell_through</code>). <em>Staged</em> is the cleaned, scoped copy the pipeline builds from it (<code>analytics.japan_sell_through</code>). A healthy pipeline can explain every row that is in one and not the other.</td></tr>
+        <tr><td><a href="glossary.html#grain">Grain</a></td><td>What one row represents. Here: one distributor, one product, one week.</td></tr>
+        <tr><td><a href="glossary.html#reconciliation">Reconciliation</a></td><td>Comparing the pipeline's output with its source, per key (here per distributor), to find rows that vanished. The check that catches what a green job status cannot.</td></tr>
+        <tr><td><a href="glossary.html#silent-suppression">Silent suppression</a></td><td>Rows removed by a rule that throws no error. The job is green, the row count looks plausible, and one distributor's sales are gone.</td></tr>
+        <tr><td><a href="glossary.html#threshold-drift">Threshold drift</a></td><td>An alert threshold set once and never recalibrated, so it no longer matches the data and never fires. A monitor that has never fired has never been tested either.</td></tr>
+        <tr><td><a href="glossary.html#anomaly-threshold">Anomaly threshold</a></td><td>A tolerance band around a series' own average. A week outside the band is flagged. The band has to be calibrated against the real spread, not guessed.</td></tr>
+        <tr><td><a href="glossary.html#three-valued-logic">NULL · three-valued logic</a></td><td>A SQL comparison returns <em>true</em>, <em>false</em> or <em>unknown</em>. <code>NULL &lt;&gt; 1</code> is unknown. A <code>WHERE</code> clause keeps only <em>true</em>, so NULL rows silently drop out of <code>= x</code> <strong>and</strong> <code>&lt;&gt; x</code>.</td></tr>
+        <tr><td><a href="glossary.html#is-distinct-from">IS DISTINCT FROM</a></td><td>A comparison that treats NULL as a value. <code>campaign_id is distinct from 1</code> is true for NULL rows; <code>campaign_id &lt;&gt; 1</code> is not.</td></tr>
+        <tr><td><a href="glossary.html#coalesce">COALESCE</a></td><td>Replaces NULL with a default: <code>coalesce(n_staged, 0)</code> turns "no staged rows found" into the number 0 so you can subtract it.</td></tr>
+        <tr><td><a href="glossary.html#cte">CTE</a></td><td>Common Table Expression: a <code>WITH</code> clause that names a sub-query at the top of a statement so the main SELECT below can use it like a table. Used in the stretch to hold each series' average.</td></tr>
+        <tr><td><a href="glossary.html#inner-vs-left-join">INNER vs LEFT join</a></td><td>INNER keeps only rows that match on both sides. LEFT keeps every row from the left table and fills the right side with NULL when nothing matches. A reconciliation must be LEFT (or FULL), or it hides the very distributor you are hunting.</td></tr>
+        <tr><td><a href="glossary.html#singular-test">Singular test</a></td><td>A dbt test written as a plain SQL file in <code>tests/</code>. It returns rows <strong>only on failure</strong>; zero rows means PASS. Written with <code>{{ ref('model') }}</code> and <code>{{ source(...) }}</code>, no trailing semicolon.</td></tr>
+        <tr><td><a href="glossary.html#kpi">KPI · KPI-level check</a></td><td>Key Performance Indicator, a business number. A KPI-level check guards the number itself ("under-25 marketing in Italy is always zero": marketing to the <code>'18-24'</code> age band is forbidden by law in Italy and Indonesia, so the count of under-25 consumers with <code>marketing_allowed</code> must be 0), not the job status.</td></tr>
+        <tr><td><a href="glossary.html#automation-bias">Automation bias</a></td><td>Accepting a confident, specific suggestion from a tool more readily than the same suggestion from a colleague, and checking it less.</td></tr>
+        <tr><td><a href="glossary.html#human-gate">Human approval gate</a></td><td>A step where a person must say yes before an automated action (a delete, an overwrite, a threshold change) takes effect.</td></tr>
+        <tr><td><a href="glossary.html#sqltools">SQLTools</a></td><td>The VS Code extension you use to run SQL against HORIZON. Paste a query into your SQLTools tab (you open it in <em>Before you start</em>), select it, and press <kbd>Ctrl+E</kbd> twice (or click <em>Run on active connection</em>).</td></tr>
+        <tr><td><a href="glossary.html#model-tiers">Model tiers · Sonnet</a></td><td>Claude comes in three price tiers: Opus (premium, for judgment), Sonnet (thrifty, for typing) and Haiku (bulk). This hour stays on Sonnet. You change it with the model picker next to the Send button; the change applies from the next reply.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <figure class="hero wide">
+    <img src="images/sell-through.svg" alt="Sell-in is PMI shipping to a distributor; sell-through is the distributor selling on to the adult consumer. Distributors have one of three channel types: branded_retail, partner_retail or ecommerce. rst.sell_through has one row per distributor, product and week, every sale_date a Monday." loading="lazy">
+    <figcaption><strong>Sell-in</strong> is PMI shipping to a distributor. <strong>Sell-through</strong> is the distributor selling on to the adult consumer, and that is what <code>rst.sell_through</code> records: one row per distributor × product × week, every <code>sale_date</code> a Monday. Each of the 12 distributors has one channel type: <code>branded_retail</code> (PMI's own stores), <code>partner_retail</code> (third-party retail) or <code>ecommerce</code>.</figcaption>
+  </figure>
+  <p>Every term used in the class is also in the <a href="glossary.html">glossary</a>.</p>
+</section>
+
+<section class="part" id="before">
+  <div class="part-h">
+    <span class="eyebrow">3 min · during the stretch before Hour 2 begins</span>
+    <h2>Before you <span>start</span></h2>
+    <p class="dek">Open the project, connect SQLTools, build both models, and check one number.</p>
+  </div>
+
+  <ol class="steps">
+    <li><p><strong>VS Code</strong> → <em>File → Open Folder</em> → <code>C:\LabFiles\hardening-a-japan-sell-through-pipeline\horizon_dbt</code>.</p></li>
+    <li><p><strong>SQLTools</strong> sidebar → right-click the <strong>HORIZON</strong> connection → <em>Connect</em>. (Fallback if the saved connection is missing: PostgreSQL, host <code>localhost</code>, port <code>5432</code>, database <code>horizon</code>, user <code>postgres</code>, password <code>Horizon!Lab2026</code>.) Then right-click <strong>HORIZON</strong> → <em>New SQL File</em>. Keep this tab open: every proof query this hour is pasted here, selected, and run with <kbd>Ctrl+E</kbd> <kbd>Ctrl+E</kbd>.</p></li>
+    <li><p><strong>Terminal</strong> (<em>Terminal → New Terminal</em>, it opens in the project folder) → <code>dbt debug</code> → expect the last line <strong>All checks passed!</strong> Then:</p>
+      <div class="prompt term">
+<pre><code class="language-text">dbt run</code></pre>
+        <p class="good"><b>What a good answer looks like</b>This builds <code>analytics.italy_sell_through</code> and <code>analytics.japan_sell_through</code>. Both are already wrong on purpose. <span class="expect ok">2 of 2 OK created sql view model</span></p>
+      </div>
+    </li>
+    <li><p><strong>Preflight</strong> in SQLTools:</p>
+      <div class="prompt sql">
+<pre><code class="language-sql">select count(*) from analytics.japan_sell_through;
+<span class="c">-- expect 945 (not 0, not an error)</span></code></pre>
+        <p class="good"><b>What a good answer looks like</b><span class="expect">expect 945</span> Not 0, not an error.</p>
+      </div>
+    </li>
+    <li><p><strong>Claude Desktop</strong> → <em>New chat</em>. Check the model picker next to the Send button says <strong>Sonnet</strong>.</p></li>
+  </ol>
+</section>
+
+<section class="part" id="opener">
+  <div class="part-h">
+    <span class="eyebrow">Opener · 3 min</span>
+    <h2>The query that <span>ran green</span></h2>
+    <p class="dek">This opener is three minutes. The instructor then sets the scene and the Detect → Diagnose → Correct → Prevent loop (about 8 minutes); hands-on starts at Step 1.</p>
+  </div>
+
+  <div class="box chat">
+    <span class="k">Predict in the chat</span>
+    <p><code>clr.lifecycle_events</code> has 15,597 rows. 74 of them have <code>campaign_id = 1</code>. How many rows does this return? <span class="opts"><code>15,523</code> · <code>15,597</code> · <code>74</code> · <code>0</code> · <code>something else</code></span></p>
+  </div>
+
+  <div class="prompt sql">
+<pre><code class="language-sql">select count(*) from clr.lifecycle_events where campaign_id = 1;
+<span class="c">-- 74</span>
+select count(*) from clr.lifecycle_events where campaign_id &lt;&gt; 1;
+<span class="c">-- 0  (not 15,523)</span></code></pre>
+    <p class="good"><b>What a good answer looks like</b><span class="expect">expect 74</span> <span class="expect bad">&lt;&gt; 1 returns 0, not 15,523</span></p>
+  </div>
+
+  <p>Run both in your SQLTools tab. <strong>0.</strong> Every row that is not campaign 1 has <code>campaign_id = NULL</code>, and <code>NULL &lt;&gt; 1</code> is <em>unknown</em>, not true. A <code>WHERE</code> clause keeps only <em>true</em>. No error, no warning, a perfectly green run, and a number that is wrong by 15,523.</p>
+
+  <div class="prompt sql">
+<pre><code class="language-sql">select count(*) from clr.lifecycle_events where campaign_id is distinct from 1;
+<span class="c">-- 15,523  (the fix: IS DISTINCT FROM treats NULL as a value)</span></code></pre>
+    <p class="good"><b>What a good answer looks like</b><span class="expect ok">15,523</span> IS DISTINCT FROM treats NULL as a value.</p>
+  </div>
+
+  <figure class="hero wide">
+    <img src="images/null-logic.svg" alt="Three-valued logic: campaign_id = 1 returns 74 rows, campaign_id &lt;&gt; 1 returns 0, and IS DISTINCT FROM 1 returns 15,523, because WHERE keeps only TRUE.">
+    <figcaption>Three-valued logic. <code>campaign_id = 1</code> returns 74 rows, <code>&lt;&gt; 1</code> returns 0 (not 15,523) and <code>IS DISTINCT FROM 1</code> returns 15,523, because <code>WHERE</code> keeps only TRUE.</figcaption>
+  </figure>
+
+  <p>Keep that feeling; it is the whole hour. A green run tells you the code executed. It tells you nothing about whether the number is right.</p>
+
+  <h3>Four ways green hides wrong</h3>
+  <p>The instructor will walk through these; the lab is about the first one, the stretch is about the second and third.</p>
+  <div class="tbl cards wide">
+    <table>
+      <thead><tr><th>Pattern</th><th>What it looks like</th><th>What would tell you</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Silent suppression</strong></td><td>A rule drops "bad" rows. The job is green, the count is plausible.</td><td>A reconciliation to the source, per distributor.</td></tr>
+        <tr><td><strong>Threshold drift</strong></td><td>The anomaly alert was set a year ago and has never fired.</td><td>Look at the real spread; was the threshold ever calibrated against it?</td></tr>
+        <tr><td><strong>Over-trust in AI output</strong></td><td>The assistant proposed a fix. It ran, the job is green again.</td><td>Was the fix checked against the source? Who owns it if it is wrong?</td></tr>
+        <tr><td><strong>Unattended remediation</strong></td><td>A nightly job deletes duplicates with nobody watching.</td><td>How reversible is it? Does it need a human approval gate?</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="part" id="steps">
+  <div class="part-h">
+    <span class="eyebrow">Hands-on · 32 min</span>
+    <h2>Detect, diagnose, <span>correct, prevent</span></h2>
+    <p class="dek">Find the rows that vanished, prove why, fix the rule, and leave a guard that fails loudly next time.</p>
+  </div>
+
+  <figure class="hero wide">
+    <img src="images/detect-loop-funnel.svg" alt="Detect, Diagnose, Correct, Prevent. 1,050 Japan source rows pass a join condition and channel_type &lt;&gt; 'ecommerce', 945 come out, 105 fall out silently, and dbt run stays green (the model has no tests yet).">
+    <figcaption>Detect, Diagnose, Correct, Prevent (reconcile to the source). 1,050 Japan source rows pass a join condition <code>and d.channel_type &lt;&gt; 'ecommerce'</code>, 945 come out, 105 fall out silently, and <code>dbt run</code> stays green (the model has no tests yet).</figcaption>
+  </figure>
+
+  <!-- STEP 1 -->
+  <div class="step" id="step1">
+    <span class="step-n">1</span>
+    <div class="step-t"><span class="step-k">Detect</span><h3>Reconcile to the source</h3></div>
+    <span class="step-min">10 min</span>
+  </div>
+  <div class="expects"><span class="expect">expect 9 rows</span><span class="expect bad">IT dropped 210</span><span class="expect bad">JP dropped 105</span></div>
+
+  <p>A green run is not proof. The check that is proof: compare what the source has with what the pipeline produced, <strong>per distributor</strong>, for both markets at once. Let Claude draft the query; you read it, then you run it.</p>
+
+  <div class="prompt">
+    <p class="asks"><b>What this asks Claude to do</b>Write one SQL query that counts source rows and staged rows per distributor for Italy and Japan, keeps every distributor even when it has zero staged rows, and sorts by the size of the gap.</p>
+<pre><code class="language-text">Context: I am a data engineer at PMI on Project HORIZON (Postgres). I am checking whether two dbt pipelines silently drop rows.
+Task: write ONE SQL query that compares source row counts with staged row counts per distributor, for market_code in ('IT','JP').
+Tables:
+- source: rst.sell_through (record_id, sale_date, market_code, distributor_id, product_code, units_sold, gross_revenue_eur)
+- staged: analytics.italy_sell_through and analytics.japan_sell_through (same columns, plus distributor_name, channel_type)
+- rst.distributors (distributor_id, distributor_name, market_code, channel_type)
+Rules: every distributor must appear even if it has zero staged rows.
+Show market_code, distributor_name, channel_type, the source count, the staged count and the gap. Sort by the gap, largest first.
+Do not run anything.
+Output: the SQL in one code block, then two sentences on which join type you chose and why.
+Respond in Markdown only. Do not create any file.</code></pre>
+    <p class="good"><b>What a good answer looks like</b>One SELECT built from two count subqueries (source rows per distributor; staged rows per distributor from both models, combined with <code>union all</code>), a <strong>LEFT join from the source side</strong>, <code>coalesce(n_staged, 0)</code>, a <code>dropped</code> column, sorted by <code>dropped desc</code>. Claude says it chose LEFT so that a distributor with no staged rows still shows up.</p>
+  </div>
+
+  <h3>Read it before you run it</h3>
+  <p>Three questions:</p>
+  <div class="tbl cards wide">
+    <table>
+      <thead><tr><th>Check</th><th>Why it matters</th></tr></thead>
+      <tbody>
+        <tr><td>Is the join from source counts to staged counts a <strong>LEFT</strong> (or FULL) join?</td><td>With an INNER join, a distributor with zero staged rows simply disappears from the result and you conclude "all fine". The reconciliation would have the same bug as the pipeline.</td></tr>
+        <tr><td>Is the staged count wrapped in <strong><code>coalesce(..., 0)</code></strong>?</td><td>Without it the gap for a missing distributor is <code>210 - NULL = NULL</code>, which sorts nowhere and reads as nothing.</td></tr>
+        <tr><td>Does it read <strong>both</strong> staged models?</td><td>Italy is the story, Japan is the lab. You want both in one result.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box try">
+    <span class="k">If any check fails</span>
+    <p>Reply in the same chat: <code>Change the join between the source counts and the staged counts to a LEFT join from the source side, and wrap the staged count in coalesce(..., 0).</code> Then read it again.</p>
+  </div>
+
+  <p>Copy the SQL into your SQLTools tab and run it. Different-but-valid SQL is normal; what matters is the join type and the numbers. If yours looks very different, use the reference version:</p>
+
+  <div class="prompt sql" data-label="Reference version · run in SQLTools">
+<pre><code class="language-sql">select d.market_code, d.distributor_name, d.channel_type,
+       src.n_source,
+       coalesce(stg.n_staged, 0)                 as n_staged,
+       src.n_source - coalesce(stg.n_staged, 0)  as dropped
+from (
+    select distributor_id, count(*) as n_source
+    from rst.sell_through where market_code in ('IT','JP') group by distributor_id
+) src
+left join (
+    select distributor_id, count(*) as n_staged from analytics.italy_sell_through group by distributor_id
+    union all
+    select distributor_id, count(*) from analytics.japan_sell_through group by distributor_id
+) stg using (distributor_id)
+join rst.distributors d using (distributor_id)
+order by dropped desc, d.market_code, d.distributor_name;
+<span class="c">-- expect 9 rows; the top two have dropped = 210 (IT) and 105 (JP); the other seven have dropped = 0</span></code></pre>
+    <p class="good"><b>What a good answer looks like</b><span class="expect">expect 9 rows</span> The top two have dropped = 210 (IT) and 105 (JP); the other seven have dropped = 0.</p>
+  </div>
+
+  <p>Expected:</p>
+  <div class="tbl cards wide">
+    <table>
+      <thead><tr><th>market</th><th>distributor</th><th>channel</th><th class="n">source</th><th class="n">staged</th><th class="n">dropped</th></tr></thead>
+      <tbody>
+        <tr><td>IT</td><td>IT Partner Distributor 2</td><td><code>partner_retail</code></td><td class="n">210</td><td class="n bad"><strong>0</strong></td><td class="n bad"><strong>210</strong></td></tr>
+        <tr><td>JP</td><td>JP Ecommerce Distributor 3</td><td><code>ecommerce</code></td><td class="n">105</td><td class="n bad"><strong>0</strong></td><td class="n bad"><strong>105</strong></td></tr>
+        <tr><td>…</td><td>every other distributor (seven rows)</td><td></td><td class="n">n</td><td class="n">n</td><td class="n ok">0</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Two distributors, two markets, zero errors, for as long as nobody reconciled.</p>
+
+  <div class="box chat">
+    <span class="k">Post in the chat</span>
+    <p>Marketing noticed Italy because the number looked low. Who noticed Japan? <span class="opts">(Nobody. That is the point.)</span></p>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step" id="step2">
+    <span class="step-n">2</span>
+    <div class="step-t"><span class="step-k">Diagnose</span><h3>Find the rule, prove the cause</h3></div>
+    <span class="step-min">8 min</span>
+  </div>
+  <div class="expects"><span class="expect">expect 105 suppressed rows</span></div>
+
+  <p>Detect told you <em>which</em> distributor. Diagnose is finding <em>why</em>, and proving it with a count.</p>
+  <p>In VS Code, open <code>models/japan_sell_through.sql</code>. Read the <code>from</code> / <code>join</code> block. Read the <strong>join condition, not just the key</strong>:</p>
+
+<pre><code class="language-sql">join {{ source('rst', 'distributors') }} d
+    on d.distributor_id = s.distributor_id
+   and d.channel_type &lt;&gt; 'ecommerce'   <span class="c">-- exclude non-store channels</span></code></pre>
+
+  <p>A plausible-looking scoping rule with an innocent comment. The join matches on the distributor key <em>and</em> on a channel rule, so every row of the one ecommerce distributor in Japan fails the join and never enters the model. Prove it in SQLTools:</p>
+
+  <div class="prompt sql">
+<pre><code class="language-sql">select count(*) as suppressed_rows
+from rst.sell_through s
+join rst.distributors d using (distributor_id)
+where s.market_code = 'JP'
+  and d.distributor_id = 3                <span class="c">-- JP Ecommerce Distributor 3, from Detect</span>
+  and d.channel_type = 'ecommerce';       <span class="c">-- the channel the join silently excludes</span>
+<span class="c">-- expect 105: exactly the gap the reconciliation found</span></code></pre>
+    <p class="good"><b>What a good answer looks like</b><span class="expect">expect 105</span> Exactly the gap the reconciliation found.</p>
+  </div>
+
+  <p>The picture of what the pipeline has been doing every night:</p>
+<pre class="wide"><code class="language-text"> 1,050 source rows (JP)
+        |
+        v
+[ join ... and channel_type &lt;&gt; 'ecommerce' ]  ---&gt; 105 rows fall out the side (distributor 3)
+        |
+        v
+   945 staged rows          job status: green</code></pre>
+
+  <div class="box chat">
+    <span class="k">Discuss (unmute)</span>
+    <p>Is this a bug or a feature? Who decided ecommerce is "not a store"? Who should have been asked? <span class="opts">(Hold that last question; it is the opening line of Hour 3.)</span></p>
+  </div>
+
+  <div class="box chat">
+    <span class="k">One word in the chat</span>
+    <p>What is the half-life of a wrong number at PMI? <span class="opts"><code>a day</code> · <code>a quarter</code> · <code>forever</code></span></p>
+  </div>
+
+  <div class="box analogy">
+    <span class="k">Say the diagnosis in one sentence</span>
+    <p>"The join carries a <code>channel_type &lt;&gt; 'ecommerce'</code> condition, so the one ecommerce distributor's 105 legitimate weekly rows never enter the staged model."</p>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step" id="step3">
+    <span class="step-n">3</span>
+    <div class="step-t"><span class="step-k">Correct, then Prevent</span><h3>Fix the rule, leave a guard, watch it bite</h3></div>
+    <span class="step-min">14 min</span>
+  </div>
+  <div class="expects"><span class="expect">Correct 3 · Prevent 6 · Prove the guard bites 5</span><span class="expect ok">1,050 rows (was 945)</span><span class="expect ok">PASS=1</span></div>
+
+  <h3 id="correct">Correct (one line, by hand)</h3>
+  <p>In <code>models/japan_sell_through.sql</code>, delete the line <code>and d.channel_type &lt;&gt; 'ecommerce'   -- exclude non-store channels</code>. The join must match on the distributor key alone:</p>
+
+<pre><code class="language-sql">join {{ source('rst', 'distributors') }} d
+    on d.distributor_id = s.distributor_id
+where s.market_code = 'JP'</code></pre>
+
+  <div class="box trap">
+    <span class="k">Do not move it</span>
+    <p>Do <strong>not</strong> move the condition into the <code>where</code> clause: it would drop the same 105 rows from there. The rule is wrong, not misplaced.</p>
+  </div>
+
+  <p>Save (<kbd>Ctrl+S</kbd>), then in the terminal:</p>
+  <div class="prompt term">
+<pre><code class="language-text">dbt run --select japan_sell_through</code></pre>
+    <p class="good"><b>What a good answer looks like</b><span class="expect ok">1 of 1 OK created sql view model analytics.japan_sell_through</span></p>
+  </div>
+
+  <p>Now confirm the fix the same way you found the bug. Re-run your reconciliation from Step 1: JP Ecommerce Distributor 3 now reads 105 / 105 / <strong>0</strong>, and every Japan distributor has <code>dropped = 0</code>. Then:</p>
+  <div class="prompt sql">
+<pre><code class="language-sql">select count(*) from analytics.japan_sell_through;
+<span class="c">-- expect 1,050 (was 945)</span></code></pre>
+    <p class="good"><b>What a good answer looks like</b><span class="expect ok">expect 1,050</span> <span class="expect note">was 945</span></p>
+  </div>
+
+  <h3 id="prevent">Prevent (leave a guard behind)</h3>
+  <p>The fix is in one file and one head. Next quarter someone adds a "reasonable" filter again. Leave a test that fails the build the day that happens. Ask Claude for a <strong>singular test</strong> (a SQL file in <code>tests/</code> that returns rows only on failure).</p>
+
+  <div class="prompt">
+    <p class="asks"><b>What this asks Claude to do</b>Write a dbt singular test that returns a row for any Japan distributor whose staged row count is lower than its source row count.</p>
+    <p class="model">Paste into Claude Desktop (<b>same chat is fine</b>).</p>
+<pre><code class="language-text">Context: dbt project on Postgres. The model japan_sell_through (one row per distributor, product and week) reads {{ source('rst','sell_through') }} for market_code = 'JP'.
+Task: write a dbt singular test for tests/assert_japan_no_dropped_distributors.sql. It must return rows only when a Japan distributor has fewer staged rows than source rows.
+Tables:
+- {{ source('rst','sell_through') }} (distributor_id, market_code)
+- {{ ref('japan_sell_through') }} (distributor_id)
+- {{ source('rst','distributors') }} (distributor_id, distributor_name)
+Rules: count source rows per distributor where market_code = 'JP'. LEFT join the staged counts to the source counts and use coalesce(n_staged, 0).
+Return distributor_id, distributor_name, n_source, n_staged. No config block. No trailing semicolon. Do not run dbt.
+Output: the test SQL in one code block, then one sentence on why the join is LEFT and not INNER.
+Respond in Markdown only. Do not create any file.</code></pre>
+    <p class="good"><b>What a good answer looks like</b>A single SELECT with a source-count subquery, a <strong>LEFT join</strong> to a staged-count subquery on <code>{{ ref('japan_sell_through') }}</code>, <code>coalesce(stg.n_staged, 0)</code>, and a <code>where coalesce(stg.n_staged, 0) &lt; src.n_source</code>. No semicolon at the end (dbt wraps the test in its own query, and a semicolon breaks it).</p>
+  </div>
+
+  <p>Read it: LEFT join? coalesce? <code>ref()</code> for the model, <code>source()</code> for the raw table? Then put it in the repo yourself:</p>
+  <ol class="steps">
+    <li><p>VS Code Explorer → right-click the <code>tests</code> folder → <em>New File…</em> → name it <code>assert_japan_no_dropped_distributors.sql</code>.</p></li>
+    <li><p>Paste the SQL from Claude (use the Copy button at the top of the code block). Save.</p></li>
+  </ol>
+
+  <p>Reference version, if yours did not pass the read-through:</p>
+  <div class="prompt file" data-label="Reference version · tests/assert_japan_no_dropped_distributors.sql">
+<pre><code class="language-sql"><span class="c">-- Guard 1: row-count reconciliation. Fails if ANY Japan distributor has fewer staged rows than source rows.</span>
+select d.distributor_id, d.distributor_name, src.n_source, coalesce(stg.n_staged, 0) as n_staged
+from (
+    select distributor_id, count(*) as n_source
+    from {{ source('rst', 'sell_through') }} where market_code = 'JP' group by distributor_id
+) src
+left join (
+    select distributor_id, count(*) as n_staged
+    from {{ ref('japan_sell_through') }} group by distributor_id
+) stg using (distributor_id)
+join {{ source('rst', 'distributors') }} d using (distributor_id)
+where coalesce(stg.n_staged, 0) &lt; src.n_source</code></pre>
+  </div>
+
+  <p>In the terminal:</p>
+  <div class="prompt term">
+<pre><code class="language-text">dbt test --select japan_sell_through</code></pre>
+    <p class="good"><b>What a good answer looks like</b><span class="expect ok">1 of 1 PASS assert_japan_no_dropped_distributors</span> <span class="expect ok">Done. PASS=1</span></p>
+  </div>
+
+  <h3 id="bites">Prove the guard bites</h3>
+  <p>A guard that has never failed is a guard you have never seen work. Break the pipeline on purpose.</p>
+
+  <div class="box chat">
+    <span class="k">Predict in the chat, before you do it</span>
+    <p>When the bad line goes back in, will the test fail? <span class="opts"><code>yes</code> · <code>no</code> · <code>it depends</code></span></p>
+  </div>
+
+  <ol class="steps">
+    <li><p>Put <code>and d.channel_type &lt;&gt; 'ecommerce'</code> back into the join in <code>models/japan_sell_through.sql</code>. Save.</p></li>
+    <li><p><code>dbt run --select japan_sell_through</code> then <code>dbt test --select japan_sell_through</code>.</p></li>
+    <li><p>Watch it go red: <span class="expect bad">FAIL 1 assert_japan_no_dropped_distributors</span> and, underneath, <code>Got 1 result, configured to fail if != 0</code>. That one row is JP Ecommerce Distributor 3: 105 source, 0 staged. This is the build going red on the day the filter shipped, which is what should have happened months ago.</p></li>
+    <li><p>Remove the line again. Save. <code>dbt run --select japan_sell_through</code> then <code>dbt test --select japan_sell_through</code>. <strong>PASS.</strong> Green, and honest. <span class="expect ok">PASS</span></p></li>
+  </ol>
+
+  <p><em>(If someone said "it depends": it depends on whether the test joins from the source side. Which is the point.)</em></p>
+
+  <div class="box chat">
+    <span class="k">Post in the chat</span>
+    <p>One pipeline you own that nobody has reconciled against its source lately.</p>
+  </div>
+</section>
+
+<section class="part" id="stretch">
+  <div class="part-h">
+    <span class="eyebrow">Stretch · if time allows · 5 min</span>
+    <h2>Calibrate an <span>anomaly threshold</span></h2>
+    <p class="dek">The second kind of silent failure: a threshold nobody calibrated (and, at the end, the third: over-trust in AI output). Ask Claude for an anomaly test, then do not paste its number until you have looked at the real data.</p>
+  </div>
+
+  <div class="expects"><span class="expect">observed 0.41x to 1.57x</span><span class="expect bad">0.5x / 2x flags 6</span><span class="expect ok">0.35x / 1.75x: PASS=2</span></div>
+
+  <div class="prompt">
+    <p class="asks"><b>What this asks Claude to do</b>Write a dbt singular test that flags any week whose <code>units_sold</code> is far above or below that distributor and product's own average, with the two tolerance factors on one editable line.</p>
+    <p class="model">Paste into Claude Desktop (<b>same chat is fine</b>).</p>
+<pre><code class="language-text">Context: dbt project on Postgres. {{ ref('japan_sell_through') }} has one row per distributor, product and week.
+Task: write a dbt singular test for tests/assert_japan_weekly_units_within_range.sql that returns any week whose units_sold is far above or below that distributor and product's own average.
+Tables:
+- {{ ref('japan_sell_through') }} (distributor_id, product_code, sale_date, units_sold)
+Rules: compute avg(units_sold) per distributor_id and product_code in a CTE, join it back, and flag rows above an upper factor or below a lower factor of that average.
+Put the two factors on one clearly marked line so I can change them. No config block. No trailing semicolon. Do not run dbt.
+Output: the test SQL in one code block, then the factors you chose and why, in one line.
+Respond in Markdown only. Do not create any file.</code></pre>
+    <p class="good"><b>What a good answer looks like</b>A CTE (a <code>WITH</code> clause: a named sub-query you define at the top and use below) with <code>avg(units_sold)</code> per distributor and product, a join back on both keys, a <code>where</code> with two factors. Claude usually proposes something like <strong>0.5x and 2x</strong>. Confident, specific, and uncalibrated.</p>
+  </div>
+
+  <p>Look at Japan's real spread first (SQLTools, on the fixed model):</p>
+  <div class="prompt sql">
+<pre><code class="language-sql">select distributor_id, product_code, min(units_sold), round(avg(units_sold)) as avg_units, max(units_sold),
+       round(max(units_sold)::numeric / avg(units_sold), 2) as max_over_avg,
+       round(min(units_sold)::numeric / avg(units_sold), 2) as min_over_avg
+from analytics.japan_sell_through group by 1, 2 order by 1, 2;
+<span class="c">-- observed: 0.41x to 1.57x of each series' average (10 rows, one per distributor and product)</span></code></pre>
+    <p class="good"><b>What a good answer looks like</b><span class="expect">10 rows</span> One per distributor and product; observed 0.41x to 1.57x of each series' average.</p>
+  </div>
+
+  <div class="tbl cards wide">
+    <table>
+      <thead><tr><th>Factors</th><th class="n">Normal weeks flagged</th><th>Verdict</th></tr></thead>
+      <tbody>
+        <tr><td>0.5x / 2x (the usual default)</td><td class="n bad"><strong>6</strong> false alarms</td><td>Nobody trusts the test by Friday.</td></tr>
+        <tr><td>0.35x / 1.75x</td><td class="n ok"><strong>0</strong></td><td>Just outside the observed range: normal weeks pass, a genuine outlier fails.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Create <code>tests/assert_japan_weekly_units_within_range.sql</code> the same way as in Step 3 (VS Code Explorer → right-click <code>tests</code> → <em>New File…</em>), paste Claude's SQL, change the two factors on its marked line to <code>0.35</code> and <code>1.75</code>, save, then run <code>dbt test --select japan_sell_through</code>: expect <span class="expect ok">PASS=2</span>. (If you leave Claude's <code>0.5</code> and <code>2</code> in place you get <span class="expect bad">FAIL 6</span>: six normal weeks flagged.)</p>
+
+  <div class="box tidbit">
+    <span class="k">Automation bias</span>
+    <p>A threshold copied from the assistant without this check is calibrated by luck. That is <strong>automation bias</strong>: a confident, specific number from a tool gets checked less than the same number from a colleague. The habit that protects you is boring: look at the real distribution before you accept any number the model proposes.</p>
+  </div>
+</section>
+
+<section class="part" id="recap">
+  <div class="part-h">
+    <span class="eyebrow">3 min</span>
+    <h2>What just <span>happened</span></h2>
+    <p class="dek">The same job status, before and after. Everything else changed.</p>
+  </div>
+
+  <div class="tbl cards wide">
+    <table>
+      <thead><tr><th></th><th>The green pipeline</th><th>The hardened pipeline</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Job status</strong></td><td>green, every night</td><td>green</td></tr>
+        <tr><td><strong>Japan staged rows</strong></td><td class="bad">945</td><td class="ok"><strong>1,050</strong></td></tr>
+        <tr><td><strong>JP Ecommerce Distributor 3</strong></td><td class="bad">0 rows, no error, no alert</td><td class="ok">105 rows</td></tr>
+        <tr><td><strong>Who found it</strong></td><td>nobody (Marketing found Italy)</td><td>a reconciliation to the source</td></tr>
+        <tr><td><strong>What stops it next time</strong></td><td>nothing</td><td>a guard that you watched fail once</td></tr>
+        <tr><td><strong>Who signed</strong></td><td>nobody</td><td>you, with every paste and every number</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="part" id="takeaway">
+  <div class="part-h">
+    <span class="eyebrow">Takeaway #2</span>
+    <h2>A green run is <span>not a right number</span></h2>
+  </div>
+
+  <p>Silent suppression, threshold drift and over-trust in AI output throw no errors. Detect with a reconciliation to the source. Diagnose by proving the cause against the warehouse. Correct the rule. Prevent with a guard that fails loudly next time, and watch it fail once so you know it works. <em>Green ≠ right.</em></p>
+
+  <div class="box try">
+    <span class="k">On Monday</span>
+    <p>Write the reconciliation that proves one of your pipelines matches its source. Pick one KPI-level check ("this number should never do X", like under-25 marketing in Italy must always be zero). Name one automated decision in your estate that deserves a human approval gate.</p>
+  </div>
+
+  <p class="rule-line">The assistant drafts. <span class="w">The warehouse decides.</span> The engineer signs.</p>
+  <p>Next: <a href="hour3.html">Hour 3 · Shift left</a> · Back: <a href="hour1.html">Hour 1 · No vibe pipelines</a></p>
+</section>
+
+
+    <footer class="foot">
+      <nav aria-label="All guides">
+        <a href="index.html">Start here</a>
+        <a href="hour1.html">Hour 1 · No vibe pipelines</a>
+        <a href="hour2.html">Hour 2 · Green is not right</a>
+        <a href="hour3.html">Hour 3 · Shift left</a>
+        <a href="hour4.html">Hour 4 · You are the gate</a>
+        <a href="glossary.html">Glossary</a>
+      </nav>
+      <p>Lab guides for the PMI Data Engineer Future Skills class · Project HORIZON is fictional and training-only</p>
+    </footer>
+  </main>
+</div>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 460" width="100%" class="hz" role="img" aria-labelledby="st-title st-desc">
+<title id="st-title">Sell-in vs sell-through, and the three channel types</title>
+<desc id="st-desc">PMI ships products to a distributor: that is sell-in, not used in this lab. Each of the 12 distributors has one channel type: branded_retail (PMI's own stores), partner_retail (third-party retail) or ecommerce (online sales). The distributor sells on to the adult consumer: that is sell-through, recorded in rst.sell_through. One row is one distributor, one product and one week; every sale_date is a Monday. 2,730 weekly rows across 105 Mondays, 2024-01-01 to 2025-12-29.</desc>
+<style>
+.hz{
+  --navy:#102B53; --navy2:#0C2040; --orange:#FF4A00; --teal:#00C9A7; --ink:#1C2B40;
+  --tint:#F4F6FA; --muted:#5A6B80; --red:#C8402A;
+  --card:#FFFFFF; --line:#C9D3E0; --grid:#E4E9F1; --code:#F4F6FA;
+  --claude:#102B53; --on-claude:#FFFFFF;
+  --teal-ink:#00805F; --teal-soft:#D6F5EE;
+  --orange-ink:#D63D00; --orange-soft:#FFE6DA;
+  --red-ink:#B5361F; --red-soft:#FAE3DE;
+  --navy-soft:#E4EAF4; --mutedfill:#C3CDDA;
+}
+@media (prefers-color-scheme: dark){
+  .hz{
+    --ink:#F4F6FA; --muted:#AFBDD0; --card:#13305F; --line:#3C5884; --grid:#25416C; --code:#0B1B36;
+    --claude:#2F5FB4; --on-claude:#FFFFFF;
+    --teal-ink:#1FD9B9; --teal-soft:#0F3F3A;
+    --orange-ink:#FF8A5B; --orange-soft:#4B2514;
+    --red:#E8604A; --red-ink:#FF8B78; --red-soft:#4E1D17;
+    --navy-soft:#1B3B6E; --mutedfill:#4E6686; --tint:#0C2040;
+  }
+}
+.hz text{font-family:"Space Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;fill:var(--ink);font-size:16px}
+.hz .mono{font-family:"DM Mono",ui-monospace,Menlo,Consolas,monospace;font-size:14px}
+.hz .b{font-weight:700}
+.hz .i{font-style:italic}
+.hz .muted{fill:var(--muted)}
+.hz .teal-ink{fill:var(--teal-ink)}
+.hz .orange-ink{fill:var(--orange-ink)}
+.hz .red-ink{fill:var(--red-ink)}
+.hz .on{fill:var(--on-claude)}
+.hz .card{fill:var(--card);stroke:var(--line);stroke-width:1.5}
+.hz .soft-navy{fill:var(--navy-soft);stroke:var(--line);stroke-width:1.5}
+.hz .soft-teal{fill:var(--teal-soft);stroke:var(--teal);stroke-width:1.5}
+.hz .soft-orange{fill:var(--orange-soft);stroke:var(--orange);stroke-width:1.5}
+.hz .soft-red{fill:var(--red-soft);stroke:var(--red);stroke-width:1.5}
+.hz .claude{fill:var(--claude);stroke:none}
+.hz .code{fill:var(--code);stroke:var(--line);stroke-width:1}
+.hz .ln{stroke:var(--muted);stroke-width:2;fill:none}
+.hz .ln-ink{stroke:var(--ink);stroke-width:2;fill:none}
+.hz .ln-teal{stroke:var(--teal);stroke-width:2.5;fill:none}
+.hz .ln-orange{stroke:var(--orange);stroke-width:2.5;fill:none}
+.hz .ln-red{stroke:var(--red);stroke-width:2.5;fill:none}
+.hz .ln-claude{stroke:var(--claude);stroke-width:2;fill:none}
+.hz .dash{stroke-dasharray:7 6}
+.hz .grid{stroke:var(--grid);stroke-width:1;fill:none}
+.hz .f-teal{fill:var(--teal)}
+.hz .f-orange{fill:var(--orange)}
+.hz .f-red{fill:var(--red)}
+.hz .f-muted{fill:var(--mutedfill)}
+.hz .f-card{fill:var(--card)}
+.hz .f-line{fill:var(--line)}
+.hz .f-ink{fill:var(--ink)}
+.hz .f-navy{fill:var(--claude)}
+.hz .f-code{fill:var(--code)}
+.hz .f-teal-soft{fill:var(--teal-soft)}
+.hz .f-orange-soft{fill:var(--orange-soft)}
+.hz .f-red-soft{fill:var(--red-soft)}
+.hz .f-navy-soft{fill:var(--navy-soft)}
+.hz .mk-muted{fill:var(--muted)}
+.hz .mk-ink{fill:var(--ink)}
+.hz .mk-teal{fill:var(--teal)}
+.hz .mk-orange{fill:var(--orange)}
+.hz .mk-red{fill:var(--red)}
+.hz .mk-claude{fill:var(--claude)}
+</style>
+<defs>
+<marker id="st-ar-muted" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-muted"/></marker>
+<marker id="st-ar-teal" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-teal"/></marker>
+<marker id="st-ar-orange" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-orange"/></marker>
+<marker id="st-ar-red" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-red"/></marker>
+<marker id="st-ar-claude" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-claude"/></marker>
+</defs>
+<rect x="40" y="80" width="190" height="150" rx="12" class="claude"/>
+<text x="135" y="140" text-anchor="middle" class="b on" style="font-size:24px">PMI</text>
+<text x="135" y="166" text-anchor="middle" class="on" style="font-size:14px">makes and ships</text>
+<text x="135" y="186" text-anchor="middle" class="on" style="font-size:14px">smoke-free products</text>
+<line x1="230" y1="155" x2="406" y2="155" class="ln" marker-end="url(#st-ar-muted)"/>
+<text x="318" y="140" text-anchor="middle" class="b" style="font-size:17px">sell-in</text>
+<text x="318" y="178" text-anchor="middle" class="muted" style="font-size:13px">PMI ships to distributors</text>
+<text x="318" y="196" text-anchor="middle" class="muted" style="font-size:13px">(not in these labs)</text>
+<rect x="410" y="40" width="360" height="236" rx="12" class="card"/>
+<text x="430" y="70" class="b" style="font-size:18px">a distributor</text>
+<text x="430" y="92" class="muted" style="font-size:14px">12 in rst.distributors; each has one channel type</text>
+<rect x="430" y="110" width="320" height="42" rx="21" class="soft-navy"/>
+<text x="450" y="137" class="mono b" style="font-size:14px">branded_retail</text>
+<text x="730" y="137" text-anchor="end" class="muted" style="font-size:14px">PMI's own stores</text>
+<rect x="430" y="162" width="320" height="42" rx="21" class="soft-navy"/>
+<text x="450" y="189" class="mono b" style="font-size:14px">partner_retail</text>
+<text x="730" y="189" text-anchor="end" class="muted" style="font-size:14px">third-party retail</text>
+<rect x="430" y="214" width="320" height="42" rx="21" class="soft-navy"/>
+<text x="450" y="241" class="mono b" style="font-size:14px">ecommerce</text>
+<text x="730" y="241" text-anchor="end" class="muted" style="font-size:14px">online sales</text>
+<line x1="770" y1="155" x2="946" y2="155" class="ln-teal" marker-end="url(#st-ar-teal)"/>
+<text x="858" y="140" text-anchor="middle" class="b teal-ink" style="font-size:17px">sell-through</text>
+<text x="858" y="178" text-anchor="middle" class="muted" style="font-size:13px">sold to the consumer</text>
+<text x="858" y="196" text-anchor="middle" class="b teal-ink" style="font-size:13px">this is rst.sell_through</text>
+<rect x="950" y="80" width="210" height="150" rx="12" class="soft-teal"/>
+<text x="1055" y="140" text-anchor="middle" class="b" style="font-size:19px">adult consumer</text>
+<text x="1055" y="166" text-anchor="middle" class="muted" style="font-size:14px">buys in a store</text>
+<text x="1055" y="186" text-anchor="middle" class="muted" style="font-size:14px">or online</text>
+<text x="40" y="326" class="mono b orange-ink" style="font-size:13px" letter-spacing="1.5">THE GRAIN: ONE ROW = ONE DISTRIBUTOR × ONE PRODUCT × ONE WEEK</text>
+<rect x="40" y="342" width="156" height="56" rx="8" class="code"/>
+<text x="118" y="366" text-anchor="middle" class="mono b" style="font-size:14px">2024-01-01</text>
+<text x="118" y="387" text-anchor="middle" class="muted" style="font-size:13px">Monday · units_sold</text>
+<rect x="210" y="342" width="156" height="56" rx="8" class="code"/>
+<text x="288" y="366" text-anchor="middle" class="mono b" style="font-size:14px">2024-01-08</text>
+<text x="288" y="387" text-anchor="middle" class="muted" style="font-size:13px">Monday · units_sold</text>
+<rect x="380" y="342" width="156" height="56" rx="8" class="code"/>
+<text x="458" y="366" text-anchor="middle" class="mono b" style="font-size:14px">2024-01-15</text>
+<text x="458" y="387" text-anchor="middle" class="muted" style="font-size:13px">Monday · units_sold</text>
+<rect x="550" y="342" width="156" height="56" rx="8" class="code"/>
+<text x="628" y="366" text-anchor="middle" class="mono b" style="font-size:14px">2024-01-22</text>
+<text x="628" y="387" text-anchor="middle" class="muted" style="font-size:13px">Monday · units_sold</text>
+<rect x="720" y="342" width="156" height="56" rx="8" class="code"/>
+<text x="798" y="366" text-anchor="middle" class="mono b" style="font-size:14px">2024-01-29</text>
+<text x="798" y="387" text-anchor="middle" class="muted" style="font-size:13px">Monday · units_sold</text>
+<text x="900" y="377" class="mono b" style="font-size:20px">… 105 Mondays</text>
+<text x="40" y="436" class="muted" style="font-size:15px">rst.sell_through: 2,730 weekly rows, 2024-01-01 to 2025-12-29. Every sale_date is a Monday: the week the sales are counted in.</text>
+
+</svg>

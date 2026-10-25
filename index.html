@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Start here · Project HORIZON lab guides</title>
+<meta name="description" content="Lab guides for the PMI Data Engineer Future Skills class. Project HORIZON is fictional and training-only.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#0C2040">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230C2040'/%3E%3Crect x='6' y='6' width='9' height='9' rx='2' fill='%23FF4A00'/%3E%3Crect x='17' y='17' width='9' height='9' rx='2' fill='%2300C9A7'/%3E%3C/svg%3E">
+</head>
+<body>
+
+<header class="mast">
+  <div class="mast-in">
+    <nav class="sitenav" aria-label="Lab guides">
+      <a class="brand" href="index.html">Project HORIZON</a>
+      <a href="index.html" aria-current="page">Start here</a>
+      <a href="hour1.html">Hour 1</a>
+      <a href="hour2.html">Hour 2</a>
+      <a href="hour3.html">Hour 3</a>
+      <a href="hour4.html">Hour 4</a>
+      <a href="glossary.html">Glossary</a>
+    </nav>
+    <div class="mast-grid">
+      <div class="mast-copy">
+        <div class="eyebrow">PMI · DI&amp;A Future Skills · Data Engineer track · Project HORIZON</div>
+        <h1>Start <span>here</span><small>Project HORIZON · PMI Data Engineer Future Skills</small></h1>
+        <p class="lede">Read this before the class starts: ten minutes to read, five minutes to check your VM. <strong>Four skills. One project. Four hours.</strong></p>
+        <div class="meta"><span>VS Code + SQLTools</span><span>dbt CLI</span><span>Claude Desktop</span><span>Postgres <b>horizon</b></span></div>
+      </div>
+      <figure class="hero mast-art">
+        <img src="images/hero.svg" alt="The assistant drafts (a chat bubble with draft SQL), the warehouse decides (a database that returns 794), the engineer signs. Four theme chips: H1 No vibe pipelines, H2 Green is not right, H3 Shift left, H4 You are the gate.">
+        <figcaption>One rule all day: the assistant drafts, the warehouse decides (794), the engineer signs.</figcaption>
+      </figure>
+    </div>
+  </div>
+</header>
+
+<div class="frame">
+  <details class="toc" id="toc" open>
+    <summary>On this page</summary>
+    <ol>
+      <li><a href="#rule">The one rule</a></li>
+      <li><a href="#day">What the day is</a></li>
+      <li><a href="#words">Words you will hear</a></li>
+      <li><a href="#horizon">HORIZON in one page</a></li>
+      <li class="sub"><a href="#prove-the-page">Prove the page yourself</a></li>
+      <li><a href="#life">The life of one request</a></li>
+      <li><a href="#kit">Your kit on the VM</a></li>
+      <li class="sub"><a href="#connection">The HORIZON connection</a></li>
+      <li class="sub"><a href="#projects">The two dbt projects</a></li>
+      <li><a href="#preflight">Pre-flight checklist</a></li>
+      <li class="sub"><a href="#pf1">SQLTools connects</a></li>
+      <li class="sub"><a href="#pf2">dbt answers</a></li>
+      <li class="sub"><a href="#pf3">Claude Desktop is ready</a></li>
+      <li class="sub"><a href="#pf4">Copy a code block</a></li>
+      <li><a href="#claude">How we use Claude Desktop</a></li>
+      <li class="sub"><a href="#models">Which model, when</a></li>
+      <li class="sub"><a href="#hygiene">Prompt hygiene</a></li>
+      <li><a href="#game">Room vs Warehouse</a></li>
+      <li><a href="#schedule">Run of show</a></li>
+      <li><a href="#takeaways">Five takeaways</a></li>
+      <li><a href="#glossary">Glossary</a></li>
+    </ol>
+  </details>
+
+  <main id="main">
+    <section class="part" id="rule">
+      <div class="part-h">
+        <span class="eyebrow">Read this before class · ten minutes to read, five to check your VM</span>
+        <h2>The one <span>rule</span></h2>
+        <p class="dek">Four skills. One project. Four hours. Every hour is one Project HORIZON request taken from idea to production.</p>
+      </div>
+      <p class="rule-line">The assistant drafts. <span class="w">The warehouse decides.</span> The engineer signs.</p>
+      <p>Nothing today is about whether AI is good or bad at SQL. It is very good at SQL. Today is about where accountability sits when the drafting gets fast.</p>
+      <p>The AI assistant drafts, you prove the draft against the warehouse, you sign. The four skills are <b>Data Engineering with AI Support</b> (WA3903), <b>Accountability in Automation</b> (WA3904), <b>Cross-Functional Co-Design &amp; Feasibility Alignment</b> (WA3908) and <b>Adaptive Learning Mindset</b> (WA3906). Delivered by Accenture LearnVantage for the PMI DI&amp;A Future Skills program.</p>
+    </section>
+
+    <section class="part" id="day">
+      <div class="part-h">
+        <span class="eyebrow">The course map</span>
+        <h2>What the <span>day</span> is</h2>
+        <p class="dek">Four hours, four themes, one loop per hour, and one number from the warehouse that proves each one.</p>
+      </div>
+      <div class="mods" role="list">
+        <a class="mod" role="listitem" href="hour1.html">
+          <span class="n">1</span>
+          <span class="s">No vibe pipelines</span>
+          <span class="t">WA3903 · 0:12–1:05</span>
+          <span class="loop">Draft → Prove → Lock</span>
+          <p>Data Engineering with AI Support. A runnable draft is not a correct one. You build a tested dbt model, <code>analytics.italy_conversion_events</code>.</p>
+          <span class="r">794 source events; the draft returns 1,988 rows; 7 tests pass</span>
+        </a>
+        <a class="mod" role="listitem" href="hour2.html">
+          <span class="n">2</span>
+          <span class="s">Green ≠ right</span>
+          <span class="t">WA3904 · 1:08–1:55</span>
+          <span class="loop">Detect → Diagnose → Correct → Prevent</span>
+          <p>Accountability in Automation. A green run is not a right number. You build a reconciliation query and a dbt guard on the Japan sell-through pipeline.</p>
+          <span class="r">105 rows missing, 0 alerts; 945 rows become 1,050</span>
+        </a>
+        <a class="mod" role="listitem" href="hour3.html">
+          <span class="n">3</span>
+          <span class="s">Shift left</span>
+          <span class="t">WA3908 · 2:07–2:57</span>
+          <span class="loop">Unpack → Clarify → Prove → Specify</span>
+          <p>Cross-Functional Co-Design &amp; Feasibility. A request is intent, not a specification. You build a curated question list, a feasibility gate (one verdict per requirement) and a requirements table (no files).</p>
+          <span class="r">105 Mondays; under-25 marketing allowed ID 0% · IT 0% · JP 73%</span>
+        </a>
+        <a class="mod" role="listitem" href="hour4.html">
+          <span class="n">4</span>
+          <span class="s">You are the gate</span>
+          <span class="t">WA3906 · 3:00–3:50</span>
+          <span class="loop">Build → Probe → Look inside → Evaluate</span>
+          <p>Adaptive Learning Mindset. New is not ready. You build a Claude Desktop Project called "HORIZON analyst", and a four-line recommendation.</p>
+          <span class="r">about 277 VEEV units a week; a DELETE refused; rung: Experimentation</span>
+        </a>
+      </div>
+      <p>Every hour has the same shape: a request lands in your queue, you predict a number in the chat, the warehouse answers, and you leave with an <b>artefact</b> (a concrete thing you made) that you could take to a real review on Monday.</p>
+    </section>
+
+    <section class="part" id="words">
+      <div class="part-h">
+        <span class="eyebrow">Plain English first</span>
+        <h2>Words you will <span>hear</span></h2>
+        <p class="dek">The terms that run through the whole day. Each lab guide opens with its own shorter box, and every term is in the glossary.</p>
+      </div>
+      <div class="words">
+        <div class="k">Words you will hear <a href="glossary.html">Full glossary →</a></div>
+        <table>
+          <thead><tr><th>Term</th><th>Plain English</th></tr></thead>
+          <tbody>
+            <tr><td><a href="glossary.html#project-horizon">Project HORIZON</a></td><td>The fictional, training-only PMI data estate we work in all day: three markets, five data assets, one Postgres database called <code>horizon</code>.</td></tr>
+            <tr><td><a href="glossary.html#postgres">Warehouse</a></td><td>The Postgres database. "The warehouse decides" means: run the query, read the number, and let the number settle the argument.</td></tr>
+            <tr><td><a href="glossary.html#schema">Schema · table</a></td><td>A schema is a named folder of tables inside the database. <code>clr.consumers</code> means the table <code>consumers</code> inside the schema <code>clr</code>.</td></tr>
+            <tr><td><a href="glossary.html#sqltools">SQLTools</a></td><td>The VS Code extension we use to run SQL against HORIZON. The saved connection is called <b>HORIZON</b>.</td></tr>
+            <tr><td><a href="glossary.html#dbt">dbt</a></td><td>Data build tool. A SQL SELECT saved as a file is a <b>model</b>; <code>dbt run</code> builds it as a view in the <code>analytics</code> schema; <code>dbt test</code> checks it. A <b>source</b> is a raw table you declare once and read as <code>{{ source('schema','table') }}</code>. Tests live in two places: <code>schema.yml</code> holds one-word <b>generic tests</b> (<code>not_null</code>, <code>unique</code>, <code>relationships</code>, <code>accepted_values</code>) and the <code>tests/</code> folder holds <b>singular tests</b>, SQL files that return rows only when something is wrong.</td></tr>
+            <tr><td><a href="glossary.html#yaml">YAML</a></td><td>The indented plain-text format dbt uses for <code>schema.yml</code>. Claude gives it to you in a code block; indentation matters, so paste it unchanged.</td></tr>
+            <tr><td><a href="glossary.html#view">View</a></td><td>A saved query that behaves like a table. It recomputes every time you read it, so it is always as fresh as its source tables.</td></tr>
+            <tr><td><a href="glossary.html#model">Model (dbt) vs model (AI)</a></td><td>Two meanings today. A dbt model is a SQL file that builds a view. An AI model is the thing behind Claude (Opus, Sonnet, Haiku). The guides say which one they mean.</td></tr>
+            <tr><td><a href="glossary.html#grain">Grain</a></td><td>What one row represents: one row per conversion event; one row per distributor, product and week. The first question to ask of any table or draft.</td></tr>
+            <tr><td><a href="glossary.html#ledger">Ledger</a></td><td>A table that keeps history: many rows per key over time, rather than one current row. <code>mpl.consent_records</code> is a ledger (2.51 rows per consumer).</td></tr>
+            <tr><td><a href="glossary.html#null">NULL</a></td><td>A missing value. It is neither true nor false, so a WHERE clause silently drops the rows where the test comes out unknown. Hour 2 opens with it.</td></tr>
+            <tr><td><a href="glossary.html#reconciliation">Reconciliation</a></td><td>Comparing a pipeline's output to its source, per key (for example per distributor), to find rows that went missing without an error. Hour 2.</td></tr>
+            <tr><td><a href="glossary.html#silent-suppression">Silent suppression · silent failure</a></td><td>A pipeline that drops or distorts rows while the job still reports success. No error, wrong number. Hour 2's missing 105 rows are a silent suppression.</td></tr>
+            <tr><td><a href="glossary.html#sell-through">Sell-through · sell-in</a></td><td>Sell-through is retail sales from the distributor or retailer to the end consumer. Sell-in is PMI's shipments <em>to</em> the distributor. HORIZON's <code>rst.sell_through</code> is weekly sell-through per distributor and product.</td></tr>
+            <tr><td><a href="glossary.html#distributor">Distributor · channel type</a></td><td>The trading partner that sells to consumers. Three channel types: <code>branded_retail</code> (PMI's own stores), <code>partner_retail</code> (third-party retail), <code>ecommerce</code>.</td></tr>
+            <tr><td><a href="glossary.html#conversion">Conversion · lifecycle stages</a></td><td>In PMI usage, conversion is an adult smoker switching to a smoke-free product. In HORIZON it is the <code>'conversion'</code> value of <code>lifecycle_stage</code>. The journey: registration → trial → conversion → retention → churn.</td></tr>
+            <tr><td><a href="glossary.html#consent">Consent · marketing permission</a></td><td>Whether a consumer allowed marketing, and from what date: <code>mpl.consent_records</code> with <code>marketing_allowed</code> and <code>consent_date</code>.</td></tr>
+            <tr><td><a href="glossary.html#age-band">Age band · under-25 rule</a></td><td><code>clr.consumers.age_band</code>; <code>'18-24'</code> is the under-25 band. Marketing to under-25s is forbidden in Italy and Indonesia (0% marketing-allowed by design) and allowed in Japan.</td></tr>
+            <tr><td><a href="glossary.html#regulator">Regulators</a></td><td>MHLW (Japan's Ministry of Health, Labour and Welfare), AAMS/EU (Italy's state monopolies authority plus EU-level tobacco rules), BPOM (Indonesia's National Agency of Drug and Food Control).</td></tr>
+            <tr><td><a href="glossary.html#kpi">KPI</a></td><td>Key Performance Indicator: a business number, such as weekly units sold. A KPI-level check tests the number ("under-25 marketing in Italy is always zero"), not the job status.</td></tr>
+            <tr><td><a href="glossary.html#feasibility-verdict">Feasibility verdict</a></td><td>One of three answers to a requirement: <span class="v v-as">buildable as asked</span> · <span class="v v-change">buildable with a change</span> · <span class="v v-not">not as asked</span>, each with a number from the warehouse beside it. Hour 3's feasibility gate is one verdict per requirement.</td></tr>
+            <tr><td><a href="glossary.html#claude-desktop">Claude Desktop</a></td><td>The Claude chat app on your VM, already signed in. It drafts; it cannot create files on your VM, run dbt or query the warehouse. You do those.</td></tr>
+            <tr><td><a href="glossary.html#project">Claude Desktop Project</a></td><td>A saved set of instructions that every chat inside the Project starts with. Hour 4's "HORIZON analyst" is one. If your plan has no Projects, the same instructions go in as the first message of a fresh chat.</td></tr>
+            <tr><td><a href="glossary.html#model-tiers">Model tiers: Opus · Sonnet · Haiku</a></td><td>Three price tiers of Claude. Opus is the premium model (judgment), Sonnet the thrifty one (typing), Haiku the bulk one. Same fluency, different judgment and price.</td></tr>
+            <tr><td><a href="glossary.html#token">Token · context window</a></td><td>A token is the unit a model reads and writes, roughly three-quarters of an English word. The context window is the finite amount of text the model can see at once: everything it knows about HORIZON is what is in that window right now.</td></tr>
+            <tr><td><a href="glossary.html#prompt-hygiene">Prompt hygiene · data egress</a></td><td>Everything you paste into an assistant leaves your data boundary. Schema, grain and scope: yes. Real rows, credentials, connection strings: never.</td></tr>
+            <tr><td><a href="glossary.html#agent">Agent</a></td><td>A model, plus tools, plus a loop (think, call a tool, read the result, repeat), plus whatever permissions you gave it. Hour 4.</td></tr>
+            <tr><td><a href="glossary.html#mcp">MCP</a></td><td>Model Context Protocol: an open standard that lets an AI app call tools, such as a database query. The server enforces the permissions. You will see it in the instructor's Hour 4 demo.</td></tr>
+            <tr><td><a href="glossary.html#readiness-ladder">Readiness ladder</a></td><td>Exploration → Experimentation → Pilot → Adoption, with a human gate before each rung. A good demo is not pilot evidence. Hour 4.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="part" id="horizon">
+      <div class="part-h">
+        <span class="eyebrow">The estate</span>
+        <h2>Project HORIZON in <span>one page</span></h2>
+        <p class="dek">Three markets, five data assets, one Postgres database called <code>horizon</code>.</p>
+      </div>
+      <p><b>What it is.</b> A fictional, training-only PMI initiative that unifies analytics, engineering and architecture around the smoke-free transformation: PMI's shift from cigarettes to products without combustion, heated tobacco (IQOS) and e-vapor (VEEV). HORIZON is invented; the transformation it stands for is not. Everything lives in one Postgres database called <code>horizon</code>, is transformed with dbt, queried in SQLTools and drafted with Claude.</p>
+      <figure class="hero wide">
+        <img src="images/estate-map.svg" alt="Five source schemas, CLR, MPL, RST, DET and RFR with their row counts, feed the Postgres database horizon; dbt builds and tests analytics views, read by dashboards, regulators and the HORIZON analyst. Markets JP, IT, ID.">
+        <figcaption>Project HORIZON: five source schemas (CLR, MPL, RST, DET, RFR) with row counts feed the Postgres warehouse <code>horizon</code>. dbt builds the tested analytics views, which are read by dashboards, regulators (MHLW, AAMS/EU, BPOM) and the HORIZON analyst. Markets JP, IT, ID.</figcaption>
+      </figure>
+
+      <h3 id="markets">Three markets, three regulators</h3>
+      <div class="tbl stack cards">
+        <table>
+          <thead><tr><th>Code</th><th>Market</th><th>Stage of the smoke-free transition</th><th>Region</th><th>Regulator (approves product filings)</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Code"><b>JP</b></td><td data-label="Market">Japan</td><td data-label="Stage of the smoke-free transition">mature</td><td data-label="Region">APAC</td><td data-label="Regulator (approves product filings)"><b>MHLW</b>, Ministry of Health, Labour and Welfare</td></tr>
+            <tr><td data-label="Code"><b>IT</b></td><td data-label="Market">Italy</td><td data-label="Stage of the smoke-free transition">mid-adoption</td><td data-label="Region">EU</td><td data-label="Regulator (approves product filings)"><b>AAMS/EU</b>, Italy's state monopolies authority, plus EU-level tobacco rules</td></tr>
+            <tr><td data-label="Code"><b>ID</b></td><td data-label="Market">Indonesia</td><td data-label="Stage of the smoke-free transition">early-stage</td><td data-label="Region">APAC</td><td data-label="Regulator (approves product filings)"><b>BPOM</b>, National Agency of Drug and Food Control</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="box tidbit">
+        <span class="k">One rule of law, three of four hours</span>
+        <p><b>Marketing to under-25s is forbidden in Italy and Indonesia and allowed in Japan.</b> In the data that shows up as 0% marketing-allowed for the <code>'18-24'</code> age band in IT and ID, by design.</p>
+      </div>
+
+      <h3 id="assets">Five data assets</h3>
+      <p>Each asset is a schema. The numbers are what the warehouse holds today; you will prove several of them yourself.</p>
+      <div class="tbl stack cards">
+        <table>
+          <thead><tr><th>Asset</th><th>Schema · tables</th><th>What one row is (the grain)</th><th>The numbers</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Asset"><b>CLR</b> Consumer Lifecycle Records</td><td data-label="Schema · tables"><code>clr.consumers</code> · <code>clr.lifecycle_events</code></td><td data-label="What one row is (the grain)">a consumer with an age band; one event in a consumer's journey (registration → trial → conversion → retention → churn)</td><td data-label="The numbers">6,000 consumers · 15,597 events, 794 of them Italy conversions</td></tr>
+            <tr><td data-label="Asset"><b>MPL</b> Marketing Permission Ledger</td><td data-label="Schema · tables"><code>mpl.consent_records</code></td><td data-label="What one row is (the grain)">one consent decision on one date (<code>marketing_allowed</code>, <code>consent_date</code>). A ledger: many rows per consumer over time</td><td data-label="The numbers">15,052 rows for 6,000 consumers = 2.51 per consumer</td></tr>
+            <tr><td data-label="Asset"><b>RST</b> Retail Sell-Through Feed</td><td data-label="Schema · tables"><code>rst.sell_through</code> · <code>rst.distributors</code></td><td data-label="What one row is (the grain)">weekly units sold by one distributor, one product, one week; <code>sale_date</code> is always a Monday</td><td data-label="The numbers">2,730 rows · 12 distributors · 105 Mondays, 2024-01-01 → 2025-12-29</td></tr>
+            <tr><td data-label="Asset"><b>DET</b> Device Experience Telemetry</td><td data-label="Schema · tables"><code>det.device_telemetry</code></td><td data-label="What one row is (the grain)">one usage record from an IQOS or VEEV device</td><td data-label="The numbers">35,113 rows · 7,084 (20%) with no <code>consumer_id</code>, anonymised on purpose · 2 products</td></tr>
+            <tr><td data-label="Asset"><b>RFR</b> Regulatory Filing Repository</td><td data-label="Schema · tables"><code>rfr.filings</code></td><td data-label="What one row is (the grain)">one submission to a regulator and its status</td><td data-label="The numbers">112 filings · accepted 69% JP · 65% IT · 14% ID</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Two more schemas: <b><code>ref</code></b> holds the small reference tables (<code>ref.markets</code>, <code>ref.products</code>, <code>ref.age_bands</code>, <code>ref.campaigns</code>), and <b><code>analytics</code></b> is where dbt builds. Every model you build today lands there as a view, for example <code>analytics.italy_conversion_events</code>.</p>
+
+      <h3 id="prove-the-page">Prove the page yourself <span class="expect">expect 6000 / 15597 / 15052 / 12 / 2730 / 35113 / 112</span></h3>
+      <p>Once SQLTools is connected (see <a href="#preflight">the pre-flight checklist</a>), run this. It is the first of many times today that the warehouse, not the slide, has the last word.</p>
+      <div class="prompt sql">
+        <pre><code class="language-sql"><span class="c">-- Row counts (expect 6000 / 15597 / 15052 / 12 / 2730 / 35113 / 112)</span>
+SELECT 'clr.consumers' t, count(*) FROM clr.consumers
+UNION ALL SELECT 'clr.lifecycle_events', count(*) FROM clr.lifecycle_events
+UNION ALL SELECT 'mpl.consent_records', count(*) FROM mpl.consent_records
+UNION ALL SELECT 'rst.distributors', count(*) FROM rst.distributors
+UNION ALL SELECT 'rst.sell_through', count(*) FROM rst.sell_through
+UNION ALL SELECT 'det.device_telemetry', count(*) FROM det.device_telemetry
+UNION ALL SELECT 'rfr.filings', count(*) FROM rfr.filings;</code></pre>
+        <p class="good"><b>What a good answer looks like</b>Seven rows, one per table, matching the estate exactly. <span class="expect ok">6000 · 15597 · 15052 · 12 · 2730 · 35113 · 112</span></p>
+      </div>
+    </section>
+
+    <section class="part" id="life">
+      <div class="part-h">
+        <span class="eyebrow">Build · Operate · Design · Evolve</span>
+        <h2>The life of <span>one request</span></h2>
+        <p class="dek">Hours 1 and 2 show what goes wrong after the build: a draft that runs but is wrong, a pipeline that is green but lies. Hour 3 asks how both could have been caught before a line of code existed. Hour 4 asks what to do when the next shiny capability arrives.</p>
+      </div>
+      <div class="tbl stack">
+        <table>
+          <thead><tr><th></th><th>Stage</th><th>What happens</th><th>Where the problem hides</th></tr></thead>
+          <tbody>
+            <tr><td data-label=""><a href="hour1.html">Hour&nbsp;1</a></td><td data-label="Stage"><b>BUILD</b></td><td data-label="What happens">Claude drafts a dbt model that joins Italy conversion events to the consent ledger. It runs clean. You prove it, plan the fix, implement it, lock it with tests.</td><td data-label="Where the problem hides">a join to a ledger that <b>fans out</b> (multiplies rows); a consent that is not <b>point-in-time</b> (the record in effect on the event's date, not the latest one); a NULL nobody handled</td></tr>
+            <tr><td data-label=""><a href="hour2.html">Hour&nbsp;2</a></td><td data-label="Stage"><b>OPERATE</b></td><td data-label="What happens">A nightly pipeline has been green for weeks. You <b>reconcile</b> it to its source (compare the pipeline's output to its input, per distributor) and find 105 rows missing for one distributor. You fix the rule and leave a guard that fails loudly.</td><td data-label="Where the problem hides">one extra line in a join condition, with an innocent comment</td></tr>
+            <tr><td data-label=""><a href="hour3.html">Hour&nbsp;3</a></td><td data-label="Stage"><b>DESIGN</b></td><td data-label="What happens">Marketing asks for "real-time conversion dashboards in Power BI across all markets". You unpack four ordinary words, curate the questions, prove two things against the warehouse, and write the requirements they never said.</td><td data-label="Where the problem hides">four assumptions nobody surfaced</td></tr>
+            <tr><td data-label=""><a href="hour4.html">Hour&nbsp;4</a></td><td data-label="Stage"><b>EVOLVE</b></td><td data-label="What happens">Leadership saw a demo of an AI agent. You build one in ten minutes, probe what it can and cannot do, look inside the model, and decide which rung of the readiness ladder it has earned.</td><td data-label="Where the problem hides">a good demo mistaken for pilot evidence</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Two threads run through all four hours.</p>
+      <div class="entry first">
+        <div class="entry-h"><h3>Demonstrate, don't assert</h3><span class="chip">every hour</span></div>
+        <p>Every hour ends with a number from the warehouse that settles the argument: 1,988 vs 794 rows, 105 dropped rows, 105 Mondays, 0% under-25.</p>
+      </div>
+      <div class="entry">
+        <div class="entry-h"><h3>Context is everything</h3><span class="chip">every hour</span></div>
+        <p>What the model is given decides what it produces: the schema, not the data (Hour 1); the source, not the job status (Hour 2); the requirement, not the request (Hour 3); the question, not the whole table (Hour 4).</p>
+      </div>
+    </section>
+
+    <section class="part" id="kit">
+      <div class="part-h">
+        <span class="eyebrow">The Windows VM</span>
+        <h2>Your <span>kit</span> on the VM</h2>
+        <p class="dek">Four tools. There is no Claude Code and no AI in the terminal; every AI step today runs in the Claude Desktop app.</p>
+      </div>
+      <div class="tbl stack cards">
+        <table>
+          <thead><tr><th>Tool</th><th>What it is</th><th>What you use it for</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Tool"><b>VS Code</b></td><td data-label="What it is">the editor</td><td data-label="What you use it for">opening the dbt project folders, creating and editing <code>.sql</code> and <code>.yml</code> files, the terminal</td></tr>
+            <tr><td data-label="Tool"><b>SQLTools</b></td><td data-label="What it is">a VS Code extension that runs SQL against a database</td><td data-label="What you use it for">every proof query of the day, against the saved connection <b>HORIZON</b></td></tr>
+            <tr><td data-label="Tool"><b>dbt</b> (in the VS Code terminal)</td><td data-label="What it is">the data build tool</td><td data-label="What you use it for"><code>dbt debug</code> checks the connection, <code>dbt run</code> builds the models, <code>dbt test</code> checks them (Hours 1 and 2)</td></tr>
+            <tr><td data-label="Tool"><b>Claude Desktop</b></td><td data-label="What it is">the Claude chat app, already signed in</td><td data-label="What you use it for">drafting SQL, YAML, plans and questions; the Hour 4 "HORIZON analyst" Project</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="connection">The HORIZON connection</h3>
+      <p>Saved in SQLTools already. These are the details if you ever need to re-create it (SQLTools sidebar → <em>Add New Connection</em> → PostgreSQL).</p>
+      <div class="tbl cards">
+        <table>
+          <thead><tr><th>Setting</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td>Connection name</td><td>HORIZON</td></tr>
+            <tr><td>Driver</td><td>PostgreSQL</td></tr>
+            <tr><td>Server / host</td><td><code>localhost</code></td></tr>
+            <tr><td>Port</td><td><code>5432</code></td></tr>
+            <tr><td>Database</td><td><code>horizon</code></td></tr>
+            <tr><td>User</td><td><code>postgres</code></td></tr>
+            <tr><td>Password</td><td><code>Horizon!Lab2026</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="box trap">
+        <span class="k">Never in a prompt</span>
+        <p>These are training-only credentials. They still never go into a Claude prompt (see <a href="#hygiene">prompt hygiene</a> below).</p>
+      </div>
+
+      <h3 id="projects">The two dbt projects, and the files you will create</h3>
+      <p>Open each project folder in VS Code with <strong>File → Open Folder</strong>, then create or edit the files listed next to it.</p>
+      <div class="tbl stack wrap projects">
+        <table>
+          <thead><tr><th>Hour</th><th>Project folder</th><th>Files you create or edit</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Hour">1</td><td data-label="Project folder"><code><span class="seg">C:\</span><wbr><span class="seg">LabFiles\</span><wbr><span class="seg">building-a-tested-rst-model-for-indonesia\</span><wbr><span class="seg">horizon_dbt</span></code></td><td data-label="Files you create or edit">create <code>models/analytics/italy_conversion_events.sql</code> (copy <code>models/analytics/MODEL_TEMPLATE.sql.example</code>, or New File; first line <code>{{ config(materialized='view', schema='analytics') }}</code>) · <code>models/analytics/schema.yml</code> · <code>tests/no_underage_marketing_italy.sql</code></td></tr>
+            <tr><td data-label="Hour">2</td><td data-label="Project folder"><code><span class="seg">C:\</span><wbr><span class="seg">LabFiles\</span><wbr><span class="seg">hardening-a-japan-sell-through-pipeline\</span><wbr><span class="seg">horizon_dbt</span></code></td><td data-label="Files you create or edit">edit <code>models/japan_sell_through.sql</code> · create <code>tests/assert_japan_no_dropped_distributors.sql</code> (optional: <code>tests/assert_japan_weekly_units_within_range.sql</code>)</td></tr>
+            <tr><td data-label="Hour">3</td><td data-label="Project folder">none</td><td data-label="Files you create or edit">no files: SQLTools and Claude Desktop only</td></tr>
+            <tr><td data-label="Hour">4</td><td data-label="Project folder">none</td><td data-label="Files you create or edit">no files on the VM: a Claude Desktop <b>Project</b> named "HORIZON analyst" (left sidebar → Projects → New project → <em>Set project instructions</em>; if your left sidebar has no Projects entry, Hour 4 shows you how to paste the same instructions as the first message of a fresh chat instead)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="part" id="preflight">
+      <div class="part-h">
+        <span class="eyebrow">5 minutes, before 0:00</span>
+        <h2>Pre-flight <span>checklist</span></h2>
+        <p class="dek">Tick each box. The number next to each step is what "it works" looks like.</p>
+      </div>
+
+      <div class="step" id="pf1">
+        <span class="step-n">1</span>
+        <div class="step-t"><span class="step-k">Connect</span><h3>SQLTools connects</h3></div>
+        <span class="expect">expect 15597</span>
+      </div>
+      <p>In VS Code, click the SQLTools icon in the left Activity Bar (a database cylinder). Right-click <b>HORIZON</b> → <b>Connect</b>. Open a new SQL file (SQLTools: <em>New SQL File</em>), paste the query below, select it and press <kbd>Ctrl+E</kbd> <kbd>Ctrl+E</kbd> (or click the <em>Run on active connection</em> link that SQLTools shows above the query).</p>
+      <div class="prompt sql">
+        <pre><code class="language-sql">select count(*) from clr.lifecycle_events;   <span class="c">-- expect 15597</span></code></pre>
+        <p class="good"><b>What a good answer looks like</b>One row, one number. <span class="expect ok">15597</span></p>
+      </div>
+
+      <div class="step" id="pf2">
+        <span class="step-n">2</span>
+        <div class="step-t"><span class="step-k">Check</span><h3>dbt answers</h3></div>
+        <span class="expect ok">All checks passed!</span>
+      </div>
+      <p><em>File → Open Folder</em> → <code>C:\LabFiles\building-a-tested-rst-model-for-indonesia\horizon_dbt</code>. Then <em>Terminal → New Terminal</em> and run:</p>
+      <div class="prompt term">
+        <pre><code>dbt debug</code></pre>
+        <p class="good"><b>What a good answer looks like</b>The last line reads <strong>All checks passed!</strong> If dbt says it cannot find a profile or a project, check that the terminal prompt shows the <code>horizon_dbt</code> folder.</p>
+      </div>
+
+      <div class="step" id="pf3">
+        <span class="step-n">3</span>
+        <div class="step-t"><span class="step-k">Open</span><h3>Claude Desktop is ready</h3></div>
+        <span class="expect note">picker shows Sonnet</span>
+      </div>
+      <p>Open Claude Desktop and confirm you are signed in. Click <b>New chat</b> at the top of the left sidebar. Find the <b>model picker next to the send button</b> at the bottom of the chat box and make sure it shows <b>Sonnet</b>. If it shows something else, click it and pick Sonnet.</p>
+
+      <div class="step" id="pf4">
+        <span class="step-n">4</span>
+        <div class="step-t"><span class="step-k">Rehearse</span><h3>You can copy a code block</h3></div>
+        <span class="expect">expect 15597</span>
+      </div>
+      <p>Paste this warm-up into the chat.</p>
+      <div class="prompt">
+        <p class="asks"><b>What this asks Claude to do</b>write one SQL query that counts the rows in one table, so you can rehearse the copy-paste loop before it matters.</p>
+        <pre><code>Context: I am a data engineer at PMI on Project HORIZON, a Postgres warehouse.
+Task: write one SQL query that counts the rows in the table below.
+Tables: clr.lifecycle_events (event_id, consumer_id, market_code, product_code, event_date, lifecycle_stage, campaign_id, source_channel)
+Rules: one statement, no SELECT *, no comments.
+Output: the SQL in one code block.
+Respond in Markdown only. Do not create any file.</code></pre>
+        <p class="good"><b>What a good answer looks like</b>one code block containing <code>select count(*) from clr.lifecycle_events;</code> (capitalisation and a column alias may differ; that is normal). Hover over the code block and click <strong>Copy</strong> in its top-right corner (if you do not see it, select the text inside the block and press <kbd>Ctrl+C</kbd>). Paste it into your SQLTools file, run it: <span class="expect ok">15597</span> (SQLTools shows numbers without the comma). You have just done the whole loop of the day once.</p>
+      </div>
+
+      <div class="step" id="pf5">
+        <span class="step-n">5</span>
+        <div class="step-t"><span class="step-k">Find</span><h3>You know where the guides are</h3></div>
+        <span class="expect note">4 guides</span>
+      </div>
+      <p>Four lab guides, one per hour, with every prompt, query and expected number: <a href="hour1.html">Hour 1 · No vibe pipelines</a>, <a href="hour2.html">Hour 2 · Green is not right</a>, <a href="hour3.html">Hour 3 · Shift left</a>, <a href="hour4.html">Hour 4 · You are the gate</a>.</p>
+      <div class="box note">
+        <span class="k">If a step fails</span>
+        <p>Say so in the chat before we start. Steps 1 and 2 matter most: Hour 1 begins with them.</p>
+      </div>
+    </section>
+
+    <section class="part" id="claude">
+      <div class="part-h">
+        <span class="eyebrow">The loop, every time</span>
+        <h2>How we use <span>Claude Desktop</span></h2>
+        <p class="dek">Claude Desktop is a chat window. It cannot create files on your VM, run dbt or query the warehouse. That is by design today.</p>
+      </div>
+      <ol class="steps">
+        <li>Paste the prompt from the guide into Claude Desktop.</li>
+        <li>Claude replies with SQL or YAML in a code block.</li>
+        <li>You copy the code block.</li>
+        <li>You paste it into a file in VS Code (or into SQLTools).</li>
+        <li>You run <code>dbt run</code>, <code>dbt test</code> or the query, and read the number.</li>
+      </ol>
+      <ul>
+        <li>If Claude shows the code in a panel on the right instead of in the chat, use the <strong>Copy</strong> button at the top of that panel, or reply "Put it in a code block in the chat."</li>
+        <li>Opus not in the picker list? Look under <strong>More models</strong>; if it is still missing, stay on Sonnet.</li>
+      </ul>
+      <figure class="hero wide">
+        <img src="images/paste-is-signing.svg" alt="The Claude Desktop loop in six steps: paste the prompt, Claude replies with SQL in a code block, copy it, paste it into models/analytics/italy_conversion_events.sql in VS Code, dbt run builds the view, SQLTools counts 794.">
+        <figcaption>The Claude Desktop loop: prompt, Claude's reply, copy, paste into <code>models/analytics/italy_conversion_events.sql</code> in VS Code, <code>dbt run</code>, SQLTools count 794. The paste is you, signing.</figcaption>
+      </figure>
+      <p class="rule-line">The paste is you, signing. <span class="w">Nothing lands in the repo unless you put it there.</span></p>
+      <p>Read what you paste before you run it.</p>
+
+      <h3 id="fresh-chat">Fresh chat per lab</h3>
+      <p>Start every hour with <b>New chat</b>. A fresh chat starts with an empty context window. An old conversation full of Hour 1 SQL makes Hour 2's answers worse, not better: the model attends to everything in the window, and attention is a budget.</p>
+
+      <h3 id="models">Which model, when</h3>
+      <p>Models come in tiers, and the tiers differ in price far more than in fluency; what the money buys is judgment. Default to <b>Sonnet</b>, the thrifty model, for drafting and implementing. For exactly one step in Hour 1 (planning the fix from facts you have proved) switch the picker to <b>Opus</b>, the premium model, read the plan, then switch back to Sonnet to implement it. You can change the model at any point in a conversation; the change applies from the next response. If your picker does not offer Opus, stay on Sonnet: the plan-then-implement split still works and still teaches the point.</p>
+      <div class="tbl stack cards">
+        <table>
+          <thead><tr><th>Model</th><th>Price per million tokens, in / out</th><th>Use it for</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Model"><b>Opus 5.5</b> (premium)</td><td data-label="Price per million tokens, in / out">$4 / $20</td><td data-label="Use it for">judgment: reviewing, planning, deciding what to test</td></tr>
+            <tr><td data-label="Model"><b>Sonnet 5.5</b> (thrifty)</td><td data-label="Price per million tokens, in / out">$2 / $10</td><td data-label="Use it for">typing: drafting from a spec, implementing an approved plan, writing tests from a list</td></tr>
+            <tr><td data-label="Model"><b>Haiku 5.5</b></td><td data-label="Price per million tokens, in / out">$0.10 / $0.50</td><td data-label="Use it for">bulk, mechanical work with no ambiguity</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Output costs five times input on every tier, and a plan is twenty lines where an implementation is two hundred. That asymmetry is why we plan on the premium model and type on the thrifty one: <b>premium planning, thrifty execution.</b> On a subscription the same ratio shows up as how fast you use up your session limit. <em>(Anthropic pricing, October 2026.)</em></p>
+      <figure class="hero wide">
+        <img src="images/premium-thrifty.svg" alt="Draft on Sonnet, prove with a count (1,988 vs 794), plan the fix on Opus, implement and test on Sonnet, ending in 794 = 794 with 7 tests passing. Prices per million tokens: Opus 4 and 20 dollars, Sonnet 2 and 10, Haiku 0.10 and 0.50.">
+        <figcaption>Draft on Sonnet, prove with a count, plan the fix on Opus (a 20-line plan you review), implement and test on Sonnet: 794 = 794, 7 tests pass. Prices per million tokens: Opus $4/$20, Sonnet $2/$10, Haiku $0.10/$0.50. Output costs 5x input.</figcaption>
+      </figure>
+
+      <h3 id="hygiene">Prompt hygiene = data egress</h3>
+      <p>Everything you paste into Claude leaves your data boundary. Schema, column names, grain and scope: yes. Real consumer rows, credentials, connection strings: never. No prompt in these guides contains a single real record, and none of yours should either.</p>
+
+      <h3 id="labelled">Every prompt is labelled</h3>
+      <p>Each prompt in the guides has the same three parts, so you always know what you are asking for and what to expect back:</p>
+      <ul>
+        <li>above it, <b>What this asks Claude to do:</b> one plain-English sentence;</li>
+        <li>the prompt itself, short, with labelled lines: <code>Context:</code> · <code>Task:</code> · <code>Tables:</code> (schema and column names only) · <code>Rules:</code> · <code>Output:</code>, ending with "Respond in Markdown only. Do not create any file.";</li>
+        <li>below it, <b>What a good answer looks like:</b> so you can tell a good draft from a merely plausible one.</li>
+      </ul>
+      <div class="box tidbit">
+        <span class="k">Your SQL will not match your neighbour's</span>
+        <p>The model samples its next token from a distribution of likely continuations, so one prompt gives two engineers two drafts, both fluent. That is normal. Review is about the pattern (join type, grain, NULL handling), never about matching the instructor's text. Prove with a count, not by eye.</p>
+      </div>
+    </section>
+
+    <section class="part" id="game">
+      <div class="part-h">
+        <span class="eyebrow">The chat is our second screen</span>
+        <h2>Room vs <span>Warehouse</span></h2>
+        <p class="dek">The game, and the chat house rules.</p>
+      </div>
+      <p><b>House rule for the day: the chat is our second screen.</b> One-word answers count. "+1" to someone else's answer counts. Going off mute counts double. Nobody is graded on being right; the whole class is built on the moments where a confident answer turns out to be wrong.</p>
+      <p>Every 💬 in a lab guide is a moment to type something. Several times today you will be asked to <b>predict a number before we run the query</b>. The room votes in the chat; the warehouse answers. We keep score: if the room's majority is right, the room scores. If the warehouse surprises the room, the warehouse scores. We read the final score at 3:50.</p>
+      <p>The first three moments come before Hour 1 even starts.</p>
+      <div class="box chat" id="confession">
+        <span class="k">Confession poll</span>
+        <p><strong>Y or N:</strong> have you ever merged, shipped or forwarded code you did not fully read?</p>
+      </div>
+      <div class="box chat" id="trust">
+        <span class="k">Trust meter</span>
+        <p><strong>1 to 10:</strong> a nightly pipeline has been green for weeks. How much do you trust the number on the dashboard? <span class="opts">We take the room's average now, and again at the end of Hour 2.</span></p>
+      </div>
+      <div class="box chat" id="icebreaker">
+        <span class="k">Icebreaker 1 · which face is real?</span>
+        <p>Two faces on screen. One is a photograph of a person; one was generated by a model. Type <strong>L</strong> or <strong>R</strong>. Then, one word: how did you decide? <span class="opts">ears · teeth · background · hair · glasses · earrings · "just a feeling"</span></p>
+      </div>
+      <div class="box analogy">
+        <span class="k">Plausible is not right</span>
+        <p>The generated face is not sloppy. It is plausible. AI-drafted SQL is exactly the same: plausible is not the same as right, and "looks fine" is not a check.</p>
+      </div>
+    </section>
+
+    <section class="part" id="schedule">
+      <div class="part-h">
+        <span class="eyebrow">0:00 to 4:00</span>
+        <h2>Run of <span>show</span></h2>
+        <p class="dek">Four hours, with a stretch after every hour and a break in the middle.</p>
+      </div>
+      <div class="agenda">
+        <div class="agenda-row"><span class="agenda-time">0:00–0:12</span><span class="agenda-label">Welcome, HORIZON in one page, Icebreaker 1: which face is real?</span></div>
+        <div class="agenda-row"><span class="agenda-time">0:12–1:05</span><span class="agenda-label"><a href="hour1.html">Hour 1 · No vibe pipelines</a><span class="tag">Draft → Prove → Lock</span><span class="sub">First, how the assistant works: the room plays the language model. Then Draft → Prove → Lock on the Italy conversion and consent model.</span></span></div>
+        <div class="agenda-row break"><span class="agenda-time">1:05–1:08</span><span class="agenda-label">Stretch</span></div>
+        <div class="agenda-row"><span class="agenda-time">1:08–1:55</span><span class="agenda-label"><a href="hour2.html">Hour 2 · Green ≠ right</a><span class="tag">Detect → Diagnose → Correct → Prevent</span><span class="sub">Detect → Diagnose → Correct → Prevent on the Japan sell-through pipeline; watch the guard fail before you trust it.</span></span></div>
+        <div class="agenda-row break"><span class="agenda-time">1:55–2:07</span><span class="agenda-label">Break. Add one real request from your own work to the parking lot before you go. The board link is posted in the chat at 1:55; if you cannot open it, post your request in the chat starting with <code>PARKING:</code></span></div>
+        <div class="agenda-row"><span class="agenda-time">2:07–2:57</span><span class="agenda-label"><a href="hour3.html">Hour 3 · Shift left</a><span class="tag">Unpack → Clarify → Prove → Specify</span><span class="sub">Icebreaker 2: how many seconds is "real-time"? Then the Marketing dashboard request, four buried assumptions, two warehouse proofs.</span></span></div>
+        <div class="agenda-row break"><span class="agenda-time">2:57–3:00</span><span class="agenda-label">Stretch</span></div>
+        <div class="agenda-row"><span class="agenda-time">3:00–3:50</span><span class="agenda-label"><a href="hour4.html">Hour 4 · You are the gate</a><span class="tag">Build → Probe → Look inside → Evaluate</span><span class="sub">Build a read-only HORIZON analyst in Claude Desktop, probe it, look inside the model, decide its rung.</span></span></div>
+        <div class="agenda-row"><span class="agenda-time">3:50–4:00</span><span class="agenda-label">Close<span class="sub">The scoreboard, the five takeaways with the numbers that proved them, one Monday commitment each.</span></span></div>
+      </div>
+      <div class="box try">
+        <span class="k">If you fall behind</span>
+        <p>Watch, then catch up in the lab blocks. Every step is in the guide with its expected number next to it. The "Prove" step of every hour is pure SQLTools, so you can always rejoin there.</p>
+      </div>
+    </section>
+
+    <section class="part" id="takeaways">
+      <div class="part-h">
+        <span class="eyebrow">A preview</span>
+        <h2>Five <span>takeaways</span></h2>
+        <p class="dek">These come back at 3:50 with the numbers that proved each one.</p>
+      </div>
+      <div class="tbl stack">
+        <table>
+          <thead><tr><th></th><th>Takeaway</th><th>Hour</th></tr></thead>
+          <tbody>
+            <tr><td class="n" data-label="">1</td><td data-label="Takeaway"><b>A runnable draft is not a correct one.</b> Give the assistant the schema, never the data. Read every join, every NULL, every grain. Prove the row count before it lands, then turn each contract into a test.</td><td data-label="Hour">1</td></tr>
+            <tr><td class="n" data-label="">2</td><td data-label="Takeaway"><b>A green run is not a right number.</b> Silent failures throw no errors. Reconcile to the source, prove the cause, fix the rule, leave a guard that fails loudly next time.</td><td data-label="Hour">2</td></tr>
+            <tr><td class="n" data-label="">3</td><td data-label="Takeaway"><b>A request is intent, not a specification.</b> Every ambiguous word is a fork in the design. Surface the assumptions, confirm feasibility against the warehouse, align first, build once.</td><td data-label="Hour">3</td></tr>
+            <tr><td class="n" data-label="">4</td><td data-label="Takeaway"><b>New is not ready.</b> A good demo is not pilot evidence. A capability earns each rung of the ladder, and you are the human gate in front of every one.</td><td data-label="Hour">4</td></tr>
+            <tr><td class="n" data-label="">5</td><td data-label="Takeaway"><b>Demonstrate, don't assert.</b> The warehouse is the arbiter. Every verdict you give today, and every one you give at PMI next week, comes with the query and the number behind it.</td><td data-label="Hour">all&nbsp;four</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="box note">
+        <span class="k">After today</span>
+        <p>You can add the four skills to your Individual Development Plan (IDP) and agree an action plan with your Line Manager. Each hour ends with a "Monday" artefact; the four together are that plan. On completion: the PMI DI&amp;A Future Skills Certificate, Data Engineer track, with a shareable digital badge.</p>
+      </div>
+    </section>
+
+    <section class="part" id="glossary">
+      <div class="part-h">
+        <span class="eyebrow">From agent to view</span>
+        <h2><span>Glossary</span></h2>
+        <p class="dek">Every term used today, from <em>agent</em> to <em>view</em>, is defined in plain English in the <a href="glossary.html">glossary</a>. If a word in a lab guide is new to you, it is there.</p>
+      </div>
+      <p><b>Next:</b> open <a href="hour1.html">Hour 1 · No vibe pipelines</a>.</p>
+    </section>
+
+    <footer class="foot">
+      <nav aria-label="All guides">
+        <a href="index.html">Start here</a>
+        <a href="hour1.html">Hour 1 · No vibe pipelines</a>
+        <a href="hour2.html">Hour 2 · Green is not right</a>
+        <a href="hour3.html">Hour 3 · Shift left</a>
+        <a href="hour4.html">Hour 4 · You are the gate</a>
+        <a href="glossary.html">Glossary</a>
+      </nav>
+      <p>Lab guides for the PMI Data Engineer Future Skills class · Project HORIZON is fictional and training-only</p>
+    </footer>
+  </main>
+</div>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>

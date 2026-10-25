@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 600" width="100%" class="hz" role="img" aria-labelledby="hero-title hero-desc">
+<title id="hero-title">The assistant drafts. The warehouse decides. The engineer signs.</title>
+<desc id="hero-desc">Three-beat strip: a chat bubble with draft SQL, a database cylinder that returns the count 794, and a file being signed by the engineer. Below: four theme chips, H1 No vibe pipelines, H2 Green is not right, H3 Shift left, H4 You are the gate.</desc>
+<style>
+.hz{
+  --navy:#102B53; --navy2:#0C2040; --orange:#FF4A00; --teal:#00C9A7; --ink:#1C2B40;
+  --tint:#F4F6FA; --muted:#5A6B80; --red:#C8402A;
+  --card:#FFFFFF; --line:#C9D3E0; --grid:#E4E9F1; --code:#F4F6FA;
+  --claude:#102B53; --on-claude:#FFFFFF;
+  --teal-ink:#00805F; --teal-soft:#D6F5EE;
+  --orange-ink:#D63D00; --orange-soft:#FFE6DA;
+  --red-ink:#B5361F; --red-soft:#FAE3DE;
+  --navy-soft:#E4EAF4; --mutedfill:#C3CDDA;
+}
+@media (prefers-color-scheme: dark){
+  .hz{
+    --ink:#F4F6FA; --muted:#AFBDD0; --card:#13305F; --line:#3C5884; --grid:#25416C; --code:#0B1B36;
+    --claude:#2F5FB4; --on-claude:#FFFFFF;
+    --teal-ink:#1FD9B9; --teal-soft:#0F3F3A;
+    --orange-ink:#FF8A5B; --orange-soft:#4B2514;
+    --red:#E8604A; --red-ink:#FF8B78; --red-soft:#4E1D17;
+    --navy-soft:#1B3B6E; --mutedfill:#4E6686; --tint:#0C2040;
+  }
+}
+.hz text{font-family:"Space Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;fill:var(--ink);font-size:16px}
+.hz .mono{font-family:"DM Mono",ui-monospace,Menlo,Consolas,monospace;font-size:14px}
+.hz .b{font-weight:700}
+.hz .i{font-style:italic}
+.hz .muted{fill:var(--muted)}
+.hz .teal-ink{fill:var(--teal-ink)}
+.hz .orange-ink{fill:var(--orange-ink)}
+.hz .red-ink{fill:var(--red-ink)}
+.hz .on{fill:var(--on-claude)}
+.hz .card{fill:var(--card);stroke:var(--line);stroke-width:1.5}
+.hz .soft-navy{fill:var(--navy-soft);stroke:var(--line);stroke-width:1.5}
+.hz .soft-teal{fill:var(--teal-soft);stroke:var(--teal);stroke-width:1.5}
+.hz .soft-orange{fill:var(--orange-soft);stroke:var(--orange);stroke-width:1.5}
+.hz .soft-red{fill:var(--red-soft);stroke:var(--red);stroke-width:1.5}
+.hz .claude{fill:var(--claude);stroke:none}
+.hz .code{fill:var(--code);stroke:var(--line);stroke-width:1}
+.hz .ln{stroke:var(--muted);stroke-width:2;fill:none}
+.hz .ln-ink{stroke:var(--ink);stroke-width:2;fill:none}
+.hz .ln-teal{stroke:var(--teal);stroke-width:2.5;fill:none}
+.hz .ln-orange{stroke:var(--orange);stroke-width:2.5;fill:none}
+.hz .ln-red{stroke:var(--red);stroke-width:2.5;fill:none}
+.hz .ln-claude{stroke:var(--claude);stroke-width:2;fill:none}
+.hz .dash{stroke-dasharray:7 6}
+.hz .grid{stroke:var(--grid);stroke-width:1;fill:none}
+.hz .f-teal{fill:var(--teal)}
+.hz .f-orange{fill:var(--orange)}
+.hz .f-red{fill:var(--red)}
+.hz .f-muted{fill:var(--mutedfill)}
+.hz .f-card{fill:var(--card)}
+.hz .f-line{fill:var(--line)}
+.hz .f-ink{fill:var(--ink)}
+.hz .f-navy{fill:var(--claude)}
+.hz .f-code{fill:var(--code)}
+.hz .f-teal-soft{fill:var(--teal-soft)}
+.hz .f-orange-soft{fill:var(--orange-soft)}
+.hz .f-red-soft{fill:var(--red-soft)}
+.hz .f-navy-soft{fill:var(--navy-soft)}
+.hz .mk-muted{fill:var(--muted)}
+.hz .mk-ink{fill:var(--ink)}
+.hz .mk-teal{fill:var(--teal)}
+.hz .mk-orange{fill:var(--orange)}
+.hz .mk-red{fill:var(--red)}
+.hz .mk-claude{fill:var(--claude)}
+</style>
+<defs>
+<marker id="hero-ar-muted" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-muted"/></marker>
+<marker id="hero-ar-ink" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-ink"/></marker>
+<marker id="hero-ar-teal" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-teal"/></marker>
+<marker id="hero-ar-orange" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-orange"/></marker>
+<marker id="hero-ar-red" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-red"/></marker>
+<marker id="hero-ar-claude" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-claude"/></marker>
+</defs>
+<text x="90" y="58" class="mono orange-ink b" style="font-size:14px" letter-spacing="2">PROJECT HORIZON  ·  ONE RULE, ALL DAY</text>
+<rect x="90" y="95" width="420" height="335" rx="16" class="card"/>
+<circle cx="130" cy="135" r="16" class="f-orange"/>
+<text x="130" y="141" text-anchor="middle" class="b on" style="font-size:17px">1</text>
+<text x="158" y="142" class="b" style="font-size:24px">The assistant drafts</text>
+<text x="300.0" y="390" text-anchor="middle" class="muted" style="font-size:15px">a reply in a chat window,</text>
+<text x="300.0" y="412" text-anchor="middle" class="muted" style="font-size:15px">not a decision</text>
+<rect x="590" y="95" width="420" height="335" rx="16" class="card"/>
+<circle cx="630" cy="135" r="16" class="f-orange"/>
+<text x="630" y="141" text-anchor="middle" class="b on" style="font-size:17px">2</text>
+<text x="658" y="142" class="b" style="font-size:24px">The warehouse decides</text>
+<text x="800.0" y="390" text-anchor="middle" class="muted" style="font-size:15px">count it in Postgres:</text>
+<text x="800.0" y="412" text-anchor="middle" class="muted" style="font-size:15px">794 Italy conversion events</text>
+<rect x="1090" y="95" width="420" height="335" rx="16" class="card"/>
+<circle cx="1130" cy="135" r="16" class="f-orange"/>
+<text x="1130" y="141" text-anchor="middle" class="b on" style="font-size:17px">3</text>
+<text x="1158" y="142" class="b" style="font-size:24px">The engineer signs</text>
+<text x="1300.0" y="390" text-anchor="middle" class="muted" style="font-size:15px">the paste is you, signing:</text>
+<text x="1300.0" y="412" text-anchor="middle" class="muted" style="font-size:15px">nothing lands unless you put it there</text>
+<rect x="118" y="171" width="364" height="178" rx="14" class="claude"/>
+<path d="M144,348 L134,367 L164,348 Z" class="claude"/>
+<text x="138" y="209" class="mono on" style="font-size:14px">select e.event_id, m.marketing_allowed</text>
+<text x="138" y="236" class="mono on" style="font-size:14px">from clr.lifecycle_events e</text>
+<text x="138" y="263" class="mono on" style="font-size:14px">join mpl.consent_records m</text>
+<text x="138" y="290" class="mono on" style="font-size:14px">  on m.consumer_id = e.consumer_id</text>
+<text x="138" y="317" class="mono on" style="font-size:14px">where e.market_code = 'IT'</text>
+<rect x="390" y="159" width="80" height="26" rx="13" class="soft-orange"/>
+<text x="430" y="177" text-anchor="middle" class="b orange-ink" style="font-size:15px">a draft</text>
+<path d="M695.0,189 L695.0,339 A105.0,20 0 0 0 905.0,339 L905.0,189 A105.0,20 0 0 0 695.0,189 Z" class="soft-teal"/>
+<ellipse cx="800.0" cy="189" rx="105.0" ry="20" class="soft-teal"/>
+<text x="800.0" y="273" text-anchor="middle" class="b teal-ink" style="font-size:64px">794</text>
+<text x="800.0" y="305" text-anchor="middle" class="muted" style="font-size:15px">rows, counted in Postgres</text>
+<text x="800.0" y="345" text-anchor="middle" class="mono b" style="font-size:15px">horizon</text>
+<path d="M1200,169 L1366,169 L1400,203 L1400,359 L1200,359 Z" class="card"/>
+<path d="M1366,169 L1366,203 L1400,203" class="card"/>
+<text x="1216" y="203" class="mono b" style="font-size:14px">italy_conversion</text>
+<text x="1216" y="221" class="mono b" style="font-size:14px">_events.sql</text>
+<rect x="1216" y="241" width="150" height="6" rx="3" class="f-line"/>
+<rect x="1216" y="257" width="120" height="6" rx="3" class="f-line"/>
+<rect x="1216" y="273" width="160" height="6" rx="3" class="f-line"/>
+<rect x="1216" y="289" width="100" height="6" rx="3" class="f-line"/>
+<line x1="1216" y1="335" x2="1384" y2="335" class="ln"/>
+<path d="M1222,329 C1240,289 1252,339 1270,319 S1300,297 1312,325 S1340,319 1360,309" class="ln-orange" stroke-width="3" stroke-linecap="round"/>
+<g transform="translate(1394,287) rotate(45)"><rect x="-7" y="-50" width="14" height="60" rx="3" class="f-orange"/><path d="M-7,10 L0,24 L7,10 Z" class="f-ink"/></g>
+<path d="M522,275 L564,275" class="ln-orange" stroke-width="4"/>
+<path d="M560,262 L580,275 L560,288 Z" class="f-orange"/>
+<path d="M1022,275 L1064,275" class="ln-orange" stroke-width="4"/>
+<path d="M1060,262 L1080,275 L1060,288 Z" class="f-orange"/>
+<rect x="140.0" y="480" width="300" height="50" rx="25" class="soft-navy"/>
+<text x="290.0" y="512" text-anchor="middle" style="font-size:18px"><tspan class="b orange-ink">H1  </tspan><tspan class="b">No vibe pipelines</tspan></text>
+<rect x="480.0" y="480" width="300" height="50" rx="25" class="soft-navy"/>
+<text x="630.0" y="512" text-anchor="middle" style="font-size:18px"><tspan class="b orange-ink">H2  </tspan><tspan class="b">Green ≠ right</tspan></text>
+<rect x="820.0" y="480" width="300" height="50" rx="25" class="soft-navy"/>
+<text x="970.0" y="512" text-anchor="middle" style="font-size:18px"><tspan class="b orange-ink">H3  </tspan><tspan class="b">Shift left</tspan></text>
+<rect x="1160.0" y="480" width="300" height="50" rx="25" class="soft-navy"/>
+<text x="1310.0" y="512" text-anchor="middle" style="font-size:18px"><tspan class="b orange-ink">H4  </tspan><tspan class="b">You are the gate</tspan></text>
+<text x="800.0" y="568" text-anchor="middle" class="muted" style="font-size:15px">Four hours, four themes. One loop each hour: the assistant drafts, the warehouse decides, the engineer signs.</text>
+</svg>

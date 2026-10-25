@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" width="100%" class="hz" role="img" aria-labelledby="paste-title paste-desc">
+<title id="paste-title">The Claude Desktop loop: prompt, reply, copy, paste into the file in VS Code, dbt run, SQLTools count. The paste is you, signing.</title>
+<desc id="paste-desc">Six steps in a loop. Top row: you paste the prompt into Claude Desktop; Claude replies with SQL in a code block; you copy it. Bottom row: you paste it into models/analytics/italy_conversion_events.sql in VS Code; dbt run builds the view; SQLTools counts 794. An arrow carries the number into the next prompt. Caption: the paste is you, signing.</desc>
+<style>
+.hz{
+  --navy:#102B53; --navy2:#0C2040; --orange:#FF4A00; --teal:#00C9A7; --ink:#1C2B40;
+  --tint:#F4F6FA; --muted:#5A6B80; --red:#C8402A;
+  --card:#FFFFFF; --line:#C9D3E0; --grid:#E4E9F1; --code:#F4F6FA;
+  --claude:#102B53; --on-claude:#FFFFFF;
+  --teal-ink:#00805F; --teal-soft:#D6F5EE;
+  --orange-ink:#D63D00; --orange-soft:#FFE6DA;
+  --red-ink:#B5361F; --red-soft:#FAE3DE;
+  --navy-soft:#E4EAF4; --mutedfill:#C3CDDA;
+}
+@media (prefers-color-scheme: dark){
+  .hz{
+    --ink:#F4F6FA; --muted:#AFBDD0; --card:#13305F; --line:#3C5884; --grid:#25416C; --code:#0B1B36;
+    --claude:#2F5FB4; --on-claude:#FFFFFF;
+    --teal-ink:#1FD9B9; --teal-soft:#0F3F3A;
+    --orange-ink:#FF8A5B; --orange-soft:#4B2514;
+    --red:#E8604A; --red-ink:#FF8B78; --red-soft:#4E1D17;
+    --navy-soft:#1B3B6E; --mutedfill:#4E6686; --tint:#0C2040;
+  }
+}
+.hz text{font-family:"Space Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;fill:var(--ink);font-size:16px}
+.hz .mono{font-family:"DM Mono",ui-monospace,Menlo,Consolas,monospace;font-size:14px}
+.hz .b{font-weight:700}
+.hz .i{font-style:italic}
+.hz .muted{fill:var(--muted)}
+.hz .teal-ink{fill:var(--teal-ink)}
+.hz .orange-ink{fill:var(--orange-ink)}
+.hz .red-ink{fill:var(--red-ink)}
+.hz .on{fill:var(--on-claude)}
+.hz .card{fill:var(--card);stroke:var(--line);stroke-width:1.5}
+.hz .soft-navy{fill:var(--navy-soft);stroke:var(--line);stroke-width:1.5}
+.hz .soft-teal{fill:var(--teal-soft);stroke:var(--teal);stroke-width:1.5}
+.hz .soft-orange{fill:var(--orange-soft);stroke:var(--orange);stroke-width:1.5}
+.hz .soft-red{fill:var(--red-soft);stroke:var(--red);stroke-width:1.5}
+.hz .claude{fill:var(--claude);stroke:none}
+.hz .code{fill:var(--code);stroke:var(--line);stroke-width:1}
+.hz .ln{stroke:var(--muted);stroke-width:2;fill:none}
+.hz .ln-ink{stroke:var(--ink);stroke-width:2;fill:none}
+.hz .ln-teal{stroke:var(--teal);stroke-width:2.5;fill:none}
+.hz .ln-orange{stroke:var(--orange);stroke-width:2.5;fill:none}
+.hz .ln-red{stroke:var(--red);stroke-width:2.5;fill:none}
+.hz .ln-claude{stroke:var(--claude);stroke-width:2;fill:none}
+.hz .dash{stroke-dasharray:7 6}
+.hz .grid{stroke:var(--grid);stroke-width:1;fill:none}
+.hz .f-teal{fill:var(--teal)}
+.hz .f-orange{fill:var(--orange)}
+.hz .f-red{fill:var(--red)}
+.hz .f-muted{fill:var(--mutedfill)}
+.hz .f-card{fill:var(--card)}
+.hz .f-line{fill:var(--line)}
+.hz .f-ink{fill:var(--ink)}
+.hz .f-navy{fill:var(--claude)}
+.hz .f-code{fill:var(--code)}
+.hz .f-teal-soft{fill:var(--teal-soft)}
+.hz .f-orange-soft{fill:var(--orange-soft)}
+.hz .f-red-soft{fill:var(--red-soft)}
+.hz .f-navy-soft{fill:var(--navy-soft)}
+.hz .mk-muted{fill:var(--muted)}
+.hz .mk-ink{fill:var(--ink)}
+.hz .mk-teal{fill:var(--teal)}
+.hz .mk-orange{fill:var(--orange)}
+.hz .mk-red{fill:var(--red)}
+.hz .mk-claude{fill:var(--claude)}
+</style>
+<defs>
+<marker id="paste-ar-muted" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-muted"/></marker>
+<marker id="paste-ar-ink" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-ink"/></marker>
+<marker id="paste-ar-teal" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-teal"/></marker>
+<marker id="paste-ar-orange" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-orange"/></marker>
+<marker id="paste-ar-red" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-red"/></marker>
+<marker id="paste-ar-claude" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-claude"/></marker>
+</defs>
+<rect x="60" y="52" width="300" height="160" rx="12" class="card"/>
+<circle cx="86" cy="78" r="14" class="f-orange"/>
+<text x="86" y="83" text-anchor="middle" class="b on" style="font-size:15px">1</text>
+<text x="110" y="84" class="b" style="font-size:17px">Prompt</text>
+<rect x="80" y="104" width="260" height="60" rx="8" class="code"/>
+<text x="90" y="123" class="snip mono" style="font-size:12.5px">Context: HORIZON, Italy events</text>
+<text x="90" y="140" class="snip mono" style="font-size:12.5px">Task: one dbt model, grain = event</text>
+<text x="90" y="157" class="snip mono" style="font-size:12.5px">Output: Markdown only. No files.</text>
+<text x="80" y="190" class="muted" style="font-size:15px">you paste the prompt into Claude Desktop</text>
+<rect x="450" y="52" width="300" height="160" rx="12" class="card"/>
+<circle cx="476" cy="78" r="14" class="f-orange"/>
+<text x="476" y="83" text-anchor="middle" class="b on" style="font-size:15px">2</text>
+<text x="500" y="84" class="b" style="font-size:17px">Claude replies</text>
+<rect x="470" y="100" width="260" height="72" rx="8" class="claude"/>
+<text x="480" y="117" class="snip mono on" style="font-size:12px">{{ config(materialized='view',</text>
+<text x="480" y="132" class="snip mono on" style="font-size:12px">   schema='analytics') }}</text>
+<text x="480" y="147" class="snip mono on" style="font-size:12px">select e.event_id, ...</text>
+<text x="480" y="162" class="snip mono on" style="font-size:12px">from {{ source('clr', ...) }} e</text>
+<text x="470" y="190" class="muted" style="font-size:15px">SQL in a code block: a draft, not a decision</text>
+<rect x="840" y="52" width="300" height="160" rx="12" class="card"/>
+<circle cx="866" cy="78" r="14" class="f-orange"/>
+<text x="866" y="83" text-anchor="middle" class="b on" style="font-size:15px">3</text>
+<text x="890" y="84" class="b" style="font-size:17px">Copy</text>
+<rect x="936" y="106" width="70" height="56" rx="6" class="code"/>
+<rect x="950" y="116" width="70" height="56" rx="6" class="card"/>
+<text x="1038" y="148" class="mono b" style="font-size:14px">Copy</text>
+<text x="860" y="190" class="muted" style="font-size:15px">you read it first, then copy the block</text>
+<rect x="840" y="290" width="300" height="160" rx="12" class="card"/>
+<circle cx="866" cy="316" r="14" class="f-orange"/>
+<text x="866" y="321" text-anchor="middle" class="b on" style="font-size:15px">4</text>
+<text x="890" y="322" class="b" style="font-size:17px">Paste, in VS Code</text>
+<rect x="860" y="342" width="260" height="60" rx="8" class="code"/>
+<rect x="860" y="342" width="260" height="18" rx="8" class="f-navy-soft"/>
+<text x="870" y="355" class="snip mono" style="font-size:12.5px">italy_conversion_events.sql</text>
+<rect x="870" y="368" width="150" height="4" rx="2" class="f-line"/>
+<rect x="870" y="378" width="200" height="4" rx="2" class="f-line"/>
+<rect x="870" y="388" width="120" height="4" rx="2" class="f-line"/>
+<path d="M990,394 C1010,360 1025,402 1045,382 S1080,368 1102,386" class="ln-orange" stroke-width="3" stroke-linecap="round"/>
+<text x="860" y="420" class="mono" style="font-size:14px">models/analytics/</text>
+<text x="860" y="438" class="mono" style="font-size:14px">italy_conversion_events.sql</text>
+<rect x="450" y="290" width="300" height="160" rx="12" class="card"/>
+<circle cx="476" cy="316" r="14" class="f-orange"/>
+<text x="476" y="321" text-anchor="middle" class="b on" style="font-size:15px">5</text>
+<text x="500" y="322" class="b" style="font-size:17px">dbt run</text>
+<rect x="470" y="342" width="260" height="60" rx="8" class="claude"/>
+<text x="480" y="361" class="snip mono on" style="font-size:12.5px">$ dbt run</text>
+<text x="480" y="378" class="snip mono on" style="font-size:12.5px">1 of 1 OK created sql view model</text>
+<text x="480" y="395" class="snip mono on b" style="font-size:12.5px">Completed successfully</text>
+<text x="470" y="428" class="muted" style="font-size:15px">in the VS Code terminal; dbt test after it</text>
+<rect x="60" y="290" width="300" height="160" rx="12" class="card"/>
+<circle cx="86" cy="316" r="14" class="f-orange"/>
+<text x="86" y="321" text-anchor="middle" class="b on" style="font-size:15px">6</text>
+<text x="110" y="322" class="b" style="font-size:17px">SQLTools count</text>
+<rect x="80" y="342" width="140" height="60" rx="8" class="code"/>
+<text x="90" y="360" class="snip mono muted" style="font-size:12.5px">count</text>
+<line x1="80" y1="366" x2="220" y2="366" class="grid"/>
+<text x="90" y="390" class="mono b teal-ink" style="font-size:22px">794</text>
+<text x="236" y="370" class="mono" style="font-size:14px">select count(*)</text>
+<text x="236" y="390" class="muted" style="font-size:15px">from the new view</text>
+<text x="80" y="428" class="muted" style="font-size:15px">the warehouse decides: 794 = 794</text>
+<line x1="360" y1="132.0" x2="444" y2="132.0" class="ln" marker-end="url(#paste-ar-muted)"/>
+<text x="405.0" y="122.0" text-anchor="middle" class="muted" style="font-size:15px">send</text>
+<line x1="750" y1="132.0" x2="834" y2="132.0" class="ln" marker-end="url(#paste-ar-muted)"/>
+<text x="795.0" y="122.0" text-anchor="middle" class="muted" style="font-size:15px">read</text>
+<line x1="990.0" y1="212" x2="990.0" y2="284" class="ln-orange" marker-end="url(#paste-ar-orange)"/>
+<text x="978.0" y="254" text-anchor="end" class="b orange-ink" style="font-size:15px">your hands, your decision</text>
+<line x1="840" y1="370.0" x2="756" y2="370.0" class="ln" marker-end="url(#paste-ar-muted)"/>
+<text x="795.0" y="360.0" text-anchor="middle" class="muted" style="font-size:15px">save, run</text>
+<line x1="450" y1="370.0" x2="366" y2="370.0" class="ln" marker-end="url(#paste-ar-muted)"/>
+<text x="405.0" y="360.0" text-anchor="middle" class="muted" style="font-size:15px">count</text>
+<path d="M210.0,290 L210.0,218" class="ln dash" marker-end="url(#paste-ar-muted)"/>
+<text x="222.0" y="254" class="muted" style="font-size:15px">the number goes in the next prompt</text>
+<text x="600" y="492" text-anchor="middle" style="font-size:17px"><tspan class="b i orange-ink">the paste is you, signing</tspan><tspan class="muted">  ·  nothing lands in the repo unless you put it there</tspan></text>
+</svg>

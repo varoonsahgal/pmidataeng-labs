@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" width="100%" class="hz" role="img" aria-labelledby="ladder-title ladder-desc">
+<title id="ladder-title">The readiness ladder: Exploration, Experimentation, Pilot, Adoption, with a human gate before each rung</title>
+<desc id="ladder-desc">Four steps rising left to right: Exploration (worth a look?), Experimentation (sandbox, read-only), Pilot (gated, real data, rollback), Adoption (in the estate). Between each pair stands a gate with a person, labelled human gate. A marker reads today's agent on Experimentation.</desc>
+<style>
+.hz{
+  --navy:#102B53; --navy2:#0C2040; --orange:#FF4A00; --teal:#00C9A7; --ink:#1C2B40;
+  --tint:#F4F6FA; --muted:#5A6B80; --red:#C8402A;
+  --card:#FFFFFF; --line:#C9D3E0; --grid:#E4E9F1; --code:#F4F6FA;
+  --claude:#102B53; --on-claude:#FFFFFF;
+  --teal-ink:#00805F; --teal-soft:#D6F5EE;
+  --orange-ink:#D63D00; --orange-soft:#FFE6DA;
+  --red-ink:#B5361F; --red-soft:#FAE3DE;
+  --navy-soft:#E4EAF4; --mutedfill:#C3CDDA;
+}
+@media (prefers-color-scheme: dark){
+  .hz{
+    --ink:#F4F6FA; --muted:#AFBDD0; --card:#13305F; --line:#3C5884; --grid:#25416C; --code:#0B1B36;
+    --claude:#2F5FB4; --on-claude:#FFFFFF;
+    --teal-ink:#1FD9B9; --teal-soft:#0F3F3A;
+    --orange-ink:#FF8A5B; --orange-soft:#4B2514;
+    --red:#E8604A; --red-ink:#FF8B78; --red-soft:#4E1D17;
+    --navy-soft:#1B3B6E; --mutedfill:#4E6686; --tint:#0C2040;
+  }
+}
+.hz text{font-family:"Space Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;fill:var(--ink);font-size:16px}
+.hz .mono{font-family:"DM Mono",ui-monospace,Menlo,Consolas,monospace;font-size:14px}
+.hz .b{font-weight:700}
+.hz .i{font-style:italic}
+.hz .muted{fill:var(--muted)}
+.hz .teal-ink{fill:var(--teal-ink)}
+.hz .orange-ink{fill:var(--orange-ink)}
+.hz .red-ink{fill:var(--red-ink)}
+.hz .on{fill:var(--on-claude)}
+.hz .card{fill:var(--card);stroke:var(--line);stroke-width:1.5}
+.hz .soft-navy{fill:var(--navy-soft);stroke:var(--line);stroke-width:1.5}
+.hz .soft-teal{fill:var(--teal-soft);stroke:var(--teal);stroke-width:1.5}
+.hz .soft-orange{fill:var(--orange-soft);stroke:var(--orange);stroke-width:1.5}
+.hz .soft-red{fill:var(--red-soft);stroke:var(--red);stroke-width:1.5}
+.hz .claude{fill:var(--claude);stroke:none}
+.hz .code{fill:var(--code);stroke:var(--line);stroke-width:1}
+.hz .ln{stroke:var(--muted);stroke-width:2;fill:none}
+.hz .ln-ink{stroke:var(--ink);stroke-width:2;fill:none}
+.hz .ln-teal{stroke:var(--teal);stroke-width:2.5;fill:none}
+.hz .ln-orange{stroke:var(--orange);stroke-width:2.5;fill:none}
+.hz .ln-red{stroke:var(--red);stroke-width:2.5;fill:none}
+.hz .ln-claude{stroke:var(--claude);stroke-width:2;fill:none}
+.hz .dash{stroke-dasharray:7 6}
+.hz .grid{stroke:var(--grid);stroke-width:1;fill:none}
+.hz .f-teal{fill:var(--teal)}
+.hz .f-orange{fill:var(--orange)}
+.hz .f-red{fill:var(--red)}
+.hz .f-muted{fill:var(--mutedfill)}
+.hz .f-card{fill:var(--card)}
+.hz .f-line{fill:var(--line)}
+.hz .f-ink{fill:var(--ink)}
+.hz .f-navy{fill:var(--claude)}
+.hz .f-code{fill:var(--code)}
+.hz .f-teal-soft{fill:var(--teal-soft)}
+.hz .f-orange-soft{fill:var(--orange-soft)}
+.hz .f-red-soft{fill:var(--red-soft)}
+.hz .f-navy-soft{fill:var(--navy-soft)}
+.hz .mk-muted{fill:var(--muted)}
+.hz .mk-ink{fill:var(--ink)}
+.hz .mk-teal{fill:var(--teal)}
+.hz .mk-orange{fill:var(--orange)}
+.hz .mk-red{fill:var(--red)}
+.hz .mk-claude{fill:var(--claude)}
+</style>
+<defs>
+<marker id="ladder-ar-muted" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-muted"/></marker>
+<marker id="ladder-ar-ink" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-ink"/></marker>
+<marker id="ladder-ar-teal" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-teal"/></marker>
+<marker id="ladder-ar-orange" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-orange"/></marker>
+<marker id="ladder-ar-red" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-red"/></marker>
+<marker id="ladder-ar-claude" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-claude"/></marker>
+</defs>
+<text x="60" y="52" class="b" style="font-size:22px">Readiness ladder</text>
+<text x="60" y="78" class="muted" style="font-size:15px">a human gate before each rung; nothing climbs on its own</text>
+<rect x="60" y="372" width="220" height="60" rx="6" class="soft-navy"/>
+<rect x="60" y="372" width="220" height="6" rx="3" class="f-navy"/>
+<text x="170.0" y="406" text-anchor="middle" class="b" style="font-size:18px">Exploration</text>
+<text x="170.0" y="458" text-anchor="middle" class="muted" style="font-size:15px">worth a look?</text>
+<path d="M295.0,432 L295.0,312 Q295.0,294 315.0,294 Q335.0,294 335.0,312 L335.0,432" class="ln-orange" stroke-width="3"/>
+<line x1="295.0" y1="336" x2="335.0" y2="336" class="ln-orange"/>
+<circle cx="315.0" cy="354.1" r="8.1" class="f-orange"/>
+<path d="M301.5,382.2 L301.5,373.2 A13.5,9.0 0 0 1 328.5,373.2 L328.5,382.2 Z" class="f-orange"/>
+<text x="315.0" y="282" text-anchor="middle" class="b orange-ink" style="font-size:15px">human gate</text>
+<rect x="350" y="302" width="220" height="130" rx="6" class="soft-navy"/>
+<rect x="350" y="302" width="220" height="6" rx="3" class="f-navy"/>
+<text x="460.0" y="336" text-anchor="middle" class="b" style="font-size:18px">Experimentation</text>
+<text x="460.0" y="458" text-anchor="middle" class="muted" style="font-size:15px">sandbox, read-only</text>
+<path d="M585.0,432 L585.0,242 Q585.0,224 605.0,224 Q625.0,224 625.0,242 L625.0,432" class="ln-orange" stroke-width="3"/>
+<line x1="585.0" y1="266" x2="625.0" y2="266" class="ln-orange"/>
+<circle cx="605.0" cy="284.1" r="8.1" class="f-orange"/>
+<path d="M591.5,312.2 L591.5,303.2 A13.5,9.0 0 0 1 618.5,303.2 L618.5,312.2 Z" class="f-orange"/>
+<text x="605.0" y="212" text-anchor="middle" class="b orange-ink" style="font-size:15px">human gate</text>
+<rect x="640" y="232" width="220" height="200" rx="6" class="soft-navy"/>
+<rect x="640" y="232" width="220" height="6" rx="3" class="f-navy"/>
+<text x="750.0" y="266" text-anchor="middle" class="b" style="font-size:18px">Pilot</text>
+<text x="750.0" y="458" text-anchor="middle" class="muted" style="font-size:15px">gated, real data, rollback</text>
+<path d="M875.0,432 L875.0,172 Q875.0,154 895.0,154 Q915.0,154 915.0,172 L915.0,432" class="ln-orange" stroke-width="3"/>
+<line x1="875.0" y1="196" x2="915.0" y2="196" class="ln-orange"/>
+<circle cx="895.0" cy="214.1" r="8.1" class="f-orange"/>
+<path d="M881.5,242.2 L881.5,233.2 A13.5,9.0 0 0 1 908.5,233.2 L908.5,242.2 Z" class="f-orange"/>
+<text x="895.0" y="142" text-anchor="middle" class="b orange-ink" style="font-size:15px">human gate</text>
+<rect x="930" y="162" width="220" height="270" rx="6" class="soft-navy"/>
+<rect x="930" y="162" width="220" height="6" rx="3" class="f-navy"/>
+<text x="1040.0" y="196" text-anchor="middle" class="b" style="font-size:18px">Adoption</text>
+<text x="1040.0" y="458" text-anchor="middle" class="muted" style="font-size:15px">in the estate</text>
+<line x1="60" y1="432" x2="1150" y2="432" class="ln-ink"/>
+<rect x="382.0" y="244" width="156" height="32" rx="16" class="soft-orange"/>
+<text x="460.0" y="266" text-anchor="middle" class="b orange-ink" style="font-size:15px">today's agent</text>
+<line x1="460.0" y1="276" x2="460.0" y2="296" class="ln-orange" marker-end="url(#ladder-ar-orange)"/>
+<text x="1160" y="100" text-anchor="end" class="muted" style="font-size:15px">more trust, more blast radius</text>
+<line x1="938" y1="112" x2="1160" y2="112" class="ln" marker-end="url(#ladder-ar-muted)"/>
+<text x="60" y="500" class="muted" style="font-size:15px">Hour 4: the HORIZON analyst is read-only, sandboxed and asks you to run every query. Defensible rung: Experimentation.</text>
+</svg>

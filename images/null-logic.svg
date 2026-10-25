@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" width="100%" class="hz" role="img" aria-labelledby="null3-title null3-desc">
+<title id="null3-title">Three-valued logic: why campaign_id &lt;&gt; 1 returns 0 rows, not 15,523</title>
+<desc id="null3-desc">clr.lifecycle_events has 74 rows with campaign_id = 1 and 15,523 with campaign_id NULL. A grid evaluates three predicates per row kind: campaign_id = 1 is TRUE for 1 and UNKNOWN for NULL (74 rows); campaign_id &lt;&gt; 1 is FALSE for 1 and UNKNOWN for NULL (0 rows, not 15,523); campaign_id IS DISTINCT FROM 1 is FALSE for 1 and TRUE for NULL (15,523 rows). A truth strip: WHERE keeps only TRUE; FALSE and UNKNOWN are both dropped. Caption: Hour 2 opener: campaign_id &lt;&gt; 1 returns 0, not 15,523; every NULL row is UNKNOWN and drops out; IS DISTINCT FROM treats NULL as a value.</desc>
+<style>
+.hz{
+  --navy:#102B53; --navy2:#0C2040; --orange:#FF4A00; --teal:#00C9A7; --ink:#1C2B40;
+  --tint:#F4F6FA; --muted:#5A6B80; --red:#C8402A;
+  --card:#FFFFFF; --line:#C9D3E0; --grid:#E4E9F1; --code:#F4F6FA;
+  --claude:#102B53; --on-claude:#FFFFFF;
+  --teal-ink:#00805F; --teal-soft:#D6F5EE;
+  --orange-ink:#D63D00; --orange-soft:#FFE6DA;
+  --red-ink:#B5361F; --red-soft:#FAE3DE;
+  --navy-soft:#E4EAF4; --mutedfill:#C3CDDA;
+}
+@media (prefers-color-scheme: dark){
+  .hz{
+    --ink:#F4F6FA; --muted:#AFBDD0; --card:#13305F; --line:#3C5884; --grid:#25416C; --code:#0B1B36;
+    --claude:#2F5FB4; --on-claude:#FFFFFF;
+    --teal-ink:#1FD9B9; --teal-soft:#0F3F3A;
+    --orange-ink:#FF8A5B; --orange-soft:#4B2514;
+    --red:#E8604A; --red-ink:#FF8B78; --red-soft:#4E1D17;
+    --navy-soft:#1B3B6E; --mutedfill:#4E6686; --tint:#0C2040;
+  }
+}
+.hz text{font-family:"Space Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;fill:var(--ink);font-size:16px}
+.hz .mono{font-family:"DM Mono",ui-monospace,Menlo,Consolas,monospace;font-size:14px}
+.hz .b{font-weight:700}
+.hz .i{font-style:italic}
+.hz .muted{fill:var(--muted)}
+.hz .teal-ink{fill:var(--teal-ink)}
+.hz .orange-ink{fill:var(--orange-ink)}
+.hz .red-ink{fill:var(--red-ink)}
+.hz .on{fill:var(--on-claude)}
+.hz .card{fill:var(--card);stroke:var(--line);stroke-width:1.5}
+.hz .soft-navy{fill:var(--navy-soft);stroke:var(--line);stroke-width:1.5}
+.hz .soft-teal{fill:var(--teal-soft);stroke:var(--teal);stroke-width:1.5}
+.hz .soft-orange{fill:var(--orange-soft);stroke:var(--orange);stroke-width:1.5}
+.hz .soft-red{fill:var(--red-soft);stroke:var(--red);stroke-width:1.5}
+.hz .claude{fill:var(--claude);stroke:none}
+.hz .code{fill:var(--code);stroke:var(--line);stroke-width:1}
+.hz .ln{stroke:var(--muted);stroke-width:2;fill:none}
+.hz .ln-ink{stroke:var(--ink);stroke-width:2;fill:none}
+.hz .ln-teal{stroke:var(--teal);stroke-width:2.5;fill:none}
+.hz .ln-orange{stroke:var(--orange);stroke-width:2.5;fill:none}
+.hz .ln-red{stroke:var(--red);stroke-width:2.5;fill:none}
+.hz .ln-claude{stroke:var(--claude);stroke-width:2;fill:none}
+.hz .dash{stroke-dasharray:7 6}
+.hz .grid{stroke:var(--grid);stroke-width:1;fill:none}
+.hz .f-teal{fill:var(--teal)}
+.hz .f-orange{fill:var(--orange)}
+.hz .f-red{fill:var(--red)}
+.hz .f-muted{fill:var(--mutedfill)}
+.hz .f-card{fill:var(--card)}
+.hz .f-line{fill:var(--line)}
+.hz .f-ink{fill:var(--ink)}
+.hz .f-navy{fill:var(--claude)}
+.hz .f-code{fill:var(--code)}
+.hz .f-teal-soft{fill:var(--teal-soft)}
+.hz .f-orange-soft{fill:var(--orange-soft)}
+.hz .f-red-soft{fill:var(--red-soft)}
+.hz .f-navy-soft{fill:var(--navy-soft)}
+.hz .mk-muted{fill:var(--muted)}
+.hz .mk-ink{fill:var(--ink)}
+.hz .mk-teal{fill:var(--teal)}
+.hz .mk-orange{fill:var(--orange)}
+.hz .mk-red{fill:var(--red)}
+.hz .mk-claude{fill:var(--claude)}
+</style>
+<defs>
+<marker id="null3-ar-muted" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-muted"/></marker>
+<marker id="null3-ar-ink" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-ink"/></marker>
+<marker id="null3-ar-teal" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-teal"/></marker>
+<marker id="null3-ar-orange" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-orange"/></marker>
+<marker id="null3-ar-red" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-red"/></marker>
+<marker id="null3-ar-claude" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-claude"/></marker>
+</defs>
+<text x="40" y="52" class="mono b" style="font-size:16px">clr.lifecycle_events</text>
+<text x="40" y="76" class="muted" style="font-size:15px">15,597 rows, two kinds of campaign_id</text>
+<rect x="40" y="96" width="340" height="62" rx="10" class="card"/>
+<rect x="40" y="96" width="8" height="62" rx="3" class="f-orange"/>
+<text x="64" y="122" class="mono" style="font-size:15px">campaign_id = 1</text>
+<text x="64" y="144" class="muted" style="font-size:15px">a campaign was recorded</text>
+<text x="364" y="134" text-anchor="end" class="b" style="font-size:24px">74</text>
+<rect x="40" y="172" width="340" height="62" rx="10" class="card"/>
+<rect x="40" y="172" width="8" height="62" rx="3" class="f-muted"/>
+<text x="64" y="198" class="mono" style="font-size:15px">campaign_id IS NULL</text>
+<text x="64" y="220" class="muted" style="font-size:15px">nothing recorded: unknown</text>
+<text x="364" y="210" text-anchor="end" class="b" style="font-size:24px">15,523</text>
+<rect x="40" y="254" width="340" height="92" rx="10" class="soft-navy"/>
+<text x="60" y="282" class="b" style="font-size:15px">NULL means unknown.</text>
+<text x="60" y="304" style="font-size:15px">Comparing anything with NULL using = or &lt;&gt;</text>
+<text x="60" y="324" style="font-size:15px">gives UNKNOWN, not FALSE.</text>
+<text x="434" y="52" class="b" style="font-size:16px">the same predicate, evaluated per row</text>
+<text x="434" y="84" class="mono muted" style="font-size:14px">WHERE …</text>
+<text x="770" y="84" text-anchor="middle" class="mono muted" style="font-size:14px">row with 1</text>
+<text x="910" y="84" text-anchor="middle" class="mono muted" style="font-size:14px">row with NULL</text>
+<text x="1080" y="84" text-anchor="middle" class="mono muted" style="font-size:14px">rows returned</text>
+<line x1="420" y1="94" x2="1160" y2="94" class="grid"/>
+<rect x="420" y="98" width="740" height="62" rx="8" class="card"/>
+<text x="434" y="134" class="mono" style="font-size:15px">campaign_id = 1</text>
+<rect x="718" y="113" width="104" height="30" rx="15" class="soft-teal"/>
+<text x="770" y="133" text-anchor="middle" class="b teal-ink" style="font-size:15px">TRUE</text>
+<rect x="858" y="113" width="104" height="30" rx="15" class="soft-red"/>
+<text x="910" y="133" text-anchor="middle" class="b red-ink" style="font-size:15px">UNKNOWN</text>
+<text x="1080" y="136" text-anchor="middle" class="b" style="font-size:22px">74</text>
+<rect x="420" y="174" width="740" height="62" rx="8" class="card"/>
+<text x="434" y="210" class="mono" style="font-size:15px">campaign_id &lt;&gt; 1</text>
+<rect x="718" y="189" width="104" height="30" rx="15" class="card"/>
+<text x="770" y="209" text-anchor="middle" class="b muted" style="font-size:15px">FALSE</text>
+<rect x="858" y="189" width="104" height="30" rx="15" class="soft-red"/>
+<text x="910" y="209" text-anchor="middle" class="b red-ink" style="font-size:15px">UNKNOWN</text>
+<text x="1080" y="212" text-anchor="middle" class="b red-ink" style="font-size:22px">0</text>
+<text x="1080" y="230" text-anchor="middle" class="red-ink" style="font-size:15px">not 15,523!</text>
+<rect x="420" y="250" width="740" height="62" rx="8" class="card"/>
+<text x="434" y="286" class="mono" style="font-size:15px">campaign_id is distinct from 1</text>
+<rect x="718" y="265" width="104" height="30" rx="15" class="card"/>
+<text x="770" y="285" text-anchor="middle" class="b muted" style="font-size:15px">FALSE</text>
+<rect x="858" y="265" width="104" height="30" rx="15" class="soft-teal"/>
+<text x="910" y="285" text-anchor="middle" class="b teal-ink" style="font-size:15px">TRUE</text>
+<text x="1080" y="288" text-anchor="middle" class="b" style="font-size:22px">15,523</text>
+<text x="40" y="398" class="b" style="font-size:20px">WHERE keeps only TRUE.</text>
+<text x="300" y="398" class="muted" style="font-size:15px">FALSE and UNKNOWN are both dropped, and UNKNOWN never shows up in an error.</text>
+<rect x="40" y="418" width="360" height="60" rx="12" class="soft-teal"/>
+<text x="60" y="455" class="b teal-ink" style="font-size:22px">TRUE</text>
+<text x="380" y="455" text-anchor="end" class="teal-ink" style="font-size:15px">kept</text>
+<rect x="420" y="418" width="360" height="60" rx="12" class="card"/>
+<text x="440" y="455" class="b muted" style="font-size:22px">FALSE</text>
+<text x="760" y="455" text-anchor="end" class="muted" style="font-size:15px">dropped</text>
+<rect x="800" y="418" width="360" height="60" rx="12" class="soft-red"/>
+<text x="820" y="455" class="b red-ink" style="font-size:22px">UNKNOWN</text>
+<text x="1140" y="455" text-anchor="end" class="red-ink" style="font-size:15px">dropped too: the trap</text>
+<text x="40" y="506" class="muted" style="font-size:15px">Hour 2 opener: campaign_id &lt;&gt; 1 returns 0, not 15,523. Every NULL row is UNKNOWN and drops out. IS DISTINCT FROM treats NULL as a value.</text>
+</svg>

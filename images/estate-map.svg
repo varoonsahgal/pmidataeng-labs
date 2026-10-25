@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" width="100%" class="hz" role="img" aria-labelledby="estate-title estate-desc">
+<title id="estate-title">Project HORIZON: five raw schemas, one Postgres warehouse, dbt, analytics views, three kinds of reader</title>
+<desc id="estate-desc">Five source boxes (CLR, MPL, RST, DET, RFR with row counts) feed the Postgres database horizon; dbt builds and tests analytics views; the views are read by dashboards, regulators (MHLW, AAMS/EU, BPOM) and the HORIZON analyst in Hour 4. Three market chips: JP, IT, ID.</desc>
+<style>
+.hz{
+  --navy:#102B53; --navy2:#0C2040; --orange:#FF4A00; --teal:#00C9A7; --ink:#1C2B40;
+  --tint:#F4F6FA; --muted:#5A6B80; --red:#C8402A;
+  --card:#FFFFFF; --line:#C9D3E0; --grid:#E4E9F1; --code:#F4F6FA;
+  --claude:#102B53; --on-claude:#FFFFFF;
+  --teal-ink:#00805F; --teal-soft:#D6F5EE;
+  --orange-ink:#D63D00; --orange-soft:#FFE6DA;
+  --red-ink:#B5361F; --red-soft:#FAE3DE;
+  --navy-soft:#E4EAF4; --mutedfill:#C3CDDA;
+}
+@media (prefers-color-scheme: dark){
+  .hz{
+    --ink:#F4F6FA; --muted:#AFBDD0; --card:#13305F; --line:#3C5884; --grid:#25416C; --code:#0B1B36;
+    --claude:#2F5FB4; --on-claude:#FFFFFF;
+    --teal-ink:#1FD9B9; --teal-soft:#0F3F3A;
+    --orange-ink:#FF8A5B; --orange-soft:#4B2514;
+    --red:#E8604A; --red-ink:#FF8B78; --red-soft:#4E1D17;
+    --navy-soft:#1B3B6E; --mutedfill:#4E6686; --tint:#0C2040;
+  }
+}
+.hz text{font-family:"Space Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;fill:var(--ink);font-size:16px}
+.hz .mono{font-family:"DM Mono",ui-monospace,Menlo,Consolas,monospace;font-size:14px}
+.hz .b{font-weight:700}
+.hz .i{font-style:italic}
+.hz .muted{fill:var(--muted)}
+.hz .teal-ink{fill:var(--teal-ink)}
+.hz .orange-ink{fill:var(--orange-ink)}
+.hz .red-ink{fill:var(--red-ink)}
+.hz .on{fill:var(--on-claude)}
+.hz .card{fill:var(--card);stroke:var(--line);stroke-width:1.5}
+.hz .soft-navy{fill:var(--navy-soft);stroke:var(--line);stroke-width:1.5}
+.hz .soft-teal{fill:var(--teal-soft);stroke:var(--teal);stroke-width:1.5}
+.hz .soft-orange{fill:var(--orange-soft);stroke:var(--orange);stroke-width:1.5}
+.hz .soft-red{fill:var(--red-soft);stroke:var(--red);stroke-width:1.5}
+.hz .claude{fill:var(--claude);stroke:none}
+.hz .code{fill:var(--code);stroke:var(--line);stroke-width:1}
+.hz .ln{stroke:var(--muted);stroke-width:2;fill:none}
+.hz .ln-ink{stroke:var(--ink);stroke-width:2;fill:none}
+.hz .ln-teal{stroke:var(--teal);stroke-width:2.5;fill:none}
+.hz .ln-orange{stroke:var(--orange);stroke-width:2.5;fill:none}
+.hz .ln-red{stroke:var(--red);stroke-width:2.5;fill:none}
+.hz .ln-claude{stroke:var(--claude);stroke-width:2;fill:none}
+.hz .dash{stroke-dasharray:7 6}
+.hz .grid{stroke:var(--grid);stroke-width:1;fill:none}
+.hz .f-teal{fill:var(--teal)}
+.hz .f-orange{fill:var(--orange)}
+.hz .f-red{fill:var(--red)}
+.hz .f-muted{fill:var(--mutedfill)}
+.hz .f-card{fill:var(--card)}
+.hz .f-line{fill:var(--line)}
+.hz .f-ink{fill:var(--ink)}
+.hz .f-navy{fill:var(--claude)}
+.hz .f-code{fill:var(--code)}
+.hz .f-teal-soft{fill:var(--teal-soft)}
+.hz .f-orange-soft{fill:var(--orange-soft)}
+.hz .f-red-soft{fill:var(--red-soft)}
+.hz .f-navy-soft{fill:var(--navy-soft)}
+.hz .mk-muted{fill:var(--muted)}
+.hz .mk-ink{fill:var(--ink)}
+.hz .mk-teal{fill:var(--teal)}
+.hz .mk-orange{fill:var(--orange)}
+.hz .mk-red{fill:var(--red)}
+.hz .mk-claude{fill:var(--claude)}
+</style>
+<defs>
+<marker id="estate-ar-muted" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-muted"/></marker>
+<marker id="estate-ar-ink" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-ink"/></marker>
+<marker id="estate-ar-teal" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-teal"/></marker>
+<marker id="estate-ar-orange" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-orange"/></marker>
+<marker id="estate-ar-red" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-red"/></marker>
+<marker id="estate-ar-claude" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-claude"/></marker>
+</defs>
+<rect x="32" y="52" width="312" height="78" rx="8" class="card"/>
+<rect x="32" y="52" width="7" height="78" rx="3" class="f-navy"/>
+<text x="52" y="76" style="font-size:16px"><tspan class="b">CLR  </tspan><tspan class="muted">consumer lifecycle</tspan></text>
+<text x="52" y="99" class="mono" style="font-size:14px">clr.consumers  6,000</text>
+<text x="52" y="119" class="mono muted" style="font-size:14px">clr.lifecycle_events  15,597</text>
+<line x1="344" y1="91.0" x2="388" y2="196" class="ln" marker-end="url(#estate-ar-muted)"/>
+<rect x="32" y="142" width="312" height="78" rx="8" class="card"/>
+<rect x="32" y="142" width="7" height="78" rx="3" class="f-navy"/>
+<text x="52" y="166" style="font-size:16px"><tspan class="b">MPL  </tspan><tspan class="muted">marketing permissions</tspan></text>
+<text x="52" y="189" class="mono" style="font-size:14px">mpl.consent_records  15,052</text>
+<text x="52" y="209" class="mono muted" style="font-size:14px">a ledger: 2.5 rows per consumer</text>
+<line x1="344" y1="181.0" x2="388" y2="232" class="ln" marker-end="url(#estate-ar-muted)"/>
+<rect x="32" y="232" width="312" height="78" rx="8" class="card"/>
+<rect x="32" y="232" width="7" height="78" rx="3" class="f-navy"/>
+<text x="52" y="256" style="font-size:16px"><tspan class="b">RST  </tspan><tspan class="muted">retail sell-through</tspan></text>
+<text x="52" y="279" class="mono" style="font-size:14px">rst.sell_through  2,730 weekly rows</text>
+<text x="52" y="299" class="mono muted" style="font-size:14px">rst.distributors  12</text>
+<line x1="344" y1="271.0" x2="388" y2="262" class="ln" marker-end="url(#estate-ar-muted)"/>
+<rect x="32" y="322" width="312" height="78" rx="8" class="card"/>
+<rect x="32" y="322" width="7" height="78" rx="3" class="f-navy"/>
+<text x="52" y="346" style="font-size:16px"><tspan class="b">DET  </tspan><tspan class="muted">device telemetry</tspan></text>
+<text x="52" y="369" class="mono" style="font-size:14px">det.device_telemetry  35,113</text>
+<text x="52" y="389" class="mono muted" style="font-size:14px">20% anonymised (NULL consumer_id)</text>
+<line x1="344" y1="361.0" x2="388" y2="292" class="ln" marker-end="url(#estate-ar-muted)"/>
+<rect x="32" y="412" width="312" height="78" rx="8" class="card"/>
+<rect x="32" y="412" width="7" height="78" rx="3" class="f-navy"/>
+<text x="52" y="436" style="font-size:16px"><tspan class="b">RFR  </tspan><tspan class="muted">regulatory filings</tspan></text>
+<text x="52" y="459" class="mono" style="font-size:14px">rfr.filings  112</text>
+<text x="52" y="479" class="mono muted" style="font-size:14px">accepted: ID 14% · IT 65% · JP 69%</text>
+<line x1="344" y1="451.0" x2="388" y2="328" class="ln" marker-end="url(#estate-ar-muted)"/>
+<text x="457.0" y="74" text-anchor="middle" class="muted" style="font-size:15px">three markets</text>
+<rect x="383.0" y="84" width="44" height="28" rx="14" class="soft-orange"/>
+<text x="405.0" y="104" text-anchor="middle" class="b orange-ink" style="font-size:15px">JP</text>
+<rect x="435.0" y="84" width="44" height="28" rx="14" class="soft-orange"/>
+<text x="457.0" y="104" text-anchor="middle" class="b orange-ink" style="font-size:15px">IT</text>
+<rect x="487.0" y="84" width="44" height="28" rx="14" class="soft-orange"/>
+<text x="509.0" y="104" text-anchor="middle" class="b orange-ink" style="font-size:15px">ID</text>
+<text x="457.0" y="138" text-anchor="middle" class="muted" style="font-size:15px">Postgres warehouse</text>
+<path d="M392,166 L392,354 A65.0,16 0 0 0 522,354 L522,166 A65.0,16 0 0 0 392,166 Z" class="soft-teal"/>
+<ellipse cx="457.0" cy="166" rx="65.0" ry="16" class="soft-teal"/>
+<text x="457.0" y="262" text-anchor="middle" class="mono b" style="font-size:19px">horizon</text>
+<text x="457.0" y="286" text-anchor="middle" class="muted" style="font-size:15px">5 raw schemas</text>
+<text x="457.0" y="304" text-anchor="middle" class="muted" style="font-size:15px">+ analytics</text>
+<line x1="522" y1="260" x2="568" y2="260" class="ln" marker-end="url(#estate-ar-muted)"/>
+<rect x="572" y="218" width="100" height="84" rx="10" class="soft-navy"/>
+<text x="622.0" y="256" text-anchor="middle" class="b" style="font-size:22px">dbt</text>
+<text x="622.0" y="280" text-anchor="middle" class="mono muted" style="font-size:14px">run · test</text>
+<text x="622.0" y="324" text-anchor="middle" class="muted" style="font-size:15px">dbt run builds the views,</text>
+<text x="622.0" y="342" text-anchor="middle" class="muted" style="font-size:15px">dbt test checks them</text>
+<line x1="672" y1="260" x2="718" y2="260" class="ln" marker-end="url(#estate-ar-muted)"/>
+<rect x="722" y="218" width="210" height="84" rx="10" class="card"/>
+<text x="827.0" y="244" text-anchor="middle" class="b" style="font-size:16px">analytics.* views</text>
+<text x="827.0" y="268" text-anchor="middle" class="mono" style="font-size:14px">italy_conversion_events</text>
+<text x="827.0" y="288" text-anchor="middle" class="mono" style="font-size:14px">japan_sell_through</text>
+<text x="1076.0" y="104" text-anchor="middle" class="muted" style="font-size:15px">readers (read-only)</text>
+<line x1="932" y1="260" x2="978" y2="156.0" class="ln" marker-end="url(#estate-ar-muted)"/>
+<rect x="982" y="120" width="188" height="72" rx="10" class="card"/>
+<text x="1076.0" y="150" text-anchor="middle" class="b" style="font-size:16px">Dashboards</text>
+<text x="1076.0" y="172" text-anchor="middle" class="muted" style="font-size:15px">Power BI</text>
+<line x1="932" y1="260" x2="978" y2="260.0" class="ln" marker-end="url(#estate-ar-muted)"/>
+<rect x="982" y="224" width="188" height="72" rx="10" class="card"/>
+<text x="1076.0" y="254" text-anchor="middle" class="b" style="font-size:16px">Regulators</text>
+<text x="1076.0" y="276" text-anchor="middle" class="mono muted" style="font-size:14px">MHLW · AAMS/EU · BPOM</text>
+<line x1="932" y1="260" x2="978" y2="364.0" class="ln" marker-end="url(#estate-ar-muted)"/>
+<rect x="982" y="328" width="188" height="72" rx="10" class="card"/>
+<text x="1076.0" y="358" text-anchor="middle" class="b" style="font-size:16px">HORIZON analyst</text>
+<text x="1076.0" y="380" text-anchor="middle" class="muted" style="font-size:15px">Hour 4: you run its SQL</text>
+<text x="1170" y="500" text-anchor="end" class="muted" style="font-size:15px">row counts verified against the warehouse, October 2026</text>
+</svg>

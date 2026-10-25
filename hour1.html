@@ -1,0 +1,718 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Hour 1 · No vibe pipelines · Project HORIZON lab guides</title>
+<meta name="description" content="Lab guides for the PMI Data Engineer Future Skills class. Project HORIZON is fictional and training-only.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#0C2040">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230C2040'/%3E%3Crect x='6' y='6' width='9' height='9' rx='2' fill='%23FF4A00'/%3E%3Crect x='17' y='17' width='9' height='9' rx='2' fill='%2300C9A7'/%3E%3C/svg%3E">
+</head>
+<body>
+
+
+<header class="mast">
+  <div class="mast-in">
+    <nav class="sitenav" aria-label="Lab guides">
+      <a class="brand" href="index.html">Project HORIZON</a>
+      <a href="index.html">Start here</a>
+      <a href="hour1.html" aria-current="page">Hour 1</a>
+      <a href="hour2.html">Hour 2</a>
+      <a href="hour3.html">Hour 3</a>
+      <a href="hour4.html">Hour 4</a>
+      <a href="glossary.html">Glossary</a>
+    </nav>
+    <div class="mast-grid">
+      <div class="mast-copy">
+        <div class="eyebrow">PMI · DI&amp;A Future Skills · Data Engineer track · Project HORIZON</div>
+        <h1>Hour 1 · No <span>vibe</span> pipelines<small>Data Engineering with AI Support (WA3903) · Draft → Prove → Lock</small></h1>
+        <p class="lede">The assistant drafted the Italy consumer-events-to-consent model in under a minute. It runs clean. Before it ships, you prove it against the warehouse and lock it with tests. <strong>A runnable draft is not a correct one.</strong></p>
+        <div class="meta"><span>Hour 1 · 0:12 to 1:05</span><span>VS Code + SQLTools</span><span>dbt CLI</span><span>Claude Desktop · <b>Sonnet</b> + <b>Opus</b></span></div>
+      </div>
+      <div class="mfd" role="img" aria-label="Hour 1 in numbers: 794 Italy conversion events; the draft returns 1,988 rows, the fix returns 794; latest consent stamps 31 events with a future consent; 8 events have no consent in effect; 7 tests pass.">
+        <div class="hd"><b>Hour 1 · Italy conversions</b><b>rows</b></div>
+        <div class="row"><span class="lbl">source events (IT, conversion)</span><span class="val">794</span></div>
+        <div class="row"><span class="lbl">model rows, draft → fixed</span><span class="was">1,988</span><span class="now">794</span></div>
+        <div class="row"><span class="lbl">consent ledger rows / consumers</span><span class="val">15,052 / 6,000</span></div>
+        <div class="row"><span class="lbl">"latest consent" from the future</span><span class="was">31</span><span class="now">0</span></div>
+        <div class="row"><span class="lbl">no consent in effect → false</span><span class="val">8</span></div>
+        <div class="row"><span class="lbl">dbt tests</span><span class="now">7 PASS</span></div>
+        <div class="ft">Every number on this page comes from the HORIZON warehouse, and <span class="blink">you can check every one in SQLTools.</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="frame">
+  <details class="toc" id="toc" open>
+    <summary>On this page</summary>
+    <ol>
+      <li class="grp">Set-up</li>
+      <li><a href="#why">The request</a></li>
+      <li><a href="#opener">Opener · how the assistant works</a></li>
+      <li><a href="#how">How this lab works</a></li>
+      <li><a href="#words">Words you will hear</a></li>
+      <li><a href="#before">Before you start</a></li>
+      <li class="grp">The lab</li>
+      <li><a href="#step1">Step 1 · Draft</a></li>
+      <li class="sub"><a href="#land">Put the draft in the project</a></li>
+      <li><a href="#step2">Step 2 · Prove</a></li>
+      <li class="sub"><a href="#check1">Four proof checks</a></li>
+      <li><a href="#step2b">Step 2b · Plan, implement</a></li>
+      <li class="sub"><a href="#shortcut">Short on time</a></li>
+      <li><a href="#step3">Step 3 · Lock</a></li>
+      <li class="grp">Wrap-up</li>
+      <li><a href="#recap">What just happened</a></li>
+      <li><a href="#takeaway">Takeaway #1</a></li>
+      <li><a href="#indonesia">Stretch: Indonesia</a></li>
+    </ol>
+  </details>
+
+  <main id="main">
+    <section class="part" id="why">
+      <div class="part-h">
+        <span class="eyebrow">Hour 1 · WA3903 · Data Engineering with AI Support</span>
+        <h2>No <span>vibe</span> pipelines</h2>
+        <p class="dek">A runnable draft is not a correct one. Three steps: Draft → Prove → Lock. Every prompt and query you need is on this page. Paste, do not retype.</p>
+      </div>
+
+      <blockquote>
+        <p>"Vibe coding" was the Collins Dictionary Word of the Year 2025: <em>programming by vibes, not variables.</em> Fine for a weekend app. Not fine for a model that stamps a marketing permission on 794 real conversion events.</p>
+      </blockquote>
+
+      <p><b>The request that just landed:</b></p>
+      <blockquote class="request">
+        <p>"The AI assistant drafted the Italy consumer-events-to-consent model in under a minute. It runs clean, no errors. Can we ship it this afternoon?"</p>
+        <cite>Team request · Project HORIZON</cite>
+      </blockquote>
+
+      <p class="rule-line">A runnable draft is not a correct one. The assistant drafts. <span class="w">The warehouse decides.</span> You sign.</p>
+
+      <p>You will follow along with the instructor. Three steps: <b>Draft → Prove → Lock.</b> Every prompt and query you need is below. Paste, do not retype.</p>
+
+      <div class="box analogy">
+        <span class="k">Premium planning, thrifty execution</span>
+        <p>One more idea runs through the hour. The cheap, fast model drafts (a draft is going to be reviewed anyway). The expensive model does the one step that is pure judgment: planning the fix from the facts you proved. Then the cheap model implements the approved plan. You spend where the thinking is, and the thing you review is a twenty-line plan, not a two-hundred-line diff (the list of changed lines).</p>
+      </div>
+    </section>
+
+    <section class="part" id="opener">
+      <div class="part-h">
+        <span class="eyebrow">Opener · instructor-led · 0:12</span>
+        <h2>How the <span>assistant</span> works</h2>
+        <p class="dek">Before the first prompt, six minutes on the machine you are about to hand a schema to. Nothing to install, nothing to type except one word in the chat.</p>
+      </div>
+
+      <div class="box chat">
+        <span class="k">Post in the chat</span>
+        <p>Finish this line and type the next word, just one: <code>select count(*) from ___</code> <span class="opts">(Do not think about it.)</span></p>
+      </div>
+
+      <p>The chat fills with different answers, some far more popular than others, none of them wrong. That is what a language model does on every <strong>token</strong> (a piece of a word, the unit a model reads and writes): it produces a spread of likely next tokens and picks one. The instructor then types the same fragment into the <a href="https://poloclub.github.io/transformer-explainer/">Transformer Explainer</a> (GPT-2 small, running in your browser) so you can watch the probability bars and the temperature slider.</p>
+
+      <div class="box tidbit">
+        <span class="k">Four facts about the assistant</span>
+        <ol>
+          <li><strong>It predicts the next token.</strong> Plausible is its job. Correct is yours.</li>
+          <li><strong>It only knows its window.</strong> Your prompt is its whole world: no memory of your warehouse, no rows unless you paste them (do not).</li>
+          <li><strong>It samples.</strong> Same prompt, different SQL. Prove with a count, not by eye.</li>
+          <li><strong>It comes in sizes.</strong> Premium for judgment, thrifty for typing. This lab uses both.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="part" id="how">
+      <div class="part-h">
+        <span class="eyebrow">How this lab works</span>
+        <h2>The paste is <span>you</span>, signing</h2>
+        <p class="dek">Claude Desktop is a chat window. It cannot see your warehouse and it cannot create files on your VM. Every step uses the same loop.</p>
+      </div>
+
+      <ol class="steps">
+        <li>Paste a prompt from this guide into Claude Desktop.</li>
+        <li>Claude replies with SQL or YAML in a code block. Hover over the block and click <b>Copy</b>.</li>
+        <li>Paste it into a file in VS Code and save.</li>
+        <li>Run it: <code>dbt</code> in the VS Code terminal for models and tests, SQLTools for queries.</li>
+      </ol>
+
+      <p class="rule-line">The paste is you, signing. <span class="w">Nothing lands in the repo unless you put it there.</span></p>
+
+      <div class="box tidbit">
+        <span class="k">Why your SQL differs from your neighbour's</span>
+        <p>Your SQL will not match your neighbour's word for word. The model <em>samples</em>: it picks from a spread of likely next words, so one prompt gives two engineers two drafts. That is normal. The review is about the pattern (join type, grain, NULL), and the proof is a row count, never a comparison by eye.</p>
+      </div>
+    </section>
+
+    <section class="part" id="words">
+      <div class="part-h">
+        <span class="eyebrow">Before the first prompt</span>
+        <h2>Words you will <span>hear</span></h2>
+        <p class="dek">Every term used in this lab, in plain English. Each one links to the full glossary for the day.</p>
+      </div>
+
+      <div class="words">
+        <div class="k">Words you will hear <a href="glossary.html">Full glossary →</a></div>
+        <table>
+          <thead><tr><th>Term</th><th>Plain English</th></tr></thead>
+          <tbody>
+            <tr><td><a href="glossary.html#dbt">dbt</a> (data build tool)</td><td>A tool that turns SQL SELECT statements saved as files into views or tables in the warehouse. <code>dbt run</code> builds them, <code>dbt test</code> checks them. Anything in <code>{{ }}</code> (config, source, ref) is an instruction to dbt, replaced before the SQL runs.</td></tr>
+            <tr><td><a href="glossary.html#model">model</a></td><td>One SQL SELECT saved as a <code>.sql</code> file in the dbt project. The file name (without <code>.sql</code>) is the model name.</td></tr>
+            <tr><td><a href="glossary.html#model-picker">model (dbt) vs model (AI)</a></td><td>A dbt model is a SQL file that builds a view. An AI model is the thing behind Claude (Opus, Sonnet, Haiku). The picker next to the send button chooses the AI model.</td></tr>
+            <tr><td><a href="glossary.html#view">view</a></td><td>A saved query that behaves like a table. Our models build as views in the <code>analytics</code> schema.</td></tr>
+            <tr><td><a href="glossary.html#source">source</a></td><td>A raw table dbt has been told about. In a model you write <code>{{ source('clr','lifecycle_events') }}</code> instead of <code>clr.lifecycle_events</code>.</td></tr>
+            <tr><td><a href="glossary.html#schema">schema</a></td><td>Two meanings. In the database, a named folder of tables: <code>clr</code>, <code>mpl</code>, <code>analytics</code>. Loosely, the list of tables and columns, which is what you give Claude. <code>schema.yml</code> is just the dbt file that holds generic tests.</td></tr>
+            <tr><td><a href="glossary.html#generic-tests">generic test</a></td><td>A one-word check declared in <code>schema.yml</code>: <code>not_null</code>, <code>unique</code>, <code>relationships</code> (every value exists in another table), <code>accepted_values</code>.</td></tr>
+            <tr><td><a href="glossary.html#singular-test">singular test</a></td><td>A SQL file in the <code>tests/</code> folder that returns rows only when something is wrong. Zero rows = pass.</td></tr>
+            <tr><td><a href="glossary.html#contract">contract</a></td><td>A rule the data must always obey: one row per event, <code>marketing_allowed</code> never NULL. A test is a contract written down.</td></tr>
+            <tr><td><a href="glossary.html#regression">regression</a></td><td>An old bug coming back after a later change. A test that catches a regression fails the build the day it returns.</td></tr>
+            <tr><td><a href="glossary.html#grain">grain</a></td><td>What one row represents. Here: one row per conversion event.</td></tr>
+            <tr><td><a href="glossary.html#ledger">ledger</a></td><td>A table that keeps history: many rows per key over time. <code>mpl.consent_records</code> is a ledger, about 2.5 rows per consumer.</td></tr>
+            <tr><td><a href="glossary.html#fan-out">fan-out</a></td><td>A join that multiplies rows because the other side has more than one match per key.</td></tr>
+            <tr><td><a href="glossary.html#point-in-time">point-in-time</a></td><td>The record that was in effect on the event's date, not the latest one on file.</td></tr>
+            <tr><td><a href="glossary.html#null">NULL</a></td><td>"Unknown". SQL has three truth values: true, false, unknown. A <code>WHERE</code> keeps only true, so a NULL vanishes from <code>= true</code> <b>and</b> from <code>= false</code>.</td></tr>
+            <tr><td><a href="glossary.html#coalesce">COALESCE</a></td><td><code>coalesce(a, b)</code> returns <code>a</code>, unless <code>a</code> is NULL, then <code>b</code>.</td></tr>
+            <tr><td><a href="glossary.html#distinct-on">DISTINCT ON</a></td><td>Postgres: keep one row per key, the first one in the <code>ORDER BY</code>.</td></tr>
+            <tr><td><a href="glossary.html#inner-vs-left-join">INNER vs LEFT join</a></td><td>INNER drops a row when the other side has no match. LEFT keeps it, with NULLs in the missing columns.</td></tr>
+            <tr><td><a href="glossary.html#orphan-row">orphan row</a></td><td>A row whose key has no match in the table it points to.</td></tr>
+            <tr><td><a href="glossary.html#conversion">conversion</a></td><td>An adult smoker switching to a smoke-free product. In HORIZON it is the <code>'conversion'</code> value of <code>lifecycle_stage</code> (registration → trial → conversion → retention → churn).</td></tr>
+            <tr><td><a href="glossary.html#consent">consent / marketing permission</a></td><td>A consumer's yes or no to marketing: <code>marketing_allowed</code>, plus the <code>consent_date</code> it was given.</td></tr>
+            <tr><td><a href="glossary.html#under-25-rule">age band / under-25 rule</a></td><td><code>age_band</code> groups consumers by age. Marketing to the <code>'18-24'</code> band is forbidden in Italy and Indonesia (0% allowed, by design).</td></tr>
+            <tr><td><a href="glossary.html#sqltools">SQLTools</a></td><td>The VS Code extension you use to run SQL against HORIZON.</td></tr>
+            <tr><td><a href="glossary.html#token">token</a></td><td>The pieces a language model reads and writes. Roughly three-quarters of an English word; a code name such as <code>lifecycle_events</code> splits into several. Prices are per million tokens.</td></tr>
+            <tr><td><a href="glossary.html#context-window">context window</a></td><td>Everything the model can see right now: your prompt and the chat so far. It knows nothing else about HORIZON.</td></tr>
+            <tr><td><a href="glossary.html#model-tiers">model tiers</a></td><td>The same vendor sells the model in sizes (Opus, Sonnet, Haiku). The expensive one buys judgment, not fluency; all of them type SQL fine.</td></tr>
+            <tr><td><a href="glossary.html#prompt-hygiene">prompt hygiene</a></td><td>Everything you paste into Claude leaves your data boundary (a <em>data egress</em>). Schema and column names: yes. Rows, credentials, connection strings: never.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <figure class="hero wide">
+        <img src="images/dbt-anatomy.svg" alt="How dbt works: a model file that reads a source becomes a view with dbt run; generic tests in schema.yml and singular tests in tests/ check it with dbt test, PASS when no bad rows come back." loading="lazy">
+        <figcaption>How dbt works. A <strong>model</strong> is one SELECT in a <code>.sql</code> file that reads a <strong>source</strong> (a declared raw table). <code>dbt run</code> builds it as a <strong>view</strong>. <code>dbt test</code> runs the generic tests in <code>schema.yml</code> and the singular tests in <code>tests/</code> against that view: PASS means no bad rows came back.</figcaption>
+      </figure>
+
+      <p>Full list for the day: <a href="glossary.html">glossary</a>.</p>
+    </section>
+
+    <section class="part" id="before">
+      <div class="part-h">
+        <span class="eyebrow">Before you start · 1 min</span>
+        <h2>Re-check the <span>pre-flight</span></h2>
+        <p class="dek">You did this in the pre-flight. One minute to make sure everything is still connected.</p>
+      </div>
+
+      <ol class="steps">
+        <li><b>VS Code</b> → File → Open Folder → <code>C:\LabFiles\building-a-tested-rst-model-for-indonesia\horizon_dbt</code>. This is the dbt project. Its sources already declare <code>clr</code>, <code>mpl</code> and <code>rst</code>, so there is nothing to configure.</li>
+        <li><b>SQLTools</b> sidebar (the database icon) → right-click the <b>HORIZON</b> connection → <em>Connect</em>. If it is missing, create one: PostgreSQL, host <code>localhost</code>, port <code>5432</code>, database <code>horizon</code>, user <code>postgres</code>, password <code>Horizon!Lab2026</code>.</li>
+        <li><b>Terminal</b> (Terminal → New Terminal). You should be in the folder that contains <code>dbt_project.yml</code>. Run <code>dbt debug</code>. Expect <code>All checks passed!</code>.</li>
+        <li><b>Claude Desktop</b> → <b>New chat</b>. One fresh chat for this whole lab. The AI model name sits <b>next to the send button</b> at the bottom of the chat box. Click it and pick <b>Sonnet</b>. That is the thrifty model for Steps 1 and 3. You will switch to <b>Opus</b> for exactly one step in the middle, then back. You can change model at any point in a chat; it applies from the next reply.</li>
+      </ol>
+
+      <div class="tbl cards">
+        <table>
+          <thead><tr><th>Model</th><th>Price per million tokens, in / out</th><th>Use it for</th></tr></thead>
+          <tbody>
+            <tr><td><b>Opus 5.5</b></td><td><span class="num">$4 / $20</span></td><td>judgment: reviewing, planning, deciding what to test</td></tr>
+            <tr><td><b>Sonnet 5.5</b></td><td><span class="num">$2 / $10</span></td><td>typing: drafting from a spec, implementing an approved plan, writing tests from a list</td></tr>
+            <tr><td><b>Haiku 5.5</b></td><td><span class="num">$0.10 / $0.50</span></td><td>bulk, mechanical work with no ambiguity</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Output costs five times input on every tier, a plan is short and an implementation is long: that asymmetry is the whole argument. On a subscription plan the same ratio shows up as how fast you use up your session limit. <em>(Anthropic API pricing, October 2026.)</em></p>
+
+      <figure class="hero wide">
+        <img src="images/premium-thrifty.svg" alt="Draft on Sonnet, prove with a count, plan the fix on Opus, implement and test on Sonnet.">
+        <figcaption>Draft on Sonnet, prove with a count, plan the fix on Opus (a 20-line plan you review), implement and test on Sonnet: 794 = 794, 7 tests pass. Prices per million tokens: Opus $4/$20, Sonnet $2/$10, Haiku $0.10/$0.50. Output costs 5x input.</figcaption>
+      </figure>
+
+      <div class="box note">
+        <span class="k">Prompt hygiene, once</span>
+        <p>Everything we paste into Claude is a <em>data egress</em>. Schema, column names, grain, scope: yes. Real consumer rows, credentials, connection strings: never. No prompt in this guide contains any of them.</p>
+      </div>
+    </section>
+
+    <section class="part" id="lab">
+      <div class="part-h">
+        <span class="eyebrow">The lab · 27 min hands-on</span>
+        <h2>Draft → <span>Prove</span> → Lock</h2>
+        <p class="dek">The assistant drafts the Italy model. The warehouse tells you what it really does. Then you make the correction permanent with tests.</p>
+      </div>
+
+      <!-- STEP 1 -->
+      <div class="step" id="step1">
+        <span class="step-n">1</span>
+        <div class="step-t"><span class="step-k">Draft</span><h3>Draft with AI, on the thrifty model</h3></div>
+        <span class="step-min">8 min</span>
+      </div>
+
+      <p>Check the picker says <b>Sonnet</b>. A draft is cheap by design: you are about to review it anyway.</p>
+
+      <div class="prompt">
+        <p class="model">Model: <b>Sonnet</b> · new chat</p>
+        <p class="asks"><b>What this asks Claude to do</b>Write the first version of the Italy model as one SQL SELECT, from the schema alone, without touching the database.</p>
+        <pre><code>Context: I am a data engineer at PMI on Project HORIZON. We use dbt on a Postgres warehouse.
+Task: draft a dbt model called italy_conversion_events as one SQL SELECT. Draft only: do not run anything.
+Tables (read them as {{ source('clr','lifecycle_events') }} and {{ source('mpl','consent_records') }}):
+- clr.lifecycle_events: event_id, consumer_id, market_code, product_code, lifecycle_stage, event_date, campaign_id
+- mpl.consent_records: consent_id, consumer_id, marketing_allowed, consent_date
+Rules:
+- keep only market_code = 'IT' and lifecycle_stage = 'conversion'
+- attach each event's marketing_allowed from the consent record
+- add a column campaign_bucket: 'q3_campaign' when campaign_id = 1, otherwise 'other'
+- explicit column list, no SELECT *, no trailing semicolon
+Output: the model SQL in one code block, starting with {{ config(materialized='view', schema='analytics') }}.
+Respond in Markdown only. Do not create any file.</code></pre>
+        <p class="good"><b>What a good answer looks like</b>One SQL code block that starts with the <code>config</code> line, a <code>select</code> with named columns, a join from <code>lifecycle_events</code> to <code>consent_records</code> on <code>consumer_id</code>, a <code>where</code> for Italy and conversion, and a <code>case</code> for <code>campaign_bucket</code>. Notice what the prompt never said: that the consent table is a ledger. Claude cannot know that. Hold the thought.</p>
+      </div>
+
+      <h3 id="land">Put the draft in the project</h3>
+      <p>Claude gave you text in a chat. dbt needs a file. In the VS Code terminal, in the <code>horizon_dbt</code> folder:</p>
+
+      <div class="prompt term">
+        <pre><code>copy models\analytics\MODEL_TEMPLATE.sql.example models\analytics\italy_conversion_events.sql</code></pre>
+      </div>
+
+      <p>(<code>cp models/analytics/MODEL_TEMPLATE.sql.example models/analytics/italy_conversion_events.sql</code> also works in the PowerShell terminal. Or right-click the <code>models/analytics</code> folder in the Explorer → New File → name it <code>italy_conversion_events.sql</code>.) The file name without <code>.sql</code> is the model name: it is what <code>--select</code> matches later.</p>
+
+      <p>Then:</p>
+      <ol class="steps">
+        <li>Open <code>models/analytics/italy_conversion_events.sql</code>.</li>
+        <li>In Claude Desktop, hover over the SQL code block and click <b>Copy</b>. If Claude shows the code in a panel on the right instead of in the chat, use the <b>Copy</b> button at the top of that panel, or reply "Put it in a code block in the chat."</li>
+        <li>In the file, select all (<kbd>Ctrl+A</kbd>) and paste (<kbd>Ctrl+V</kbd>), so the template placeholder is gone.</li>
+        <li>Check that line 1 is <code>{{ config(materialized='view', schema='analytics') }}</code> and that it appears <b>exactly once</b>. Delete any duplicate.</li>
+        <li>Delete any semicolon at the very end of the SQL. dbt wraps your SELECT inside <code>create view ... as ( ... )</code>, so a <code>;</code> inside the brackets is a syntax error.</li>
+        <li>Save (<kbd>Ctrl+S</kbd>).</li>
+      </ol>
+
+      <figure class="hero wide">
+        <img src="images/paste-is-signing.svg" alt="The Claude Desktop loop: prompt, Claude's reply, copy, paste into the model file in VS Code, dbt run, SQLTools count.">
+        <figcaption>The Claude Desktop loop: prompt, Claude's reply, copy, paste into <code>models/analytics/italy_conversion_events.sql</code> in VS Code, <code>dbt run</code>, SQLTools count 794. The paste is you, signing.</figcaption>
+      </figure>
+
+      <p><b>The paste is you, signing.</b> <b>Do not run dbt yet.</b> Read the file like a reviewer first.</p>
+
+      <div class="box chat">
+        <span class="k">Post in the chat, one word</span>
+        <p><strong>What worries you in this draft?</strong><span class="opts">hint words: ledger · latest · NULL · grain · nothing</span></p>
+      </div>
+
+      <div class="box trap">
+        <span class="k">The three things that fail silently</span>
+        <p>In any AI-drafted transformation, these are the three places a draft goes wrong without an error.</p>
+      </div>
+      <div class="tbl cards">
+        <table>
+          <thead><tr><th>Trap</th><th>The question to ask</th></tr></thead>
+          <tbody>
+            <tr><td><b>Join type</b></td><td>If the right side is missing, do rows vanish (INNER) or survive as NULL (LEFT)?</td></tr>
+            <tr><td><b>Grain</b></td><td>Is the right side one row per key, or a <em>ledger</em> with history? Does the join fan out?</td></tr>
+            <tr><td><b>NULL</b></td><td>What happens to <code>marketing_allowed = NULL</code> in a <code>= true</code> filter? (It disappears.)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step" id="step2">
+        <span class="step-n">2</span>
+        <div class="step-t"><span class="step-k">Prove</span><h3>Prove it against the warehouse</h3></div>
+        <span class="step-min">9 min</span>
+      </div>
+      <div class="expects">
+        <span class="expect">794 source events</span>
+        <span class="expect bad">draft returns 1,988</span>
+        <span class="expect bad">31 future consents</span>
+        <span class="expect bad">8 with no consent</span>
+      </div>
+
+      <div class="box chat">
+        <span class="k">Before running anything, predict in the chat</span>
+        <p><strong>There are 794 Italy conversion events. How many rows will the model return?</strong><span class="opts">794 · more · fewer</span></p>
+      </div>
+
+      <p>Build the draft, then prove what it does. In the terminal:</p>
+
+      <div class="prompt term">
+        <pre><code>dbt run --select italy_conversion_events</code></pre>
+        <p class="good"><b>What a good answer looks like</b>Expect <code>1 of 1 OK created sql view model analytics.italy_conversion_events</code>. Green. Now the warehouse's opinion.</p>
+      </div>
+
+      <p>In SQLTools: right-click <b>HORIZON</b> → <b>New SQL File</b>, paste one query at a time, select it and press <kbd>Ctrl+E</kbd> <kbd>Ctrl+E</kbd> (or click <em>Run on active connection</em> above the query). The expected numbers are in the comments.</p>
+
+      <div class="prompt sql" id="check1">
+        <p class="asks"><b>Check 1 · the ledger</b>The consent ledger is not one row per consumer.</p>
+        <pre><code class="language-sql">-- 1) The consent ledger is NOT one row per consumer
+select count(*) as consent_rows, count(distinct consumer_id) as consumers,
+       round(count(*)::numeric / count(distinct consumer_id), 2) as rows_per_consumer
+from mpl.consent_records;
+-- expect 15,052 / 6,000 / 2.51</code></pre>
+        <p class="good"><b>What you should see</b><span class="expect">expect 15,052 / 6,000 / 2.51</span></p>
+      </div>
+
+      <div class="prompt sql" id="check2">
+        <p class="asks"><b>Check 2 · the grain</b>Source events vs model rows: did the join change the grain?</p>
+        <pre><code class="language-sql">-- 2) Source events vs model rows: did the join change the grain?
+select (select count(*) from clr.lifecycle_events
+         where market_code = 'IT' and lifecycle_stage = 'conversion') as source_events,
+       (select count(*) from analytics.italy_conversion_events)      as model_rows;
+-- expect 794 source. A draft that joins the ledger directly returns ~1,988 (2.5x fan-out).</code></pre>
+        <p class="good"><b>What you should see</b><span class="expect">expect 794 source</span> <span class="expect bad">draft returns ~1,988</span> A draft that joins the ledger directly fans out about 2.5x.</p>
+      </div>
+
+      <figure class="hero wide">
+        <img src="images/ledger-fanout.svg" alt="Joining an event to the consent ledger multiplies rows: 794 events become 1,988 rows.">
+        <figcaption>Joining event 4711 to the consent ledger (2.51 rows per consumer) turns 794 events into 1,988 rows. Fan-out: the join changed the grain and nothing complained.</figcaption>
+      </figure>
+
+      <div class="prompt sql" id="check3">
+        <p class="asks"><b>Check 3 · latest is not point-in-time</b>If the draft takes each consumer's latest consent: how many events get a consent decided after the event?</p>
+        <pre><code class="language-sql">-- 3) If the draft takes each consumer's LATEST consent: how many events get a consent decided AFTER the event?
+with latest as (
+  select distinct on (consumer_id) consumer_id, consent_date
+  from mpl.consent_records order by consumer_id, consent_date desc)
+select count(*) as conversion_events,
+       count(*) filter (where e.event_date &lt; l.consent_date) as stamped_with_future_consent
+from clr.lifecycle_events e join latest l using (consumer_id)
+where e.market_code = 'IT' and e.lifecycle_stage = 'conversion';
+-- expect 31 of 794: a permission that did not exist yet, stamped on a historical event. Wrong for any audit.</code></pre>
+        <p class="good"><b>What you should see</b><span class="expect bad">expect 31 of 794</span> A permission that did not exist yet, stamped on a historical event. Wrong for any audit.</p>
+      </div>
+
+      <figure class="hero wide">
+        <img src="images/point-in-time.svg" alt="Latest consent stamps a March event with a June record; the consent in effect on the event date is the January one.">
+        <figcaption>One consumer, one year. "Latest consent" stamps the 12 March event with a June record that did not exist yet (31 of 794 events): wrong. The consent in effect on the event date (<code>consent_date &lt;= event_date</code>) is the January one: right.</figcaption>
+      </figure>
+
+      <div class="prompt sql" id="check4">
+        <p class="asks"><b>Check 4 · NULL</b>Point-in-time: how many events have no consent dated on or before the event? These become NULL.</p>
+        <pre><code class="language-sql">-- 4) Point-in-time: how many events have NO consent dated on or before the event? (these become NULL)
+select count(*) as events_with_no_consent_in_effect
+from clr.lifecycle_events e
+where e.market_code = 'IT' and e.lifecycle_stage = 'conversion'
+  and not exists (select 1 from mpl.consent_records c
+                  where c.consumer_id = e.consumer_id and c.consent_date &lt;= e.event_date);
+-- expect 8 of 794: with no coalesce these 8 vanish from BOTH marketing_allowed = true and = false</code></pre>
+        <p class="good"><b>What you should see</b><span class="expect bad">expect 8 of 794</span> With no <code>coalesce</code>, these 8 vanish from both <code>marketing_allowed = true</code> and <code>= false</code>.</p>
+      </div>
+
+      <p>If your draft already resolves consent point-in-time, your check 2 may show 794 already. Well done; the three questions below still apply to the next draft you review, and the numbers in this guide describe the most common draft.</p>
+
+      <div class="box try">
+        <span class="k">What you should be able to say now, in one sentence each</span>
+        <ul>
+          <li><em>Grain:</em> the model returns ___ rows for 794 events, because ___.</li>
+          <li><em>Consent:</em> "latest consent" is wrong because consent is <b>point-in-time</b>: an event must carry the permission in effect <b>on its event_date</b>.</li>
+          <li><em>NULL:</em> an event with no consent dated on or before it (8 of the 794) has <code>marketing_allowed = NULL</code>, which silently drops out of <code>= true</code> <b>and</b> <code>= false</code> filters. Unknown is not "allowed".</li>
+        </ul>
+      </div>
+
+      <!-- STEP 2b -->
+      <div class="step" id="step2b">
+        <span class="step-n">2b</span>
+        <div class="step-t"><span class="step-k">Plan · Implement</span><h3>Plan the fix on the premium model, implement it on the thrifty one</h3></div>
+        <span class="step-min">5 min</span>
+      </div>
+      <div class="expects">
+        <span class="expect ok">794 = 794</span>
+      </div>
+
+      <p>You now hold three proven facts. Turning them into a correction plan is judgment; turning the plan into SQL is typing. Split the work. Stay in the same chat: Claude needs its own draft in view.</p>
+
+      <p><b>Plan, on Opus.</b> Click the model name next to the send button and pick <b>Opus</b>. (Opus not in the picker list? Look under <b>More models</b>. If it is still missing, stay on Sonnet: the plan-then-implement split still works and still teaches the point.)</p>
+
+      <div class="prompt">
+        <p class="model">Model: <b>Opus</b> · same chat</p>
+        <p class="asks"><b>What this asks Claude to do</b>Take the three facts you proved and write a short plan of SQL changes, with the reason for each and the test that would catch a regression. A plan, not code.</p>
+        <pre><code>Context: I reviewed the draft of italy_conversion_events against the warehouse and proved three facts.
+Facts:
+1. mpl.consent_records is a LEDGER: 15,052 rows for 6,000 consumers, about 2.5 per consumer.
+   The draft joins it directly, so 794 conversion events become 1,988 rows.
+2. Consent is point-in-time. "Latest consent per consumer" stamps 31 of 794 events with a permission
+   decided AFTER the event. An event must carry the consent in effect on its event_date.
+3. Once consent is point-in-time, 8 of 794 events have no consent dated on or before the event,
+   so marketing_allowed is NULL for them. NULL silently drops out of = true and = false.
+Task: write a correction plan, not code. For each fact: the exact change to the SQL, why it is correct,
+   and the dbt test that would catch a regression. State the output grain in one line.
+Rules: under 20 lines. Our standards: explicit column list, a one-line grain comment, no SELECT *.
+Output: a numbered plan in Markdown. No SQL yet.
+Respond in Markdown only. Do not create any file.</code></pre>
+        <p class="good"><b>What a good answer looks like</b>A numbered list under 20 lines. Read it like a reviewer. It must say, in some form, everything in the table below.</p>
+      </div>
+
+      <div class="tbl cards wrap">
+        <table>
+          <thead><tr><th>The plan must contain</th><th>If it does not</th></tr></thead>
+          <tbody>
+            <tr><td>exactly <b>one</b> consent row per event: the latest with <code>consent_date &lt;= event_date</code>, with a tie-break for two consents on the same day (<code>distinct on (event_id) ... order by event_id, consent_date desc, consent_id desc</code>, or an equivalent window function: <code>row_number() over (partition by event_id ...)</code>, another way to keep one row per key)</td><td>reply "Add a tie-break for two consent rows on the same day, then show the plan again." 32 Italy events have two consent rows dated the same day as their latest applicable consent: a <code>max(consent_date)</code> join fans out and <code>unique</code> catches it; a <code>distinct on</code> without the tie-break passes <code>unique</code> but picks one of the two at random, so insist on it either way</td></tr>
+            <tr><td><code>coalesce(marketing_allowed, false)</code> <b>with a comment</b> that unknown is not "allowed"</td><td>ask for the comment; the rule has to survive the next engineer</td></tr>
+            <tr><td>the grain, stated: one row per conversion event</td><td>ask for it in one line</td></tr>
+            <tr><td>the tests: <code>unique</code> and <code>not_null</code> on <code>event_id</code>, <code>not_null</code> on <code>marketing_allowed</code></td><td>add them yourself; you are allowed to improve a plan</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="box trap">
+        <span class="k">If the plan says "latest consent" again</span>
+        <p>Reject it. Reply "No. Consent must be the latest row dated on or before each event's event_date. Revise the plan." The premium model is better at this, not infallible.</p>
+      </div>
+
+      <div class="box chat">
+        <span class="k">Post in the chat, one word</span>
+        <p><strong>What did the plan contain that the draft did not?</strong><span class="opts">tie-break · comment · grain · test · nothing</span></p>
+      </div>
+
+      <p><b>Implement, on Sonnet.</b> When the plan is good, click the model name next to the send button and pick <b>Sonnet</b> again.</p>
+
+      <div class="prompt">
+        <p class="model">Model: <b>Sonnet</b> · same chat</p>
+        <p class="asks"><b>What this asks Claude to do</b>Turn the approved plan into the full model SQL, changing nothing else.</p>
+        <pre><code>Context: the correction plan you just wrote for italy_conversion_events is approved.
+Task: implement it exactly as written. Rewrite the complete model SQL. Draft only: do not run anything.
+Rules: apply all three corrections from the plan; explicit column list; a one-line grain comment; no SELECT *; no trailing semicolon.
+Output: the complete model SQL in one code block, starting with {{ config(materialized='view', schema='analytics') }}.
+Respond in Markdown only. Do not create any file.</code></pre>
+        <p class="good"><b>What a good answer looks like</b>One code block; a first part that filters to Italy conversions, a second part that picks one consent row per event with <code>consent_date &lt;= event_date</code>, and a final <code>select</code> with <code>coalesce(c.marketing_allowed, false)</code> and a comment above it.</p>
+      </div>
+
+      <p>Land it the same way as the draft: open <code>models/analytics/italy_conversion_events.sql</code>, <kbd>Ctrl+A</kbd>, paste the new SQL, check the <code>config</code> line appears exactly once, remove any trailing <code>;</code>, save. Read the SQL once against the plan. Then:</p>
+
+      <div class="prompt term">
+        <pre><code>dbt run --select italy_conversion_events</code></pre>
+        <p class="good"><b>Then</b>Re-run <a href="#check2">check 2</a> in SQLTools. <span class="expect ok">794 = 794</span> is the goal.</p>
+      </div>
+
+      <p>You reviewed twenty lines of plan instead of two hundred lines of SQL, and the expensive model wrote the twenty. You also fixed the draft by telling the assistant precisely what was wrong, in writing, not by hand-editing in silence. The correction is reviewable too.</p>
+
+      <h3 id="shortcut">If you are short on time</h3>
+      <p>Skip the model switch and paste the pre-written corrections (they are the plan, written for you). Stay on Sonnet.</p>
+
+      <div class="prompt">
+        <p class="model">Model: <b>Sonnet</b> · same chat</p>
+        <p class="asks"><b>What this asks Claude to do</b>Regenerate the model with three named corrections already decided.</p>
+        <pre><code>Context: I reviewed the draft of italy_conversion_events against the warehouse. Three corrections are needed.
+Corrections:
+1. Grain and point-in-time consent: mpl.consent_records is a ledger (about 2.5 rows per consumer). Resolve
+   exactly ONE consent row per event: the latest row with consent_date &lt;= event_date, using
+   select distinct on (event_id) ... order by event_id, consent_date desc, consent_id desc.
+   The output grain must be one row per conversion event.
+2. NULL: coalesce(marketing_allowed, false), with a comment that an unknown permission is treated as "not allowed".
+3. Standards: explicit column list and a one-line comment stating the grain. No SELECT *, no trailing semicolon.
+Task: regenerate the complete model SQL with these corrections. Draft only: do not run anything.
+Output: the complete model SQL in one code block, starting with {{ config(materialized='view', schema='analytics') }}.
+Respond in Markdown only. Do not create any file.</code></pre>
+        <p class="good"><b>What a good answer looks like</b>The same shape as above: a filtered events part, a one-consent-per-event part using <code>distinct on</code>, and a final <code>select</code> with the <code>coalesce</code> and its comment. Paste it over the file (no trailing <code>;</code>), <code>dbt run</code>, re-run check 2): <span class="expect ok">794</span></p>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step" id="step3">
+        <span class="step-n">3</span>
+        <div class="step-t"><span class="step-k">Lock</span><h3>Lock it down with tests</h3></div>
+        <span class="step-min">5 min</span>
+      </div>
+      <div class="expects">
+        <span class="expect ok">7 tests PASS</span>
+        <span class="expect note">PASS=7 WARN=0 ERROR=0</span>
+      </div>
+
+      <p>The corrections are in your head and in a chat window. Make them permanent. <b>Stay on Sonnet:</b> tests from a precise list are typing, not judgment.</p>
+
+      <div class="prompt">
+        <p class="model">Model: <b>Sonnet</b> · same chat</p>
+        <p class="asks"><b>What this asks Claude to do</b>Write two files' worth of text: the <code>schema.yml</code> entry with six generic tests, and one singular test that fails if an under-25 Italian consumer is ever marked as marketing-allowed.</p>
+        <pre><code>Context: the corrected dbt model italy_conversion_events (one row per Italy conversion event) needs its tests.
+Task 1: write models/analytics/schema.yml for this model with generic tests: not_null and unique on event_id;
+   not_null on consumer_id; relationships from consumer_id to source('clr','consumers') field consumer_id;
+   not_null on marketing_allowed; accepted_values on campaign_bucket ('q3_campaign', 'other');
+   and a short model description that states the grain.
+Task 2: write tests/no_underage_marketing_italy.sql, a singular test. From {{ ref('italy_conversion_events') }} m
+   join {{ source('clr','consumers') }} c on c.consumer_id = m.consumer_id, return rows where
+   c.market_code = 'IT' and c.age_band = '18-24' and m.marketing_allowed = true. Qualify every column with its alias.
+Rules: dbt-postgres syntax; no trailing semicolons; no other models or tests; do not run anything.
+Output: two code blocks, each labelled with its file path: first the YAML, then the SQL.
+Respond in Markdown only. Do not create any file.</code></pre>
+        <p class="good"><b>What a good answer looks like</b>A YAML block beginning <code>version: 2</code> with one model entry and a <code>columns:</code> list, and a short SQL block with a <code>select</code>, a <code>join</code> to <code>clr.consumers</code> and three <code>where</code> conditions, each column prefixed <code>m.</code> or <code>c.</code> so <code>market_code</code> is never ambiguous. The SQL returns rows only when the contract is broken.</p>
+      </div>
+
+      <p>Create the two files in VS Code (the paste is you, signing):</p>
+      <ol class="steps">
+        <li>Right-click <code>models/analytics</code> → New File → <code>schema.yml</code>. Paste the YAML block. Save.</li>
+        <li>Right-click <code>tests</code> → New File → <code>no_underage_marketing_italy.sql</code>. Paste the SQL block. Remove any trailing <code>;</code> first (dbt wraps the test in its own <code>select ... from ( ... )</code>). Save.</li>
+      </ol>
+
+      <p>Then, in the terminal:</p>
+
+      <div class="prompt term">
+        <pre><code>dbt run  --select italy_conversion_events
+dbt test --select italy_conversion_events</code></pre>
+        <p class="good"><b>What a good answer looks like</b><span class="expect ok">7 passes</span> Seven green <code>PASS</code> lines and a summary that reads <code>Done. PASS=7 WARN=0 ERROR=0 ... TOTAL=7</code>. (Yellow deprecation warnings about test syntax are harmless; the tests still run.)</p>
+      </div>
+
+      <div class="box trap">
+        <span class="k">If unique fails</span>
+        <p>If <code>unique_italy_conversion_events_event_id</code> fails, your model resolves consent with a <code>max(consent_date)</code> join and two consent rows share a day. <b>Fix the model (add the tie-break), not the test.</b></p>
+      </div>
+
+      <div class="tbl cards">
+        <table>
+          <thead><tr><th class="n">#</th><th>Test</th><th>The contract it enforces</th></tr></thead>
+          <tbody>
+            <tr><td class="n">1</td><td><code>not_null</code> event_id</td><td>every event is identified</td></tr>
+            <tr><td class="n">2</td><td><code>unique</code> event_id</td><td>one row per event: the grain, forever</td></tr>
+            <tr><td class="n">3</td><td><code>not_null</code> consumer_id</td><td>every event belongs to someone</td></tr>
+            <tr><td class="n">4</td><td><code>relationships</code> consumer_id → clr.consumers</td><td>no orphan consumers</td></tr>
+            <tr><td class="n">5</td><td><code>not_null</code> marketing_allowed</td><td>the NULL trap cannot come back</td></tr>
+            <tr><td class="n">6</td><td><code>accepted_values</code> campaign_bucket</td><td><code>'q3_campaign'</code> or <code>'other'</code>, nothing else</td></tr>
+            <tr><td class="n">7</td><td>singular <code>no_underage_marketing_italy</code></td><td>IT · age_band <code>'18-24'</code> · marketing_allowed = true must return 0 rows</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="box chat">
+        <span class="k">Post in the chat</span>
+        <p><strong>Which of the seven tests would have caught the bug you found in Step 2?</strong></p>
+      </div>
+    </section>
+
+    <section class="part" id="recap">
+      <div class="part-h">
+        <span class="eyebrow">Debrief</span>
+        <h2>What just <span>happened</span></h2>
+        <p class="dek">Both columns ran green. Only one is right.</p>
+      </div>
+
+      <div class="tbl cards">
+        <table>
+          <thead><tr><th></th><th>The draft</th><th>The engineering</th></tr></thead>
+          <tbody>
+            <tr><td><b>Speed</b></td><td>60 seconds</td><td>25 minutes</td></tr>
+            <tr><td><b>Ran without error</b></td><td class="yes">✓</td><td class="yes">✓</td></tr>
+            <tr><td><b>Correct</b></td><td><span class="no">✕</span> (1,988 rows, or 31 future-dated consents; NULL left unguarded)</td><td><span class="yes">✓</span> (794 rows, point-in-time, 8 NULLs coalesced to false)</td></tr>
+            <tr><td><b>Will stay correct</b></td><td class="no">✕</td><td><span class="yes">✓</span> (7 tests fail the build if anyone breaks it)</td></tr>
+            <tr><td><b>Who signed</b></td><td>nobody</td><td><b>you</b>, twice: the paste and the test run</td></tr>
+            <tr><td><b>Which model</b></td><td>the thrifty one, unsupervised</td><td>thrifty draft → <b>premium plan, reviewed by you</b> → thrifty implementation → the warehouse's count</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Both columns ran green. Only one is right. The difference was never visible in the output. It was visible in the row count.</p>
+    </section>
+
+    <section class="part" id="takeaway">
+      <div class="part-h">
+        <span class="eyebrow">Takeaway #1</span>
+        <h2>A runnable draft is not a <span>correct</span> one</h2>
+      </div>
+
+      <p><b>A runnable draft is not a correct one.</b> Give the assistant the schema, never the data. Read every join, every NULL, every grain. Prove the row count against the warehouse before it lands, then turn each contract into a test. <em>No vibe pipelines.</em></p>
+
+      <p><b>Premium planning, thrifty execution.</b> Spend the expensive model on judgment (the plan) and the cheap one on typing (the draft, the implementation, the tests). Review the plan; it is shorter than the diff and it is where the mistakes are.</p>
+
+      <div class="box try">
+        <span class="k">On Monday</span>
+        <p>Pick one transformation you would let an assistant draft. Write down the one contract rule it would most likely miss, the row-count check that proves it, and the single test that would fail the build.</p>
+      </div>
+    </section>
+
+    <section class="part" id="indonesia">
+      <div class="part-h">
+        <span class="eyebrow">If you have spare time · 15 min</span>
+        <h2>The <span>Indonesia</span> lab</h2>
+        <p class="dek">The original WA3903 lab. Same loop, different table.</p>
+      </div>
+      <div class="expects">
+        <span class="expect">735 rows</span>
+        <span class="expect">0 orphans</span>
+        <span class="expect ok">PASS=4</span>
+      </div>
+
+      <p><b><a href="glossary.html#sell-through">Sell-through</a></b> is retail sales from a distributor or retailer to the end consumer (as opposed to <em>sell-in</em>, PMI's shipments to the distributor). In HORIZON it is weekly: one row per <b>distributor</b> (the company selling the product) × product × week, and every <code>sale_date</code> is a Monday. Each distributor has a <b>channel type</b>: <code>branded_retail</code> (PMI's own stores), <code>partner_retail</code> (third-party retail) or <code>ecommerce</code>.</p>
+
+      <h3 id="id-draft">Draft</h3>
+      <div class="prompt">
+        <p class="model">Model: <b>Sonnet</b> · new chat</p>
+        <p class="asks"><b>What this asks Claude to do</b>Draft the Indonesia sell-through model joined to the distributor table, from the schema alone.</p>
+        <pre><code>Context: I am a data engineer at PMI on Project HORIZON. We use dbt on a Postgres warehouse.
+Task: draft a dbt model called indonesia_sell_through as one SQL SELECT. Draft only: do not run anything.
+Tables (read them as {{ source('rst','sell_through') }} and {{ source('rst','distributors') }}):
+- rst.sell_through (weekly): record_id, sale_date, market_code, distributor_id, product_code, units_sold, gross_revenue_eur
+- rst.distributors: distributor_id, distributor_name, market_code, channel_type
+Rules:
+- keep only market_code = 'ID'
+- attach distributor_name and channel_type from the distributor table
+- one row per distributor, product and week (sale_date); explicit column list, no SELECT *, no trailing semicolon; a one-line grain comment
+Output: the model SQL in one code block, starting with {{ config(materialized='view', schema='analytics') }}.
+Respond in Markdown only. Do not create any file.</code></pre>
+        <p class="good"><b>What a good answer looks like</b>A <code>select</code> from <code>sell_through</code> joined to <code>distributors</code> on <code>distributor_id</code>, filtered to <code>'ID'</code>. Look at the join type before anything else.</p>
+      </div>
+
+      <p>Land it as before: <code>copy models\analytics\MODEL_TEMPLATE.sql.example models\analytics\indonesia_sell_through.sql</code>, paste over the contents, one <code>config</code> line, no trailing <code>;</code>, save. Then <code>dbt run --select indonesia_sell_through</code> and prove it in SQLTools:</p>
+
+      <div class="prompt sql">
+        <p class="asks"><b>Prove it · orphans</b>Review the Indonesia draft against the warehouse: total rows and rows with no matching distributor.</p>
+        <pre><code class="language-sql">-- WA3903 · LAB: review the Indonesia draft against the warehouse
+select count(*) as rows_total, count(*) filter (where d.distributor_id is null) as orphan_rows
+from rst.sell_through s left join rst.distributors d using (distributor_id)
+where s.market_code = 'ID';                                   -- 735 / 0</code></pre>
+        <p class="good"><b>What you should see</b><span class="expect">expect 735 / 0</span></p>
+      </div>
+
+      <div class="prompt sql">
+        <p class="asks"><b>Prove it · grain</b>Any distributor, product and week that appears more than once.</p>
+        <pre><code class="language-sql">select distributor_id, product_code, sale_date, count(*) as n
+from rst.sell_through where market_code = 'ID'
+group by 1,2,3 having count(*) &gt; 1;                           -- no rows = grain holds</code></pre>
+        <p class="good"><b>What you should see</b><span class="expect ok">no rows = grain holds</span></p>
+      </div>
+
+      <div class="box trap">
+        <span class="k">The trap</span>
+        <p>Today there are 0 orphan distributors, so an INNER join returns the same 735 rows as a LEFT join, and the bug ships. The fix is a LEFT join with a labelled default (<code>coalesce(d.distributor_name, 'UNKNOWN')</code>, <code>coalesce(d.channel_type, 'unknown')</code>) <b>plus</b> a <code>relationships</code> test, so the first future orphan fails the build instead of vanishing.</p>
+      </div>
+
+      <h3 id="id-lock">Correct and lock</h3>
+      <div class="prompt">
+        <p class="model">Model: <b>Sonnet</b> · same chat</p>
+        <p class="asks"><b>What this asks Claude to do</b>Apply the LEFT-join correction and write the tests that make it permanent.</p>
+        <pre><code>Context: I proved the indonesia_sell_through draft against the warehouse: 735 rows, 0 orphan distributors today,
+   grain unique per distributor/product/week.
+Corrections:
+- LEFT join to rst.distributors, so a future orphan row is kept, not dropped
+- default distributor_name to 'UNKNOWN' and channel_type to 'unknown' when the distributor is missing
+Task 1: regenerate the complete model SQL with these corrections (explicit column list, one-line grain comment, no SELECT *, no trailing semicolon).
+Task 2: write models/analytics/schema_indonesia.yml for this model:
+- not_null on distributor_id and sale_date
+- relationships from distributor_id to source('rst','distributors') field distributor_id
+- accepted_values on channel_type ('branded_retail', 'partner_retail', 'ecommerce', 'unknown'); a short description
+Rules: dbt-postgres syntax; do not run anything.
+Output: two code blocks labelled with their file paths: first the SQL, then the YAML.
+Respond in Markdown only. Do not create any file.</code></pre>
+        <p class="good"><b>What a good answer looks like</b>A model with <code>left join</code> and two <code>coalesce</code> lines, and a YAML block with four tests.</p>
+      </div>
+
+      <p>Paste the SQL over the model file (no trailing <code>;</code>), then right-click <code>models/analytics</code> → New File → <code>schema_indonesia.yml</code> and paste the whole YAML block (dbt reads every <code>.yml</code> under <code>models/</code>, so a second file is fine). Then <code>dbt run --select indonesia_sell_through</code> and <code>dbt test --select indonesia_sell_through</code>: still 735 rows, all tests pass: <span class="expect ok">Done. PASS=4</span></p>
+
+      <p>Every query and test you need is above; if you finish early, compare your model with your neighbour's: same 735, different SQL, same contract.</p>
+    </section>
+
+    <footer class="foot">
+      <nav aria-label="All guides">
+        <a href="index.html">Start here</a>
+        <a href="hour1.html">Hour 1 · No vibe pipelines</a>
+        <a href="hour2.html">Hour 2 · Green is not right</a>
+        <a href="hour3.html">Hour 3 · Shift left</a>
+        <a href="hour4.html">Hour 4 · You are the gate</a>
+        <a href="glossary.html">Glossary</a>
+      </nav>
+      <p>Lab guides for the PMI Data Engineer Future Skills class · Project HORIZON is fictional and training-only</p>
+    </footer>
+  </main>
+</div>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>

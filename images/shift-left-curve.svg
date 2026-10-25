@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" width="100%" class="hz" role="img" aria-labelledby="shift-title shift-desc">
+<title id="shift-title">Shift left: the cost of a defect rises with the stage it is found in</title>
+<desc id="shift-desc">A line chart with stages Request, Design, Build, Test, Release, Operate on the x axis and relative cost to fix rising from 1x to about 100x (Boehm and Basili, 2001). Hour 1's fan-out bug is plotted between Build and Test, caught in review in 25 minutes. Hour 2's 105 missing rows sit at Operate, months later. A fat arrow points left: ask before the code exists. Four chips: real-time, conversion, across all markets, Power BI.</desc>
+<style>
+.hz{
+  --navy:#102B53; --navy2:#0C2040; --orange:#FF4A00; --teal:#00C9A7; --ink:#1C2B40;
+  --tint:#F4F6FA; --muted:#5A6B80; --red:#C8402A;
+  --card:#FFFFFF; --line:#C9D3E0; --grid:#E4E9F1; --code:#F4F6FA;
+  --claude:#102B53; --on-claude:#FFFFFF;
+  --teal-ink:#00805F; --teal-soft:#D6F5EE;
+  --orange-ink:#D63D00; --orange-soft:#FFE6DA;
+  --red-ink:#B5361F; --red-soft:#FAE3DE;
+  --navy-soft:#E4EAF4; --mutedfill:#C3CDDA;
+}
+@media (prefers-color-scheme: dark){
+  .hz{
+    --ink:#F4F6FA; --muted:#AFBDD0; --card:#13305F; --line:#3C5884; --grid:#25416C; --code:#0B1B36;
+    --claude:#2F5FB4; --on-claude:#FFFFFF;
+    --teal-ink:#1FD9B9; --teal-soft:#0F3F3A;
+    --orange-ink:#FF8A5B; --orange-soft:#4B2514;
+    --red:#E8604A; --red-ink:#FF8B78; --red-soft:#4E1D17;
+    --navy-soft:#1B3B6E; --mutedfill:#4E6686; --tint:#0C2040;
+  }
+}
+.hz text{font-family:"Space Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;fill:var(--ink);font-size:16px}
+.hz .mono{font-family:"DM Mono",ui-monospace,Menlo,Consolas,monospace;font-size:14px}
+.hz .b{font-weight:700}
+.hz .i{font-style:italic}
+.hz .muted{fill:var(--muted)}
+.hz .teal-ink{fill:var(--teal-ink)}
+.hz .orange-ink{fill:var(--orange-ink)}
+.hz .red-ink{fill:var(--red-ink)}
+.hz .on{fill:var(--on-claude)}
+.hz .card{fill:var(--card);stroke:var(--line);stroke-width:1.5}
+.hz .soft-navy{fill:var(--navy-soft);stroke:var(--line);stroke-width:1.5}
+.hz .soft-teal{fill:var(--teal-soft);stroke:var(--teal);stroke-width:1.5}
+.hz .soft-orange{fill:var(--orange-soft);stroke:var(--orange);stroke-width:1.5}
+.hz .soft-red{fill:var(--red-soft);stroke:var(--red);stroke-width:1.5}
+.hz .claude{fill:var(--claude);stroke:none}
+.hz .code{fill:var(--code);stroke:var(--line);stroke-width:1}
+.hz .ln{stroke:var(--muted);stroke-width:2;fill:none}
+.hz .ln-ink{stroke:var(--ink);stroke-width:2;fill:none}
+.hz .ln-teal{stroke:var(--teal);stroke-width:2.5;fill:none}
+.hz .ln-orange{stroke:var(--orange);stroke-width:2.5;fill:none}
+.hz .ln-red{stroke:var(--red);stroke-width:2.5;fill:none}
+.hz .ln-claude{stroke:var(--claude);stroke-width:2;fill:none}
+.hz .dash{stroke-dasharray:7 6}
+.hz .grid{stroke:var(--grid);stroke-width:1;fill:none}
+.hz .f-teal{fill:var(--teal)}
+.hz .f-orange{fill:var(--orange)}
+.hz .f-red{fill:var(--red)}
+.hz .f-muted{fill:var(--mutedfill)}
+.hz .f-card{fill:var(--card)}
+.hz .f-line{fill:var(--line)}
+.hz .f-ink{fill:var(--ink)}
+.hz .f-navy{fill:var(--claude)}
+.hz .f-code{fill:var(--code)}
+.hz .f-teal-soft{fill:var(--teal-soft)}
+.hz .f-orange-soft{fill:var(--orange-soft)}
+.hz .f-red-soft{fill:var(--red-soft)}
+.hz .f-navy-soft{fill:var(--navy-soft)}
+.hz .mk-muted{fill:var(--muted)}
+.hz .mk-ink{fill:var(--ink)}
+.hz .mk-teal{fill:var(--teal)}
+.hz .mk-orange{fill:var(--orange)}
+.hz .mk-red{fill:var(--red)}
+.hz .mk-claude{fill:var(--claude)}
+</style>
+<defs>
+<marker id="shift-ar-muted" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-muted"/></marker>
+<marker id="shift-ar-ink" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-ink"/></marker>
+<marker id="shift-ar-teal" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-teal"/></marker>
+<marker id="shift-ar-orange" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-orange"/></marker>
+<marker id="shift-ar-red" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-red"/></marker>
+<marker id="shift-ar-claude" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-claude"/></marker>
+</defs>
+<line x1="130" y1="400.0" x2="1040" y2="400.0" class="grid"/>
+<text x="118" y="405.0" text-anchor="end" class="muted" style="font-size:15px">1×</text>
+<line x1="130" y1="247.6" x2="1040" y2="247.6" class="grid"/>
+<text x="118" y="252.6" text-anchor="end" class="muted" style="font-size:15px">50×</text>
+<line x1="130" y1="92.0" x2="994" y2="92.0" class="grid"/>
+<text x="118" y="97.0" text-anchor="end" class="muted" style="font-size:15px">100×</text>
+<line x1="130" y1="82" x2="130" y2="400" class="ln-ink"/>
+<line x1="130" y1="400" x2="1050" y2="400" class="ln-ink" marker-end="url(#shift-ar-ink)"/>
+<text x="76" y="246.0" text-anchor="middle" class="muted" style="font-size:15px" transform="rotate(-90 76 246.0)">cost to fix</text>
+<line x1="130" y1="400" x2="130" y2="406" class="ln-ink"/>
+<text x="130" y="428" text-anchor="middle" class="b" style="font-size:16px">Request</text>
+<line x1="306" y1="400" x2="306" y2="406" class="ln-ink"/>
+<text x="306" y="428" text-anchor="middle" class="b" style="font-size:16px">Design</text>
+<line x1="482" y1="400" x2="482" y2="406" class="ln-ink"/>
+<text x="482" y="428" text-anchor="middle" class="b" style="font-size:16px">Build</text>
+<line x1="658" y1="400" x2="658" y2="406" class="ln-ink"/>
+<text x="658" y="428" text-anchor="middle" class="b" style="font-size:16px">Test</text>
+<line x1="834" y1="400" x2="834" y2="406" class="ln-ink"/>
+<text x="834" y="428" text-anchor="middle" class="b" style="font-size:16px">Release</text>
+<line x1="1010" y1="400" x2="1010" y2="406" class="ln-ink"/>
+<text x="1010" y="428" text-anchor="middle" class="b" style="font-size:16px">Operate</text>
+<path d="M130,400.0 C159.3,399.5 247.3,399.0 306,396.9 C364.7,394.8 423.3,391.8 482,387.6 C540.7,383.5 599.3,385.0 658,372.0 C716.7,359.0 775.3,356.5 834,309.8 C892.7,263.1 980.7,128.3 1010,92.0" class="ln-claude" stroke-width="3" stroke-linecap="round"/>
+<circle cx="570.0" cy="379.8" r="12" class="f-card"/>
+<circle cx="570.0" cy="379.8" r="9" class="f-teal"/>
+<line x1="570.0" y1="365.8" x2="570.0" y2="326" class="ln-teal"/>
+<text x="570.0" y="296" text-anchor="middle" class="b teal-ink" style="font-size:15px">Hour 1: the fan-out</text>
+<text x="570.0" y="316" text-anchor="middle" class="muted" style="font-size:15px">caught in review, 25 minutes</text>
+<circle cx="1010" cy="92.0" r="12" class="f-card"/>
+<circle cx="1010" cy="92.0" r="9" class="f-red"/>
+<text x="988" y="66.0" text-anchor="end" class="b red-ink" style="font-size:15px">Hour 2: the missing rows</text>
+<text x="988" y="86.0" text-anchor="end" class="red-ink" style="font-size:15px">105 rows, months later</text>
+<path d="M170,215 L242,178 L242,197 L760,197 L760,233 L242,233 L242,252 Z" class="f-orange"/>
+<text x="507.0" y="221" text-anchor="middle" class="b on" style="font-size:18px">ask before the code exists</text>
+<text x="148" y="112" class="b" style="font-size:15px">Hour 3: four words that are not yet requirements</text>
+<rect x="148" y="124" width="108" height="32" rx="16.0" class="soft-orange"/>
+<text x="202.0" y="145.04" text-anchor="middle" class="b orange-ink" style="font-size:15px">real-time</text>
+<rect x="268" y="124" width="118" height="32" rx="16.0" class="soft-orange"/>
+<text x="327.0" y="145.04" text-anchor="middle" class="b orange-ink" style="font-size:15px">conversion</text>
+<rect x="398" y="124" width="174" height="32" rx="16.0" class="soft-orange"/>
+<text x="485.0" y="145.04" text-anchor="middle" class="b orange-ink" style="font-size:15px">across all markets</text>
+<rect x="584" y="124" width="96" height="32" rx="16.0" class="soft-orange"/>
+<text x="632.0" y="145.04" text-anchor="middle" class="b orange-ink" style="font-size:15px">Power BI</text>
+<text x="130" y="470" class="muted" style="font-size:15px">x: the stage at which a defect is found. y: relative cost to fix it, roughly 1× at requirements to about 100× in operation (Boehm &amp; Basili, 2001).</text>
+</svg>

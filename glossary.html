@@ -1,0 +1,757 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Glossary · Project HORIZON lab guides</title>
+<meta name="description" content="Lab guides for the PMI Data Engineer Future Skills class. Project HORIZON is fictional and training-only.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#0C2040">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230C2040'/%3E%3Crect x='6' y='6' width='9' height='9' rx='2' fill='%23FF4A00'/%3E%3Crect x='17' y='17' width='9' height='9' rx='2' fill='%2300C9A7'/%3E%3C/svg%3E">
+</head>
+<body>
+
+
+<header class="mast">
+  <div class="mast-in">
+    <nav class="sitenav" aria-label="Lab guides">
+      <a class="brand" href="index.html">Project HORIZON</a>
+      <a href="index.html">Start here</a>
+      <a href="hour1.html">Hour 1</a>
+      <a href="hour2.html">Hour 2</a>
+      <a href="hour3.html">Hour 3</a>
+      <a href="hour4.html">Hour 4</a>
+      <a href="glossary.html" aria-current="page">Glossary</a>
+    </nav>
+    <div class="mast-grid">
+      <div class="mast-copy">
+        <div class="eyebrow">PMI · DI&amp;A Future Skills · Data Engineer track · Project HORIZON</div>
+        <h1>The <span>glossary</span><small>Every word you will hear today, in plain English</small></h1>
+        <p class="lede">132 terms in five groups, each with what it means, the plain-English version and where you meet it, plus a query for every number. <strong>The assistant drafts. The warehouse decides. The engineer signs.</strong></p>
+        <div class="meta"><span>VS Code + SQLTools</span><span>dbt CLI</span><span>Claude Desktop</span><span>Postgres <b>horizon</b></span></div>
+      </div>
+      <div class="mfd" role="img" aria-label="The Project HORIZON estate: clr.consumers 6,000 rows; clr.lifecycle_events 15,597; mpl.consent_records 15,052; rst.distributors 12; rst.sell_through 2,730; det.device_telemetry 35,113; rfr.filings 112.">
+        <div class="hd"><b>Project HORIZON · the estate</b><b>rows</b></div>
+        <div class="row"><span class="lbl">clr.consumers</span><span class="val">6,000</span></div>
+        <div class="row"><span class="lbl">clr.lifecycle_events</span><span class="val">15,597</span></div>
+        <div class="row"><span class="lbl">mpl.consent_records</span><span class="val">15,052</span></div>
+        <div class="row"><span class="lbl">rst.distributors</span><span class="val">12</span></div>
+        <div class="row"><span class="lbl">rst.sell_through</span><span class="val">2,730</span></div>
+        <div class="row"><span class="lbl">det.device_telemetry</span><span class="val">35,113</span></div>
+        <div class="row"><span class="lbl">rfr.filings</span><span class="val">112</span></div>
+        <div class="ft">Three markets: JP · IT · ID. Every number in these guides comes from this database, and <span class="blink">you can check every one in SQLTools.</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="frame">
+  <details class="toc" id="toc" open>
+    <summary>On this page</summary>
+    <ol>
+      <li><a href="#kit">Your kit</a></li>
+      <li><a href="#words">Words you will hear</a></li>
+      <li><a href="#terms">The glossary</a></li>
+      <li class="sub"><a href="#g1">1 · PMI and Project HORIZON</a></li><li class="sub"><a href="#g2">2 · Markets and regulators</a></li><li class="sub"><a href="#g3">3 · SQL, dbt and data engineering</a></li><li class="sub"><a href="#g4">4 · AI terms: Claude Desktop, models and agents</a></li><li class="sub"><a href="#g5">5 · Classroom devices</a></li>
+      <li><a href="#examples">Generic and singular tests</a></li>
+      <li><a href="#prove">Prove it</a></li>
+      <li class="sub"><a href="#prove-horizon">HORIZON numbers</a></li>
+      <li class="sub"><a href="#prove-regulators">Regulators</a></li>
+      <li class="sub"><a href="#prove-hour1">Hour 1 · fan-out</a></li>
+      <li class="sub"><a href="#prove-indonesia">Hour 1 · Indonesia</a></li>
+      <li class="sub"><a href="#prove-null">Hour 2 · NULL</a></li>
+      <li class="sub"><a href="#prove-recon">Hour 2 · reconciliation</a></li>
+      <li class="sub"><a href="#prove-threshold">Hour 2 · threshold</a></li>
+      <li class="sub"><a href="#prove-hour3">Hour 3 · shift left</a></li>
+      <li class="sub"><a href="#prove-hour4">Hour 4 · grounding</a></li>
+      <li><a href="#tiers">Model tiers and prices</a></li>
+      <li><a href="#close">Takeaway</a></li>
+    </ol>
+  </details>
+
+  <main id="main">
+    
+<section class="part" id="kit">
+  <div class="part-h">
+    <span class="eyebrow">Before the words</span>
+    <h2>Your kit, in one <span>paragraph</span></h2>
+    <p class="dek">The one rule runs through all four hours. This page explains every other word.</p>
+  </div>
+  <p class="rule-line">The assistant drafts. <span class="w">The warehouse decides.</span> The engineer signs.</p>
+  <p>This glossary is for data engineers who may never have used dbt, SQLTools or Claude Desktop before today. Every entry has three parts: <strong>what it means</strong>, <strong>the plain-English version</strong> (often an analogy), and <strong>where you meet it</strong> during the day. Within each group the terms are in alphabetical order.</p>
+  <p>Numbers in <strong>bold</strong> are facts from the HORIZON warehouse. Each one has a query you can run yourself in SQLTools; the queries sit in the <a href="#prove"><strong>Prove it</strong></a> section further down this page, grouped as in the glossary, with the expected number as a comment.</p>
+  <p>Everything you use today is already on your Windows VM:</p>
+  <div class="tbl cards wide">
+    <table>
+      <thead><tr><th>Tool</th><th>What it is</th><th>How you use it today</th></tr></thead>
+      <tbody>
+        <tr><td><strong>VS Code</strong></td><td>the code editor</td><td>you create and edit the dbt files here</td></tr>
+<tr><td><strong>SQLTools</strong></td><td>a VS Code extension that runs SQL against a database</td><td>saved connection <strong>HORIZON</strong> (host <code>localhost</code>, port <code>5432</code>, database <code>horizon</code>, user <code>postgres</code>, password <code>Horizon!Lab2026</code>)</td></tr>
+<tr><td><strong>dbt</strong> (data build tool)</td><td>a command-line tool that builds and tests SQL models</td><td><code>dbt run</code>, <code>dbt test</code> in the VS Code terminal</td></tr>
+<tr><td><strong>Claude Desktop</strong></td><td>the Claude chat app (signed in)</td><td>you paste a prompt; Claude replies with SQL or YAML in a code block</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Claude Desktop is a chat window. <strong>It cannot create or edit files on your VM.</strong> The loop for every lab is the same: paste the prompt into Claude Desktop → Claude replies with SQL or YAML in a code block → you copy it → you paste it into a file in VS Code → you run dbt or SQLTools.</p>
+  <figure class="hero wide">
+  <img src="images/paste-is-signing.svg" alt="The Claude Desktop loop: prompt, reply, copy, paste into VS Code, dbt run, SQLTools count 794." loading="lazy">
+  <figcaption>The Claude Desktop loop: prompt, Claude's reply, copy, paste into <code>models/analytics/italy_conversion_events.sql</code> in VS Code, <code>dbt run</code>, SQLTools count 794. The paste is you, signing.</figcaption>
+</figure>
+  <div class="box note"><span class="k">The one habit</span><p><strong>The paste is you, signing. Nothing lands in the repo unless you put it there.</strong></p></div>
+  <p>The two project folders you will open in VS Code:</p>
+<pre><code class="language-text">Hour 1   C:\LabFiles\building-a-tested-rst-model-for-indonesia\horizon_dbt
+Hour 2   C:\LabFiles\hardening-a-japan-sell-through-pipeline\horizon_dbt
+Hour 3   no files
+Hour 4   no files on the VM (a Claude Desktop Project instead)</code></pre>
+  <div class="box chat"><span class="k">Chat poll</span><p><strong>Post in the chat, one word:</strong> which word on this page had you never heard before today? <em>(Nobody is graded. The whole class is built on the moments where a confident answer turns out to be wrong.)</em></p></div>
+</section>
+
+<section class="part" id="words">
+  <div class="part-h">
+    <span class="eyebrow">Start here</span>
+    <h2>Words you will <span>hear</span></h2>
+    <p class="dek">The fifteen that matter most. Each term links to its full entry below.</p>
+  </div>
+  <div class="words">
+    <div class="k">Words you will hear <a href="#terms">Full glossary ↓</a></div>
+    <table>
+      <thead><tr><th>Term</th><th>Plain English</th></tr></thead>
+      <tbody>
+        <tr><td><a href="#dbt">dbt</a></td><td>a tool that turns a SQL SELECT saved in a file (a "model") into a view or table (<code>dbt run</code>) and checks it (<code>dbt test</code>)</td></tr>
+<tr><td><a href="#dbt-model">model</a></td><td>one SQL SELECT saved as one file; dbt builds it as a view</td></tr>
+<tr><td><a href="#view">view</a></td><td>a saved SELECT that behaves like a table but stores nothing</td></tr>
+<tr><td><a href="#grain">grain</a></td><td>what one row represents ("one row per conversion event")</td></tr>
+<tr><td><a href="#ledger">ledger</a></td><td>a table that keeps history: many rows per key over time, not one current row</td></tr>
+<tr><td><a href="#fan-out">fan-out</a></td><td>a join that multiplies rows because the other side has several matches per key</td></tr>
+<tr><td><a href="#point-in-time">point-in-time</a></td><td>the record that was in effect on the event's date, not the latest one</td></tr>
+<tr><td><a href="#null">NULL</a></td><td>SQL for "unknown"; a comparison with NULL is neither true nor false, and <code>WHERE</code> throws it away</td></tr>
+<tr><td><a href="#sell-through">sell-through</a></td><td>retail sales from the distributor or shop to the end consumer (sell-in is PMI's shipments to the distributor)</td></tr>
+<tr><td><a href="#conversion">conversion</a></td><td>an adult smoker switching to a smoke-free product; in HORIZON, the <code>'conversion'</code> lifecycle stage</td></tr>
+<tr><td><a href="#consent">consent</a></td><td>a consumer's recorded yes or no to marketing, with the date they said it</td></tr>
+<tr><td><a href="#under-25-rule">under-25 rule</a></td><td>marketing to the <code>'18-24'</code> age band is forbidden in Italy and Indonesia (0% by design) and allowed in Japan</td></tr>
+<tr><td><a href="#reconciliation">reconciliation</a></td><td>comparing what the pipeline produced with what the source holds, per key</td></tr>
+<tr><td><a href="#agent">agent</a></td><td>a model, plus tools, plus a loop, plus the permissions you gave it</td></tr>
+<tr><td><a href="#permission-prompt">human gate</a></td><td>the moment nothing happens until a person says yes; today, that person is you</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="part" id="terms">
+  <div class="part-h">
+    <span class="eyebrow">A to Z, in five groups</span>
+    <h2>The <span>glossary</span></h2>
+    <p class="dek">Type to filter. Every term has its own link, so the lab guides can point straight at it: <code>glossary.html#grain</code>, <code>#ledger</code>, <code>#dbt</code> and so on.</p>
+  </div>
+  <div class="gloss-tools">
+    <label for="glossary-search">Find a term</label>
+    <input id="glossary-search" type="search" placeholder="grain, ledger, MCP…" autocomplete="off">
+    <output id="glossary-count" for="glossary-search">132 terms</output>
+  </div>
+<div class="gloss-group" id="g1">
+<h3>1 · PMI and Project HORIZON</h3>
+<dl class="gloss">
+  <dt id="accenture-learnvantage"><strong>Accenture LearnVantage</strong></dt>
+  <dd>Accenture's learning and training business, the delivery partner for this program. <span class="plain"><em>Plain English:</em> The training partner whose name is on the cover slide.</span> <span class="where">Where you meet it: Cover</span></dd>
+  <dt id="adult-consumer"><span id="adult-smoker"></span><strong>Adult consumer · adult smoker</strong></dt>
+  <dd>PMI's standard phrase: smoke-free products are marketed only to adults who would otherwise continue to smoke. <span class="plain"><em>Plain English:</em> The reason every under-25 rule in HORIZON exists.</span> <span class="where">Where you meet it: Hours 1, 3, 4</span></dd>
+  <dt id="age-band"><span id="under-25-rule"></span><strong>Age band · under-25 rule</strong></dt>
+  <dd><code>clr.consumers.age_band</code>; <code>'18-24'</code> is the under-25 band. Marketing to under-25s is forbidden in Italy and Indonesia (<strong>0%</strong> marketing-allowed by design) and allowed in Japan (<strong>675</strong> of <strong>924</strong> under-25 consent rows allow marketing, <strong>73%</strong>; that is 319 of Japan's 359 under-25 consumers with at least one allowed row). <span class="plain"><em>Plain English:</em> A legal line drawn in the data. In IT and ID the count of under-25 marketing-allowed must always be <strong>zero</strong>, and a count of zero is a test you can write.</span> <span class="where">Where you meet it: Hour 1 (singular test), Hour 3 (feasibility), Hour 4 (probe and grounding)</span></dd>
+  <dt id="analytics"><strong>analytics</strong> (schema)</dt>
+  <dd>The schema dbt builds your models into: <code>analytics.italy_conversion_events</code>, <code>analytics.japan_sell_through</code>. <span class="plain"><em>Plain English:</em> The output shelf. Raw data lives in <code>clr</code>, <code>mpl</code>, <code>rst</code>, <code>det</code>, <code>rfr</code>; what you build lands in <code>analytics</code>.</span> <span class="where">Where you meet it: Hours 1, 2</span></dd>
+  <dt id="clr"><span id="consumer-lifecycle-records"></span><strong>CLR · Consumer Lifecycle Records</strong></dt>
+  <dd><code>clr.consumers</code> (<strong>6,000</strong> rows) and <code>clr.lifecycle_events</code> (<strong>15,597</strong> rows). <span class="plain"><em>Plain English:</em> Who the consumers are, and what happened to them, one event per row.</span> <span class="where">Where you meet it: Hours 1, 3, 4</span></dd>
+  <dt id="consent"><span id="marketing-permission"></span><strong>Consent · marketing permission</strong></dt>
+  <dd><code>mpl.consent_records</code>: <code>marketing_allowed</code> (true or false) plus <code>consent_date</code>. <strong>15,052</strong> rows for <strong>6,000</strong> consumers = <strong>2.51</strong> per consumer, because it is a ledger. <span class="plain"><em>Plain English:</em> A consumer's yes or no to marketing, with the date they said it. People change their minds, so each consumer has several rows; only the row in effect on the event's date counts.</span> <span class="where">Where you meet it: Hour 1</span></dd>
+  <dt id="conversion"><strong>Conversion</strong></dt>
+  <dd>In PMI usage, an adult smoker switching to a smoke-free product. In HORIZON, the <code>'conversion'</code> value of <code>lifecycle_stage</code> in <code>clr.lifecycle_events</code>; Italy has <strong>794</strong> conversion events. <span class="plain"><em>Plain English:</em> The moment the business cares about most, and the word Marketing never defines in Hour 3.</span> <span class="where">Where you meet it: Hours 1, 3</span></dd>
+  <dt id="cop"><span id="di-a-cop-leads"></span><strong>CoP · DI&amp;A CoP Leads</strong></dt>
+  <dd>Community of Practice. The DI&amp;A CoP Leads selected the four skills in this class from a task analysis of the Data Engineer role. <span class="plain"><em>Plain English:</em> The people to ask when an internal acronym (DCA, MCTS, REEV) is not spelled out.</span> <span class="where">Where you meet it: Intro</span></dd>
+  <dt id="dca"><strong>DCA</strong></dt>
+  <dd>A PMI-internal system named in your decks ("a DCA classification scope", "a DCA classification job"); ask your CoP lead for the expansion. <span class="plain"><em>Plain English:</em> When you see it, read "one of our internal systems".</span> <span class="where">Where you meet it: Icebreakers, Hour 3 Monday artefact</span></dd>
+  <dt id="det"><span id="device-experience-telemetry"></span><strong>DET · Device Experience Telemetry</strong></dt>
+  <dd><code>det.device_telemetry</code>: <strong>35,113</strong> rows from IQOS and VEEV devices (<strong>2</strong> products); <strong>7,084</strong> rows (<strong>20%</strong>) have a NULL <code>consumer_id</code> on purpose. <span class="plain"><em>Plain English:</em> What the devices report back. One row in five is anonymised by design: a privacy measure, not a defect, and a fact any new capability must preserve.</span> <span class="where">Where you meet it: Hour 4</span></dd>
+  <dt id="di-a"><strong>DI&amp;A</strong></dt>
+  <dd>Data, Insights &amp; Analytics: PMI's data function and the sponsor of this program. <span class="plain"><em>Plain English:</em> The department running this.</span> <span class="where">Where you meet it: Cover, certificate</span></dd>
+  <dt id="distributor"><span id="channel-type"></span><strong>Distributor · channel type</strong></dt>
+  <dd><code>rst.distributors</code> (<strong>12</strong> rows): the trading partner that sells to consumers. <code>channel_type</code> is <code>branded_retail</code> (PMI's own stores), <code>partner_retail</code> (third-party retail) or <code>ecommerce</code>. <span class="plain"><em>Plain English:</em> The shop. Both Hour 2 bugs are filters on <code>channel_type</code> that drop one whole distributor.</span> <span class="where">Where you meet it: Hours 1, 2, 4</span></dd>
+  <dt id="field-force"><strong>Field force</strong></dt>
+  <dd>PMI's sales representatives who visit retail outlets. <span class="plain"><em>Plain English:</em> The people on the road; "an MCTS field-force dashboard" is their tool.</span> <span class="where">Where you meet it: Hour 3</span></dd>
+  <dt id="future-skills-initiative"><span id="di-a-enablement-program"></span><strong>Future Skills Initiative · DI&amp;A Enablement Program</strong></dt>
+  <dd>PMI's upskilling program: four forward-looking skills per role track, delivered as instructor-led hours, ending in a certificate and badge. <span class="plain"><em>Plain English:</em> Why you are here today.</span> <span class="where">Where you meet it: Intro, close</span></dd>
+  <dt id="horizon-lab2026"><strong>Horizon!Lab2026</strong></dt>
+  <dd>The training-only password of the <code>postgres</code> user on your VM. Never a real credential. <span class="plain"><em>Plain English:</em> Already saved in the HORIZON connection in SQLTools; you only type it if you re-create the connection. Never paste it into Claude Desktop (see prompt hygiene).</span> <span class="where">Where you meet it: Before you start, every hour</span></dd>
+  <dt id="idp"><span id="individual-development-plan"></span><strong>IDP · Individual Development Plan</strong></dt>
+  <dd>Where you add the four skills after the program and agree an action plan with your line manager. <span class="plain"><em>Plain English:</em> Your four Monday artefacts are its first entries.</span> <span class="where">Where you meet it: Intro, close</span></dd>
+  <dt id="iqos"><strong>IQOS</strong></dt>
+  <dd>PMI's heated-tobacco device brand: it heats tobacco sticks (TEREA, HEETS) instead of burning them. A brand name, not an acronym. <span class="plain"><em>Plain English:</em> One of the two device products in <code>det.device_telemetry</code>.</span> <span class="where">Where you meet it: Hour 4</span></dd>
+  <dt id="lifecycle-stages"><strong>Lifecycle stages</strong></dt>
+  <dd><code>registration → trial → conversion → retention → churn</code>: the consumer journey recorded in CLR. <span class="plain"><em>Plain English:</em> Five chapters of one consumer's story; each event row is one chapter.</span> <span class="where">Where you meet it: Hours 1, 3</span></dd>
+  <dt id="market"><span id="market-code"></span><span id="market-maturity"></span><strong>Market · market code · market maturity</strong></dt>
+  <dd>A country operating unit and how far its smoke-free transition has gone: <strong>JP</strong> Japan (mature), <strong>IT</strong> Italy (mid-adoption), <strong>ID</strong> Indonesia (early-stage). <span class="plain"><em>Plain English:</em> Three countries, three rulebooks. Nothing is "all markets" until you have checked each one.</span> <span class="where">Where you meet it: Everywhere</span></dd>
+  <dt id="mcts"><strong>MCTS</strong></dt>
+  <dd>A PMI-internal system named in your decks ("an MCTS store-coverage ask", "an MCTS brief"); ask your CoP lead for the expansion. <span class="plain"><em>Plain English:</em> Read "the trade and field-force system" until confirmed.</span> <span class="where">Where you meet it: Icebreakers, Hour 3</span></dd>
+  <dt id="mpl"><span id="marketing-permission-ledger"></span><strong>MPL · Marketing Permission Ledger</strong></dt>
+  <dd><code>mpl.consent_records</code>, <strong>15,052</strong> rows. <span class="plain"><em>Plain English:</em> The consent history book. See <strong>ledger</strong> in group 3.</span> <span class="where">Where you meet it: Hours 1, 3, 4</span></dd>
+  <dt id="pmi"><strong>PMI</strong></dt>
+  <dd>Philip Morris International, the client. Not the Project Management Institute. <span class="plain"><em>Plain English:</em> The company whose data this is.</span> <span class="where">Where you meet it: Everywhere</span></dd>
+  <dt id="pmi-di-a-future-skills-certificate"><strong>PMI DI&amp;A Future Skills Certificate</strong></dt>
+  <dd>The completion certificate for the Data Engineer track, with a shareable digital badge. <span class="plain"><em>Plain English:</em> The certificate marks the four skills; the habits are what the next twelve months are for.</span> <span class="where">Where you meet it: Close</span></dd>
+  <dt id="project-horizon"><strong>Project HORIZON</strong></dt>
+  <dd>A fictional, training-only PMI initiative: one Postgres database called <code>horizon</code> with five data assets across three markets. No relation to the UK Post Office's Horizon system, which Hour 2 uses as a cautionary story. <span class="plain"><em>Plain English:</em> Today's sandbox. Every number in the class comes from it, and you can check every one.</span> <span class="where">Where you meet it: Everywhere</span></dd>
+  <dt id="reev"><strong>REEV</strong></dt>
+  <dd>A PMI-internal system named in your decks ("a REEV integration", "a REEV mapping"); ask your CoP lead for the expansion. <span class="plain"><em>Plain English:</em> Read "one of our internal systems".</span> <span class="where">Where you meet it: Icebreakers, Hour 3</span></dd>
+  <dt id="ref"><strong>ref.*</strong></dt>
+  <dd>Reference tables: <code>ref.markets</code>, <code>ref.products</code>, <code>ref.age_bands</code>, <code>ref.campaigns</code>. <span class="plain"><em>Plain English:</em> The lookup lists.</span> <span class="where">Where you meet it: Hour 3 (<code>ref.markets</code> for regions)</span></dd>
+  <dt id="regulatory-filing"><span id="acceptance"></span><strong>Regulatory filing · acceptance</strong></dt>
+  <dd>A submission to a regulator about a product, and whether it was accepted. <code>rfr.filings.status</code> is <code>accepted</code>, <code>under_review</code>, <code>submitted</code> or <code>remediation_required</code>. <span class="plain"><em>Plain English:</em> Paperwork sent to the regulator, and the regulator's answer.</span> <span class="where">Where you meet it: Hour 3 variant</span></dd>
+  <dt id="rfr"><span id="regulatory-filing-repository"></span><strong>RFR · Regulatory Filing Repository</strong></dt>
+  <dd><code>rfr.filings</code>, <strong>112</strong> filings, each with a market, a regulator and a status. <span class="plain"><em>Plain English:</em> The filing cabinet for regulators.</span> <span class="where">Where you meet it: Hour 3 variant</span></dd>
+  <dt id="rst"><span id="retail-sell-through-feed"></span><strong>RST · Retail Sell-Through Feed</strong></dt>
+  <dd><code>rst.sell_through</code> (<strong>2,730</strong> weekly rows, <strong>105</strong> distinct Mondays, <strong>0</strong> non-Mondays, <strong>2024-01-01 → 2025-12-29</strong>) and <code>rst.distributors</code> (<strong>12</strong>). <span class="plain"><em>Plain English:</em> What the shops sold, week by week.</span> <span class="where">Where you meet it: Hours 1, 2, 3, 4</span></dd>
+  <dt id="sell-through"><span id="sell-in"></span><strong>Sell-through · sell-in</strong></dt>
+  <dd>Sell-through: retail sales from the distributor or retailer to the end consumer. Sell-in: PMI's shipments <em>to</em> the distributor. In HORIZON, one row per distributor × product × week; every <code>sale_date</code> is a Monday. <span class="plain"><em>Plain English:</em> Sell-in fills the shelf; sell-through empties it. A weekly feed can never be "real-time".</span> <span class="where">Where you meet it: Hours 1, 2, 3</span></dd>
+  <dt id="smoke-free-transformation"><span id="smoke-free-products"></span><strong>Smoke-free transformation · smoke-free products</strong></dt>
+  <dd>PMI's strategic shift away from cigarettes to products without combustion: heated tobacco (IQOS), e-vapor (VEEV) and oral nicotine (ZYN). HORIZON is the fictional data estate behind that shift. <span class="plain"><em>Plain English:</em> The business reason for every table in the warehouse.</span> <span class="where">Where you meet it: HORIZON slide, Hour 3 request</span></dd>
+  <dt id="store-coverage"><span id="tier-1-outlet"></span><strong>Store coverage · Tier-1 outlet</strong></dt>
+  <dd>Commercial terms: the share of target retail outlets served or visited, and the top-priority tier of those outlets. <span class="plain"><em>Plain English:</em> How much of the market the field force reaches.</span> <span class="where">Where you meet it: Hour 3</span></dd>
+  <dt id="veev"><strong>VEEV</strong></dt>
+  <dd>PMI's e-vapor brand. <code>rst.sell_through</code> carries VEEV product codes; the Hour 4 question is "which Japan distributor sells the most VEEV units per week on average?" (<strong>JP Partner Distributor 2, about 277</strong>; then Partner 5 ≈ 271, Branded 4 ≈ 209, Ecommerce 3 ≈ 169). <span class="plain"><em>Plain English:</em> The product your Hour 4 agent is asked about.</span> <span class="where">Where you meet it: Hour 4</span></dd>
+  <dt id="wa3903"><span id="wa3904"></span><span id="wa3908"></span><span id="wa3906"></span><strong>WA3903 · WA3904 · WA3908 · WA3906</strong></dt>
+  <dd>The vendor course codes: Data Engineering with AI Support; Accountability in Automation; Cross-Functional Co-Design &amp; Feasibility Alignment; Adaptive Learning Mindset for Data Engineers. <span class="plain"><em>Plain English:</em> Hours 1, 2, 3 and 4, in that order.</span> <span class="where">Where you meet it: Dividers</span></dd>
+</dl>
+  <figure class="hero wide">
+    <img src="images/sell-through.svg" alt="Sell-in is PMI shipping to a distributor; sell-through is the distributor selling on to the adult consumer. Distributors have one of three channel types: branded_retail, partner_retail or ecommerce. rst.sell_through has one row per distributor, product and week, every sale_date a Monday." loading="lazy">
+    <figcaption><strong>Sell-in</strong> is PMI shipping to a distributor. <strong>Sell-through</strong> is the distributor selling on to the adult consumer, and that is what <code>rst.sell_through</code> records: one row per distributor × product × week, every <code>sale_date</code> a Monday. Each of the 12 distributors has one channel type: <code>branded_retail</code> (PMI's own stores), <code>partner_retail</code> (third-party retail) or <code>ecommerce</code>.</figcaption>
+  </figure>
+</div>
+<div class="gloss-group" id="g2">
+<h3>2 · Markets and regulators</h3>
+<dl class="gloss">
+  <dt id="aams-eu"><strong>AAMS / EU</strong></dt>
+  <dd>Amministrazione Autonoma dei Monopoli di Stato, Italy's former state-monopolies authority for tobacco, since merged into ADM (Agenzia delle Dogane e dei Monopoli). The "/EU" is there because EU-level rules (the Tobacco Products Directive) also apply in Italy. <span class="plain"><em>Plain English:</em> Italy's tobacco regulator, plus Brussels. Filing acceptance in HORIZON: <strong>65%</strong>.</span> <span class="where">Where you meet it: Hour 3 variant</span></dd>
+  <dt id="apac"><span id="eu"></span><strong>APAC · EU</strong></dt>
+  <dd>Asia-Pacific and European Union: the two regions in <code>ref.markets</code>. Japan and Indonesia are APAC; Italy is EU. <span class="plain"><em>Plain English:</em> Two regions, but three regulators; region is not the unit of compliance.</span> <span class="where">Where you meet it: Hour 3 variant</span></dd>
+  <dt id="bpom"><strong>BPOM</strong></dt>
+  <dd>Badan Pengawas Obat dan Makanan, Indonesia's National Agency of Drug and Food Control. <span class="plain"><em>Plain English:</em> Indonesia's regulator. Filing acceptance in HORIZON: <strong>14%</strong>.</span> <span class="where">Where you meet it: Hour 3 variant</span></dd>
+  <dt id="compliance-posture"><strong>Compliance posture</strong></dt>
+  <dd>The regulatory team's phrase for "how compliant are we overall". <span class="plain"><em>Plain English:</em> HORIZON shows it cannot honestly be one blended number: <strong>14% / 65% / 69%</strong> across three regulators. Per market is the only honest design.</span> <span class="where">Where you meet it: Hour 3 variant</span></dd>
+  <dt id="data-residency"><strong>Data residency</strong></dt>
+  <dd>The requirement that data about a market's consumers stays in an approved jurisdiction. <span class="plain"><em>Plain English:</em> Italian consumer data may not be allowed to sit on a server outside the EU. One of the non-functional requirements Marketing never states.</span> <span class="where">Where you meet it: Hour 3 Step 4</span></dd>
+  <dt id="id"><span id="indonesia"></span><strong>ID · Indonesia</strong></dt>
+  <dd>Early-stage market, APAC, regulator BPOM. Under-25 marketing forbidden: <strong>0%</strong> marketing-allowed. <span class="plain"><em>Plain English:</em> The market with the most complex regulation and the lowest filing acceptance.</span> <span class="where">Where you meet it: Hour 1 stretch, Hours 3, 4</span></dd>
+  <dt id="it"><span id="italy"></span><strong>IT · Italy</strong></dt>
+  <dd>Mid-adoption market, EU, regulator AAMS/EU. Under-25 marketing forbidden: <strong>0%</strong>. <span class="plain"><em>Plain English:</em> The market in the Hour 1 model and the Hour 2 dashboard complaint.</span> <span class="where">Where you meet it: Hours 1, 2, 3, 4</span></dd>
+  <dt id="jp"><span id="japan"></span><strong>JP · Japan</strong></dt>
+  <dd>Mature market, APAC, regulator MHLW. Under-25 marketing allowed: <strong>73%</strong> of under-25 consent rows (<strong>675</strong> of <strong>924</strong>). <span class="plain"><em>Plain English:</em> The market nobody noticed was broken in Hour 2, and the one the Hour 4 agent answers about.</span> <span class="where">Where you meet it: Hours 2, 3, 4</span></dd>
+  <dt id="mhlw"><strong>MHLW</strong></dt>
+  <dd>Japan's Ministry of Health, Labour and Welfare. <span class="plain"><em>Plain English:</em> Japan's regulator. Filing acceptance in HORIZON: <strong>69%</strong>.</span> <span class="where">Where you meet it: Hour 3 variant</span></dd>
+  <dt id="regulator"><strong>Regulator</strong></dt>
+  <dd>The government body that approves products and marketing in a market. <span class="plain"><em>Plain English:</em> Three markets, three regulators, three rulebooks.</span> <span class="where">Where you meet it: Hour 3</span></dd>
+</dl>
+</div>
+<div class="gloss-group" id="g3">
+<h3>3 · SQL, dbt and data engineering</h3>
+<dl class="gloss">
+  <dt id="aggregate"><strong>Aggregate</strong></dt>
+  <dd>A count, sum or average over many rows, returned instead of the rows themselves. <span class="plain"><em>Plain English:</em> Ask for the answer, not the rows: one number per distributor is safe to paste into a chat; <strong>35,113</strong> telemetry rows are not.</span> <span class="where">Where you meet it: Hour 4 Step 2</span></dd>
+  <dt id="anomaly-threshold"><strong>Anomaly threshold</strong></dt>
+  <dd>A tolerance band around a series' own average that flags unusual weeks. Japan's real weekly spread is <strong>0.41x to 1.57x</strong> of each series' average; on the fixed model a 0.5x/2x rule flags <strong>6</strong> normal weeks; 0.35x/1.75x flags <strong>0</strong>. <span class="plain"><em>Plain English:</em> Set the alarm just outside what normal looks like, measured against the data, never guessed or pasted from the assistant.</span> <span class="where">Where you meet it: Hour 2 stretch</span></dd>
+  <dt id="as-of-date"><strong>As-of date</strong></dt>
+  <dd>The date the source data was last loaded, printed on every number. <span class="plain"><em>Plain English:</em> "Refreshed each morning" describes the report. The as-of date describes the data.</span> <span class="where">Where you meet it: Hour 3</span></dd>
+  <dt id="batch-fed-vs-real-time"><span id="batch-fed"></span><span id="real-time"></span><strong>Batch-fed vs real-time</strong></dt>
+  <dd>Batch: data arrives in scheduled loads (nightly, weekly). Real-time: each event arrives within seconds through a stream. HORIZON is batch-fed: <code>rst.sell_through</code> has <strong>105</strong> weekly periods. <span class="plain"><em>Plain English:</em> A weekly feed cannot power a live dashboard, however often the dashboard refreshes.</span> <span class="where">Where you meet it: Hour 3</span></dd>
+  <dt id="clarifying-question"><strong>Clarifying question</strong></dt>
+  <dd>A question whose answer changes what you build. <span class="plain"><em>Plain English:</em> If every possible answer leads to the same build, do not ask it.</span> <span class="where">Where you meet it: Hour 3 Step 2</span></dd>
+  <dt id="coalesce"><strong>COALESCE</strong></dt>
+  <dd>Returns the first non-NULL value in its list: <code>coalesce(marketing_allowed, false)</code>. <span class="plain"><em>Plain English:</em> "If it is unknown, use this default instead." Always add a comment saying why that default is right.</span> <span class="where">Where you meet it: Hours 1, 2</span></dd>
+  <dt id="contract"><strong>Contract</strong></dt>
+  <dd>A rule the data must always obey: one row per event, <code>marketing_allowed</code> never NULL. <span class="plain"><em>Plain English:</em> A test is a contract written down; dbt checks it on every run.</span> <span class="where">Where you meet it: Hours 1, 2</span></dd>
+  <dt id="cte"><span id="with-clause"></span><strong>CTE · WITH clause</strong></dt>
+  <dd>Common Table Expression: a <code>WITH</code> clause that names a sub-query at the top of a statement so the main SELECT below can use it like a table. <span class="plain"><em>Plain English:</em> A named scratch table that lives for one query.</span> <span class="where">Where you meet it: Hour 2</span></dd>
+  <dt id="dbt"><strong>dbt</strong> (data build tool)</dt>
+  <dd>A command-line tool that turns SQL SELECT files into views or tables and tests them. <code>dbt debug</code> checks the connection; <code>dbt run</code> builds; <code>dbt test</code> checks. <code>--select name</code> limits either command to one model. <span class="plain"><em>Plain English:</em> A build system for SQL. You write the SELECT; dbt does the CREATE VIEW and runs the checks.</span> <span class="where">Where you meet it: Hours 1, 2</span></dd>
+  <dt id="dbt-model"><span id="model"></span><strong>dbt model</strong></dt>
+  <dd>One SQL SELECT saved as a file in <code>models/</code>; <code>dbt run</code> builds it as a view or table. In our labs the first line is <code>{{ config(materialized='view', schema='analytics') }}</code>. <span class="plain"><em>Plain English:</em> One file = one view. Hour 1 creates <code>models/analytics/italy_conversion_events.sql</code>; Hour 2 edits <code>models/japan_sell_through.sql</code>.</span> <span class="where">Where you meet it: Hours 1, 2</span></dd>
+  <dt id="dbt-source"><span id="source"></span><strong>dbt source</strong></dt>
+  <dd>A declared raw table, written <code>{{ source('schema','table') }}</code>, for example <code>{{ source('mpl','consent_records') }}</code>. <span class="plain"><em>Plain English:</em> How a model points at a raw table without hard-coding its name. The project file <code>models/_horizon_sources.yml</code> already declares every HORIZON schema (<code>rst</code>, <code>clr</code>, <code>mpl</code>, <code>det</code>, <code>rfr</code>, <code>ref</code>), so any <code>{{ source('schema','table') }}</code> compiles with no setup.</span> <span class="where">Where you meet it: Hours 1, 2</span></dd>
+  <dt id="dbt-ref"><span id="ref-function"></span><strong>dbt ref()</strong></dt>
+  <dd><code>{{ ref('japan_sell_through') }}</code> points at another dbt model you built. <span class="plain"><em>Plain English:</em> <code>source()</code> for raw tables, <code>ref()</code> for your own models.</span> <span class="where">Where you meet it: Hour 2 tests</span></dd>
+  <dt id="distinct-on"><strong>DISTINCT ON</strong> (Postgres)</dt>
+  <dd><code>select distinct on (key) ... order by key, consent_date desc</code> keeps exactly one row per key: the first by the ORDER BY. <span class="plain"><em>Plain English:</em> "For each event, keep only the newest consent dated on or before it." The one-line fix for a fan-out.</span> <span class="where">Where you meet it: Hour 1 corrected model</span></dd>
+  <dt id="dsn"><span id="connection-string"></span><strong>DSN · connection string</strong></dt>
+  <dd><code>postgres://user:password@host:5432/db</code>: the database address and keys in one line. <span class="plain"><em>Plain English:</em> Your SQLTools connection holds one. Never paste it into Claude Desktop.</span> <span class="where">Where you meet it: Hour 4 (instructor's MCP demo)</span></dd>
+  <dt id="fan-out"><strong>Fan-out</strong></dt>
+  <dd>A join that multiplies rows because the right side has several matches per key. <strong>794</strong> Italy conversion events joined to the consent ledger became <strong>1,988</strong> rows. <span class="plain"><em>Plain English:</em> One event, 2.5 consent rows, 2.5 copies of the event. The row count is how you catch it.</span> <span class="where">Where you meet it: Hour 1</span></dd>
+  <dt id="feasibility-verdict"><strong>Feasibility verdict</strong></dt>
+  <dd>The three allowed answers to a request: <strong>buildable as asked · buildable with a change · not as asked</strong>. <span class="plain"><em>Plain English:</em> Never a plain yes or no. Always one of three, with a warehouse number as evidence.</span> <span class="where">Where you meet it: Hour 3</span></dd>
+  <dt id="generic-tests"><span id="schema-yml"></span><strong>Generic tests · schema.yml</strong></dt>
+  <dd>Tests declared in YAML against a model's columns: <code>not_null</code>, <code>unique</code>, <code>relationships</code> (every value exists in another table), <code>accepted_values</code> (only these values). <span class="plain"><em>Plain English:</em> Four reusable checks you switch on by naming the column. Hour 1 ends with 6 generic tests + 1 singular test = <strong>7 passes</strong>.</span> <span class="where">Where you meet it: Hour 1 Step 3</span></dd>
+  <dt id="grain"><strong>Grain</strong></dt>
+  <dd>What one row represents: one row per conversion event; one row per distributor, product and week. <span class="plain"><em>Plain English:</em> Before you join anything, finish the sentence "one row is one ___". If a join changes the answer, it changed the grain.</span> <span class="where">Where you meet it: Everywhere</span></dd>
+  <dt id="inner-vs-left-join"><span id="inner-join"></span><span id="left-join"></span><strong>INNER vs LEFT (vs FULL) join</strong></dt>
+  <dd>INNER keeps only rows that match on both sides. LEFT keeps every left-side row and fills the right side with NULL when nothing matches. FULL keeps both sides. <span class="plain"><em>Plain English:</em> INNER hides the rows you are hunting; a reconciliation must be LEFT or FULL.</span> <span class="where">Where you meet it: Hours 1, 2</span></dd>
+  <dt id="is-distinct-from"><strong>IS DISTINCT FROM</strong></dt>
+  <dd>A comparison that treats NULL as a value: <code>campaign_id is distinct from 1</code> returns <strong>15,523</strong> rows where <code>campaign_id &lt;&gt; 1</code> returns <strong>0</strong>. <span class="plain"><em>Plain English:</em> "Different from 1, and yes, unknown counts as different."</span> <span class="where">Where you meet it: Hour 2 opener</span></dd>
+  <dt id="jinja">**Jinja · <code>{{ }}</code>**</dt>
+  <dd>dbt's templating. Anything in double curly braces (<code>config</code>, <code>source</code>, <code>ref</code>) is replaced before the SQL runs. <span class="plain"><em>Plain English:</em> The curly braces are instructions to dbt, not to Postgres.</span> <span class="where">Where you meet it: Hours 1, 2</span></dd>
+  <dt id="join-condition"><strong>Join condition</strong></dt>
+  <dd>The <code>ON</code> clause of a join. A filter hidden inside it (<code>and d.channel_type &lt;&gt; 'ecommerce'</code>) silently drops rows. <span class="plain"><em>Plain English:</em> Read the whole join, not just the key.</span> <span class="where">Where you meet it: Hour 2 Diagnose</span></dd>
+  <dt id="kpi"><span id="kpi-level-check"></span><strong>KPI · KPI-level check</strong></dt>
+  <dd>Key Performance Indicator; a check on a business number ("under-25 marketing in Italy is always zero") rather than on a job status. <span class="plain"><em>Plain English:</em> A green job status says "it ran". A KPI check says "the number is right".</span> <span class="where">Where you meet it: Hour 2 takeaway</span></dd>
+  <dt id="ledger"><strong>Ledger</strong></dt>
+  <dd>A table that keeps history: many rows per key over time, rather than one current row per key. <code>mpl.consent_records</code> has <strong>2.51</strong> rows per consumer. <span class="plain"><em>Plain English:</em> A bank statement, not a balance. Joining a ledger directly fans out; joining it point-in-time does not.</span> <span class="where">Where you meet it: Hour 1</span></dd>
+  <dt id="nfr"><span id="non-functional-requirement"></span><strong>NFR · non-functional requirement</strong></dt>
+  <dd>Refresh cadence, cost, reliability, access control, data residency, regulatory constraint, as-of date. <span class="plain"><em>Plain English:</em> The requirements nobody says out loud and everybody assumes.</span> <span class="where">Where you meet it: Hour 3 Step 4</span></dd>
+  <dt id="null"><span id="three-valued-logic"></span><strong>NULL · three-valued logic</strong></dt>
+  <dd>SQL comparisons return true, false or <strong>unknown</strong>; <code>WHERE</code> keeps only true. <code>campaign_id &lt;&gt; 1</code> returns <strong>0</strong> rows, not 15,523, because <code>NULL &lt;&gt; 1</code> is unknown. <span class="plain"><em>Plain English:</em> NULL is "I don't know". "I don't know ≠ 1" is still "I don't know", and the filter throws it away without a word.</span> <span class="where">Where you meet it: Hour 2 opener, Hour 1</span></dd>
+  <dt id="orphan-row"><strong>Orphan row</strong></dt>
+  <dd>A fact row whose key has no match in the dimension (a sell-through row for a distributor missing from <code>rst.distributors</code>). An INNER join drops it silently; a LEFT join keeps it with NULLs; a <code>relationships</code> test catches it. Indonesia today: <strong>0</strong> orphans, which is exactly why the INNER-join bug ships. <span class="plain"><em>Plain English:</em> A delivery note for a shop nobody has on file.</span> <span class="where">Where you meet it: Hour 1 Indonesia stretch</span></dd>
+  <dt id="point-in-time"><strong>Point-in-time</strong></dt>
+  <dd>The record in effect on the event's date, not the latest one. "Latest consent per consumer" stamps <strong>31 of 794</strong> Italy events with a consent dated after the event. <span class="plain"><em>Plain English:</em> What did the consumer say <em>at the time</em>, not what they say now.</span> <span class="where">Where you meet it: Hour 1</span></dd>
+  <dt id="postgres"><span id="postgresql"></span><span id="schema"></span><strong>Postgres · PostgreSQL · schema</strong></dt>
+  <dd>The database engine behind <code>horizon</code>. A schema is a named folder of tables: <code>clr</code>, <code>mpl</code>, <code>rst</code>, <code>det</code>, <code>rfr</code>, <code>ref</code>, <code>analytics</code>. <span class="plain"><em>Plain English:</em> <code>clr.consumers</code> reads "the consumers table in the clr folder".</span> <span class="where">Where you meet it: Everywhere</span></dd>
+  <dt id="power-bi-desktop-vs-service"><strong>Power BI Desktop vs Service</strong></dt>
+  <dd>Desktop is the local report-authoring app a single analyst installs; Service is the cloud workspace with scheduled refresh and sharing. In the HORIZON scenario Marketing has Desktop only, so a self-refreshing dashboard is not available as asked. <span class="plain"><em>Plain English:</em> A dashboard that refreshes itself needs Service. With Desktop only, you share a file.</span> <span class="where">Where you meet it: Hour 3</span></dd>
+  <dt id="reconciliation"><strong>Reconciliation</strong></dt>
+  <dd>Comparing the pipeline's output to its source per key (here per distributor) to find rows that vanished. <strong>IT Partner Distributor 2: 210 source / 0 staged. JP Ecommerce Distributor 3: 105 / 0.</strong> <span class="plain"><em>Plain English:</em> Count on both sides of the pipe, per distributor, and subtract.</span> <span class="where">Where you meet it: Hour 2 Detect</span></dd>
+  <dt id="regression"><strong>Regression</strong></dt>
+  <dd>An old bug coming back after a later change. <span class="plain"><em>Plain English:</em> The test you write today is what fails the build when someone brings the bug back next month.</span> <span class="where">Where you meet it: Hours 1, 2</span></dd>
+  <dt id="request-vs-specification"><span id="specification"></span><strong>Request vs specification</strong></dt>
+  <dd>A request says what someone wants, in their words ("real-time"). A specification says exactly what will be built, in terms you can test ("refreshed by 07:00 each morning, as-of date shown on every number"). <span class="plain"><em>Plain English:</em> A request is intent, not a specification.</span> <span class="where">Where you meet it: Hour 3</span></dd>
+  <dt id="shift-left"><strong>Shift left</strong></dt>
+  <dd>Do the checking at Request and Design, before any code exists, instead of at Test and Operate. <span class="plain"><em>Plain English:</em> The thing that moves left is the questions.</span> <span class="where">Where you meet it: Hour 3</span></dd>
+  <dt id="silent-suppression"><strong>Silent suppression</strong></dt>
+  <dd>Rows removed by a rule with no error and no alert. <span class="plain"><em>Plain English:</em> The pipeline is green; the distributor is gone.</span> <span class="where">Where you meet it: Hour 2</span></dd>
+  <dt id="singular-test"><strong>Singular test</strong></dt>
+  <dd>A SQL file in <code>tests/</code> that returns rows only on failure; <code>dbt test</code> fails if any row comes back. Examples: <code>tests/no_underage_marketing_italy.sql</code>, <code>tests/assert_japan_no_dropped_distributors.sql</code>. <span class="plain"><em>Plain English:</em> A smoke alarm. Silence means fine; one row means the build goes red. Hour 2 makes you trip it on purpose so you know it works.</span> <span class="where">Where you meet it: Hours 1, 2</span></dd>
+  <dt id="sqltools"><strong>SQLTools</strong></dt>
+  <dd>The VS Code extension used to run SQL against HORIZON. Saved connection <strong>HORIZON</strong>: <code>localhost</code> / <code>5432</code> / <code>horizon</code> / <code>postgres</code> / <code>Horizon!Lab2026</code>. <span class="plain"><em>Plain English:</em> Your window into the warehouse. Paste a query into a SQLTools query tab, select it and press <strong>Ctrl+E Ctrl+E</strong> (or click the <em>Run on active connection</em> link that appears above the query).</span> <span class="where">Where you meet it: Every hour</span></dd>
+  <dt id="staged"><span id="staging-model"></span><strong>Staged · staging model</strong></dt>
+  <dd>The first dbt layer built over a source: <code>analytics.japan_sell_through</code> is the staged version of <code>rst.sell_through</code> for Japan. "Source vs staged" means raw vs built. Japan: <strong>945</strong> rows planted, <strong>1,050</strong> fixed. <span class="plain"><em>Plain English:</em> The pipe's output, as opposed to its input.</span> <span class="where">Where you meet it: Hour 2</span></dd>
+  <dt id="stakeholder"><strong>Stakeholder</strong></dt>
+  <dd>Anyone who asks for, uses, pays for or governs the thing you build. <span class="plain"><em>Plain English:</em> Not only whoever sent the request: Legal and the regulatory owner count too.</span> <span class="where">Where you meet it: Hour 3 Step 1</span></dd>
+  <dt id="superuser"><strong>Superuser</strong></dt>
+  <dd>A database login that can read and change everything. <code>postgres</code>, your SQLTools login, is one. <span class="plain"><em>Plain English:</em> Fine for a training sandbox; never the login an agent should connect with.</span> <span class="where">Where you meet it: Hour 4 Step 4</span></dd>
+  <dt id="threshold-drift"><strong>Threshold drift</strong></dt>
+  <dd>An alert threshold that no longer matches the data and so never fires (or fires constantly). <span class="plain"><em>Plain English:</em> A smoke alarm with a dead battery.</span> <span class="where">Where you meet it: Hour 2</span></dd>
+  <dt id="view"><strong>View</strong></dt>
+  <dd>A saved SELECT that behaves like a table but stores nothing; our dbt models are views in <code>analytics</code>. <span class="plain"><em>Plain English:</em> A window onto the data, re-run every time you query it.</span> <span class="where">Where you meet it: Hours 1, 2</span></dd>
+  <dt id="window-function"><strong>Window function</strong></dt>
+  <dd><code>row_number() over (partition by event_id order by consent_date desc)</code> numbers rows within a group; an alternative to DISTINCT ON for "one row per key". <span class="plain"><em>Plain English:</em> Rank inside each group, keep rank 1.</span> <span class="where">Where you meet it: Hour 1 Step 2b</span></dd>
+  <dt id="yaml"><strong>YAML</strong></dt>
+  <dd>The indented text format of <code>schema.yml</code>. <span class="plain"><em>Plain English:</em> Indentation is meaning: two spaces, never tabs.</span> <span class="where">Where you meet it: Hour 1 Step 3</span></dd>
+</dl>
+</div>
+<div class="gloss-group" id="g4">
+<h3>4 · AI terms: Claude Desktop, models and agents</h3>
+<dl class="gloss">
+  <dt id="agent"><strong>Agent</strong></dt>
+  <dd>A model, plus a set of tools, plus a loop (think, call a tool, read the result, repeat), plus whatever permissions it was given. <span class="plain"><em>Plain English:</em> In Hour 4 the "tool" is you: Claude writes the SQL, you run it in SQLTools and decide what to paste back. Every tool call is a human running a query.</span> <span class="where">Where you meet it: Hour 4</span></dd>
+  <dt id="allow-once"><span id="allow-always"></span><strong>Allow once · Allow always</strong></dt>
+  <dd>The two choices on the permission prompt in the instructor's MCP demo (labels vary by version). <span class="plain"><em>Plain English:</em> "Allow always" removes the gate for good. Choose it and the agent never asks again.</span> <span class="where">Where you meet it: Hour 4 Step 3 (instructor-led)</span></dd>
+  <dt id="automation-bias"><strong>Automation bias</strong></dt>
+  <dd>Accepting a confident, specific suggestion from a tool more readily than from a colleague, and checking it less. <span class="plain"><em>Plain English:</em> A threshold you would never accept from a junior engineer, pasted from Claude without a check.</span> <span class="where">Where you meet it: Hour 2 stretch</span></dd>
+  <dt id="blast-radius"><strong>Blast radius</strong></dt>
+  <dd>How much damage a tool or job could do if it is wrong: zero for a read-only door, large for an unattended nightly delete. <span class="plain"><em>Plain English:</em> Ask "what is the worst this can do?" before "how good is the demo?".</span> <span class="where">Where you meet it: Hours 2, 4</span></dd>
+  <dt id="claude-desktop"><strong>Claude Desktop</strong></dt>
+  <dd>The Claude chat app on your VM. It answers in a chat window; it cannot create or edit files on the VM. Start every lab with <strong>New chat</strong>. <span class="plain"><em>Plain English:</em> Claude types the draft; you carry it into the repo. The paste is you, signing.</span> <span class="where">Where you meet it: Every hour</span></dd>
+  <dt id="connectors"><span id="mcp-server"></span><strong>Connectors · MCP server</strong></dt>
+  <dd>In Claude Desktop, the <strong>+</strong> button at the bottom-left of the chat box → <em>Connectors</em> lists the tools Claude may call. In the instructor's Hour 4 demo a read-only database door named <code>horizon</code> is connected. Your VM has no connectors, by design. <span class="plain"><em>Plain English:</em> A tool plugged into the chat. Watch the demo: the permission prompt, the tool call, the SQL, and the DELETE the tool refuses.</span> <span class="where">Where you meet it: Hour 4 Step 3 (instructor-led)</span></dd>
+  <dt id="context-window"><strong>Context window</strong></dt>
+  <dd>The finite amount of text a model can see at once: your prompt, the conversation so far, anything you pasted. <span class="plain"><em>Plain English:</em> A desk, not a filing cabinet. What is not on the desk does not exist for the model.</span> <span class="where">Where you meet it: Hours 3, 4</span></dd>
+  <dt id="context-rot"><span id="attention-budget"></span><strong>Context rot · attention budget</strong></dt>
+  <dd>Accuracy drops as the input grows (Chroma's Context Rot study, 18 models). Anthropic frames context as a budget to spend carefully. <span class="plain"><em>Plain English:</em> Pasting <strong>35,113</strong> rows does not make the answer better; it buries the question. That is why a well-built agent aggregates instead of dumping rows.</span> <span class="where">Where you meet it: Hour 4</span></dd>
+  <dt id="curate-do-not-collect"><strong>Curate, do not collect</strong></dt>
+  <dd>The rule for AI output in Hours 3 and 4: Claude generates more than you need; your job is to choose. <span class="plain"><em>Plain English:</em> Delete the question whose answer would not change the design. Delete the gate criterion you could not verify.</span> <span class="where">Where you meet it: Hours 3, 4</span></dd>
+  <dt id="dbhub"><strong>DBHub</strong></dt>
+  <dd>The open-source MCP server the instructor runs on a Mac. Configured read-only (only <code>select / with / explain / show</code> are allowed); it exposes one tool, <code>execute_sql</code>. <span class="plain"><em>Plain English:</em> The door into the warehouse that the demo agent uses. The lock is on the door, not in the prompt.</span> <span class="where">Where you meet it: Hour 4 Step 3 (instructor-led)</span></dd>
+  <dt id="four-line-recommendation"><strong>Four-line recommendation</strong></dt>
+  <dd><code>Rung / Verdict / Guardrails / Gate owner</code>: the output of the readiness-gate method. Verdict is one of explore · pilot-with-guardrails · defer · reject. <span class="plain"><em>Plain English:</em> Four lines a leader will actually read.</span> <span class="where">Where you meet it: Hour 4 Step 4</span></dd>
+  <dt id="fresh-chat"><span id="new-chat"></span><strong>Fresh chat · New chat</strong></dt>
+  <dd>Start each lab in a new conversation so the previous lab is not in the context window. <span class="plain"><em>Plain English:</em> Clear the desk before the next job.</span> <span class="where">Where you meet it: Every lab</span></dd>
+  <dt id="human-gate-short"><strong>Human gate</strong></dt>
+  <dd>See <a href="#permission-prompt">permission prompt</a>.</dd>
+  <dt id="llm"><span id="large-language-model"></span><strong>LLM · large language model</strong></dt>
+  <dd>The kind of model behind Claude. It predicts the next token from everything in its context window. <span class="plain"><em>Plain English:</em> A very good guess at what comes next. Plausible is what it optimises for; correct is your job.</span> <span class="where">Where you meet it: Hour 1 opening (how the assistant works), Hour 4</span></dd>
+  <dt id="mcp"><span id="model-context-protocol"></span><strong>MCP · Model Context Protocol</strong></dt>
+  <dd>An open standard that lets an AI app call tools such as a database query. The server enforces permissions. <span class="plain"><em>Plain English:</em> A USB-C port for tools: the plug is standard, and the permissions are set on the door, not in the prompt.</span> <span class="where">Where you meet it: Hour 4</span></dd>
+  <dt id="model-picker"><strong>Model picker</strong></dt>
+  <dd>The drop-down <strong>next to the send button</strong> in Claude Desktop. You can change model at any point in a conversation; it applies from the next reply. Default to <strong>Sonnet</strong>. For the Hour 1 planning step switch to <strong>Opus</strong>, read the plan, switch back. If Opus is not offered, stay on Sonnet; the plan-then-implement split still teaches the point. <span class="plain"><em>Plain English:</em> Choosing who does the work: the senior for the plan, the fast typist for the draft.</span> <span class="where">Where you meet it: Hour 1 Step 2b</span></dd>
+  <dt id="model-tiers"><span id="opus"></span><span id="sonnet"></span><span id="haiku"></span><strong>Model tiers · Opus · Sonnet · Haiku</strong></dt>
+  <dd>Anthropic's three price tiers of Claude. See the table below. Same fluency, different judgment and price; output costs five times input on every tier. On a subscription the same ratio shows up as how fast you use your session limit. <span class="plain"><em>Plain English:</em> Three colleagues with the same vocabulary and very different day rates.</span> <span class="where">Where you meet it: Hour 1</span></dd>
+  <dt id="permission-prompt"><span id="human-gate"></span><strong>Permission prompt · human gate</strong></dt>
+  <dd>The dialog that asks whether a tool call may run before it runs (you see it in the instructor's demo). On your VM the gate is you: nothing runs until you paste SQL into SQLTools or a file into VS Code. <span class="plain"><em>Plain English:</em> The moment nothing happens until a person says yes. Today, that person is you.</span> <span class="where">Where you meet it: Hours 1, 4</span></dd>
+  <dt id="premium-planning-thrifty-execution"><strong>Premium planning, thrifty execution</strong></dt>
+  <dd>Use the expensive model for the short, judgment-heavy step (review, plan) and the cheap one for the long, mechanical step (draft, implement, tests from a list). <span class="plain"><em>Plain English:</em> Pay the senior for the twenty-line plan, not the two-hundred-line typing. The thing you review is the plan.</span> <span class="where">Where you meet it: Hour 1 Step 2b</span></dd>
+  <dt id="project"><span id="project-instructions"></span><strong>Project · project instructions</strong> (Claude Desktop)</dt>
+  <dd>A Project (left sidebar → <em>Projects</em> → <em>New project</em> → <em>Set project instructions</em>) carries standing instructions into every chat inside it. Hour 4's "agent" is a Project named <strong>HORIZON analyst</strong>. If Projects are unavailable on your plan, paste the same instructions as the first message of a fresh chat. <span class="plain"><em>Plain English:</em> A job description Claude re-reads at the start of every chat.</span> <span class="where">Where you meet it: Hour 4 Step 1</span></dd>
+  <dt id="prompt"><strong>Prompt</strong></dt>
+  <dd>What you paste into Claude. In this class every prompt has the same shape: <code>Context:</code> / <code>Task:</code> / <code>Tables:</code> (schema and column names only) / <code>Rules:</code> / <code>Output:</code>, at most 15 lines, ending with "Respond in Markdown only. Do not create any file." <span class="plain"><em>Plain English:</em> A work order, not a conversation. The guide says in one sentence what each prompt asks for, and what a good answer looks like.</span> <span class="where">Where you meet it: Every hour</span></dd>
+  <dt id="prompt-hygiene"><span id="data-egress"></span><strong>Prompt hygiene · data egress</strong></dt>
+  <dd>Everything pasted into an assistant leaves your data boundary. Give schema and column names, grain, scope and constraints; never rows, credentials or connection strings. <span class="plain"><em>Plain English:</em> The schema is a map; the rows are the territory. Share the map.</span> <span class="where">Where you meet it: Hour 1, every prompt</span></dd>
+  <dt id="prompt-injection"><strong>Prompt injection</strong></dt>
+  <dd>Instructions hidden inside content the model reads (a comment in a table, a web page) that try to steer it. <span class="plain"><em>Plain English:</em> Why "a rule in a prompt is a request" and the real control must live outside the model.</span> <span class="where">Where you meet it: Hour 4</span></dd>
+  <dt id="read-only"><span id="readonly-violation"></span><strong>Read-only · READONLY_VIOLATION</strong></dt>
+  <dd>The DBHub setting <code>readonly = true</code> allows only <code>select / with / explain / show</code>; <code>READONLY_VIOLATION</code> is the error the tool returns when the agent is asked to DELETE. <span class="plain"><em>Plain English:</em> The control is in the tool's configuration, not in the model's good manners.</span> <span class="where">Where you meet it: Hour 4 Step 3 (instructor-led)</span></dd>
+  <dt id="readiness-ladder"><strong>Readiness ladder</strong></dt>
+  <dd><strong>Exploration → Experimentation → Pilot → Adoption</strong>, with a human gate before each rung. <span class="plain"><em>Plain English:</em> A good demo is not pilot evidence. Today's agent earns <strong>Experimentation</strong>: sandbox, read-only, aggregates only.</span> <span class="where">Where you meet it: Hour 4 Step 4</span></dd>
+  <dt id="readiness-gate-prompt"><strong>Readiness-gate prompt</strong></dt>
+  <dd>The WA3906 method written as a prompt you paste: size it up against the estate, ground it with two warehouse facts you ran yourself (<strong>35,113 / 7,084</strong> anonymised; under-25 marketing-allowed <strong>ID 0 · IT 0 · JP 675</strong>), place it on the ladder, define the gate, write the four-line recommendation. <span class="plain"><em>Plain English:</em> A reusable checklist you paste into the chat. The numbers come from your SQLTools, not from Claude's memory.</span> <span class="where">Where you meet it: Hour 4 Step 4</span></dd>
+  <dt id="sampling"><strong>Sampling</strong></dt>
+  <dd>The model picks each next token from a spread of likely options, not always the single most likely one. <span class="plain"><em>Plain English:</em> The same prompt gives different drafts, so your SQL will not match your neighbour's word for word.</span> <span class="where">Where you meet it: Hour 1</span></dd>
+  <dt id="temperature"><strong>Temperature</strong></dt>
+  <dd>The sampling setting that decides whether the model takes the most likely next token or gambles on a less likely one. <span class="plain"><em>Plain English:</em> Why two students get different SQL from the same prompt, and why "it worked for me" proves nothing.</span> <span class="where">Where you meet it: Hour 1 opening (how the assistant works)</span></dd>
+  <dt id="token"><strong>Token</strong></dt>
+  <dd>The unit a model reads and writes, roughly three-quarters of an English word. Prices and context windows are counted in tokens. <span class="plain"><em>Plain English:</em> Pasting the 35,113-row telemetry table (about 2 MB of text) would cost well over half a million tokens: more than twice a 200,000-token context window. A good prompt is a few hundred.</span> <span class="where">Where you meet it: Hour 1 opening (how the assistant works), Hour 4</span></dd>
+  <dt id="tool-call"><strong>Tool call</strong></dt>
+  <dd>One request from the model to a tool, for example <code>execute_sql</code> with a SQL string. <span class="plain"><em>Plain English:</em> In the demo you watch it on screen; on your VM you are the tool.</span> <span class="where">Where you meet it: Hour 4</span></dd>
+  <dt id="vibe-coding"><strong>Vibe coding</strong></dt>
+  <dd>Collins Dictionary Word of the Year 2025: accepting AI-generated code on feel rather than reading it. <span class="plain"><em>Plain English:</em> Fine for a weekend app. Not fine for a model that stamps a marketing permission on 794 real events. Hour 1's theme is its opposite.</span> <span class="where">Where you meet it: Hour 1</span></dd>
+</dl>
+</div>
+<div class="gloss-group" id="g5">
+<h3>5 · Classroom devices</h3>
+<dl class="gloss">
+  <dt id="chat-poll"><strong>💬 chat poll</strong></dt>
+  <dd>A one-word answer in the chat. The chat is the second screen all day; one-word answers count, going off mute counts double. Nobody is graded on being right. <span class="where">Where you meet it: Every hour</span></dd>
+  <dt id="demonstrate-dont-assert"><strong>Demonstrate, don't assert</strong></dt>
+  <dd>Every verdict in the class comes with a query and a number: 1,988 vs 794; 105 dropped rows; 105 Mondays; 0% under-25 in IT and ID; 20% anonymised. <span class="where">Where you meet it: Every hour, Takeaway #5</span></dd>
+  <dt id="follow-along-vs-hands-on-lab"><strong>Follow-along vs hands-on lab</strong></dt>
+  <dd>Follow-along: the instructor drives and you type along (Hours 1, 3, 4). Hands-on: you drive and the instructor paces (Hour 2). <span class="where">Where you meet it: Every hour</span></dd>
+  <dt id="icebreakers"><strong>Icebreakers</strong></dt>
+  <dd>Two warm-ups: "Which face is real?" in the welcome block before Hour 1, and "How many seconds is real-time?" at the start of Hour 3. Both prove that a confident room can be confidently wrong. <span class="where">Where you meet it: Welcome block, Hour 3</span></dd>
+  <dt id="monday-artefact"><strong>Monday artefact</strong></dt>
+  <dd>The one concrete thing each hour asks you to do on Monday. The four together are your IDP action plan. <span class="where">Where you meet it: End of every hour</span></dd>
+  <dt id="the-one-rule"><strong>The one rule</strong></dt>
+  <dd>"The assistant drafts. The warehouse decides. The engineer signs." <span class="where">Where you meet it: Everywhere</span></dd>
+  <dt id="parking-lot"><strong>Parking lot</strong></dt>
+  <dd>The shared board where you post one real request from your own work before the break; two are run live in Hour 3. <span class="where">Where you meet it: Before the break, Hour 3</span></dd>
+  <dt id="predict-then-reveal"><strong>Predict, then reveal</strong></dt>
+  <dd>You predict a number in the chat before the query runs, then the warehouse answers. The gap between the two is the lesson. <span class="where">Where you meet it: Every hour</span></dd>
+  <dt id="role-cards"><strong>Role cards</strong></dt>
+  <dd>Three volunteers speak as Marketing, Legal and the Vendor. <span class="where">Where you meet it: Hour 3</span></dd>
+  <dt id="room-vs-warehouse-scoreboard"><strong>Room vs Warehouse scoreboard</strong></dt>
+  <dd>The running tally of predictions the room got right versus times the warehouse surprised it; read out at 3:50. <span class="where">Where you meet it: Every hour, close</span></dd>
+  <dt id="takeaway"><strong>Takeaway</strong></dt>
+  <dd>One sentence per hour, five in total: a runnable draft is not a correct one · green ≠ right · a request is intent, not a specification · new ≠ ready · demonstrate, don't assert. <span class="where">Where you meet it: End of every hour</span></dd>
+  <dt id="trust-meter"><strong>Trust meter</strong></dt>
+  <dd>A 1-to-10 vote on how much you trust a green pipeline, taken in the welcome block before Hour 1 and again at the end of Hour 2. <span class="where">Where you meet it: Welcome block, Hour 2</span></dd>
+  <dt id="unmute-moment"><strong>Unmute moment</strong></dt>
+  <dd>A question that wants a sentence, not a word. Going off mute counts double. <span class="where">Where you meet it: Every hour</span></dd>
+</dl>
+</div>
+  <p class="gloss-empty" id="glossary-empty" hidden>No term matches that. Try a shorter word, or a table name such as <code>consent_records</code>.</p>
+</section>
+
+<section class="part" id="examples">
+  <div class="part-h">
+    <span class="eyebrow">Group 3, in code</span>
+    <h2>What a generic test and a singular test <span>look like</span></h2>
+    <p class="dek">The two kinds of dbt test from the corrected Hour 1 model. Six generic tests plus one singular test = seven passes.</p>
+  </div>
+  <figure class="hero wide">
+        <img src="images/dbt-anatomy.svg" alt="How dbt works: a model file that reads a source becomes a view with dbt run; generic tests in schema.yml and singular tests in tests/ check it with dbt test, PASS when no bad rows come back." loading="lazy">
+        <figcaption>How dbt works. A <strong>model</strong> is one SELECT in a <code>.sql</code> file that reads a <strong>source</strong> (a declared raw table). <code>dbt run</code> builds it as a <strong>view</strong>. <code>dbt test</code> runs the generic tests in <code>schema.yml</code> and the singular tests in <code>tests/</code> against that view: PASS means no bad rows came back.</figcaption>
+      </figure>
+  <p>The <code>models/analytics/schema.yml</code> from the corrected Hour 1 model (six generic tests):</p>
+  <div class="prompt file" data-label="Example · models/analytics/schema.yml">
+    <p class="asks"><b>What it is</b>Six generic tests declared in YAML: <code>not_null</code> and <code>unique</code> on <code>event_id</code>, <code>not_null</code> and <code>relationships</code> on <code>consumer_id</code>, <code>not_null</code> on <code>marketing_allowed</code>, <code>accepted_values</code> on <code>campaign_bucket</code>.</p>
+<pre><code class="language-yaml">version: 2
+
+models:
+  - name: italy_conversion_events
+    description: Italy conversion events with the marketing permission in effect on the event date. Grain is one row per conversion event.
+    columns:
+      - name: event_id
+        tests: [not_null, unique]
+      - name: consumer_id
+        tests:
+          - not_null
+          - relationships:
+              to: source('clr', 'consumers')
+              field: consumer_id
+      - name: marketing_allowed
+        description: Point-in-time consent (latest consent on or before event_date); unknown is treated as false.
+        tests: [not_null]
+      - name: campaign_bucket
+        tests:
+          - accepted_values:
+              values: ['q3_campaign', 'other']</code></pre>
+  </div>
+  <p>The singular test <code>tests/no_underage_marketing_italy.sql</code> (returns rows only on failure):</p>
+  <div class="prompt file" data-label="Example · tests/no_underage_marketing_italy.sql">
+    <p class="asks"><b>What it is</b>A SQL file in <code>tests/</code> that looks for the forbidden case. Silence means fine; one row means the build goes red.</p>
+<pre><code class="language-sql">-- Contract: no Italy conversion event may carry marketing_allowed = true for an under-25 consumer.
+-- Returns rows only on failure.
+select e.event_id, e.consumer_id, c.age_band
+from {{ ref('italy_conversion_events') }} e
+join {{ source('clr', 'consumers') }} c using (consumer_id)
+where e.market_code = 'IT'
+  and c.age_band = '18-24'
+  and e.marketing_allowed = true</code></pre>
+    <p class="good"><b>What you should see</b><span class="expect ok">7 tests PASS</span> with the six generic tests above, on the corrected 794-row model.</p>
+  </div>
+</section>
+
+<section class="part" id="prove">
+  <div class="part-h">
+    <span class="eyebrow">Demonstrate, don't assert</span>
+    <h2>Prove it: every bold number, <span>as a query</span></h2>
+    <p class="dek">Run any of these in SQLTools. The expected number is in the pill and in the SQL comment.</p>
+  </div>
+
+  <h3 id="prove-horizon">Prove it · the HORIZON numbers in one query</h3>
+  <p>Run this in SQLTools: select the whole query and press <kbd>Ctrl+E</kbd> <kbd>Ctrl+E</kbd>. The seven counts are the canonical sizes of the five assets.</p>
+  <div class="prompt sql">
+  <p class="asks"><b>What it checks</b> The row count of every table in the five HORIZON data assets, in one result.</p>
+<pre><code class="language-sql">SELECT 'clr.consumers' t, count(*) FROM clr.consumers
+UNION ALL SELECT 'clr.lifecycle_events', count(*) FROM clr.lifecycle_events
+UNION ALL SELECT 'mpl.consent_records', count(*) FROM mpl.consent_records
+UNION ALL SELECT 'rst.distributors', count(*) FROM rst.distributors
+UNION ALL SELECT 'rst.sell_through', count(*) FROM rst.sell_through
+UNION ALL SELECT 'det.device_telemetry', count(*) FROM det.device_telemetry
+UNION ALL SELECT 'rfr.filings', count(*) FROM rfr.filings;
+-- expect 6000 / 15597 / 15052 / 12 / 2730 / 35113 / 112</code></pre>
+  <p class="good"><b>What you should see</b><span class="expect">6000 / 15597 / 15052</span> <span class="expect">12 / 2730 / 35113 / 112</span>  In the order of the query: consumers, lifecycle events, consent records, distributors, sell-through, telemetry, filings.</p>
+</div>
+  <div class="prompt sql">
+  <p class="asks"><b>What it checks</b> The Hour 4 question, answered by hand: average weekly VEEV units for each Japan distributor.</p>
+<pre><code class="language-sql">-- The Hour 4 question, answered by hand: VEEV units per week by Japan distributor
+select d.distributor_name, round(avg(s.units_sold)) as avg_veev_units_per_week
+from rst.sell_through s join rst.distributors d using (distributor_id)
+where s.market_code = 'JP' and s.product_code = 'VEEV'
+group by 1 order by 2 desc;
+-- JP Partner Distributor 2 = 277 · JP Partner Distributor 5 = 271 · JP Branded Distributor 4 = 209 · JP Ecommerce Distributor 3 = 169</code></pre>
+  <p class="good"><b>What you should see</b><span class="expect">expect 277 · 271 · 209 · 169</span>  JP Partner Distributor 2 = 277 · JP Partner Distributor 5 = 271 · JP Branded Distributor 4 = 209 · JP Ecommerce Distributor 3 = 169.</p>
+</div>
+  <figure class="hero wide">
+  <img src="images/estate-map.svg" alt="Map of the HORIZON estate: five source schemas feed the horizon warehouse; dbt builds analytics views." loading="lazy">
+  <figcaption>Project HORIZON: five source schemas (CLR, MPL, RST, DET, RFR) with row counts feed the Postgres warehouse <code>horizon</code>. dbt builds the tested analytics views, which are read by dashboards, regulators (MHLW, AAMS/EU, BPOM) and the HORIZON analyst. Markets JP, IT, ID.</figcaption>
+</figure>
+
+  <h3 id="prove-regulators">Prove it · three regulators, three acceptance rates</h3>
+  <div class="prompt sql">
+  <p class="asks"><b>What it checks</b> Filings per market, the share accepted, and which regulator each market answers to.</p>
+<pre><code class="language-sql">select f.market_code, m.region, count(*) as filings,
+       round(100.0 * count(*) filter (where status = 'accepted') / count(*), 0) as pct_accepted,
+       string_agg(distinct f.regulator, ', ') as regulators
+from rfr.filings f join ref.markets m using (market_code)
+group by 1, 2 order by 1;                                     -- ID 14% BPOM · IT 65% AAMS/EU · JP 69% MHLW</code></pre>
+  <p class="good"><b>What you should see</b><span class="expect">ID 14% BPOM</span> <span class="expect">IT 65% AAMS/EU</span> <span class="expect">JP 69% MHLW</span> </p>
+</div>
+
+  <h3 id="prove-hour1">Prove it · ledger, fan-out and point-in-time (Hour 1)</h3>
+  <div class="prompt sql">
+  <p class="asks"><b>What it checks</b> Three checks: the consent ledger has many rows per consumer; the model has the same row count as the source; and how many events &quot;latest consent&quot; would stamp with a future consent.</p>
+<pre><code class="language-sql">-- WA3903 · PROVE. The cheapest, highest-value check: count before and after.
+-- 1) the consent LEDGER is not one row per consumer
+select count(*) as consent_rows, count(distinct consumer_id) as consumers,
+       round(count(*)::numeric / count(distinct consumer_id), 2) as rows_per_consumer
+from mpl.consent_records;                                   -- 15,052 / 6,000 / 2.51
+
+-- 2) source events vs model rows (run after: dbt run --select italy_conversion_events)
+select (select count(*) from clr.lifecycle_events where market_code='IT' and lifecycle_stage='conversion') as source_events,
+       (select count(*) from analytics.italy_conversion_events) as model_rows;   -- 794 vs 1,988 (flawed) or 794 (fixed)
+
+-- 3) how many events would get a consent decided AFTER the event, if you take "latest consent"?
+with latest as (
+  select distinct on (consumer_id) consumer_id, consent_date
+  from mpl.consent_records order by consumer_id, consent_date desc)
+select count(*) as conversion_events,
+       count(*) filter (where e.event_date &lt; l.consent_date) as stamped_with_future_consent
+from clr.lifecycle_events e join latest l using (consumer_id)
+where e.market_code='IT' and e.lifecycle_stage='conversion';          -- 31 of 794</code></pre>
+  <p class="good"><b>What you should see</b><span class="expect">15,052 / 6,000 / 2.51</span> <span class="expect bad">draft returns 1,988</span> <span class="expect ok">fixed 794</span> <span class="expect">31 of 794</span>  Check 2 is 794 vs 1,988 on the flawed draft and 794 vs 794 once fixed.</p>
+</div>
+  <figure class="hero wide">
+  <img src="images/ledger-fanout.svg" alt="Diagram: one event joined to several consent rows becomes several rows; 794 events become 1,988." loading="lazy">
+  <figcaption>Joining event 4711 to the consent ledger (2.51 rows per consumer) turns 794 events into 1,988 rows. Fan-out: the join changed the grain and nothing complained.</figcaption>
+</figure>
+
+  <h3 id="prove-indonesia">Prove it · orphan rows and grain (Hour 1 Indonesia stretch)</h3>
+  <div class="prompt sql">
+  <p class="asks"><b>What it checks</b> Whether any Indonesia sell-through row has no matching distributor, and whether the grain (distributor × product × week) holds.</p>
+<pre><code class="language-sql">-- WA3903 · LAB. Review the Indonesia draft against the warehouse.
+select count(*) as rows_total, count(*) filter (where d.distributor_id is null) as orphan_rows
+from rst.sell_through s left join rst.distributors d using (distributor_id)
+where s.market_code = 'ID';                                   -- 735 / 0
+
+select distributor_id, product_code, sale_date, count(*) as n
+from rst.sell_through where market_code = 'ID'
+group by 1,2,3 having count(*) &gt; 1;                           -- no rows = grain holds</code></pre>
+  <p class="good"><b>What you should see</b><span class="expect">735 / 0</span> <span class="expect ok">no rows = grain holds</span> </p>
+</div>
+
+  <h3 id="prove-null">Prove it · NULL and three-valued logic (Hour 2 opener)</h3>
+  <div class="box chat"><span class="k">Predict, then reveal</span><p><strong>Predict before you run it:</strong> how many rows will the second query return? Post your number in the chat, then run it.</p></div>
+  <div class="prompt sql">
+  <p class="asks"><b>What it checks</b> How <code>=</code>, <code>&lt;&gt;</code> and <code>IS DISTINCT FROM</code> treat the NULLs in <code>campaign_id</code>.</p>
+<pre><code class="language-sql">-- WA3904 · opener. The three-valued-logic trap: 15,597 events; 74 have campaign_id = 1. The rest are NULL.
+-- 💬 Predict before you run it: how many rows will the second query return? Post your number in the chat, then run it.
+select count(*) from clr.lifecycle_events where campaign_id = 1;    -- 74
+select count(*) from clr.lifecycle_events where campaign_id &lt;&gt; 1;   -- 0  (not 15,523!) NULL &lt;&gt; 1 is UNKNOWN
+select count(*) from clr.lifecycle_events where campaign_id is distinct from 1;  -- 15,523: the fix</code></pre>
+  <p class="good"><b>What you should see</b><span class="expect">74</span> <span class="expect bad">&lt;&gt; 1 returns 0</span> <span class="expect ok">IS DISTINCT FROM 15,523</span> </p>
+</div>
+  <figure class="hero wide">
+  <img src="images/null-logic.svg" alt="Diagram of three-valued logic: 74, 0 and 15,523 rows for three filters." loading="lazy">
+  <figcaption>Three-valued logic. <code>campaign_id = 1</code> returns 74 rows, <code>&lt;&gt; 1</code> returns 0 (not 15,523) and <code>IS DISTINCT FROM 1</code> returns 15,523, because WHERE keeps only TRUE.</figcaption>
+</figure>
+
+  <h3 id="prove-recon">Prove it · reconciliation and silent suppression (Hour 2)</h3>
+  <div class="prompt sql">
+  <p class="asks"><b>What it checks</b> Source rows vs staged rows per distributor for Italy and Japan, and how many were dropped.</p>
+<pre><code class="language-sql">-- WA3904 · DETECT. Reconcile source vs staged per distributor, IT and JP in one query.
+-- The LEFT join is the whole trick: an INNER join would hide the very rows you are hunting.
+select d.market_code, d.distributor_name, d.channel_type,
+       src.n_source,
+       coalesce(stg.n_staged, 0)                 as n_staged,
+       src.n_source - coalesce(stg.n_staged, 0)  as dropped
+from (
+    select distributor_id, count(*) as n_source
+    from rst.sell_through where market_code in ('IT','JP') group by distributor_id
+) src
+left join (
+    select distributor_id, count(*) as n_staged from analytics.italy_sell_through group by distributor_id
+    union all
+    select distributor_id, count(*) from analytics.japan_sell_through group by distributor_id
+) stg using (distributor_id)
+join rst.distributors d using (distributor_id)
+order by dropped desc, d.market_code, d.distributor_name;
+-- expect IT Partner Distributor 2 (partner_retail) 210 / 0 / 210 and JP Ecommerce Distributor 3 (ecommerce) 105 / 0 / 105; every other distributor dropped = 0</code></pre>
+  <p class="good"><b>What you should see</b><span class="expect bad">IT Partner Distributor 2 · 210 / 0</span> <span class="expect bad">JP Ecommerce Distributor 3 · 105 / 0</span>  Every other distributor has dropped = 0.</p>
+</div>
+  <div class="prompt sql">
+  <p class="asks"><b>What it checks</b> How many real Japan rows the hidden filter in the join condition removes.</p>
+<pre><code class="language-sql">-- WA3904 · DIAGNOSE. Prove the cause: how many real rows does the join condition remove?
+select count(*) as suppressed_rows
+from rst.sell_through s
+join rst.distributors d using (distributor_id)
+where s.market_code = 'JP'
+  and d.distributor_id = 3                 -- JP Ecommerce Distributor 3 (from Detect)
+  and d.channel_type = 'ecommerce';        -- the channel the join silently excludes
+-- expect 105</code></pre>
+  <p class="good"><b>What you should see</b><span class="expect">expect 105</span> </p>
+</div>
+
+  <h3 id="prove-threshold">Prove it · anomaly threshold (Hour 2 stretch)</h3>
+  <div class="prompt sql">
+  <p class="asks"><b>What it checks</b> Japan's real weekly spread per distributor and product, so the alert threshold is measured, not guessed.</p>
+<pre><code class="language-sql">-- WA3904 · PREVENT. Calibrate the anomaly threshold against Japan's REAL weekly spread, not a guess.
+select distributor_id, product_code,
+       min(units_sold), round(avg(units_sold)) as avg_units, max(units_sold),
+       round(max(units_sold)::numeric / avg(units_sold), 2) as max_over_avg,
+       round(min(units_sold)::numeric / avg(units_sold), 2) as min_over_avg
+from analytics.japan_sell_through
+group by 1, 2 order by 1, 2;
+-- observed: 0.41x to 1.57x of each series' average. Run after the Correct step (1,050 rows): a 0.5x/2x rule flags 6 normal weeks; 0.35x/1.75x flags 0.
+-- (On the planted 945-row view the 0.5x/2x rule flags 5.)</code></pre>
+  <p class="good"><b>What you should see</b><span class="expect">0.41x to 1.57x</span> <span class="expect bad">0.5x/2x flags 6</span> <span class="expect ok">0.35x/1.75x flags 0</span>  Run it after the Correct step (1,050 rows). On the planted 945-row view the 0.5x/2x rule flags 5.</p>
+</div>
+
+  <h3 id="prove-hour3">Prove it · weekly grain and the under-25 rule (Hour 3)</h3>
+  <div class="prompt sql">
+  <p class="asks"><b>What it checks</b> Two warehouse facts that settle the Marketing request: sell-through is weekly, and under-25 marketing is 0% in Italy and Indonesia (counted in consent rows, then in Japan's consumers).</p>
+<pre><code class="language-sql">-- WA3908 · SHIFT LEFT. Demonstrate, don't assert. Two warehouse facts that settle the Marketing request.
+-- (a) Is "real-time" even possible? Sell-through is WEEKLY: every sale_date is a Monday.
+select count(*) as rows, count(distinct sale_date) as distinct_weeks,
+       count(*) filter (where extract(isodow from sale_date) &lt;&gt; 1) as non_monday_rows,
+       min(sale_date), max(sale_date)
+from rst.sell_through;                                        -- 2,730 / 105 / 0
+
+-- (b) Is a uniform cross-market under-25 segment even legal? 0% marketing-allowed in IT and ID.
+select c.market_code,
+       count(*) filter (where c.age_band = '18-24') as under25_rows,
+       count(*) filter (where c.age_band = '18-24' and m.marketing_allowed) as under25_mktg_ok,
+       round(100.0 * count(*) filter (where c.age_band = '18-24' and m.marketing_allowed)
+             / nullif(count(*) filter (where c.age_band = '18-24'), 0), 0) as pct
+from clr.consumers c left join mpl.consent_records m using (consumer_id)
+group by 1 order by 1;                                        -- ID 0% · IT 0% · JP 73% (675 of 924 consent rows)
+
+-- (c) The same fact counted in consumers, not consent rows: Japan's under-25 consumers, and how many have at least one yes.
+select count(distinct c.consumer_id) as under25_consumers,
+       count(distinct c.consumer_id) filter (where m.marketing_allowed) as with_a_yes
+from clr.consumers c left join mpl.consent_records m using (consumer_id)
+where c.market_code = 'JP' and c.age_band = '18-24';          -- 359 / 319</code></pre>
+  <p class="good"><b>What you should see</b><span class="expect">2,730 / 105 / 0</span> <span class="expect">ID 0% · IT 0% · JP 73%</span> <span class="expect note">675 of 924 consent rows</span> <span class="expect note">359 / 319 consumers</span> </p>
+</div>
+
+  <h3 id="prove-hour4">Prove it · the two grounding facts any new capability must preserve (Hour 4)</h3>
+  <div class="prompt sql">
+  <p class="asks"><b>What it checks</b> The two facts you paste into the readiness-gate prompt, plus what &quot;read all the telemetry&quot; would cost.</p>
+<pre><code class="language-sql">-- WA3906 · YOU ARE THE GATE. The two facts any new capability (streaming, vector DB, an AI agent) must preserve.
+-- (a) About 20% of device telemetry is INTENTIONALLY anonymised: a privacy measure, not a defect.
+select count(*) as rows, count(*) filter (where consumer_id is null) as anonymised,
+       round(100.0 * count(*) filter (where consumer_id is null) / count(*), 0) as pct_anon,
+       count(distinct product_code) as products
+from det.device_telemetry;                                    -- 35,113 / 7,084 / 20% / 2
+
+-- (b) Under-25 marketing is forbidden in IT and ID: the curated layer enforces it today.
+select c.market_code,
+       count(*) filter (where c.age_band = '18-24' and m.marketing_allowed) as under25_mktg_ok
+from clr.consumers c left join mpl.consent_records m using (consumer_id)
+group by 1 order by 1;                                        -- ID 0 · IT 0 · JP 675
+
+-- (c) Context-rot check: what would "read all the telemetry" cost? 35,113 rows x 9 columns is about 2 MB of text, well over half a million tokens.
+select pg_size_pretty(pg_total_relation_size('det.device_telemetry')) as table_size,
+       (select count(*) from det.device_telemetry) * 9 as approx_cells;
+-- expect about 4 MB (4040 kB, including indexes) and 316,017 cells</code></pre>
+  <p class="good"><b>What you should see</b><span class="expect">35,113 / 7,084 / 20% / 2</span> <span class="expect">ID 0 · IT 0 · JP 675</span> <span class="expect note">about 4 MB · 316,017 cells</span> </p>
+</div>
+</section>
+
+<section class="part" id="tiers">
+  <div class="part-h">
+    <span class="eyebrow">Group 4, in prices</span>
+    <h2>Model tiers and <span>prices</span></h2>
+    <p class="dek">Anthropic API pricing, October 2026.</p>
+  </div>
+  <div class="tbl cards">
+    <table>
+      <thead><tr><th>Model</th><th class="n">Price per million tokens, in / out</th><th>Use it for</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Opus 5.5</strong></td><td class="n">$4 / $20</td><td>judgment: reviewing, planning, deciding what to test</td></tr>
+<tr><td><strong>Sonnet 5.5</strong></td><td class="n">$2 / $10</td><td>typing: drafting from a spec, implementing an approved plan, writing tests from a list</td></tr>
+<tr><td><strong>Haiku 5.5</strong></td><td class="n">$0.10 / $0.50</td><td>bulk, mechanical work with no ambiguity</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>A plan is short and an implementation is long; output costs five times input on every tier. That asymmetry is the whole argument for premium planning and thrifty execution.</p>
+  <figure class="hero wide">
+  <img src="images/premium-thrifty.svg" alt="Premium planning, thrifty execution: Sonnet drafts, Opus plans, Sonnet implements." loading="lazy">
+  <figcaption>Draft on Sonnet, prove with a count, plan the fix on Opus (a 20-line plan you review), implement and test on Sonnet: 794 = 794, 7 tests pass. Prices per million tokens: Opus $4/$20, Sonnet $2/$10, Haiku $0.10/$0.50. Output costs 5x input.</figcaption>
+</figure>
+</section>
+
+<section class="part" id="close">
+  <div class="part-h">
+    <span class="eyebrow">Takeaway</span>
+    <h2>Every word serves <span>one rule</span></h2>
+  </div>
+  <p>Every word on this page serves one rule: <strong>the assistant drafts, the warehouse decides, the engineer signs.</strong> dbt builds what you paste. SQLTools shows you what is true. Claude Desktop writes a draft, and only a draft. The gate between the draft and the repo is you.</p>
+  <div class="box chat"><span class="k">Chat poll</span><p><strong>Post in the chat, one word:</strong> which word on this page will you have to explain to a colleague on Monday?</p></div>
+</section>
+
+
+    <footer class="foot">
+      <nav aria-label="All guides">
+        <a href="index.html">Start here</a>
+        <a href="hour1.html">Hour 1 · No vibe pipelines</a>
+        <a href="hour2.html">Hour 2 · Green is not right</a>
+        <a href="hour3.html">Hour 3 · Shift left</a>
+        <a href="hour4.html">Hour 4 · You are the gate</a>
+        <a href="glossary.html">Glossary</a>
+      </nav>
+      <p>Lab guides for the PMI Data Engineer Future Skills class · Project HORIZON is fictional and training-only</p>
+    </footer>
+  </main>
+</div>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>

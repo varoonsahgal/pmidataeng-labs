@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" width="100%" class="hz" role="img" aria-labelledby="pit-title pit-desc">
+<title id="pit-title">Point-in-time: the consent in effect on the event date, not the latest one</title>
+<desc id="pit-desc">Timeline for one consumer: consent granted 14 January, a conversion event 12 March, consent withdrawn 2 June. An arrow from March to June labelled WRONG shows the latest-consent join stamping a permission that did not exist yet (31 of 794 events). An arrow from March back to January labelled RIGHT shows the record in effect on the event date, consent_date &lt;= event_date.</desc>
+<style>
+.hz{
+  --navy:#102B53; --navy2:#0C2040; --orange:#FF4A00; --teal:#00C9A7; --ink:#1C2B40;
+  --tint:#F4F6FA; --muted:#5A6B80; --red:#C8402A;
+  --card:#FFFFFF; --line:#C9D3E0; --grid:#E4E9F1; --code:#F4F6FA;
+  --claude:#102B53; --on-claude:#FFFFFF;
+  --teal-ink:#00805F; --teal-soft:#D6F5EE;
+  --orange-ink:#D63D00; --orange-soft:#FFE6DA;
+  --red-ink:#B5361F; --red-soft:#FAE3DE;
+  --navy-soft:#E4EAF4; --mutedfill:#C3CDDA;
+}
+@media (prefers-color-scheme: dark){
+  .hz{
+    --ink:#F4F6FA; --muted:#AFBDD0; --card:#13305F; --line:#3C5884; --grid:#25416C; --code:#0B1B36;
+    --claude:#2F5FB4; --on-claude:#FFFFFF;
+    --teal-ink:#1FD9B9; --teal-soft:#0F3F3A;
+    --orange-ink:#FF8A5B; --orange-soft:#4B2514;
+    --red:#E8604A; --red-ink:#FF8B78; --red-soft:#4E1D17;
+    --navy-soft:#1B3B6E; --mutedfill:#4E6686; --tint:#0C2040;
+  }
+}
+.hz text{font-family:"Space Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;fill:var(--ink);font-size:16px}
+.hz .mono{font-family:"DM Mono",ui-monospace,Menlo,Consolas,monospace;font-size:14px}
+.hz .b{font-weight:700}
+.hz .i{font-style:italic}
+.hz .muted{fill:var(--muted)}
+.hz .teal-ink{fill:var(--teal-ink)}
+.hz .orange-ink{fill:var(--orange-ink)}
+.hz .red-ink{fill:var(--red-ink)}
+.hz .on{fill:var(--on-claude)}
+.hz .card{fill:var(--card);stroke:var(--line);stroke-width:1.5}
+.hz .soft-navy{fill:var(--navy-soft);stroke:var(--line);stroke-width:1.5}
+.hz .soft-teal{fill:var(--teal-soft);stroke:var(--teal);stroke-width:1.5}
+.hz .soft-orange{fill:var(--orange-soft);stroke:var(--orange);stroke-width:1.5}
+.hz .soft-red{fill:var(--red-soft);stroke:var(--red);stroke-width:1.5}
+.hz .claude{fill:var(--claude);stroke:none}
+.hz .code{fill:var(--code);stroke:var(--line);stroke-width:1}
+.hz .ln{stroke:var(--muted);stroke-width:2;fill:none}
+.hz .ln-ink{stroke:var(--ink);stroke-width:2;fill:none}
+.hz .ln-teal{stroke:var(--teal);stroke-width:2.5;fill:none}
+.hz .ln-orange{stroke:var(--orange);stroke-width:2.5;fill:none}
+.hz .ln-red{stroke:var(--red);stroke-width:2.5;fill:none}
+.hz .ln-claude{stroke:var(--claude);stroke-width:2;fill:none}
+.hz .dash{stroke-dasharray:7 6}
+.hz .grid{stroke:var(--grid);stroke-width:1;fill:none}
+.hz .f-teal{fill:var(--teal)}
+.hz .f-orange{fill:var(--orange)}
+.hz .f-red{fill:var(--red)}
+.hz .f-muted{fill:var(--mutedfill)}
+.hz .f-card{fill:var(--card)}
+.hz .f-line{fill:var(--line)}
+.hz .f-ink{fill:var(--ink)}
+.hz .f-navy{fill:var(--claude)}
+.hz .f-code{fill:var(--code)}
+.hz .f-teal-soft{fill:var(--teal-soft)}
+.hz .f-orange-soft{fill:var(--orange-soft)}
+.hz .f-red-soft{fill:var(--red-soft)}
+.hz .f-navy-soft{fill:var(--navy-soft)}
+.hz .mk-muted{fill:var(--muted)}
+.hz .mk-ink{fill:var(--ink)}
+.hz .mk-teal{fill:var(--teal)}
+.hz .mk-orange{fill:var(--orange)}
+.hz .mk-red{fill:var(--red)}
+.hz .mk-claude{fill:var(--claude)}
+</style>
+<defs>
+<marker id="pit-ar-muted" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-muted"/></marker>
+<marker id="pit-ar-ink" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-ink"/></marker>
+<marker id="pit-ar-teal" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-teal"/></marker>
+<marker id="pit-ar-orange" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-orange"/></marker>
+<marker id="pit-ar-red" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-red"/></marker>
+<marker id="pit-ar-claude" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-claude"/></marker>
+</defs>
+<text x="40" y="44" class="b" style="font-size:20px">One consumer, one year. Which consent row belongs to the March event?</text>
+<line x1="60" y1="300" x2="1140" y2="300" class="ln-ink" marker-end="url(#pit-ar-ink)"/>
+<line x1="100" y1="294" x2="100" y2="306" class="ln-ink"/>
+<text x="100" y="326" text-anchor="middle" class="muted" style="font-size:15px">Jan</text>
+<line x1="210" y1="294" x2="210" y2="306" class="ln-ink"/>
+<text x="210" y="326" text-anchor="middle" class="muted" style="font-size:15px">Feb</text>
+<line x1="320" y1="294" x2="320" y2="306" class="ln-ink"/>
+<text x="320" y="326" text-anchor="middle" class="muted" style="font-size:15px">Mar</text>
+<line x1="430" y1="294" x2="430" y2="306" class="ln-ink"/>
+<text x="430" y="326" text-anchor="middle" class="muted" style="font-size:15px">Apr</text>
+<line x1="540" y1="294" x2="540" y2="306" class="ln-ink"/>
+<text x="540" y="326" text-anchor="middle" class="muted" style="font-size:15px">May</text>
+<line x1="650" y1="294" x2="650" y2="306" class="ln-ink"/>
+<text x="650" y="326" text-anchor="middle" class="muted" style="font-size:15px">Jun</text>
+<line x1="760" y1="294" x2="760" y2="306" class="ln-ink"/>
+<text x="760" y="326" text-anchor="middle" class="muted" style="font-size:15px">Jul</text>
+<line x1="870" y1="294" x2="870" y2="306" class="ln-ink"/>
+<text x="870" y="326" text-anchor="middle" class="muted" style="font-size:15px">Aug</text>
+<line x1="980" y1="294" x2="980" y2="306" class="ln-ink"/>
+<text x="980" y="326" text-anchor="middle" class="muted" style="font-size:15px">Sep</text>
+<line x1="1090" y1="294" x2="1090" y2="306" class="ln-ink"/>
+<text x="1090" y="326" text-anchor="middle" class="muted" style="font-size:15px">Oct</text>
+<path d="M365,286 Q506.5,60 650,286" class="ln-red" marker-end="url(#pit-ar-red)"/>
+<text x="506.5" y="92" text-anchor="middle" class="b red-ink" style="font-size:18px">“latest consent per consumer”  →  WRONG</text>
+<text x="506.5" y="116" text-anchor="middle" class="red-ink" style="font-size:15px">stamps the March event with a permission that did not exist yet</text>
+<text x="506.5" y="138" text-anchor="middle" class="muted" style="font-size:15px">31 of 794 Italy events get a consent dated after the event</text>
+<text x="506.5" y="160" text-anchor="middle" class="mono muted" style="font-size:14px">max(consent_date) per consumer</text>
+<path d="M353,314 Q252.5,500 150,314" class="ln-teal" marker-end="url(#pit-ar-teal)"/>
+<text x="312.5" y="440" text-anchor="middle" class="b teal-ink" style="font-size:18px">“consent in effect on the event date”  →  RIGHT</text>
+<text x="312.5" y="464" text-anchor="middle" class="teal-ink" style="font-size:15px">the record in force on 12 March is the one granted on 14 January</text>
+<text x="312.5" y="486" text-anchor="middle" class="mono muted" style="font-size:14px">where consent_date &lt;= event_date  ·  latest of those, per event</text>
+<circle cx="146" cy="300" r="11" class="f-teal"/>
+<circle cx="146" cy="300" r="11" class="f-card" fill-opacity="0" stroke="#FFFFFF" stroke-width="2"/>
+<rect x="348" y="289" width="22" height="22" transform="rotate(45 359 300)" class="f-navy"/>
+<circle cx="654" cy="300" r="11" class="f-red"/>
+<text x="62" y="244" class="b" style="font-size:15px">14 Jan · consent granted</text>
+<text x="62" y="264" class="mono teal-ink" style="font-size:14px">marketing_allowed = true</text>
+<line x1="146" y1="270" x2="146" y2="284" class="ln-teal"/>
+<text x="375" y="358" class="b" style="font-size:15px">12 Mar · conversion event</text>
+<text x="375" y="378" class="mono" style="font-size:14px">lifecycle_stage = 'conversion'</text>
+<text x="670" y="358" class="b" style="font-size:15px">2 Jun · consent withdrawn</text>
+<text x="670" y="378" class="mono red-ink" style="font-size:14px">marketing_allowed = false</text>
+<rect x="760" y="392" width="400" height="100" rx="10" class="card"/>
+<text x="780" y="420" class="mono b" style="font-size:14px">point-in-time (adj.)</text>
+<text x="780" y="444" style="font-size:15px">the record in effect on the event's date,</text>
+<text x="780" y="466" style="font-size:15px">not the latest record for that key.</text>
+</svg>

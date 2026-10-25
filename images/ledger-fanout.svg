@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" width="100%" class="hz" role="img" aria-labelledby="fanout-title fanout-desc">
+<title id="fanout-title">Fan-out: one conversion event joined to a consent ledger becomes two rows</title>
+<desc id="fanout-desc">Event 4711 (12 March) from clr.lifecycle_events is joined on consumer_id to mpl.consent_records, a ledger with about 2.5 rows per consumer. The output has the same event twice. Across the market: 794 events become 1,988 rows. Caption: fan-out, the join changed the grain and nothing complained.</desc>
+<style>
+.hz{
+  --navy:#102B53; --navy2:#0C2040; --orange:#FF4A00; --teal:#00C9A7; --ink:#1C2B40;
+  --tint:#F4F6FA; --muted:#5A6B80; --red:#C8402A;
+  --card:#FFFFFF; --line:#C9D3E0; --grid:#E4E9F1; --code:#F4F6FA;
+  --claude:#102B53; --on-claude:#FFFFFF;
+  --teal-ink:#00805F; --teal-soft:#D6F5EE;
+  --orange-ink:#D63D00; --orange-soft:#FFE6DA;
+  --red-ink:#B5361F; --red-soft:#FAE3DE;
+  --navy-soft:#E4EAF4; --mutedfill:#C3CDDA;
+}
+@media (prefers-color-scheme: dark){
+  .hz{
+    --ink:#F4F6FA; --muted:#AFBDD0; --card:#13305F; --line:#3C5884; --grid:#25416C; --code:#0B1B36;
+    --claude:#2F5FB4; --on-claude:#FFFFFF;
+    --teal-ink:#1FD9B9; --teal-soft:#0F3F3A;
+    --orange-ink:#FF8A5B; --orange-soft:#4B2514;
+    --red:#E8604A; --red-ink:#FF8B78; --red-soft:#4E1D17;
+    --navy-soft:#1B3B6E; --mutedfill:#4E6686; --tint:#0C2040;
+  }
+}
+.hz text{font-family:"Space Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;fill:var(--ink);font-size:16px}
+.hz .mono{font-family:"DM Mono",ui-monospace,Menlo,Consolas,monospace;font-size:14px}
+.hz .b{font-weight:700}
+.hz .i{font-style:italic}
+.hz .muted{fill:var(--muted)}
+.hz .teal-ink{fill:var(--teal-ink)}
+.hz .orange-ink{fill:var(--orange-ink)}
+.hz .red-ink{fill:var(--red-ink)}
+.hz .on{fill:var(--on-claude)}
+.hz .card{fill:var(--card);stroke:var(--line);stroke-width:1.5}
+.hz .soft-navy{fill:var(--navy-soft);stroke:var(--line);stroke-width:1.5}
+.hz .soft-teal{fill:var(--teal-soft);stroke:var(--teal);stroke-width:1.5}
+.hz .soft-orange{fill:var(--orange-soft);stroke:var(--orange);stroke-width:1.5}
+.hz .soft-red{fill:var(--red-soft);stroke:var(--red);stroke-width:1.5}
+.hz .claude{fill:var(--claude);stroke:none}
+.hz .code{fill:var(--code);stroke:var(--line);stroke-width:1}
+.hz .ln{stroke:var(--muted);stroke-width:2;fill:none}
+.hz .ln-ink{stroke:var(--ink);stroke-width:2;fill:none}
+.hz .ln-teal{stroke:var(--teal);stroke-width:2.5;fill:none}
+.hz .ln-orange{stroke:var(--orange);stroke-width:2.5;fill:none}
+.hz .ln-red{stroke:var(--red);stroke-width:2.5;fill:none}
+.hz .ln-claude{stroke:var(--claude);stroke-width:2;fill:none}
+.hz .dash{stroke-dasharray:7 6}
+.hz .grid{stroke:var(--grid);stroke-width:1;fill:none}
+.hz .f-teal{fill:var(--teal)}
+.hz .f-orange{fill:var(--orange)}
+.hz .f-red{fill:var(--red)}
+.hz .f-muted{fill:var(--mutedfill)}
+.hz .f-card{fill:var(--card)}
+.hz .f-line{fill:var(--line)}
+.hz .f-ink{fill:var(--ink)}
+.hz .f-navy{fill:var(--claude)}
+.hz .f-code{fill:var(--code)}
+.hz .f-teal-soft{fill:var(--teal-soft)}
+.hz .f-orange-soft{fill:var(--orange-soft)}
+.hz .f-red-soft{fill:var(--red-soft)}
+.hz .f-navy-soft{fill:var(--navy-soft)}
+.hz .mk-muted{fill:var(--muted)}
+.hz .mk-ink{fill:var(--ink)}
+.hz .mk-teal{fill:var(--teal)}
+.hz .mk-orange{fill:var(--orange)}
+.hz .mk-red{fill:var(--red)}
+.hz .mk-claude{fill:var(--claude)}
+</style>
+<defs>
+<marker id="fanout-ar-muted" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-muted"/></marker>
+<marker id="fanout-ar-ink" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-ink"/></marker>
+<marker id="fanout-ar-teal" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-teal"/></marker>
+<marker id="fanout-ar-orange" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-orange"/></marker>
+<marker id="fanout-ar-red" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-red"/></marker>
+<marker id="fanout-ar-claude" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-claude"/></marker>
+</defs>
+<rect x="40" y="70" width="320" height="180" rx="10" class="card"/>
+<text x="56" y="96" class="mono b" style="font-size:15px">clr.lifecycle_events</text>
+<text x="56" y="116" class="muted" style="font-size:15px">grain: one row = one event</text>
+<line x1="40" y1="128" x2="360" y2="128" class="grid"/>
+<text x="56" y="148" class="mono muted" style="font-size:14px">event_id</text>
+<text x="140" y="148" class="mono muted" style="font-size:14px">consumer_id</text>
+<text x="246" y="148" class="mono muted" style="font-size:14px">event_date</text>
+<text x="56" y="174" class="mono b" style="font-size:14px">4711</text>
+<text x="140" y="174" class="mono b" style="font-size:14px">2093</text>
+<text x="246" y="174" class="mono" style="font-size:14px">12 Mar</text>
+<text x="56" y="234" class="mono muted" style="font-size:14px">lifecycle_stage = 'conversion' · IT</text>
+<rect x="440" y="70" width="350" height="180" rx="10" class="card"/>
+<text x="456" y="96" class="mono b" style="font-size:15px">mpl.consent_records</text>
+<text x="456" y="116" class="muted" style="font-size:15px">a ledger: history, many rows per consumer</text>
+<line x1="440" y1="128" x2="790" y2="128" class="grid"/>
+<text x="456" y="148" class="mono muted" style="font-size:14px">consent_id</text>
+<text x="552" y="148" class="mono muted" style="font-size:14px">consumer_id</text>
+<text x="666" y="148" class="mono muted" style="font-size:14px">date</text>
+<text x="724" y="148" class="mono muted" style="font-size:14px">allowed</text>
+<text x="456" y="174" class="mono" style="font-size:14px">8801</text>
+<text x="552" y="174" class="mono b" style="font-size:14px">2093</text>
+<text x="666" y="174" class="mono" style="font-size:14px">14 Jan</text>
+<text x="724" y="174" class="mono teal-ink b" style="font-size:14px">true</text>
+<text x="456" y="200" class="mono" style="font-size:14px">9120</text>
+<text x="552" y="200" class="mono b" style="font-size:14px">2093</text>
+<text x="666" y="200" class="mono" style="font-size:14px">02 Jun</text>
+<text x="724" y="200" class="mono red-ink b" style="font-size:14px">false</text>
+<text x="456" y="234" class="mono muted" style="font-size:14px">15,052 rows / 6,000 consumers = 2.51 each</text>
+<rect x="870" y="70" width="290" height="180" rx="10" class="card"/>
+<text x="886" y="96" class="mono b" style="font-size:15px">draft model output</text>
+<text x="886" y="116" class="muted" style="font-size:15px">same event, twice</text>
+<line x1="870" y1="128" x2="1160" y2="128" class="grid"/>
+<text x="886" y="148" class="mono muted" style="font-size:14px">event_id</text>
+<text x="970" y="148" class="mono muted" style="font-size:14px">consent_date</text>
+<text x="1084" y="148" class="mono muted" style="font-size:14px">allowed</text>
+<rect x="876" y="156" width="278" height="25" rx="5" class="f-red-soft"/>
+<text x="886" y="174" class="mono b red-ink" style="font-size:14px">4711</text>
+<text x="970" y="174" class="mono" style="font-size:14px">14 Jan</text>
+<text x="1084" y="174" class="mono" style="font-size:14px">true</text>
+<rect x="876" y="182" width="278" height="25" rx="5" class="f-red-soft"/>
+<text x="886" y="200" class="mono b red-ink" style="font-size:14px">4711</text>
+<text x="970" y="200" class="mono" style="font-size:14px">02 Jun</text>
+<text x="1084" y="200" class="mono" style="font-size:14px">false</text>
+<text x="886" y="234" class="mono red-ink" style="font-size:14px">grain: event × consent row</text>
+<line x1="360" y1="160" x2="436" y2="160" class="ln-ink" marker-end="url(#fanout-ar-ink)"/>
+<text x="400" y="52" text-anchor="middle" class="mono" style="font-size:14px">join on consumer_id</text>
+<line x1="400" y1="58" x2="400" y2="150" class="grid"/>
+<line x1="790" y1="160" x2="866" y2="160" class="ln-ink" marker-end="url(#fanout-ar-ink)"/>
+<text x="830" y="52" text-anchor="middle" class="mono" style="font-size:14px">returns 2 rows</text>
+<line x1="830" y1="58" x2="830" y2="150" class="grid"/>
+<line x1="40" y1="276" x2="1160" y2="276" class="grid"/>
+<text x="150" y="356" text-anchor="middle" class="b" style="font-size:60px">794</text>
+<text x="150" y="386" text-anchor="middle" class="muted" style="font-size:15px">Italy conversion events</text>
+<text x="150" y="406" text-anchor="middle" class="muted" style="font-size:15px">in the source</text>
+<path d="M300,336 L840,336" class="ln-red" stroke-width="5"/>
+<path d="M832,318 L866,336 L832,354 Z" class="f-red"/>
+<text x="575" y="318" text-anchor="middle" class="muted" style="font-size:15px">× about 2.5 consent rows per consumer</text>
+<text x="575" y="378" text-anchor="middle" class="b red-ink" style="font-size:19px">fan-out: the join changed the grain and nothing complained</text>
+<text x="575" y="404" text-anchor="middle" class="muted" style="font-size:15px">the model built, the dashboard refreshed, every row looked valid</text>
+<text x="1010" y="356" text-anchor="middle" class="b red-ink" style="font-size:60px">1,988</text>
+<text x="1010" y="386" text-anchor="middle" class="muted" style="font-size:15px">rows in the draft model</text>
+<text x="1010" y="406" text-anchor="middle" class="muted" style="font-size:15px">one event, many consents</text>
+<rect x="40" y="436" width="1120" height="56" rx="10" class="soft-teal"/>
+<text x="600" y="471" text-anchor="middle" style="font-size:16px"><tspan class="b teal-ink">Prove it: </tspan><tspan>count the source, count the model. 794 ≠ 1,988 is the whole bug report.</tspan></text>
+</svg>

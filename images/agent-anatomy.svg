@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" width="100%" class="hz" role="img" aria-labelledby="agent-title agent-desc">
+<title id="agent-title">Anatomy of the agent: in class you are the tool and the gate; in the instructor demo a permission dialog and a read-only MCP server are the gates</title>
+<desc id="agent-desc">Row A, in class with Claude Desktop: you prompt Claude Desktop (Project HORIZON analyst, instructions are a request); it writes one SQL query; you run it in SQLTools against Postgres horizon; an aggregate comes back; you paste it; Claude answers. Row B, instructor demo with MCP: you prompt Claude Desktop; a permission dialog is the gate; the MCP server DBHub with readonly = true is a control; Postgres sits inside a dashed ring labelled blast radius: no writes (reads still reach every table); a DELETE arrow is stamped READONLY_VIOLATION.</desc>
+<style>
+.hz{
+  --navy:#102B53; --navy2:#0C2040; --orange:#FF4A00; --teal:#00C9A7; --ink:#1C2B40;
+  --tint:#F4F6FA; --muted:#5A6B80; --red:#C8402A;
+  --card:#FFFFFF; --line:#C9D3E0; --grid:#E4E9F1; --code:#F4F6FA;
+  --claude:#102B53; --on-claude:#FFFFFF;
+  --teal-ink:#00805F; --teal-soft:#D6F5EE;
+  --orange-ink:#D63D00; --orange-soft:#FFE6DA;
+  --red-ink:#B5361F; --red-soft:#FAE3DE;
+  --navy-soft:#E4EAF4; --mutedfill:#C3CDDA;
+}
+@media (prefers-color-scheme: dark){
+  .hz{
+    --ink:#F4F6FA; --muted:#AFBDD0; --card:#13305F; --line:#3C5884; --grid:#25416C; --code:#0B1B36;
+    --claude:#2F5FB4; --on-claude:#FFFFFF;
+    --teal-ink:#1FD9B9; --teal-soft:#0F3F3A;
+    --orange-ink:#FF8A5B; --orange-soft:#4B2514;
+    --red:#E8604A; --red-ink:#FF8B78; --red-soft:#4E1D17;
+    --navy-soft:#1B3B6E; --mutedfill:#4E6686; --tint:#0C2040;
+  }
+}
+.hz text{font-family:"Space Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;fill:var(--ink);font-size:16px}
+.hz .mono{font-family:"DM Mono",ui-monospace,Menlo,Consolas,monospace;font-size:14px}
+.hz .b{font-weight:700}
+.hz .i{font-style:italic}
+.hz .muted{fill:var(--muted)}
+.hz .teal-ink{fill:var(--teal-ink)}
+.hz .orange-ink{fill:var(--orange-ink)}
+.hz .red-ink{fill:var(--red-ink)}
+.hz .on{fill:var(--on-claude)}
+.hz .card{fill:var(--card);stroke:var(--line);stroke-width:1.5}
+.hz .soft-navy{fill:var(--navy-soft);stroke:var(--line);stroke-width:1.5}
+.hz .soft-teal{fill:var(--teal-soft);stroke:var(--teal);stroke-width:1.5}
+.hz .soft-orange{fill:var(--orange-soft);stroke:var(--orange);stroke-width:1.5}
+.hz .soft-red{fill:var(--red-soft);stroke:var(--red);stroke-width:1.5}
+.hz .claude{fill:var(--claude);stroke:none}
+.hz .code{fill:var(--code);stroke:var(--line);stroke-width:1}
+.hz .ln{stroke:var(--muted);stroke-width:2;fill:none}
+.hz .ln-ink{stroke:var(--ink);stroke-width:2;fill:none}
+.hz .ln-teal{stroke:var(--teal);stroke-width:2.5;fill:none}
+.hz .ln-orange{stroke:var(--orange);stroke-width:2.5;fill:none}
+.hz .ln-red{stroke:var(--red);stroke-width:2.5;fill:none}
+.hz .ln-claude{stroke:var(--claude);stroke-width:2;fill:none}
+.hz .dash{stroke-dasharray:7 6}
+.hz .grid{stroke:var(--grid);stroke-width:1;fill:none}
+.hz .f-teal{fill:var(--teal)}
+.hz .f-orange{fill:var(--orange)}
+.hz .f-red{fill:var(--red)}
+.hz .f-muted{fill:var(--mutedfill)}
+.hz .f-card{fill:var(--card)}
+.hz .f-line{fill:var(--line)}
+.hz .f-ink{fill:var(--ink)}
+.hz .f-navy{fill:var(--claude)}
+.hz .f-code{fill:var(--code)}
+.hz .f-teal-soft{fill:var(--teal-soft)}
+.hz .f-orange-soft{fill:var(--orange-soft)}
+.hz .f-red-soft{fill:var(--red-soft)}
+.hz .f-navy-soft{fill:var(--navy-soft)}
+.hz .mk-muted{fill:var(--muted)}
+.hz .mk-ink{fill:var(--ink)}
+.hz .mk-teal{fill:var(--teal)}
+.hz .mk-orange{fill:var(--orange)}
+.hz .mk-red{fill:var(--red)}
+.hz .mk-claude{fill:var(--claude)}
+</style>
+<defs>
+<marker id="agent-ar-muted" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-muted"/></marker>
+<marker id="agent-ar-ink" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-ink"/></marker>
+<marker id="agent-ar-teal" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-teal"/></marker>
+<marker id="agent-ar-orange" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-orange"/></marker>
+<marker id="agent-ar-red" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-red"/></marker>
+<marker id="agent-ar-claude" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-claude"/></marker>
+</defs>
+<text x="40" y="40" style="font-size:16px"><tspan class="b">A · In class (Claude Desktop): </tspan><tspan class="orange-ink b">you are the tool and the gate</tspan></text>
+<rect x="40" y="64" width="100" height="72" rx="12" class="soft-orange"/>
+<circle cx="62" cy="85.65" r="7.6499999999999995" class="f-orange"/>
+<path d="M49.25,112.3 L49.25,103.8 A12.75,8.5 0 0 1 74.75,103.8 L74.75,112.3 Z" class="f-orange"/>
+<text x="92" y="98.0" class="b" style="font-size:15px">YOU</text>
+<rect x="196" y="64" width="224" height="72" rx="12" class="claude"/>
+<text x="308" y="86" text-anchor="middle" class="b on" style="font-size:16px">Claude Desktop</text>
+<text x="308" y="106" text-anchor="middle" class="on" style="font-size:15px">Project “HORIZON analyst”</text>
+<text x="308" y="124" text-anchor="middle" class="on i" style="font-size:15px">instructions = a request</text>
+<rect x="476" y="72" width="140" height="56" rx="8" class="code"/>
+<text x="546" y="98" text-anchor="middle" class="mono b" style="font-size:14px">ONE SQL query</text>
+<text x="546" y="116" text-anchor="middle" class="mono muted" style="font-size:14px">aggregate only</text>
+<rect x="672" y="64" width="198" height="72" rx="12" class="soft-orange"/>
+<circle cx="694" cy="85.65" r="7.6499999999999995" class="f-orange"/>
+<path d="M681.25,112.3 L681.25,103.8 A12.75,8.5 0 0 1 706.75,103.8 L706.75,112.3 Z" class="f-orange"/>
+<text x="724" y="98.0" class="b" style="font-size:15px">YOU, in SQLTools</text>
+<text x="724" y="116.0" class="muted" style="font-size:15px">the tool and the gate</text>
+<path d="M926,72 L926,128 A60.0,12 0 0 0 1046,128 L1046,72 A60.0,12 0 0 0 926,72 Z" class="soft-teal"/>
+<ellipse cx="986.0" cy="72" rx="60.0" ry="12" class="soft-teal"/>
+<text x="986" y="100" text-anchor="middle" class="muted" style="font-size:15px">Postgres</text>
+<text x="986" y="120" text-anchor="middle" class="mono b" style="font-size:15px">horizon</text>
+<line x1="140" y1="100.0" x2="192" y2="100.0" class="ln" marker-end="url(#agent-ar-muted)"/>
+<text x="166.0" y="90.0" text-anchor="middle" class="muted" style="font-size:15px">prompt</text>
+<line x1="420" y1="100.0" x2="472" y2="100.0" class="ln" marker-end="url(#agent-ar-muted)"/>
+<text x="446.0" y="90.0" text-anchor="middle" class="muted" style="font-size:15px">writes</text>
+<line x1="616" y1="100.0" x2="668" y2="100.0" class="ln" marker-end="url(#agent-ar-muted)"/>
+<text x="642.0" y="90.0" text-anchor="middle" class="muted" style="font-size:15px">read it</text>
+<line x1="870" y1="100.0" x2="922" y2="100.0" class="ln" marker-end="url(#agent-ar-muted)"/>
+<text x="896.0" y="90.0" text-anchor="middle" class="muted" style="font-size:15px">run</text>
+<path d="M986,136 L986,170 L800,170 L800,138" class="ln-teal" marker-end="url(#agent-ar-teal)"/>
+<text x="812" y="187" class="muted" style="font-size:15px">aggregate back (≤ 50 rows)</text>
+<path d="M760,136 L760,200 L340,200 L340,138" class="ln-orange" marker-end="url(#agent-ar-orange)"/>
+<text x="352" y="217" class="muted" style="font-size:15px">you paste the result: nothing moves unless you move it</text>
+<path d="M300,136 L300,230 L90,230 L90,138" class="ln-claude" marker-end="url(#agent-ar-claude)"/>
+<text x="102" y="247" class="muted" style="font-size:15px">answer: 277 + the SQL + one caveat</text>
+<line x1="40" y1="262" x2="1160" y2="262" class="grid"/>
+<text x="40" y="294" style="font-size:16px"><tspan class="b">B · Instructor demo (MCP): </tspan><tspan class="orange-ink b">the model calls the tool; a dialog and a read-only server are the gates</tspan></text>
+<rect x="40" y="318" width="100" height="72" rx="12" class="soft-orange"/>
+<circle cx="62" cy="339.65" r="7.6499999999999995" class="f-orange"/>
+<path d="M49.25,366.3 L49.25,357.8 A12.75,8.5 0 0 1 74.75,357.8 L74.75,366.3 Z" class="f-orange"/>
+<text x="92" y="352.0" class="b" style="font-size:15px">YOU</text>
+<rect x="200" y="318" width="192" height="72" rx="12" class="claude"/>
+<text x="296" y="342" text-anchor="middle" class="b on" style="font-size:16px">Claude Desktop</text>
+<text x="296" y="362" text-anchor="middle" class="on" style="font-size:15px">same Project, plus:</text>
+<text x="296" y="379" text-anchor="middle" class="on i" style="font-size:15px">“run it with execute_sql”</text>
+<rect x="452" y="318" width="184" height="72" rx="12" class="card" stroke="#FF4A00" stroke-width="2"/>
+<text x="544" y="342" text-anchor="middle" class="b" style="font-size:15px">permission dialog</text>
+<text x="544" y="362" text-anchor="middle" class="mono" style="font-size:14px">Allow once / always?</text>
+<text x="544" y="379" text-anchor="middle" class="b orange-ink" style="font-size:15px">the gate</text>
+<rect x="696" y="318" width="182" height="72" rx="12" class="soft-navy"/>
+<text x="787" y="342" text-anchor="middle" class="b" style="font-size:15px">MCP server: DBHub</text>
+<text x="787" y="362" text-anchor="middle" class="mono" style="font-size:14px">readonly = true</text>
+<text x="787" y="379" text-anchor="middle" class="b" style="font-size:15px">a control</text>
+<ellipse cx="1008" cy="354.0" rx="96" ry="66" class="ln dash"/>
+<path d="M948,326 L948,382 A60.0,12 0 0 0 1068,382 L1068,326 A60.0,12 0 0 0 948,326 Z" class="soft-teal"/>
+<ellipse cx="1008.0" cy="326" rx="60.0" ry="12" class="soft-teal"/>
+<text x="1008" y="354" text-anchor="middle" class="muted" style="font-size:15px">Postgres</text>
+<text x="1008" y="374" text-anchor="middle" class="mono b" style="font-size:15px">horizon</text>
+<text x="1008" y="436" text-anchor="middle" class="b teal-ink" style="font-size:15px">blast radius: no writes</text>
+<text x="1008" y="453" text-anchor="middle" class="muted" style="font-size:13px">(reads still reach every table)</text>
+<line x1="140" y1="354.0" x2="196" y2="354.0" class="ln" marker-end="url(#agent-ar-muted)"/>
+<text x="168.0" y="344.0" text-anchor="middle" class="muted" style="font-size:15px">prompt</text>
+<line x1="392" y1="354.0" x2="448" y2="354.0" class="ln" marker-end="url(#agent-ar-muted)"/>
+<text x="420.0" y="344.0" text-anchor="middle" class="muted" style="font-size:15px">tool call</text>
+<line x1="636" y1="354.0" x2="692" y2="354.0" class="ln" marker-end="url(#agent-ar-muted)"/>
+<text x="664.0" y="344.0" text-anchor="middle" class="muted" style="font-size:15px">allowed</text>
+<line x1="878" y1="354.0" x2="944" y2="354.0" class="ln" marker-end="url(#agent-ar-muted)"/>
+<text x="911.0" y="344.0" text-anchor="middle" class="muted" style="font-size:15px">SELECT</text>
+<path d="M296,390 L296,440 L787,440 L787,392" class="ln-red" marker-end="url(#agent-ar-red)"/>
+<text x="330" y="433" class="mono red-ink" style="font-size:14px">delete from rst.distributors where channel_type = 'ecommerce'</text>
+<g transform="translate(560,466) rotate(-3)"><rect x="-108" y="-15" width="216" height="30" rx="4" fill="none" stroke="#C8402A" stroke-width="2.5"/><text x="0" y="6" text-anchor="middle" class="mono b red-ink" style="font-size:15px">READONLY_VIOLATION</text>
+</g>
+<text x="840" y="472" class="muted" style="font-size:15px">refused by the server, not by a prompt</text>
+<text x="40" y="508" class="muted" style="font-size:15px">Two gates in the demo: the permission dialog (you) and readonly = true (code). A rule in a prompt is only a request.</text>
+</svg>
