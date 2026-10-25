@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Prep basics · Project HORIZON lab guides</title>
+<meta name="description" content="The 10-minute foundation for teaching the PMI Data Engineer Future Skills labs: the four hours in one picture, the warehouse map, tables, SQL, joins, NULL, dbt, the student's tools, the AI words and every PMI term, explained from zero. Project HORIZON is fictional and training-only.">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#0C2040">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/prep.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230C2040'/%3E%3Crect x='6' y='6' width='9' height='9' rx='2' fill='%23FF4A00'/%3E%3Crect x='17' y='17' width='9' height='9' rx='2' fill='%2300C9A7'/%3E%3C/svg%3E">
+<style>
+  /* the four hours as colour-coded cards */
+  .hours { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.9rem; max-width: 100%; margin: 0 0 1.5rem; }
+  .hours a { min-width: 0; display: grid; gap: 0.35rem; align-content: start; text-decoration: none; color: inherit; background: var(--surface); border: 1px solid var(--rule); border-top: 4px solid var(--c); border-radius: var(--radius); padding: 0.95rem 1.05rem 1.05rem; box-shadow: var(--shadow); transition: transform 0.15s; }
+  .hours a:hover { transform: translateY(-3px); }
+  .hours .n { font-family: var(--f-mono); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+  .hours .t { font-family: var(--f-display); font-weight: 700; font-size: 1.35rem; text-transform: uppercase; letter-spacing: -0.01em; color: var(--head); line-height: 1.1; }
+  .hours .p { font-size: 0.98rem; color: var(--head); font-weight: 500; line-height: 1.45; }
+  .hours .d { font-size: 0.9rem; color: var(--muted); line-height: 1.5; }
+  .hours .go { font-size: 0.88rem; font-weight: 600; color: var(--teal-ink); }
+  @media (max-width: 700px) { .hours { grid-template-columns: minmax(0, 1fr); } }
+  @media (prefers-reduced-motion: reduce) { .hours a { transition: none; } }
+</style>
+</head>
+<body class="prep prep-0">
+
+<header class="mast">
+  <div class="mast-in">
+    <nav class="sitenav" aria-label="Lab guides">
+      <a class="brand" href="index.html">Project HORIZON</a>
+      <a href="prep.html" aria-current="page">Prep basics</a>
+      <a href="prep-hour1.html">Hour 1</a>
+      <a href="prep-hour2.html">Hour 2</a>
+      <a href="prep-hour3.html">Hour 3</a>
+      <a href="prep-hour4.html">Hour 4</a>
+      <a href="index.html">Student site</a>
+    </nav>
+    <div class="mast-grid">
+      <div class="mast-copy">
+        <div class="eyebrow">Prep guides · start here · read in 12 minutes</div>
+        <h1>The basics, <span>from zero</span><small>The foundation under all four lab guides: the day in one picture, the warehouse, tables, SQL, joins, dbt, the AI words and every PMI term. No prior knowledge assumed.</small></h1>
+        <p class="lede">Read this page once. Then read the guide for the hour you are about to teach (about 18 minutes each) and do its dry run. <strong>These pages are for you, not for students:</strong> they are not linked from the student site and are hidden from search engines.</p>
+        <div class="guides" aria-label="Prep guides">
+          <a href="prep.html" aria-current="page">0 · Basics</a>
+          <a href="prep-hour1.html">1 · No vibe pipelines</a>
+          <a href="prep-hour2.html">2 · Green ≠ right</a>
+          <a href="prep-hour3.html">3 · Shift left</a>
+          <a href="prep-hour4.html">4 · You are the gate</a>
+        </div>
+      </div>
+      <div class="mfd" role="img" aria-label="The point of the whole day: the assistant drafts, the warehouse decides, the engineer signs. One number per hour: 1,988 wrong rows, 105 missing rows, 105 Mondays, 277 checked.">
+        <div class="hd"><b>The point of the whole day</b><b>in one line</b></div>
+        <div class="pt">The AI <b>drafts</b>. The data <b>decides</b>. The engineer <b>signs</b>.</div>
+        <div class="row"><span class="lbl">Hour 1 · rows from a draft that ran fine</span><span class="was">1,988</span></div>
+        <div class="row"><span class="lbl">Hour 2 · rows lost while the job stayed green</span><span class="val">105</span></div>
+        <div class="row"><span class="lbl">Hour 3 · weekly deliveries ("real-time"?)</span><span class="val">105</span></div>
+        <div class="row"><span class="lbl">Hour 4 · the AI's answer, checked by a human</span><span class="now">277</span></div>
+        <div class="ft">Every verdict today comes with <span class="blink">a query and a number.</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="frame">
+  <details class="toc" id="toc" open>
+    <summary>On this page</summary>
+    <div class="pin"><b>The point, all day</b>The AI drafts. The data decides. The engineer signs. Never trust "it ran": check with a number.</div>
+    <ol>
+      <li class="grp">The day</li>
+      <li><a href="#day">Four hours, four points</a></li>
+      <li><a href="#world">The company and the data</a></li>
+      <li class="grp">The tech, from zero</li>
+      <li><a href="#tables">Tables and SQL</a></li>
+      <li><a href="#join">Joins, drawn</a></li>
+      <li><a href="#null">NULL, drawn</a></li>
+      <li><a href="#dbt">dbt in one picture</a></li>
+      <li><a href="#tools">The student's computer</a></li>
+      <li><a href="#ai">The AI words</a></li>
+      <li class="grp">Reference</li>
+      <li><a href="#pmi">PMI dictionary</a></li>
+      <li><a href="#numbers">Every key number</a></li>
+      <li><a href="#before">Before class, on your Mac</a></li>
+    </ol>
+  </details>
+
+  <main id="main">
+
+    <!-- ============================================================ DAY -->
+    <section class="part" id="day">
+      <div class="part-h">
+        <span class="eyebrow">The day · 2 minutes</span>
+        <h2>Four hours, <span>four points</span></h2>
+        <p class="dek">A 4-hour class for PMI data engineers, built from four 1-hour courses. Each hour has one theme and one point. Students do a hands-on lab in each.</p>
+      </div>
+      <div class="hours">
+        <a href="prep-hour1.html" style="--c:#FF7A3D"><span class="n">Hour 1 · WA3903 · 0:12–1:05</span><span class="t">No vibe pipelines</span><span class="p">Code that runs without an error can still be wrong.</span><span class="d">Claude drafts a table; students prove it wrong with three known answers (794 rows, not 1,988), fix it, lock it with tests.</span><span class="go">Hour 1 prep guide →</span></a>
+        <a href="prep-hour2.html" style="--c:#12B865"><span class="n">Hour 2 · WA3904 · 1:08–1:55</span><span class="t">Green ≠ right</span><span class="p">A pipeline that finishes "green" can still be losing data.</span><span class="d">A nightly job silently drops one shop's sales. Students count rows in vs out, find the one bad line, fix it, and leave an alarm.</span><span class="go">Hour 2 prep guide →</span></a>
+        <a href="prep-hour3.html" style="--c:#00C9A7"><span class="n">Hour 3 · WA3908 · 2:07–2:57</span><span class="t">Shift left</span><span class="p">Ask the questions before anyone builds.</span><span class="d">Marketing asks for "real-time dashboards across all markets". Students build nothing: they find the hidden guesses and prove two of them impossible with data.</span><span class="go">Hour 3 prep guide →</span></a>
+        <a href="prep-hour4.html" style="--c:#7B66FF"><span class="n">Hour 4 · WA3906 · 3:00–4:00</span><span class="t">You are the gate</span><span class="p">New is not ready. A good demo is not evidence.</span><span class="d">Leadership wants an AI agent on the data. Students build a safe one, test what it refuses, watch a real lock, and write a readiness verdict.</span><span class="go">Hour 4 prep guide →</span></a>
+      </div>
+      <p>Notice the arc: Hours 1 and 2 catch problems <em>after</em> building (a wrong draft, a lying pipeline). Hour 3 asks how both could have been caught <em>before</em>. Hour 4 applies everything to the next shiny AI tool.</p>
+      <div class="point"><span class="k">Back to the point</span><p>All four hours teach one habit from different angles: <b>do not trust a result because it looks finished. Check it with a number you can explain.</b></p></div>
+    </section>
+
+    <!-- ============================================================ WORLD -->
+    <section class="part" id="world">
+      <div class="part-h">
+        <span class="eyebrow">The day · 2 minutes</span>
+        <h2>The company <span>and the data</span></h2>
+        <p class="dek">The students work at PMI. The data is a made-up but realistic warehouse called Project HORIZON. Here is what lives where.</p>
+      </div>
+      <p><b>PMI</b> (Philip Morris International) is the tobacco company behind Marlboro. Its strategy is to move adult smokers onto <b>smoke-free products</b> that do not burn tobacco: <b>IQOS</b> (heats tobacco), <b>VEEV</b> (e-cigarette) and <b>ZYN</b> (nicotine pouches). Your students are PMI's data engineers: the people who build the tables and pipelines that the business reads.</p>
+      <p><b>Project HORIZON</b> is a fictional training database covering three countries (PMI says "markets"): <b>JP</b> Japan, <b>IT</b> Italy, <b>ID</b> Indonesia. Each has its own regulator and its own laws. The big one: <b>marketing to people aged 18 to 24 is forbidden in Italy and Indonesia</b>, allowed in Japan.</p>
+      <p>The database is organised into folders (database people say <b>schemas</b>). The short names look cryptic; here they are decoded:</p>
+      <div class="tbl cards stack wrap"><table>
+        <thead><tr><th>Folder</th><th>Stands for</th><th>What is in it (one row = …)</th><th>Hours</th></tr></thead>
+        <tbody>
+          <tr><td data-th="Folder"><code>clr</code></td><td data-th="Stands for">Consumer Lifecycle Records</td><td data-th="What"><code>consumers</code> (one row = a person: market, age band) and <code>lifecycle_events</code> (one row = something a person did: registered, tried, converted…)</td><td data-th="Hours">1, 3, 4</td></tr>
+          <tr><td data-th="Folder"><code>mpl</code></td><td data-th="Stands for">Marketing Permission Ledger</td><td data-th="What"><code>consent_records</code> (one row = a person's yes/no to one contact channel, dated)</td><td data-th="Hours">1, 3, 4</td></tr>
+          <tr><td data-th="Folder"><code>rst</code></td><td data-th="Stands for">Retail Sell-Through</td><td data-th="What"><code>distributors</code> (one row = a company that sells PMI products) and <code>sell_through</code> (one row = one distributor, one product, one week of sales)</td><td data-th="Hours">2, 3, 4</td></tr>
+          <tr><td data-th="Folder"><code>det</code></td><td data-th="Stands for">Device Experience Telemetry</td><td data-th="What"><code>device_telemetry</code> (one row = one device, one day of use). 1 in 5 rows anonymised on purpose</td><td data-th="Hours">4</td></tr>
+          <tr><td data-th="Folder"><code>rfr</code></td><td data-th="Stands for">Regulatory Filing Repository</td><td data-th="What"><code>filings</code> (one row = paperwork sent to a regulator, and its status)</td><td data-th="Hours">3 (challenge)</td></tr>
+          <tr><td data-th="Folder"><code>ref</code></td><td data-th="Stands for">Reference</td><td data-th="What">small lookup lists: markets, products, age bands, campaigns</td><td data-th="Hours">background</td></tr>
+          <tr><td data-th="Folder"><code>analytics</code></td><td data-th="Stands for">(output)</td><td data-th="What">where <b>students' work lands</b>: the tables they build with dbt</td><td data-th="Hours">1, 2</td></tr>
+        </tbody>
+      </table></div>
+      <div class="point"><span class="k">Back to the point</span><p>The data is not broken anywhere. Every trap today comes from <b>an assumption about the data</b> ("one consent per person", "online stores are not stores", "real-time is possible"). Knowing what one row means is half of every lab.</p></div>
+    </section>
+
+    <!-- ============================================================ TABLES & SQL -->
+    <section class="part" id="tables">
+      <div class="part-h">
+        <span class="eyebrow">The tech · 2 minutes</span>
+        <h2>Tables <span>and SQL</span></h2>
+        <p class="dek">If you can read a spreadsheet, you can read a table. SQL is how you ask it questions.</p>
+      </div>
+      <figure class="drawn">
+        <div class="drawn-tab">rst.distributors <em>a real table, first five rows</em></div>
+        <div class="drawn-box">
+          <div class="drawn-sub"><b>One row =</b> one company that sells PMI products. Columns across the top, rows down the side, exactly like a spreadsheet tab.</div>
+          <table>
+            <thead><tr><th>distributor_id</th><th>distributor_name</th><th>market_code</th><th>channel_type</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>JP Branded Distributor 1</td><td>JP</td><td>branded_retail</td></tr>
+              <tr><td>2</td><td>JP Partner Distributor 2</td><td>JP</td><td>partner_retail</td></tr>
+              <tr class="hi"><td>3</td><td>JP Ecommerce Distributor 3</td><td>JP</td><td>ecommerce</td></tr>
+              <tr><td>4</td><td>JP Branded Distributor 4</td><td>JP</td><td>branded_retail</td></tr>
+              <tr><td>5</td><td>JP Partner Distributor 5</td><td>JP</td><td>partner_retail</td></tr>
+              <tr class="more"><td colspan="4">… 7 more rows (Italy and Indonesia)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </figure>
+      <p>A <b>query</b> asks that table a question. It reads almost like English:</p>
+<pre><code>select distributor_name         <span class="c">-- show me this column</span>
+from rst.distributors            <span class="c">-- from this table</span>
+where channel_type = 'ecommerce' <span class="c">-- but only rows where this is true</span>
+<span class="c">-- answer: JP Ecommerce Distributor 3, IT Ecommerce Distributor 3, ID Ecommerce Distributor 3</span></code></pre>
+      <p>The SQL words you will meet today, all of them:</p>
+      <div class="tbl cards stack wrap"><table>
+        <thead><tr><th>Word</th><th>Means</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td data-th="Word"><code>select … from …</code></td><td data-th="Means">show these columns from this table</td><td data-th="Example"><code>select event_id from clr.lifecycle_events</code></td></tr>
+          <tr><td data-th="Word"><code>where</code></td><td data-th="Means">keep only rows where this is true</td><td data-th="Example"><code>where market_code = 'IT'</code></td></tr>
+          <tr><td data-th="Word"><code>count(*)</code></td><td data-th="Means">don't show rows, just say how many</td><td data-th="Example"><code>select count(*) from …</code> → 794</td></tr>
+          <tr><td data-th="Word"><code>sum</code> · <code>avg</code></td><td data-th="Means">add up · average</td><td data-th="Example"><code>avg(units_sold)</code> → 277</td></tr>
+          <tr><td data-th="Word"><code>group by</code></td><td data-th="Means">one answer per group instead of one overall</td><td data-th="Example"><code>group by market_code</code> → one row per country</td></tr>
+          <tr><td data-th="Word"><code>e.event_id</code></td><td data-th="Means">a nickname: "event_id from the table nicknamed e"</td><td data-th="Example"><code>from clr.lifecycle_events e</code></td></tr>
+          <tr><td data-th="Word"><code>join … on</code></td><td data-th="Means">glue two tables together where a column matches</td><td data-th="Example">drawn in the next section</td></tr>
+          <tr><td data-th="Word"><code>( select … )</code></td><td data-th="Means">a small question inside a bigger one (a <b>subquery</b>)</td><td data-th="Example">count rows per distributor, Hour 2</td></tr>
+          <tr><td data-th="Word"><code>filter (where …)</code></td><td data-th="Means">count only some rows, next to the full count</td><td data-th="Example">"249 people, 0 of them allowed"</td></tr>
+          <tr><td data-th="Word"><code>exists ( … )</code></td><td data-th="Means">"is there at least one matching row?" yes/no</td><td data-th="Example">does this person have any "yes" slip?</td></tr>
+        </tbody>
+      </table></div>
+      <div class="point"><span class="k">Back to the point</span><p>The most important query all day is the humblest one: <b><code>count(*)</code></b>. Most of the "checks" in every lab are a count compared with a number you already know.</p></div>
+    </section>
+
+    <!-- ============================================================ JOIN -->
+    <section class="part" id="join">
+      <div class="part-h">
+        <span class="eyebrow">The tech · 2 minutes</span>
+        <h2>Joins, <span>drawn</span></h2>
+        <p class="dek">A join glues rows from two tables together wherever a column matches. Two facts about joins cause the problems in Hours 1 and 2.</p>
+      </div>
+      <figure class="diagram" aria-label="Join fact one: a row with three matches becomes three rows. Join fact two: a row with no match disappears in a normal join but survives with empty cells in a LEFT join.">
+        <svg viewBox="0 0 700 300" role="img">
+          <text class="d-h" x="20" y="24">FACT 1 · ONE ROW × 3 MATCHES = 3 ROWS</text>
+          <rect class="d-lab" x="20" y="44" width="150" height="40" rx="6"/><text class="d-lab-t" x="32" y="69">order #7 · Ana</text>
+          <rect class="d-box" x="230" y="36" width="150" height="26" rx="5"/><text class="d-t" x="242" y="54">Ana · slip A</text>
+          <rect class="d-box" x="230" y="66" width="150" height="26" rx="5"/><text class="d-t" x="242" y="84">Ana · slip B</text>
+          <rect class="d-box" x="230" y="96" width="150" height="26" rx="5"/><text class="d-t" x="242" y="114">Ana · slip C</text>
+          <path class="d-line" d="M170 64 L230 49 M170 64 L230 79 M170 64 L230 109"/>
+          <path class="d-line-lab" d="M392 79 L432 79"/><path class="d-head-lab" d="M432 73 L442 79 L432 85 Z"/>
+          <text class="d-tb" x="455" y="54">#7 Ana + slip A</text>
+          <text class="d-tb" x="455" y="80">#7 Ana + slip B</text>
+          <text class="d-tb" x="455" y="106">#7 Ana + slip C</text>
+          <text class="d-stop-t" x="680" y="132" text-anchor="end">1 order is now 3 rows: Hour 1's trap</text>
+          <line class="d-grid" x1="20" y1="152" x2="680" y2="152"/>
+          <text class="d-h" x="20" y="180">FACT 2 · NO MATCH = THE ROW VANISHES (UNLESS LEFT JOIN)</text>
+          <rect class="d-lab" x="20" y="200" width="150" height="40" rx="6"/><text class="d-lab-t" x="32" y="225">order #8 · Ben</text>
+          <rect class="d-soft" x="230" y="200" width="150" height="40" rx="6" style="stroke-dasharray:4 3"/><text class="d-cap" x="242" y="225">no slip for Ben</text>
+          <text class="d-t" x="420" y="214">join:</text><text class="d-stop-t" x="470" y="214">row gone, no warning</text>
+          <text class="d-t" x="420" y="242">left join:</text><text class="d-go-t" x="500" y="242">#8 Ben + (empty)</text>
+          <text class="d-stop-t" x="680" y="280" text-anchor="end">a dropped row is Hour 2's trap</text>
+        </svg>
+        <figcaption>The database never warns about either. To the database, both are ordinary, correct joins. Only a count tells you something changed.</figcaption>
+      </figure>
+      <p>Hour 2 adds one twist: a join can carry extra conditions, <code>on d.distributor_id = s.distributor_id <b>and</b> d.channel_type &lt;&gt; 'ecommerce'</code>. A row is kept only when <b>both</b> are true, so every online-store sale silently fails the second condition and vanishes (fact 2).</p>
+      <div class="point"><span class="k">Back to the point</span><p>A join can <b>add</b> rows (fan-out) or <b>remove</b> rows (no match) without any error. That is why "rows in vs rows out" is the first check in both coding labs.</p></div>
+    </section>
+
+    <!-- ============================================================ NULL -->
+    <section class="part" id="null">
+      <div class="part-h">
+        <span class="eyebrow">The tech · 1 minute</span>
+        <h2>NULL, <span>drawn</span></h2>
+        <p class="dek">NULL is an empty cell: not true, not false, not zero. It means "unknown", and it quietly breaks filters.</p>
+      </div>
+      <p>The Hour 2 opener in one table. The diary has 15,597 rows: 74 with <code>campaign_id = 1</code> and 15,523 empty (NULL). How many rows are "not campaign 1"?</p>
+      <div class="tbl cards stack"><table>
+        <thead><tr><th>Query</th><th>Answer</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td data-th="Query"><code>where campaign_id = 1</code></td><td data-th="Answer"><b>74</b></td><td data-th="Why">as expected</td></tr>
+          <tr><td data-th="Query"><code>where campaign_id &lt;&gt; 1</code></td><td data-th="Answer"><span class="no">0</span></td><td data-th="Why">"is NULL different from 1?" → <b>unknown</b>. <code>where</code> keeps only <b>true</b>, so every NULL row is dropped</td></tr>
+          <tr><td data-th="Query"><code>where campaign_id is distinct from 1</code></td><td data-th="Answer"><span class="yes">15,523</span></td><td data-th="Why">treats empty as a real value: the right answer</td></tr>
+        </tbody>
+      </table></div>
+      <p>Two more NULL tools: <code>is null</code> finds empty cells (never <code>= null</code>, which matches nothing), and <code>coalesce(x, false)</code> means "use x, but if it is empty use false". Hour 1 uses it for "no permission slip means no".</p>
+      <div class="point"><span class="k">Back to the point</span><p>NULL is how wrong numbers hide in plain sight: <b>a filter returns 0 instead of 15,523, and nothing turns red.</b></p></div>
+    </section>
+
+    <!-- ============================================================ DBT -->
+    <section class="part" id="dbt">
+      <div class="part-h">
+        <span class="eyebrow">The tech · 2 minutes</span>
+        <h2>dbt in <span>one picture</span></h2>
+        <p class="dek">dbt ("data build tool") is how data engineers turn SQL queries into saved tables, and check them. Hours 1 and 2 use it; Hours 3 and 4 do not.</p>
+      </div>
+      <ul class="flow">
+        <li><b>1 · The model</b><strong>a .sql file</strong><span>one <code>select</code> query, saved as e.g. <code>japan_sell_through.sql</code></span></li>
+        <li><b>2 · dbt run</b><strong>builds it</strong><span>sends the query to the database and saves the result</span></li>
+        <li><b>3 · The view</b><strong>a "table" you can query</strong><span>named after the file, in the <code>analytics</code> folder</span></li>
+        <li class="you"><b>4 · dbt test</b><strong>checks it</strong><span>runs every test: PASS or FAIL with a count</span></li>
+      </ul>
+      <div class="terms">
+        <div class="wcard"><h4>Model <small>the recipe card</small></h4><p>A file holding one <code>select</code>. Its file name becomes the table name.</p><p class="like">a recipe card; <code>dbt run</code> is the oven.</p></div>
+        <div class="wcard"><h4>View <small>a saved query</small></h4><p>What dbt builds here. Reads like a table; really a saved query that re-runs each time.</p></div>
+        <div class="wcard"><h4><code>{{ source('rst','sell_through') }}</code> <small>raw table</small></h4><p>dbt's way of writing <code>rst.sell_through</code>: "the raw table called…". The <code>{{ }}</code> are dbt's fill-in-the-blank brackets.</p></div>
+        <div class="wcard"><h4><code>{{ ref('japan_sell_through') }}</code> <small>another model</small></h4><p>"The table built from that model file". Used in tests to point at what we built.</p></div>
+        <div class="wcard"><h4><code>{{ config(…) }}</code> <small>settings line</small></h4><p>The first line of a model: "save this as a view in the <code>analytics</code> folder".</p></div>
+        <div class="wcard"><h4>Test <small>an alarm</small></h4><p>A query that <b>hunts for bad rows</b>. Finds none: PASS. Finds some: FAIL with the count. One-word tests (<code>unique</code>, <code>not_null</code>) are listed in <code>schema.yml</code>; custom ones are .sql files in <code>tests/</code>.</p><p class="like">a smoke alarm: silent when all is well, loud the moment it is not.</p></div>
+      </div>
+<pre>dbt run --select italy_conversion_events    <span class="c"># build one model</span>
+dbt test --select italy_conversion_events   <span class="c"># run its tests</span>
+<span class="n">Done. PASS=4 WARN=0 ERROR=0 SKIP=0 TOTAL=4</span>   <span class="c"># what success looks like</span></pre>
+      <div class="point"><span class="k">Back to the point</span><p><code>dbt run</code> going green proves only that the SQL is valid. <b>dbt never checks whether the numbers are right.</b> Only tests do that, and only for the rules someone wrote down.</p></div>
+    </section>
+
+    <!-- ============================================================ TOOLS -->
+    <section class="part" id="tools">
+      <div class="part-h">
+        <span class="eyebrow">The tech · 1 minute</span>
+        <h2>The student's <span>computer</span></h2>
+        <p class="dek">Students work on a Windows virtual machine with four tools. There is no Claude Code: the only AI is the Claude Desktop chat app.</p>
+      </div>
+      <div class="tbl cards stack wrap"><table>
+        <thead><tr><th>Tool</th><th>What it is</th><th>What students do with it</th></tr></thead>
+        <tbody>
+          <tr><td data-th="Tool"><b>VS Code</b></td><td data-th="What">a code editor (like Word, for code)</td><td data-th="Do">open the dbt project folder <code>C:\Users\labadmin\Downloads\setup\horizon_dbt</code>, create and save .sql files</td></tr>
+          <tr><td data-th="Tool"><b>SQLTools</b></td><td data-th="What">a panel inside VS Code that talks to the database</td><td data-th="Do">right-click HORIZON → Connect → New SQL File; select a query, <span class="kbd">Ctrl+E</span> <span class="kbd">Ctrl+E</span> to run it</td></tr>
+          <tr><td data-th="Tool"><b>Terminal</b></td><td data-th="What">the text command line, inside VS Code</td><td data-th="Do">type <code>dbt run</code>, <code>dbt test</code>, <code>dbt debug</code></td></tr>
+          <tr><td data-th="Tool"><b>Claude Desktop</b></td><td data-th="What">Anthropic's chat app. Cannot see the database or create files</td><td data-th="Do">paste a prompt, copy the code it writes; model picker next to the send button (Sonnet / Opus); <b>Projects</b> in Hour 4</td></tr>
+        </tbody>
+      </table></div>
+      <p>Every prompt in every lab has the same five labelled parts, which makes them easy to explain:</p>
+      <div class="tbl cards stack"><table>
+        <thead><tr><th>Part</th><th>Says</th></tr></thead>
+        <tbody>
+          <tr><td data-th="Part"><b>Context</b></td><td data-th="Says">who we are and what tools we use</td></tr>
+          <tr><td data-th="Part"><b>Task</b></td><td data-th="Says">the one thing to produce</td></tr>
+          <tr><td data-th="Part"><b>Tables</b></td><td data-th="Says">table and column <b>names</b> only, never real rows ("prompt hygiene")</td></tr>
+          <tr><td data-th="Part"><b>Rules</b></td><td data-th="Says">constraints: no <code>select *</code>, under 15 lines, no code yet…</td></tr>
+          <tr><td data-th="Part"><b>Output</b></td><td data-th="Says">the exact shape of the answer; always ends "Do not create any file"</td></tr>
+        </tbody>
+      </table></div>
+      <div class="point"><span class="k">Back to the point</span><p>Because Claude Desktop cannot touch anything, <b>a human carries every piece of code across</b>. The class catchphrase: "the paste is you, signing."</p></div>
+    </section>
+
+    <!-- ============================================================ AI -->
+    <section class="part" id="ai">
+      <div class="part-h">
+        <span class="eyebrow">The tech · 2 minutes</span>
+        <h2>The <span>AI words</span></h2>
+        <p class="dek">Enough to explain the opener in Hour 1 and the agent in Hour 4.</p>
+      </div>
+      <div class="terms">
+        <div class="wcard"><h4>Language model <small>LLM</small></h4><p>The engine inside Claude. It has read a vast amount of text and writes by predicting what comes next.</p><p class="like">a phone's autocomplete, scaled up enormously.</p></div>
+        <div class="wcard"><h4>Token <small>a piece of a word</small></h4><p>Models read and write in chunks of roughly ¾ of a word (about 4 characters). Prices and memory limits are counted in tokens.</p></div>
+        <div class="wcard"><h4>Next-token prediction <small>how it writes</small></h4><p>At every step it scores all possible next tokens and picks one. It writes what <b>sounds likely</b>, not what it has checked. Shown live with the <a href="https://poloclub.github.io/transformer-explainer/">Transformer Explainer</a>.</p></div>
+        <div class="wcard"><h4>Sonnet · Opus · Haiku <small>model sizes</small></h4><p>Claude comes in sizes. Per million tokens (in / out): <b>Opus</b> $4 / $20 (best thinker), <b>Sonnet</b> $2 / $10 (strong, cheaper), <b>Haiku</b> $0.10 / $0.50 (bulk work).</p><p class="here">"premium planning, thrifty execution": Opus writes the short plan, Sonnet types the long code.</p></div>
+        <div class="wcard"><h4>Context window <small>its working memory</small></h4><p>Everything the model can "see" at once: instructions, chat, pasted text. Large ones hold about 200,000 tokens, and quality drops as it fills ("context rot").</p></div>
+        <div class="wcard"><h4>Agent · tool call <small>AI that does things</small></h4><p>An agent can ask for actions ("run this SQL"), read the result and continue. Each request is a <b>tool call</b>.</p><p class="here">Hour 4. Today the "tool" is the student, who runs the SQL by hand.</p></div>
+        <div class="wcard"><h4>MCP <small>Model Context Protocol</small></h4><p>A standard plug that connects an AI app to a tool such as a database. The permissions live in the plug, not in the prompt.</p><p class="like">a USB-C port for AI tools.</p></div>
+        <div class="wcard"><h4>Automation bias <small>a human habit</small></h4><p>Trusting a number more because a machine produced it. Every lab is a small cure for it.</p></div>
+      </div>
+      <div class="point"><span class="k">Back to the point</span><p>A model that writes what <i>sounds</i> right, about data it has never seen, will sometimes be <b>confidently wrong</b>. That single fact is why the human signs.</p></div>
+    </section>
+
+    <!-- ============================================================ PMI -->
+    <section class="part" id="pmi">
+      <div class="part-h">
+        <span class="eyebrow">Reference · scan it, come back when needed</span>
+        <h2>PMI <span>dictionary</span></h2>
+        <p class="dek">Every company or industry word used in the labs, in plain English.</p>
+      </div>
+      <div class="tbl cards stack wrap"><table>
+        <thead><tr><th>Word</th><th>Plain English</th><th>Where it shows up</th></tr></thead>
+        <tbody>
+          <tr><td data-th="Word"><b>PMI</b></td><td data-th="Plain English">Philip Morris International, the tobacco company</td><td data-th="Where">everywhere</td></tr>
+          <tr><td data-th="Word"><b>DI&amp;A</b></td><td data-th="Plain English">PMI's data department (written as "Data, Insights &amp; Analytics" in the vendor notes)</td><td data-th="Where">the class title</td></tr>
+          <tr><td data-th="Word"><b>Smoke-free products</b></td><td data-th="Plain English">products that do not burn tobacco; PMI's strategy is to switch adult smokers onto them</td><td data-th="Where">the reason for all the data</td></tr>
+          <tr><td data-th="Word"><b>IQOS · VEEV · ZYN</b></td><td data-th="Plain English">heated tobacco device · e-cigarette (vape) · nicotine pouches. The <code>product_code</code> column</td><td data-th="Where">Hours 1, 2, 4</td></tr>
+          <tr><td data-th="Word"><b>Adult smoker</b></td><td data-th="Plain English">PMI markets these products only to adults who would otherwise keep smoking. Why the under-25 rules exist</td><td data-th="Where">Hours 1, 3, 4</td></tr>
+          <tr><td data-th="Word"><b>Conversion</b></td><td data-th="Plain English">a smoker switching to a smoke-free product</td><td data-th="Where">Hours 1, 3</td></tr>
+          <tr><td data-th="Word"><b>Lifecycle stages</b></td><td data-th="Plain English">registration (signs up) → trial → conversion → retention (stays) or churn (quits)</td><td data-th="Where">Hours 1, 3</td></tr>
+          <tr><td data-th="Word"><b>Consent · marketing permission</b></td><td data-th="Plain English">a person's dated yes/no to marketing, one per contact channel</td><td data-th="Where">Hour 1</td></tr>
+          <tr><td data-th="Word"><b>comm_channel</b></td><td data-th="Plain English">a way of <b>contacting a person</b>: email, sms, push, postal</td><td data-th="Where">Hour 1</td></tr>
+          <tr><td data-th="Word"><b>channel_type</b></td><td data-th="Plain English">a way of <b>selling</b>: branded_retail (PMI's own stores), partner_retail (other companies' shops), ecommerce (online). Not the same "channel" as above!</td><td data-th="Where">Hours 2, 4</td></tr>
+          <tr><td data-th="Word"><b>Distributor</b></td><td data-th="Plain English">a company that sells PMI products on to shoppers</td><td data-th="Where">Hours 2, 4</td></tr>
+          <tr><td data-th="Word"><b>Sell-in · sell-through</b></td><td data-th="Plain English">sell-in: PMI ships to the distributor (fills the shelf). Sell-through: the distributor sells to shoppers (empties the shelf). HORIZON has weekly sell-through</td><td data-th="Where">Hours 2, 3, 4</td></tr>
+          <tr><td data-th="Word"><b>Units sold · gross revenue (EUR)</b></td><td data-th="Plain English">how many items were sold · the money from them before deductions, in euros</td><td data-th="Where">Hours 2, 4</td></tr>
+          <tr><td data-th="Word"><b>Market · JP / IT / ID</b></td><td data-th="Plain English">a country: Japan (mature market), Italy (mid), Indonesia (early)</td><td data-th="Where">everywhere</td></tr>
+          <tr><td data-th="Word"><b>Regulator</b></td><td data-th="Plain English">the government body that approves products and marketing: MHLW (Japan), AAMS/EU (Italy), BPOM (Indonesia)</td><td data-th="Where">Hour 3</td></tr>
+          <tr><td data-th="Word"><b>Age band · under-25</b></td><td data-th="Plain English">age group column; <code>'18-24'</code> is the under-25 band. Marketing to it is forbidden in Italy and Indonesia</td><td data-th="Where">Hours 1, 3, 4</td></tr>
+          <tr><td data-th="Word"><b>Campaign</b></td><td data-th="Plain English">a marketing push; campaign 1 is "Italy IQOS Autumn Conversion Push", sent by email</td><td data-th="Where">Hours 1, 2</td></tr>
+          <tr><td data-th="Word"><b>Telemetry</b></td><td data-th="Plain English">usage data a device sends back (sessions, minutes)</td><td data-th="Where">Hour 4</td></tr>
+          <tr><td data-th="Word"><b>Project HORIZON</b></td><td data-th="Plain English">the fictional, training-only data estate the class uses</td><td data-th="Where">everywhere</td></tr>
+          <tr><td data-th="Word"><b>Power BI</b></td><td data-th="Plain English">Microsoft's dashboard tool. "Desktop" is a file on one PC; the shared cloud service is separate (Marketing only has Desktop)</td><td data-th="Where">Hour 3</td></tr>
+          <tr><td data-th="Word"><b>Q1</b></td><td data-th="Plain English">the first quarter: January to March</td><td data-th="Where">Hour 4</td></tr>
+        </tbody>
+      </table></div>
+      <div class="box tidbit"><span class="k">If a word is not here</span><p>Some PMI-internal names (for example MCTS, DCA, REEV) appear in older decks without an expansion. If a student uses one, ask them what it means at their site: they know, and it makes a good engagement moment.</p></div>
+    </section>
+
+    <!-- ============================================================ NUMBERS -->
+    <section class="part" id="numbers">
+      <div class="part-h">
+        <span class="eyebrow">Reference · every number checked on 25 October 2026</span>
+        <h2>Every <span>key number</span></h2>
+        <p class="dek">If you can explain each of these in one sentence, you can teach the day.</p>
+      </div>
+      <div class="tbl cards stack wrap"><table>
+        <thead><tr><th>Hour</th><th>Number</th><th>What it is</th></tr></thead>
+        <tbody>
+          <tr><td data-th="Hour">1</td><td data-th="Number"><b>794</b></td><td data-th="What">Italy conversions = rows the right table has</td></tr>
+          <tr><td data-th="Hour">1</td><td data-th="Number"><b>1,988</b></td><td data-th="What">rows when every permission slip is glued on (fan-out)</td></tr>
+          <tr><td data-th="Hour">1</td><td data-th="Number"><b>3552 → true</b></td><td data-th="What">the person checked by hand: their 16 Nov push "yes" was in force on 17 Nov</td></tr>
+          <tr><td data-th="Hour">1</td><td data-th="Number"><b>8 · 597 · PASS=4</b></td><td data-th="What">no slip yet (→ false) · duplicates the <code>unique</code> test finds · tests at the end</td></tr>
+          <tr><td data-th="Hour">2</td><td data-th="Number"><b>1,050 vs 945</b></td><td data-th="What">Japan sales rows in the raw data vs in the pipeline</td></tr>
+          <tr><td data-th="Hour">2</td><td data-th="Number"><b>105 · ≈ €88,700</b></td><td data-th="What">rows (and money) of JP Ecommerce Distributor 3 silently dropped</td></tr>
+          <tr><td data-th="Hour">2</td><td data-th="Number"><b>74 · 0 · 15,523</b></td><td data-th="What">the opener: <code>= 1</code>, <code>&lt;&gt; 1</code>, <code>is distinct from 1</code></td></tr>
+          <tr><td data-th="Hour">3</td><td data-th="Number"><b>105 Mondays · 0 other days</b></td><td data-th="What">sales arrive weekly, so "real-time" is impossible</td></tr>
+          <tr><td data-th="Hour">3, 4</td><td data-th="Number"><b>IT 0 of 249 · ID 0 of 191 · JP 319 of 359</b></td><td data-th="What">under-25 people who said yes to marketing, per market</td></tr>
+          <tr><td data-th="Hour">4</td><td data-th="Number"><b>277</b></td><td data-th="What">VEEV units per week, JP Partner Distributor 2 (29,100 ÷ 105)</td></tr>
+          <tr><td data-th="Hour">4</td><td data-th="Number"><b>35,113 · 7,084</b></td><td data-th="What">device telemetry rows · of which anonymised (20%)</td></tr>
+        </tbody>
+      </table></div>
+      <div class="point"><span class="k">Back to the point</span><p>Every verdict in the class is <b>a number with a query behind it.</b> That is the closing line of the day: <i>demonstrate, don't assert.</i></p></div>
+    </section>
+
+    <!-- ============================================================ BEFORE -->
+    <section class="part" id="before">
+      <div class="part-h">
+        <span class="eyebrow">Reference · the morning of class</span>
+        <h2>Before class, <span>on your Mac</span></h2>
+        <p class="dek">Your Mac runs a local copy of the HORIZON warehouse in Docker, identical to the students' data. Five commands make sure it matches what the guides say.</p>
+      </div>
+      <ol class="run">
+        <li><b>Start Docker Desktop, then the warehouse</b>
+          <div class="prompt term" data-label="Mac Terminal"><pre>cd ~/pmidataeng/horizon-warehouse
+make up</pre></div>
+          <p><span class="expect ok">warehouse ready: localhost:5432 / horizon / postgres</span></p></li>
+        <li><b>Check every number in the guides</b>
+          <div class="prompt term" data-label="Mac Terminal"><pre>make verify</pre></div>
+          <p>Prints the ground-truth numbers (794, 1,988, 105, 277…). Compare them with <a href="#numbers">the table above</a>.</p></li>
+        <li><b>Reset to the class starting state</b>
+          <div class="prompt term" data-label="Mac Terminal"><pre>make plant</pre></div>
+          <p><span class="expect ok">…|945</span> Removes any lab files you made and re-plants the Hour 2 bug.</p></li>
+        <li><b>Prove the Hour 4 database door (MCP)</b>
+          <div class="prompt term" data-label="Mac Terminal"><pre>make demo-prep</pre></div>
+          <p>Checks the numbers, the read-only connection (277, then the DELETE refused with <code>READONLY_VIOLATION</code>) and prints the on-stage checklist.</p></li>
+        <li><b>Restart Claude Desktop</b>
+          <p>Fully quit (<span class="kbd">Cmd+Q</span>) and reopen, so it loads the database connector for the Hour 4 demo.</p></li>
+      </ol>
+      <p>Then: the guide for the hour you teach first. <a href="prep-hour1.html">Hour 1 prep guide →</a></p>
+    </section>
+
+    <footer class="foot">
+      <nav aria-label="Prep guides">
+        <a href="prep.html">Prep basics</a>
+        <a href="prep-hour1.html">Hour 1 prep</a>
+        <a href="prep-hour2.html">Hour 2 prep</a>
+        <a href="prep-hour3.html">Hour 3 prep</a>
+        <a href="prep-hour4.html">Hour 4 prep</a>
+        <a href="index.html">Student site</a>
+      </nav>
+      <p>Instructor prep guides for the PMI Data Engineer Future Skills class · Project HORIZON is fictional and training-only</p>
+    </footer>
+  </main>
+</div>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,724 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Hour 2 prep guide · Project HORIZON lab guides</title>
+<meta name="description" content="Learn Lab 2 (Green ≠ right) from zero before you teach it: the point, the PMI words, the tables drawn out with real rows, every step walked, a dry run with expected output, and the questions students ask. Project HORIZON is fictional and training-only.">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#0C2040">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/prep.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230C2040'/%3E%3Crect x='6' y='6' width='9' height='9' rx='2' fill='%23FF4A00'/%3E%3Crect x='17' y='17' width='9' height='9' rx='2' fill='%2300C9A7'/%3E%3C/svg%3E">
+</head>
+<body class="prep prep-2">
+
+<header class="mast">
+  <div class="mast-in">
+    <nav class="sitenav" aria-label="Lab guides">
+      <a class="brand" href="index.html">Project HORIZON</a>
+      <a href="prep.html">Prep basics</a>
+      <a href="prep-hour1.html">Hour 1</a>
+      <a href="prep-hour2.html" aria-current="page">Hour 2</a>
+      <a href="prep-hour3.html">Hour 3</a>
+      <a href="prep-hour4.html">Hour 4</a>
+      <a href="hour2.html">Student page</a>
+      <a href="instructor-hour2.html">Run of show</a>
+    </nav>
+    <div class="mast-grid">
+      <div class="mast-copy">
+        <div class="eyebrow">Prep guide · Hour 2 · WA3904 · read in 17 minutes</div>
+        <h1>Green ≠ right, <span>from zero</span><small>Everything you need to understand, run and teach Lab 2, assuming you have never written SQL, never used dbt and never worked at PMI.</small></h1>
+        <p class="lede">Read it top to bottom once. Then do the <a href="#dryrun" style="color:var(--lab)">dry run</a> (15 minutes at the keyboard). After that, the <a href="instructor-hour2.html" style="color:var(--lab)">run-of-show guide</a> tells you what to say minute by minute. <strong>Every number here was checked against the HORIZON warehouse on 25 October 2026.</strong></p>
+        <div class="guides" aria-label="Prep guides">
+          <a href="prep.html">0 · Basics</a>
+          <a href="prep-hour1.html">1 · No vibe pipelines</a>
+          <a href="prep-hour2.html" aria-current="page">2 · Green ≠ right</a>
+          <a href="prep-hour3.html">3 · Shift left</a>
+          <a href="prep-hour4.html">4 · You are the gate</a>
+        </div>
+      </div>
+      <div class="mfd" role="img" aria-label="The point of Hour 2, and its numbers: Japan's raw table has 1,050 rows; the green pipeline delivers 945; 105 rows, about 88,700 euros, are missing, all from one online distributor; after the fix 1,050 arrive; the new test fails once on purpose, then passes.">
+        <div class="hd"><b>The point of Hour 2</b><b>in one line</b></div>
+        <div class="pt">A green job only means <b>the code ran.</b> You know the number is right when you count what went in against what came out.</div>
+        <div class="row"><span class="lbl">Japan rows in the raw data</span><span class="val">1,050</span></div>
+        <div class="row"><span class="lbl">rows the green pipeline delivers</span><span class="was">945</span></div>
+        <div class="row"><span class="lbl">missing, every night (≈ €88,700)</span><span class="val">105</span></div>
+        <div class="row"><span class="lbl">after the one-line fix</span><span class="now">1,050</span></div>
+        <div class="row"><span class="lbl">the new alarm: bad line in / out</span><span class="now">FAIL 1 → PASS</span></div>
+        <div class="ft">The line to repeat: <span class="blink">automation does the work. You own the outcome.</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="frame">
+  <details class="toc" id="toc" open>
+    <summary>On this page</summary>
+    <div class="pin"><b>The point, always</b>Green means the code ran, not that the number is right. Count what went in against what came out, starting from the list of what should exist.</div>
+    <ol>
+      <li class="grp">Understand it · 10 min</li>
+      <li><a href="#route">Your 17 minutes</a></li>
+      <li><a href="#point">The point</a></li>
+      <li><a href="#story">The story, and the PMI words</a></li>
+      <li><a href="#words">The tech words</a></li>
+      <li><a href="#data">The data, drawn</a></li>
+      <li><a href="#trap">The trap, drawn</a></li>
+      <li><a href="#list">Start from the list</a></li>
+      <li class="grp">Walk the lab · 7 min</li>
+      <li><a href="#opener">Opener · the query that ran green</a></li>
+      <li><a href="#s1">Step 1 · Detect</a></li>
+      <li><a href="#s2">Step 2 · Diagnose</a></li>
+      <li><a href="#s3">Step 3 · Correct</a></li>
+      <li><a href="#s4">Step 4 · Prevent</a></li>
+      <li><a href="#challenges">The four challenges</a></li>
+      <li class="grp">Be ready</li>
+      <li><a href="#dryrun">Dry run on your Mac</a></li>
+      <li><a href="#asks">If a student asks…</a></li>
+      <li><a href="#recap">Teach it in 60 seconds</a></li>
+    </ol>
+  </details>
+
+  <main id="main">
+
+    <!-- ============================================================ ROUTE -->
+    <section class="part" id="route">
+      <div class="part-h">
+        <span class="eyebrow">Start here · 30 seconds</span>
+        <h2>Your <span>17 minutes</span></h2>
+        <p class="dek">Each section answers one question you would otherwise have to ask someone. Skip nothing the first time.</p>
+      </div>
+      <div class="budget">
+        <div class="k"><span>Reading route</span><span>minutes</span></div>
+        <ol>
+          <li><div><a href="#point">The point</a><span>The one sentence the whole hour proves.</span></div><i>1</i></li>
+          <li><div><a href="#story">The story, and the PMI words</a><span>Who complained about what, and what "distributor" and "sell-through" mean.</span></div><i>2</i></li>
+          <li><div><a href="#words">The tech words</a><span>Pipeline, green, reconciliation, NULL, a join with a hidden rule, a test.</span></div><i>2</i></li>
+          <li><div><a href="#data">The data, drawn</a><span>The shop list and one real week of Japan sales.</span></div><i>2</i></li>
+          <li><div><a href="#trap">The trap, drawn</a><span>Ten rows go in, nine come out. Where the tenth goes.</span></div><i>2</i></li>
+          <li><div><a href="#list">Start from the list</a><span>Why the check has to begin with what should exist.</span></div><i>1</i></li>
+          <li><div><a href="#opener">Walk the lab</a><span>Opener and the four steps: what students do, see, and what it means.</span></div><i>7</i></li>
+          <li class="tot"><div>Then, at the keyboard: <a href="#dryrun">the dry run</a><span>Do the lab yourself once, exactly like a student. Expected output for every command.</span></div><i>+15</i></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============================================================ POINT -->
+    <section class="part" id="point">
+      <div class="part-h">
+        <span class="eyebrow">Understand it · 1 minute</span>
+        <h2>The <span>point</span></h2>
+        <p class="dek">Every lab today has one sentence at its centre. This is Hour 2's. Every section below ends with a "Back to the point" box that ties what you just read to it.</p>
+      </div>
+      <p class="rule-line">Green means the code ran. <span class="w">It does not mean the number is right.</span></p>
+      <p>A nightly job copies sales data into a clean table that dashboards read. Every night it finishes <strong>green</strong>: no errors, no alerts. And every night it quietly throws away one shop's sales. Nobody notices, because nothing is red. The lab teaches one habit to catch that: <strong>count what went in, count what came out, and compare</strong>, shop by shop, starting from the list of shops that <em>should</em> be there. Then leave an automatic alarm, and watch it ring once so you know it works.</p>
+      <p>Hour 1 was "a draft that runs can be wrong". Hour 2 is the grown-up version: <strong>a pipeline that has run green for weeks can be wrong too.</strong></p>
+      <div class="bigs">
+        <div><span class="n">1,050</span><b>should arrive</b><p>Japan's raw sales table has 1,050 rows. A correct pipeline delivers all of them.</p></div>
+        <div><span class="n bad">945</span><b>actually arrive</b><p>What the green pipeline delivers, every night.</p></div>
+        <div><span class="n bad">105</span><b>vanish silently</b><p>About €88,700 of sales, all from one online shop.</p></div>
+        <div><span class="n ok">FAIL 1</span><b>the alarm works</b><p>Students break the pipeline on purpose and watch their test catch it.</p></div>
+      </div>
+      <div class="point"><span class="k">Back to the point</span><p>If you remember one thing: <b>"the job is green" answers "did the code run?", not "is the number right?"</b> Only a count against the source answers the second question.</p></div>
+    </section>
+
+    <!-- ============================================================ STORY -->
+    <section class="part" id="story">
+      <div class="part-h">
+        <span class="eyebrow">Understand it · 2 minutes</span>
+        <h2>The story, and the <span>PMI words</span></h2>
+        <p class="dek">The lab in four panels, then every company word in them, decoded.</p>
+      </div>
+      <div class="story">
+        <div><b>The complaint</b><p>Marketing writes: <em>"Italy's sales number on the dashboard looks too low. The pipeline has been green for weeks. Can you confirm it is fine?"</em></p></div>
+        <div><b>The hidden bug</b><p>Someone added one "reasonable" filter. It drops <span class="em">one whole shop</span> in each market. No error. Green every night.</p></div>
+        <div><b>The hunt</b><p>Students work on <span class="em">Japan</span>, the market nobody complained about. They count rows in vs out per shop and find Japan's online store has <span class="em">105 in, 0 out.</span></p></div>
+        <div><b>The fix</b><p>Prove the cause with a count, <span class="em">delete one line</span>, add a test, then break it on purpose to <span class="em">watch the alarm ring.</span></p></div>
+      </div>
+
+      <h3>The PMI words, decoded</h3>
+      <div class="terms">
+        <div class="wcard pmi"><h4>Distributor <small>who sells for PMI</small></h4><p>PMI does not sell straight to shoppers. It sells to <b>distributors</b>: companies that run shops or websites and sell to the public.</p><p class="like">a farm (PMI) selling eggs through supermarkets (the distributors).</p><p class="here">the table <code>rst.distributors</code>: 12 of them, 5 in Japan, 4 in Italy, 3 in Indonesia.</p></div>
+        <div class="wcard pmi"><h4>Channel type <small>what kind of shop</small></h4><p>Each distributor has one of three channels: <b>branded_retail</b> = PMI's own branded stores · <b>partner_retail</b> = other companies' shops that stock PMI products · <b>ecommerce</b> = online stores.</p><p class="here">the column <code>channel_type</code>. Both bugs today are filters on this column.</p></div>
+        <div class="wcard pmi"><h4>Sell-through <small>what the shops sold</small></h4><p>How many units a distributor sold <b>to customers</b>, reported weekly. (Its opposite, <b>sell-in</b>, is what PMI shipped <em>to</em> the distributor.)</p><p class="like">sell-in fills the shelf; sell-through empties it.</p><p class="here">the table <code>rst.sell_through</code>: one row per shop, per product, per week.</p></div>
+        <div class="wcard pmi"><h4>Market · JP, IT <small>a country</small></h4><p>PMI calls each country a "market": <b>JP</b> Japan, <b>IT</b> Italy, <b>ID</b> Indonesia.</p><p class="here">Marketing complained about Italy. Students fix Japan, which nobody complained about. That contrast is the lesson.</p></div>
+        <div class="wcard pmi"><h4>Products <small>IQOS · VEEV · ZYN</small></h4><p>PMI's smoke-free brands: <b>IQOS</b> heats tobacco, <b>VEEV</b> is an e-cigarette, <b>ZYN</b> is a nicotine pouch.</p><p class="here">the column <code>product_code</code>. Not every shop sells every product.</p></div>
+        <div class="wcard pmi"><h4>Dashboard <small>where the number shows up</small></h4><p>A screen of charts that managers read. It shows whatever the clean table contains, so if rows are missing there, they are missing on the dashboard too.</p><p class="here">Marketing only saw "Italy looks low". Nobody saw Japan at all.</p></div>
+      </div>
+      <div class="point"><span class="k">Back to the point</span><p>Italy got noticed because the number <em>looked</em> low. Japan lost 10% of its rows and nobody blinked. <b>"Looks fine" is not a check.</b> A count against the source is.</p></div>
+    </section>
+
+    <!-- ============================================================ WORDS -->
+    <section class="part" id="words">
+      <div class="part-h">
+        <span class="eyebrow">Understand it · 2 minutes</span>
+        <h2>The <span>tech words</span></h2>
+        <p class="dek">Each with an everyday picture. The <a href="prep.html">basics guide</a> covers table, row, SQL, join and dbt from scratch.</p>
+      </div>
+      <div class="terms">
+        <div class="wcard"><h4>Pipeline · nightly job <small>the conveyor belt</small></h4><p>An automatic process that copies data from a raw table into a clean table, every night, with nobody watching.</p><p class="like">a conveyor belt from the loading dock (raw data) to the shop floor (the dashboard).</p><p class="here">the dbt model <code>japan_sell_through.sql</code> builds <code>analytics.japan_sell_through</code>.</p></div>
+        <div class="wcard"><h4>"Green" <small>job status</small></h4><p>The job finished without an error. That is all it means. A job that drops half the data finishes just as green.</p><p class="like">a smoke alarm with no battery: silent is not the same as safe.</p><p class="here">green for weeks, while 105 rows were missing.</p></div>
+        <div class="wcard"><h4>Reconciliation <small>in vs out</small></h4><p>Counting what went into a process and what came out, and comparing. Same idea as balancing a chequebook.</p><p class="like">counting the eggs into the crate and out of the crate. If 10 go in and 9 come out, one broke.</p><p class="here">Step 1: rows per distributor in the raw table vs in the pipeline.</p></div>
+        <div class="wcard"><h4>A join with an <code>and</code> <small>a hidden gate</small></h4><p>A join glues two tables where a column matches. If the matching rule says <code>… and something else</code>, a row is only glued when <b>both</b> are true. If not, the row is dropped. No error.</p><p class="here">the pipeline's join says "distributor matches <b>and</b> channel is not ecommerce".</p></div>
+        <div class="wcard"><h4>Inner join <small>the default</small></h4><p>Plain <code>join</code> in SQL means <b>inner</b> join: rows with no match vanish. (A <b>left</b> join would keep them.)</p><p class="here">why the online shop's sales disappear instead of showing up with blanks.</p></div>
+        <div class="wcard"><h4>Subquery <small>a question in brackets</small></h4><p>A small <code>(select …)</code> inside a bigger query, asked again for every row. "For each shop, how many rows does it have?"</p><p class="here">the reconciliation is built from two of these per shop.</p></div>
+        <div class="wcard"><h4>NULL · three answers, not two <small>the opener</small></h4><p>Comparing with an empty value gives <b>unknown</b>, not true or false. A filter keeps only rows where the answer is <b>true</b>, so unknown rows silently vanish.</p><p class="here">the opener: <code>where campaign_id &lt;&gt; 1</code> returns 0 rows, not 15,523.</p></div>
+        <div class="wcard"><h4>dbt singular test <small>a hand-written alarm</small></h4><p>A SQL file in the <code>tests/</code> folder that <b>lists problems</b>. Zero rows back: PASS. Any rows back: FAIL, and the build turns red.</p><p class="here">Step 4: a test that lists every Japan shop that lost rows.</p></div>
+      </div>
+      <div class="point"><span class="k">Back to the point</span><p>Every word here is about the gap between <b>"it ran"</b> and <b>"it is complete"</b>. Green, inner joins and NULL filters all drop rows without complaint. Reconciliation and tests are how you hear the complaint.</p></div>
+    </section>
+
+    <!-- ============================================================ DATA -->
+    <section class="part" id="data">
+      <div class="part-h">
+        <span class="eyebrow">Understand it · 2 minutes</span>
+        <h2>The data, <span>drawn</span></h2>
+        <p class="dek">Two tables: the list of shops, and their weekly sales. Real rows from the warehouse.</p>
+      </div>
+
+      <h3>Table 1 · the shop list: <code>rst.distributors</code></h3>
+      <figure class="drawn">
+        <div class="drawn-tab">rst.distributors <em>"who sells for PMI"</em></div>
+        <div class="drawn-box">
+          <div class="drawn-sub"><b>One row =</b> one distributor (shop company). Japan and Italy shown; Indonesia's three are not in today's pipelines.</div>
+          <table>
+            <thead><tr><th>distributor_id</th><th>distributor_name</th><th>market</th><th>channel_type</th><th class="note">in plain English</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>JP Branded Distributor 1</td><td>JP</td><td>branded_retail</td><td class="note">PMI's own stores</td></tr>
+              <tr><td>2</td><td>JP Partner Distributor 2</td><td>JP</td><td>partner_retail</td><td class="note">other companies' shops</td></tr>
+              <tr class="hi"><td>3</td><td>JP Ecommerce Distributor 3</td><td>JP</td><td>ecommerce</td><td class="note">online. Lost by the Japan pipeline</td></tr>
+              <tr><td>4</td><td>JP Branded Distributor 4</td><td>JP</td><td>branded_retail</td><td class="note">PMI's own stores</td></tr>
+              <tr><td>5</td><td>JP Partner Distributor 5</td><td>JP</td><td>partner_retail</td><td class="note">other companies' shops</td></tr>
+              <tr><td>6</td><td>IT Branded Distributor 1</td><td>IT</td><td>branded_retail</td><td class="note">PMI's own stores</td></tr>
+              <tr class="hi"><td>7</td><td>IT Partner Distributor 2</td><td>IT</td><td>partner_retail</td><td class="note">other companies' shops. Lost by the Italy pipeline</td></tr>
+              <tr><td>8</td><td>IT Ecommerce Distributor 3</td><td>IT</td><td>ecommerce</td><td class="note">online</td></tr>
+              <tr><td>9</td><td>IT Branded Distributor 4</td><td>IT</td><td>branded_retail</td><td class="note">PMI's own stores</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </figure>
+
+      <h3>Table 2 · the weekly sales: <code>rst.sell_through</code></h3>
+      <p>One real week of Japan sales, Monday 3 March 2025. Ten rows went in:</p>
+      <figure class="drawn">
+        <div class="drawn-tab">rst.sell_through <em>"what the shops sold"</em></div>
+        <div class="drawn-box">
+          <div class="drawn-sub"><b>One row =</b> one distributor, one product, one week. Every <code>sale_date</code> is a Monday.</div>
+          <table>
+            <thead><tr><th>record_id</th><th>sale_date</th><th>distributor</th><th>product</th><th class="n">units_sold</th><th class="note">in the pipeline?</th></tr></thead>
+            <tbody>
+              <tr><td>62</td><td>2025-03-03</td><td>1 · branded</td><td>ZYN</td><td class="n">301</td><td class="note">yes</td></tr>
+              <tr><td>167</td><td>2025-03-03</td><td>2 · partner</td><td>IQOS</td><td class="n">292</td><td class="note">yes</td></tr>
+              <tr><td>272</td><td>2025-03-03</td><td>2 · partner</td><td>VEEV</td><td class="n">367</td><td class="note">yes</td></tr>
+              <tr><td>377</td><td>2025-03-03</td><td>2 · partner</td><td>ZYN</td><td class="n">383</td><td class="note">yes</td></tr>
+              <tr class="gone"><td>482</td><td>2025-03-03</td><td>3 · ecommerce</td><td>VEEV</td><td class="n">182</td><td class="note">missing, and nobody was told</td></tr>
+              <tr><td>587</td><td>2025-03-03</td><td>4 · branded</td><td>VEEV</td><td class="n">187</td><td class="note">yes</td></tr>
+              <tr><td>692</td><td>2025-03-03</td><td>4 · branded</td><td>ZYN</td><td class="n">216</td><td class="note">yes</td></tr>
+              <tr><td>797</td><td>2025-03-03</td><td>5 · partner</td><td>IQOS</td><td class="n">146</td><td class="note">yes</td></tr>
+              <tr><td>902</td><td>2025-03-03</td><td>5 · partner</td><td>VEEV</td><td class="n">318</td><td class="note">yes</td></tr>
+              <tr><td>1007</td><td>2025-03-03</td><td>5 · partner</td><td>ZYN</td><td class="n">293</td><td class="note">yes</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption class="drawn-cap">10 shop-and-product combinations in Japan, so 10 rows every week. Distributor 3 sells only VEEV online, so it has one row a week.</figcaption>
+      </figure>
+      <p>Where the big numbers come from. The data covers <b>105 weeks</b> (1 Jan 2024 to 29 Dec 2025):</p>
+      <figure class="drawn small">
+        <div class="drawn-tab">rows per market</div>
+        <div class="drawn-box">
+          <table>
+            <thead><tr><th>market</th><th class="n">shop × product combos</th><th class="n">× weeks</th><th class="n">= rows</th></tr></thead>
+            <tbody>
+              <tr class="hi"><td>JP · Japan</td><td class="n">10</td><td class="n">× 105</td><td class="n">1,050</td></tr>
+              <tr><td>IT · Italy</td><td class="n">9</td><td class="n">× 105</td><td class="n">945</td></tr>
+              <tr class="dim"><td>ID · Indonesia</td><td class="n">7</td><td class="n">× 105</td><td class="n">735</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption class="drawn-cap"><b>Watch out:</b> Italy's raw table has 945 rows, and Japan's broken pipeline also delivers 945. Pure coincidence. Do not let students mix them up.</figcaption>
+      </figure>
+      <h3>The pipeline, in plain English</h3>
+      <ul class="flow">
+        <li><b>1 · Take</b><strong>every raw sales row</strong><span><code>rst.sell_through</code></span></li>
+        <li><b>2 · Glue on</b><strong>the shop's name and channel</strong><span>a join to <code>rst.distributors</code></span></li>
+        <li><b>3 · Keep</b><strong>Japan only</strong><span><code>where market_code = 'JP'</code></span></li>
+        <li class="you"><b>4 · Save as</b><strong>the clean table</strong><span><code>analytics.japan_sell_through</code></span></li>
+      </ul>
+      <div class="point"><span class="k">Back to the point</span><p>Because we know the shape of the data (10 rows a week × 105 weeks), <b>we know the right answer before we look at the pipeline: 1,050.</b> That known number is what makes a check possible.</p></div>
+    </section>
+
+    <!-- ============================================================ TRAP -->
+    <section class="part" id="trap">
+      <div class="part-h">
+        <span class="eyebrow">Understand it · 2 minutes</span>
+        <h2>The trap, <span>drawn</span></h2>
+        <p class="dek">Step 2 of the pipeline (glue on the shop's details) carries one extra rule. Here is the week of 3 March going through it.</p>
+      </div>
+<pre><code>join {{ source('rst', 'distributors') }} d
+    on d.distributor_id = s.distributor_id
+   and d.channel_type &lt;&gt; 'ecommerce'   <span class="c">-- exclude non-store channels</span></code></pre>
+      <figure class="diagram" aria-label="Ten sales rows for the week of 3 March 2025 go into the join. The join keeps a row only if the distributor matches and the channel is not ecommerce. Nine rows come out. Row 482, from the ecommerce distributor 3, is dropped with no error.">
+        <svg viewBox="0 0 700 320" role="img">
+          <text class="d-h" x="20" y="22">IN · 10 ROWS</text>
+          <text class="d-h" x="680" y="22" text-anchor="end">OUT · 9 ROWS</text>
+          <g>
+            <rect class="d-box" x="20" y="36" width="175" height="20" rx="4"/><text class="d-lbl" x="30" y="50">62 · D1 · branded</text>
+            <rect class="d-box" x="20" y="60" width="175" height="20" rx="4"/><text class="d-lbl" x="30" y="74">167 · D2 · partner</text>
+            <rect class="d-box" x="20" y="84" width="175" height="20" rx="4"/><text class="d-lbl" x="30" y="98">272 · D2 · partner</text>
+            <rect class="d-box" x="20" y="108" width="175" height="20" rx="4"/><text class="d-lbl" x="30" y="122">377 · D2 · partner</text>
+            <rect class="d-stop" x="20" y="132" width="175" height="20" rx="4"/><text class="d-stop-t" x="30" y="147" style="font-size:12px">482 · D3 · ecommerce</text>
+            <rect class="d-box" x="20" y="156" width="175" height="20" rx="4"/><text class="d-lbl" x="30" y="170">587 · D4 · branded</text>
+            <rect class="d-box" x="20" y="180" width="175" height="20" rx="4"/><text class="d-lbl" x="30" y="194">692 · D4 · branded</text>
+            <rect class="d-box" x="20" y="204" width="175" height="20" rx="4"/><text class="d-lbl" x="30" y="218">797 · D5 · partner</text>
+            <rect class="d-box" x="20" y="228" width="175" height="20" rx="4"/><text class="d-lbl" x="30" y="242">902 · D5 · partner</text>
+            <rect class="d-box" x="20" y="252" width="175" height="20" rx="4"/><text class="d-lbl" x="30" y="266">1007 · D5 · partner</text>
+          </g>
+          <path class="d-line" d="M195 154 L 250 154"/>
+          <rect class="d-lab" x="250" y="70" width="200" height="130" rx="10"/>
+          <text class="d-lab-t" x="350" y="96" text-anchor="middle">THE JOIN'S GATE</text>
+          <text class="d-t" x="350" y="120" text-anchor="middle">keeps a row only if BOTH:</text>
+          <text class="d-tb" x="350" y="144" text-anchor="middle">① the distributor matches</text>
+          <text class="d-tb" x="350" y="166" text-anchor="middle">② channel ≠ 'ecommerce'</text>
+          <text class="d-cap" x="350" y="188" text-anchor="middle">fail either: dropped</text>
+          <path class="d-line" d="M450 135 L 505 135"/>
+          <g>
+            <rect class="d-go" x="505" y="36" width="175" height="20" rx="4"/><text class="d-lbl" x="515" y="50">62 · D1 · branded</text>
+            <rect class="d-go" x="505" y="60" width="175" height="20" rx="4"/><text class="d-lbl" x="515" y="74">167 · D2 · partner</text>
+            <rect class="d-go" x="505" y="84" width="175" height="20" rx="4"/><text class="d-lbl" x="515" y="98">272 · D2 · partner</text>
+            <rect class="d-go" x="505" y="108" width="175" height="20" rx="4"/><text class="d-lbl" x="515" y="122">377 · D2 · partner</text>
+            <rect class="d-go" x="505" y="132" width="175" height="20" rx="4"/><text class="d-lbl" x="515" y="146">587 · D4 · branded</text>
+            <rect class="d-go" x="505" y="156" width="175" height="20" rx="4"/><text class="d-lbl" x="515" y="170">692 · D4 · branded</text>
+            <rect class="d-go" x="505" y="180" width="175" height="20" rx="4"/><text class="d-lbl" x="515" y="194">797 · D5 · partner</text>
+            <rect class="d-go" x="505" y="204" width="175" height="20" rx="4"/><text class="d-lbl" x="515" y="218">902 · D5 · partner</text>
+            <rect class="d-go" x="505" y="228" width="175" height="20" rx="4"/><text class="d-lbl" x="515" y="242">1007 · D5 · partner</text>
+          </g>
+          <path class="d-line-stop" d="M350 200 L 350 262"/>
+          <rect class="d-stop" x="255" y="262" width="190" height="44" rx="8"/>
+          <text class="d-stop-t" x="350" y="281" text-anchor="middle">482 dropped</text>
+          <text class="d-cap" x="350" y="298" text-anchor="middle">no error · no warning · still green</text>
+        </svg>
+        <figcaption>Ten in, nine out. Every week, for 105 weeks: <b>105 rows</b>, about <b>€88,700</b> of sales, gone. The comment "exclude non-store channels" makes it look deliberate, but nobody ever decided online sales should not count.</figcaption>
+      </figure>
+      <p>Italy has a different rule doing the same damage, in a different place (the <code>where</code>, not the join):</p>
+<pre><code>where s.market_code = 'IT'
+  <span class="c">-- limit to reportable retail channels</span>
+  and d.channel_type in ('branded_retail', 'ecommerce')</code></pre>
+      <p>"Keep only branded and online" means <b>partner shops are dropped</b>: IT Partner Distributor 2, <b>210 rows</b>, about <b>€138,100</b>. That is why Italy looked low to Marketing. Students fix Japan in the lab; Italy is Challenge 1.</p>
+      <div class="point"><span class="k">Back to the point</span><p>The pipeline did exactly what its code said. That is the problem: <b>a filter that throws rows away is valid SQL</b>, so the job is green. Only someone who knows 1,050 should arrive can tell that 945 is wrong.</p></div>
+    </section>
+
+    <!-- ============================================================ LIST -->
+    <section class="part" id="list">
+      <div class="part-h">
+        <span class="eyebrow">Understand it · 1 minute</span>
+        <h2>Start from <span>the list</span></h2>
+        <p class="dek">The single most important design idea in the lab. If you check the pipeline by looking at the pipeline, the missing shop is invisible.</p>
+      </div>
+      <div class="drawn-pair">
+        <figure class="drawn">
+          <div class="drawn-tab">✕ counting from the pipeline</div>
+          <div class="drawn-box"><table>
+            <thead><tr><th>shop</th><th class="n">rows</th></tr></thead>
+            <tbody>
+              <tr><td>JP Branded 1</td><td class="n">105</td></tr>
+              <tr><td>JP Partner 2</td><td class="n">315</td></tr>
+              <tr><td>JP Branded 4</td><td class="n">210</td></tr>
+              <tr><td>JP Partner 5</td><td class="n">315</td></tr>
+              <tr class="more"><td colspan="2">4 shops, all fine. Nothing to see.</td></tr>
+            </tbody>
+          </table></div>
+        </figure>
+        <figure class="drawn">
+          <div class="drawn-tab">✓ counting from the shop list</div>
+          <div class="drawn-box"><table>
+            <thead><tr><th>shop</th><th class="n">in</th><th class="n">out</th></tr></thead>
+            <tbody>
+              <tr><td>JP Branded 1</td><td class="n">105</td><td class="n">105</td></tr>
+              <tr><td>JP Partner 2</td><td class="n">315</td><td class="n">315</td></tr>
+              <tr class="gone"><td>JP Ecommerce 3</td><td class="n">105</td><td class="n">0</td></tr>
+              <tr><td>JP Branded 4</td><td class="n">210</td><td class="n">210</td></tr>
+              <tr><td>JP Partner 5</td><td class="n">315</td><td class="n">315</td></tr>
+            </tbody>
+          </table></div>
+        </figure>
+      </div>
+      <p>A shop with zero rows in the pipeline has <b>no row to count</b>, so a check that starts from the pipeline cannot see it. Start from the list of shops that <em>should</em> exist, and the missing one shows up as a <b>0</b>.</p>
+      <div class="box analogy"><span class="k">Picture it</span><p>Taking the register by asking "everyone who is here, raise your hand" never finds the absent child. You have to read names off the class list.</p></div>
+      <div class="point"><span class="k">Back to the point</span><p>This is the hour's method in one picture: <b>compare what came out against what should exist</b>, not against itself. A check that starts from the pipeline inherits the pipeline's blind spot.</p></div>
+    </section>
+
+    <!-- ============================================================ OPENER -->
+    <section class="part" id="opener">
+      <div class="part-h">
+        <span class="eyebrow">Walk the lab · 1 minute · class time 1:08</span>
+        <h2>Opener · <span>the query that ran green</span></h2>
+        <p class="dek">A three-minute warm-up that proves a filter can throw rows away with no error. It uses Hour 1's diary table.</p>
+      </div>
+      <figure class="drawn">
+        <div class="drawn-tab">clr.lifecycle_events <em>the diary, one column we have not used yet</em></div>
+        <div class="drawn-box">
+          <div class="drawn-sub"><b><code>campaign_id</code></b> = which marketing campaign led to the event. Most events had none, so it is empty (NULL).</div>
+          <table>
+            <thead><tr><th>event_id</th><th>market</th><th>stage</th><th>campaign_id</th></tr></thead>
+            <tbody>
+              <tr><td>8078</td><td>IT</td><td>conversion</td><td class="null">NULL</td></tr>
+              <tr><td>8100</td><td>IT</td><td>conversion</td><td class="null">NULL</td></tr>
+              <tr class="hi"><td>8185</td><td>IT</td><td>conversion</td><td>1</td></tr>
+              <tr><td>9539</td><td>IT</td><td>conversion</td><td class="null">NULL</td></tr>
+              <tr class="more"><td colspan="4">15,597 rows in all: 74 with campaign 1, 15,523 NULL</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </figure>
+      <div class="lanes">
+        <div class="lane do"><span class="k">Students do</span><div><p>Predict in the chat: how many rows does <code>where campaign_id &lt;&gt; 1</code> ("is not 1") return? Then run three counts in SQLTools.</p></div></div>
+        <div class="lane see"><span class="k">They see</span><div>
+          <p><code>= 1</code> → <b>74</b> · <code>&lt;&gt; 1</code> → <b>0</b> (!) · <code>is distinct from 1</code> → <b>15,523</b></p></div></div>
+        <div class="lane mean"><span class="k">It means</span><div><p>"Is NULL not equal to 1?" The database answers <b>unknown</b>, not true. A <code>where</code> keeps only <b>true</b> rows, so every NULL row vanishes. <code>is distinct from</code> treats empty as a real value and answers true.</p></div></div>
+      </div>
+      <div class="tbl cards stack"><table>
+        <thead><tr><th>campaign_id</th><th><code>&lt;&gt; 1</code> says</th><th><code>is distinct from 1</code> says</th></tr></thead>
+        <tbody>
+          <tr><td data-th="campaign_id">1</td><td data-th="&lt;&gt; 1">false → dropped (correct)</td><td data-th="is distinct from 1">false → dropped (correct)</td></tr>
+          <tr><td data-th="campaign_id">NULL</td><td data-th="&lt;&gt; 1"><span class="no">unknown → dropped (wrong!)</span></td><td data-th="is distinct from 1"><span class="yes">true → kept ✓</span></td></tr>
+        </tbody>
+      </table></div>
+      <div class="point"><span class="k">Back to the point</span><p>15,523 rows lost, <b>no error, no warning</b>. If a filter can do that in a one-line query, it can do it inside a nightly pipeline. That is exactly what happens to Japan.</p></div>
+    </section>
+
+    <!-- ============================================================ STEP 1 -->
+    <section class="part" id="s1">
+      <div class="step"><span class="step-n">1</span><div class="step-t"><span class="step-k">Detect · SQLTools · 9 min · class 1:19</span><h3>Count in vs out</h3></div><span class="step-min">2 min read</span></div>
+      <div class="lanes">
+        <div class="lane do"><span class="k">Students do</span><div><p>Run two queries in SQLTools: first the totals for Japan, then the count per distributor for Japan and Italy.</p></div></div>
+        <div class="lane see"><span class="k">They see</span><div><p><b>1,050 vs 945</b>, then a 9-row table with two shops at <b>0</b>: JP Ecommerce Distributor 3 (105 missing) and IT Partner Distributor 2 (210 missing).</p></div></div>
+        <div class="lane mean"><span class="k">It means</span><div><p>The total says <em>that</em> rows are missing. The per-shop count says <em>which</em>. That second query is the <b>reconciliation</b>.</p></div></div>
+      </div>
+      <h3>Query 1 · "Did every Japan row reach the pipeline?"</h3>
+<pre><code>select
+  (select count(*) from rst.sell_through
+    where market_code = 'JP')                         as in_source,
+  (select count(*) from analytics.japan_sell_through) as in_pipeline;</code></pre>
+      <p>Two small questions in brackets, answers side by side. <span class="expect bad">1,050 · 945 (today)</span> <span class="expect ok">1,050 · 1,050 (after the fix)</span></p>
+      <h3>Query 2 · the reconciliation: "For each shop, how many went in and how many came out?"</h3>
+<pre><code>select market_code, distributor_name, in_source, in_pipeline,
+       in_source - in_pipeline as missing
+from (
+  select d.market_code, d.distributor_name,
+         (select count(*) from rst.sell_through s
+           where s.distributor_id = d.distributor_id) as in_source,
+         (select count(*) from analytics.japan_sell_through j
+           where j.distributor_id = d.distributor_id)
+       + (select count(*) from analytics.italy_sell_through i
+           where i.distributor_id = d.distributor_id) as in_pipeline
+  from rst.distributors d
+  where d.market_code in ('JP', 'IT')
+) counts
+order by missing desc;</code></pre>
+      <p>Read it from the inside out:</p>
+      <div class="tbl stack wrap"><table>
+        <thead><tr><th>Part</th><th>In plain English</th></tr></thead>
+        <tbody>
+          <tr><td data-th="Part"><code>from rst.distributors d where d.market_code in ('JP','IT')</code></td><td data-th="Plain English"><b>start from the shop list</b>: all 9 shops in Japan and Italy</td></tr>
+          <tr><td data-th="Part"><code>(select count(*) from rst.sell_through s where s.distributor_id = d.distributor_id)</code></td><td data-th="Plain English">for each shop: its rows in the raw data (<code>in_source</code>)</td></tr>
+          <tr><td data-th="Part"><code>(… japan_sell_through …) + (… italy_sell_through …)</code></td><td data-th="Plain English">…and its rows in the two clean tables. A shop is in one market only, so one side is always 0 (<code>in_pipeline</code>)</td></tr>
+          <tr><td data-th="Part"><code>) counts</code></td><td data-th="Plain English">call that little table of counts "counts"</td></tr>
+          <tr><td data-th="Part"><code>in_source - in_pipeline as missing</code></td><td data-th="Plain English">how many the pipeline lost</td></tr>
+          <tr><td data-th="Part"><code>order by missing desc</code></td><td data-th="Plain English">biggest losses at the top</td></tr>
+        </tbody>
+      </table></div>
+      <figure class="drawn">
+        <div class="drawn-tab">the reconciliation result <em>real output, 9 rows</em></div>
+        <div class="drawn-box"><table>
+          <thead><tr><th>market</th><th>distributor_name</th><th class="n">in_source</th><th class="n">in_pipeline</th><th class="n">missing</th></tr></thead>
+          <tbody>
+            <tr class="gone"><td>IT</td><td>IT Partner Distributor 2</td><td class="n">210</td><td class="n">0</td><td class="n">210</td></tr>
+            <tr class="gone"><td>JP</td><td>JP Ecommerce Distributor 3</td><td class="n">105</td><td class="n">0</td><td class="n">105</td></tr>
+            <tr><td>IT</td><td>IT Branded Distributor 1</td><td class="n">210</td><td class="n">210</td><td class="n">0</td></tr>
+            <tr><td>IT</td><td>IT Branded Distributor 4</td><td class="n">210</td><td class="n">210</td><td class="n">0</td></tr>
+            <tr><td>IT</td><td>IT Ecommerce Distributor 3</td><td class="n">315</td><td class="n">315</td><td class="n">0</td></tr>
+            <tr><td>JP</td><td>JP Branded Distributor 1</td><td class="n">105</td><td class="n">105</td><td class="n">0</td></tr>
+            <tr><td>JP</td><td>JP Branded Distributor 4</td><td class="n">210</td><td class="n">210</td><td class="n">0</td></tr>
+            <tr><td>JP</td><td>JP Partner Distributor 2</td><td class="n">315</td><td class="n">315</td><td class="n">0</td></tr>
+            <tr><td>JP</td><td>JP Partner Distributor 5</td><td class="n">315</td><td class="n">315</td><td class="n">0</td></tr>
+          </tbody>
+        </table></div>
+        <figcaption class="drawn-cap">The order of the seven "0 missing" rows can differ between runs. That is fine. <b>Italy's row explains Marketing's complaint. Japan's row is the one nobody noticed.</b></figcaption>
+      </figure>
+      <div class="box chat"><span class="k">Chat poll</span><p>Marketing noticed Italy because the number looked low. <b>Who noticed Japan?</b> <span class="opts">(Nobody. That is the point.)</span></p></div>
+      <div class="point"><span class="k">Back to the point</span><p>Two numbers per shop, <b>in and out</b>, and the bug that hid behind weeks of green is on screen in one query. That is what "green ≠ right" looks like in practice.</p></div>
+    </section>
+
+    <!-- ============================================================ STEP 2 -->
+    <section class="part" id="s2">
+      <div class="step"><span class="step-n">2</span><div class="step-t"><span class="step-k">Diagnose · VS Code + Sonnet + SQLTools · 7 min · class 1:28</span><h3>Find the rule, then prove it is the cause</h3></div><span class="step-min">2 min read</span></div>
+      <div class="lanes">
+        <div class="lane do"><span class="k">Students do</span><div>
+          <ol>
+            <li><b>2a</b> Open <code>models/japan_sell_through.sql</code> and read it.</li>
+            <li><b>2b</b> New chat, <b>Sonnet</b>: paste the file and ask Claude to explain which rows would not reach the result.</li>
+            <li><b>2c</b> Run one counting query that measures exactly what the suspicious rule removes.</li>
+          </ol>
+        </div></div>
+        <div class="lane see"><span class="k">They see</span><div><p>The line <code>and d.channel_type &lt;&gt; 'ecommerce'</code>, Claude saying "ecommerce rows are dropped with no error", and the proof query returning <b>105</b>.</p></div></div>
+        <div class="lane mean"><span class="k">It means</span><div><p>105 = 1,050 − 945. A count that matches the gap <b>exactly</b> is a diagnosis. Anything less is a guess. <b>Claude explains; the warehouse proves.</b></p></div></div>
+      </div>
+      <h3>2a · The pipeline, line by line</h3>
+      <div class="tbl stack wrap"><table>
+        <thead><tr><th>Line</th><th>In plain English</th></tr></thead>
+        <tbody>
+          <tr><td data-th="Line"><code>from {{ source('rst','sell_through') }} s</code></td><td data-th="Plain English">start from the raw weekly sales, nicknamed <code>s</code></td></tr>
+          <tr><td data-th="Line"><code>join {{ source('rst','distributors') }} d</code></td><td data-th="Plain English">glue on the shop list, nicknamed <code>d</code>…</td></tr>
+          <tr><td data-th="Line"><code>on d.distributor_id = s.distributor_id</code></td><td data-th="Plain English">…matching each sale to its shop. Fine</td></tr>
+          <tr><td data-th="Line"><code>and d.channel_type &lt;&gt; 'ecommerce'</code></td><td data-th="Plain English"><b>…and only if the shop is not online.</b> An extra rule with an innocent-looking comment</td></tr>
+          <tr><td data-th="Line"><code>where s.market_code = 'JP'</code></td><td data-th="Plain English">keep Japan</td></tr>
+        </tbody>
+      </table></div>
+      <details class="qa"><summary>Show the 2b prompt (Sonnet, new chat)</summary><div>
+      <div class="prompt" data-label="Step 2b · paste into Claude Desktop (Sonnet) · then paste the model file where marked">
+<pre>Context: I am a data engineer at PMI. The dbt model below runs every night without errors.
+Task: explain in plain English what this SQL does, step by step. Then list every kind of row from rst.sell_through that would NOT end up in the result, and why.
+Rules: do not rewrite the SQL. Under 15 lines.
+SQL:
+&lt;paste the contents of models/japan_sell_through.sql here&gt;
+Respond in Markdown only. Do not create any file.</pre>
+      </div>
+      <p>Pasting SQL code is fine: it is code, not data. A good answer names two kinds of dropped rows: ecommerce sales (silently, because of the join's extra rule) and non-Japan rows (on purpose).</p>
+      </div></details>
+      <h3>2c · The proof: "How many Japan rows does that one rule remove?"</h3>
+<pre><code>select count(*) as rows_the_rule_removes
+from rst.sell_through s
+join rst.distributors d on d.distributor_id = s.distributor_id
+where s.market_code = 'JP'
+  and d.channel_type = 'ecommerce';</code></pre>
+      <p>Same join, <b>without</b> the extra rule, counting only the online shop's Japan rows: exactly what the pipeline throws away. <span class="expect ok">105 = the gap exactly</span></p>
+      <div class="box try"><span class="k">The diagnosis, in one sentence</span><p>"The join carries a <code>channel_type &lt;&gt; 'ecommerce'</code> rule, so all 105 weekly sales rows from JP Ecommerce Distributor 3 never enter the pipeline, and nothing reports it."</p></div>
+      <div class="box chat"><span class="k">Unmute</span><p>Is this a bug or a feature? Who decided online stores are "not a store"? Who should have been asked? <span class="opts">Hold the last one: it opens Hour 3.</span></p></div>
+      <div class="point"><span class="k">Back to the point</span><p>Notice the order: <b>the data found the problem first</b> (Step 1), the code reading found the line second, and a count confirmed it third. Claude's explanation is useful, but it is the 105 that settles it.</p></div>
+    </section>
+
+    <!-- ============================================================ STEP 3 -->
+    <section class="part" id="s3">
+      <div class="step"><span class="step-n">3</span><div class="step-t"><span class="step-k">Correct · VS Code · 4 min · class 1:35</span><h3>Delete one line, count again</h3></div><span class="step-min">1 min read</span></div>
+      <div class="lanes">
+        <div class="lane do"><span class="k">Students do</span><div>
+          <ol>
+            <li>Delete the line <code>and d.channel_type &lt;&gt; 'ecommerce'   -- exclude non-store channels</code>. Save.</li>
+            <li><code>dbt run --select japan_sell_through</code></li>
+            <li>Run Query 1 and Query 2 again.</li>
+          </ol>
+        </div></div>
+        <div class="lane see"><span class="k">They see</span><div><p><code>OK created sql view model analytics.japan_sell_through</code>, then <b>1,050 · 1,050</b>, and every Japan shop at 0 missing.</p></div></div>
+        <div class="lane mean"><span class="k">It means</span><div><p>One line does not need an AI. You can see it, delete it, sign it. And the proof that the fix worked is the <b>same count</b> that found the problem.</p></div></div>
+      </div>
+      <div class="tbl cards stack"><table>
+        <thead><tr><th>Check</th><th>Before</th><th>After the fix</th></tr></thead>
+        <tbody>
+          <tr><td data-th="Check">Query 1 · Japan rows in the pipeline</td><td data-th="Before"><span class="no">945</span></td><td data-th="After"><span class="yes">1,050 ✓</span></td></tr>
+          <tr><td data-th="Check">Query 2 · JP Ecommerce Distributor 3 missing</td><td data-th="Before"><span class="no">105</span></td><td data-th="After"><span class="yes">0 ✓</span></td></tr>
+          <tr><td data-th="Check">Query 2 · IT Partner Distributor 2 missing</td><td data-th="Before"><span class="no">210</span></td><td data-th="After">210 (still broken: Challenge 1)</td></tr>
+        </tbody>
+      </table></div>
+      <div class="box trap"><span class="k">A tempting wrong fix</span><p><b>Do not move the rule into the <code>where</code>.</b> It would drop the same 105 rows from a different place. The rule is wrong, not misplaced.</p></div>
+      <div class="point"><span class="k">Back to the point</span><p>The fix is tiny. What took the work was <b>knowing it was broken</b>, which only the in-vs-out count could tell us. That is why the count, not the fix, is the skill.</p></div>
+    </section>
+
+    <!-- ============================================================ STEP 4 -->
+    <section class="part" id="s4">
+      <div class="step"><span class="step-n">4</span><div class="step-t"><span class="step-k">Prevent · Sonnet + dbt · 11 min · class 1:39</span><h3>Leave an alarm, and watch it ring once</h3></div><span class="step-min">2 min read</span></div>
+      <div class="lanes">
+        <div class="lane do"><span class="k">Students do</span><div>
+          <ol>
+            <li><b>4a</b> Ask Sonnet for a dbt test that lists every Japan shop whose rows did not all arrive (prompt below).</li>
+            <li><b>4b</b> Save it as <code>tests/assert_japan_no_dropped_distributors.sql</code>, run <code>dbt test --select japan_sell_through</code> → <b>PASS=1</b>.</li>
+            <li><b>4c</b> Put the bad line back, <code>dbt run</code> + <code>dbt test</code> → <b>FAIL 1</b>. Delete it again → <b>PASS=1</b>.</li>
+          </ol>
+        </div></div>
+        <div class="lane see"><span class="k">They see</span><div><pre>FAIL 1  assert_japan_no_dropped_distributors
+        Got 1 result, configured to fail if != 0
+Done. PASS=0 WARN=0 ERROR=1 SKIP=0 TOTAL=1</pre></div></div>
+        <div class="lane mean"><span class="k">It means</span><div><p>The fix lives in one file and one person's head. Next quarter someone adds another "reasonable" filter. The test turns the build <b>red</b> the day rows go missing. And a test you have never seen fail might not work at all, so you break it on purpose once.</p></div></div>
+      </div>
+      <details class="qa"><summary>Show the 4a prompt (Sonnet, same chat)</summary><div>
+      <div class="prompt" data-label="Step 4a · paste into Claude Desktop (Sonnet)">
+<pre>Context: dbt project on Postgres. The model japan_sell_through should contain every Japan row of {{ source('rst','sell_through') }}.
+Task: write a dbt singular test, tests/assert_japan_no_dropped_distributors.sql, that returns one row for every Japan distributor whose rows did not all reach the model.
+How: start from {{ source('rst','distributors') }} where market_code = 'JP'. For each distributor, count its rows in {{ source('rst','sell_through') }} (call it in_source) and in {{ ref('japan_sell_through') }} (call it in_pipeline), using a small subquery for each count. Return distributor_name, in_source, in_pipeline where in_pipeline &lt; in_source.
+Rules: no config block, no trailing semicolon. Do not run anything.
+Output: the SQL in one code block. Respond in Markdown only. Do not create any file.</pre>
+      </div>
+      </div></details>
+      <p>The test students end up with. It is Query 2, turned into an alarm:</p>
+<pre><code><span class="c">-- Guard: fails (returns a row) for every Japan distributor whose rows did not all reach the pipeline.</span>
+select distributor_name, in_source, in_pipeline
+from (
+    select d.distributor_name,
+           (select count(*) from {{ source('rst', 'sell_through') }} s
+             where s.distributor_id = d.distributor_id) as in_source,
+           (select count(*) from {{ ref('japan_sell_through') }} j
+             where j.distributor_id = d.distributor_id) as in_pipeline
+    from {{ source('rst', 'distributors') }} d
+    where d.market_code = 'JP'
+) counts
+where in_pipeline &lt; in_source</code></pre>
+      <div class="tbl stack wrap"><table>
+        <thead><tr><th>Part</th><th>In plain English</th></tr></thead>
+        <tbody>
+          <tr><td data-th="Part"><code>from {{ source('rst','distributors') }} d where … = 'JP'</code></td><td data-th="Plain English">start from the <b>list of Japan shops that should exist</b>, exactly like Query 2</td></tr>
+          <tr><td data-th="Part"><code>{{ source(…) }}</code> vs <code>{{ ref(…) }}</code></td><td data-th="Plain English"><code>source</code> = a raw table; <code>ref</code> = something dbt built (the pipeline's clean table)</td></tr>
+          <tr><td data-th="Part"><code>where in_pipeline &lt; in_source</code></td><td data-th="Plain English">keep only shops that lost rows. Zero shops = zero rows = <b>PASS</b></td></tr>
+        </tbody>
+      </table></div>
+      <p>What the three runs look like, and what each means:</p>
+      <div class="tbl cards stack"><table>
+        <thead><tr><th>Moment</th><th>Output</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td data-th="Moment">4b · fixed pipeline</td><td data-th="Output"><span class="yes">PASS=1</span></td><td data-th="Meaning">green, but you have never seen it fail, so you do not know it works</td></tr>
+          <tr><td data-th="Moment">4c · bad line back in</td><td data-th="Output"><span class="no">FAIL 1 · ERROR=1</span></td><td data-th="Meaning">1 problem row: JP Ecommerce Distributor 3 · in_source 105 · in_pipeline 0. The build is red: what should have happened the day the filter shipped</td></tr>
+          <tr><td data-th="Moment">4c · bad line removed</td><td data-th="Output"><span class="yes">PASS=1</span></td><td data-th="Meaning">green, and now <b>honest</b></td></tr>
+        </tbody>
+      </table></div>
+      <div class="box chat"><span class="k">Chat poll</span><p><b>Predict</b> before 4c: when the bad line goes back in, will the test fail? <span class="opts">yes · no · it depends</span></p><p>"It depends" is the best answer: it depends on the test starting from the shop list. A test that started from the pipeline's rows would never see Distributor 3.</p></div>
+      <div class="point"><span class="k">Back to the point</span><p>The alarm is the reconciliation from Step 1, <b>run automatically every build</b>. Now green means something again: it means the code ran <em>and</em> every shop's rows arrived.</p></div>
+    </section>
+
+    <!-- ============================================================ CHALLENGES -->
+    <section class="part" id="challenges">
+      <div class="part-h">
+        <span class="eyebrow">Walk the lab · for fast finishers</span>
+        <h2>The four <span>challenges</span></h2>
+        <p class="dek">You only need the question, why it matters and the answer. Full SQL is in the <a href="instructor-hour2.html#solutions">run-of-show guide</a>.</p>
+      </div>
+      <div class="tbl cards stack wrap"><table>
+        <thead><tr><th>Challenge</th><th>The question in plain English</th><th>The answer</th><th>Why it matters</th></tr></thead>
+        <tbody>
+          <tr><td data-th="Challenge">⭐ 1 · Fix Italy</td><td data-th="Question">Italy's pipeline has 735 rows, the raw data 945. Find the rule (it is in the <code>where</code>, not the join) and fix it.</td><td data-th="Answer"><b>945 rows</b>; IT Partner Distributor 2 goes <b>0 → 210</b>.</td><td data-th="Why">Partner shops may have been left out on purpose. Show the 210 rows and €138,100, and let the owner of the Italy number decide in writing.</td></tr>
+          <tr><td data-th="Challenge">⭐⭐ 2 · One alarm for both markets</td><td data-th="Question">Extend the test to Japan and Italy at once.</td><td data-th="Answer">While Italy is broken: <b>FAIL 1</b>. After Challenge 1: <b>PASS</b>.</td><td data-th="Why">A test only guards what it covers.</td></tr>
+          <tr><td data-th="Challenge">⭐⭐ 3 · Don't trust Claude's first number</td><td data-th="Question">Claude suggests flagging any week below 0.5× or above 2× the usual. Is that sensible?</td><td data-th="Answer">Normal weeks already range <b>0.41× to 1.57×</b>, so 0.5×/2× → <b>FAIL 6</b> false alarms. 0.35×/1.75× → <b>PASS</b>.</td><td data-th="Why"><b>Automation bias</b>: a confident number from a tool gets checked less than the same number from a colleague.</td></tr>
+          <tr><td data-th="Challenge">⭐⭐⭐ 4 · A number that must never move</td><td data-th="Question">A test that under-25 Italians allowed to receive marketing is always zero, counted in people.</td><td data-th="Answer"><b>PASS</b>: 0 of Italy's 249. (Japan, where it is legal: 319 of 359.)</td><td data-th="Why">Guard the number the business cares about, not just the job status.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="point"><span class="k">Back to the point</span><p>Challenge 3 is the hour's sentence turned on the AI: <b>a threshold that sounds right is like a job that is green.</b> You still measure the real data before you trust it.</p></div>
+    </section>
+
+    <!-- ============================================================ DRY RUN -->
+    <section class="part" id="dryrun">
+      <div class="part-h">
+        <span class="eyebrow">Be ready · 15 minutes at the keyboard</span>
+        <h2>Dry run <span>on your Mac</span></h2>
+        <p class="dek">Do the lab once as a student would, on your local copy of the warehouse. Every expected result below is real output from 25 October 2026. Two lanes: the full student path, or a 3-minute fast lane.</p>
+      </div>
+      <h3>Fast lane (3 minutes, no Claude)</h3>
+      <ol class="run">
+        <li><b>Planted state, then the reconciliation</b>
+          <div class="prompt term" data-label="Mac Terminal"><pre>cd ~/pmidataeng/horizon-warehouse
+make s2</pre></div>
+          <p><span class="expect ok">…|945</span> then the 9-row table with <span class="expect bad">IT Partner Distributor 2 · 210 · 0 · 210</span> <span class="expect bad">JP Ecommerce Distributor 3 · 105 · 0 · 105</span></p></li>
+        <li><b>The fix: install the corrected Japan model and reconcile again</b>
+          <div class="prompt term" data-label="Mac Terminal"><pre>make s2-fix</pre></div>
+          <p><span class="expect ok">JP Ecommerce Distributor 3 · 105 · 105 · 0</span> (Italy still 210 missing, as intended.)</p></li>
+        <li><b>The alarm on the fixed model</b>
+          <div class="prompt term" data-label="Mac Terminal"><pre>make s2-test</pre></div>
+          <p><span class="expect ok">Done. PASS=2</span> (this installs two tests: the Step 4 alarm and the Challenge 3 threshold test.)</p></li>
+        <li><b>Prove the alarm rings: put the bad line back</b>
+          <div class="prompt term" data-label="Mac Terminal"><pre>make s2-plant</pre></div>
+          <p><span class="expect bad">FAIL 1 assert_japan_no_dropped_distributors</span> <span class="expect">PASS=1 ERROR=1 TOTAL=2</span></p></li>
+        <li><b>Reset to the class starting state</b>
+          <div class="prompt term" data-label="Mac Terminal"><pre>make plant</pre></div>
+          <p><span class="expect ok">… rows (expect 945 planted…)|945</span> Tests removed, bug planted again.</p></li>
+      </ol>
+      <h3>Student lane (15 minutes, with Claude Desktop)</h3>
+      <ol class="run">
+        <li><b>Clean slate</b> <span class="run-lane">Terminal tab 1</span>
+          <div class="prompt term" data-label="Mac Terminal"><pre>cd ~/pmidataeng/horizon-warehouse && make plant</pre></div>
+          <p><span class="expect ok">945</span></p></li>
+        <li><b>Open the dbt project and switch dbt on</b> <span class="run-lane">VS Code</span>
+          <p>File → Open Folder → <code>~/pmidataeng/horizon-warehouse/horizon_dbt</code>. In its terminal:</p>
+          <div class="prompt term" data-label="VS Code terminal"><pre>source ../.venv/bin/activate
+dbt run --select italy_sell_through japan_sell_through</pre></div>
+          <p><span class="expect ok">2 of 2 OK</span> (On the VMs dbt is already on the path.)</p></li>
+        <li><b>A place to run queries</b> <span class="run-lane">Terminal tab 2</span>
+          <div class="prompt term" data-label="Mac Terminal, second tab"><pre>cd ~/pmidataeng/horizon-warehouse && make psql</pre></div>
+          <p>Or SQLTools if you have a HORIZON connection. Run <a href="#opener">the opener's three counts</a>: <span class="expect">74</span> <span class="expect bad">0</span> <span class="expect ok">15523</span></p></li>
+        <li><b>Step 1 · Detect</b> <span class="run-lane">SQL prompt</span>
+          <p>Run <a href="#s1">Query 1 and Query 2</a>. <span class="expect bad">1050 | 945</span> and the 9-row table with two shops at 0.</p></li>
+        <li><b>Step 2 · Diagnose</b> <span class="run-lane">VS Code + Claude</span>
+          <p>Open <code>models/japan_sell_through.sql</code>, find the line. Paste the 2b prompt plus the file into a new Sonnet chat. Then run the proof query: <span class="expect ok">105</span></p></li>
+        <li><b>Step 3 · Correct</b> <span class="run-lane">VS Code</span>
+          <p>Delete the <code>and d.channel_type &lt;&gt; 'ecommerce'</code> line, save, then:</p>
+          <div class="prompt term" data-label="VS Code terminal"><pre>dbt run --select japan_sell_through</pre></div>
+          <p>Rerun Query 1: <span class="expect ok">1050 | 1050</span></p></li>
+        <li><b>Step 4 · Prevent</b> <span class="run-lane">Claude + VS Code</span>
+          <p>Get the test from Sonnet (or paste the reference above) into <code>tests/assert_japan_no_dropped_distributors.sql</code>, then:</p>
+          <div class="prompt term" data-label="VS Code terminal"><pre>dbt test --select japan_sell_through</pre></div>
+          <p><span class="expect ok">PASS=1</span> Put the bad line back, <code>dbt run --select japan_sell_through</code>, test again: <span class="expect bad">FAIL 1</span>. Remove it, run, test: <span class="expect ok">PASS=1</span></p></li>
+        <li><b>Reset for class</b> <span class="run-lane">Terminal tab 1</span>
+          <div class="prompt term" data-label="Mac Terminal"><pre>cd ~/pmidataeng/horizon-warehouse && make plant</pre></div>
+          <p><span class="expect ok">945</span> Your test file is removed and the bug is planted again. Run this before every class.</p></li>
+      </ol>
+      <div class="box tidbit"><span class="k">On the student VMs</span><p>Students use the same <code>C:\Users\labadmin\Downloads\setup\horizon_dbt</code> folder as Hour 1. If <code>models\japan_sell_through.sql</code> or <code>italy_sell_through.sql</code> is missing, the student page has both files to paste, <b>bug included</b>: finding it from the data is the lab. The Hour 2 VM path has not been checked on a real VM yet, so open one before class.</p></div>
+    </section>
+
+    <!-- ============================================================ ASKS -->
+    <section class="part" id="asks">
+      <div class="part-h">
+        <span class="eyebrow">Be ready · 3 minutes</span>
+        <h2>If a student <span>asks…</span></h2>
+        <p class="dek">The questions that actually come up, with answers you can say out loud.</p>
+      </div>
+      <details class="qa"><summary>"Why does <code>&lt;&gt; 1</code> return 0? Surely empty is 'not 1'?"</summary><div><p>To a person, yes. To SQL, comparing anything with NULL gives "unknown", and a <code>where</code> only keeps rows that are definitely true. Use <code>is distinct from</code> when empties should count, or add <code>or campaign_id is null</code>.</p></div></details>
+      <details class="qa"><summary>"Maybe excluding online sales was deliberate?"</summary><div><p>Maybe! That is the real question. But nobody wrote it down, nobody told Marketing, and the dashboard calls itself "sell-through", not "store sell-through". A rule that changes a business number needs an owner who signs it. We treat it as a bug in the lab; in real life you ask first. That conversation is Hour 3.</p></div></details>
+      <details class="qa"><summary>"Why not just move the filter to the <code>where</code>?"</summary><div><p>It would drop the same 105 rows from a different place. The problem is the rule, not where it sits.</p></div></details>
+      <details class="qa"><summary>"Isn't comparing the totals enough?"</summary><div><p>Totals tell you <em>that</em> something is missing, not <em>what</em>. And two errors can cancel out in a total. Per shop, the missing one shows up as a clean 0.</p></div></details>
+      <details class="qa"><summary>"Why start the query from the distributors table?"</summary><div><p>Because a shop with no rows in the pipeline has nothing to count there. Starting from the list of shops that should exist is the only way it appears, as a 0. Like taking the register from the class list rather than asking who is here.</p></div></details>
+      <details class="qa"><summary>"Why all the little <code>(select count(*) …)</code> brackets instead of one big join?"</summary><div><p>Readability and safety. Each bracket asks one small question per shop, and a shop with no rows still gets a 0. A join plus group-by can quietly drop that shop again, the very thing we are hunting.</p></div></details>
+      <details class="qa"><summary>"Why break the test on purpose? It passed."</summary><div><p>A test you have never seen fail might never fail. For example, a version that started from the pipeline's rows would pass forever. Breaking it once proves the alarm has a battery.</p></div></details>
+      <details class="qa"><summary>"My test passes but Italy is still broken. Is the test wrong?"</summary><div><p>No, it only covers Japan. That is Challenge 2: one alarm for both markets, which fails until Italy is fixed.</p></div></details>
+      <details class="qa"><summary>"Why did nobody notice Japan?"</summary><div><p>Nobody had an expected number to compare against. 945 looks like a perfectly normal number. Italy got noticed only because someone had a feeling it was low. Feelings are not monitoring.</p></div></details>
+      <details class="qa"><summary>"Why Sonnet all hour, not Opus?"</summary><div><p>Today's AI jobs are routine: explain some SQL, write a test from a precise description. The one hard decision (delete the line) is made by a human. Premium models are for hard planning, as in Hour 1.</p></div></details>
+    </section>
+
+    <!-- ============================================================ RECAP -->
+    <section class="part" id="recap">
+      <div class="part-h">
+        <span class="eyebrow">Be ready · 1 minute</span>
+        <h2>Teach it in <span>60 seconds</span></h2>
+        <p class="dek">If you can say this card out loud without looking, you are ready.</p>
+      </div>
+      <div class="recap">
+        <p class="k">Hour 2 · Green ≠ right</p>
+        <p class="big">Green means the code ran, not that the number is right. Count what went in against what came out, starting from what should exist.</p>
+        <ol>
+          <li><b>Detect:</b> Japan raw 1,050, pipeline 945. Per shop: JP Ecommerce Distributor 3 has 105 in, 0 out.</li>
+          <li><b>Diagnose:</b> the join's extra rule <code>channel_type &lt;&gt; 'ecommerce'</code>. Proof query: exactly 105.</li>
+          <li><b>Correct:</b> delete one line, rebuild, count again: 1,050 = 1,050.</li>
+          <li><b>Prevent:</b> a test that starts from the shop list. Bad line in: FAIL 1. Out: PASS.</li>
+        </ol>
+        <div class="nums"><span><b>1,050</b> in</span><span><b>945</b> out</span><span><b>105</b> missing ≈ €88,700</span><span><b>210</b> Italy ≈ €138,100</span><span><b>FAIL 1</b> → <b>PASS</b></span><span><b>0</b> from <code>&lt;&gt; 1</code></span></div>
+        <p class="line">The line: <b>automation does the work. You own the outcome.</b></p>
+      </div>
+      <p style="margin-top:1.5rem">Next: <a href="instructor-hour2.html">the run-of-show guide</a> (what to say minute by minute) · <a href="prep-hour3.html">Hour 3 prep guide →</a></p>
+    </section>
+
+    <footer class="foot">
+      <nav aria-label="Prep guides">
+        <a href="prep.html">Prep basics</a>
+        <a href="prep-hour1.html">Hour 1 prep</a>
+        <a href="prep-hour2.html">Hour 2 prep</a>
+        <a href="prep-hour3.html">Hour 3 prep</a>
+        <a href="prep-hour4.html">Hour 4 prep</a>
+        <a href="instructor-hour2.html">Hour 2 run of show</a>
+        <a href="hour2.html">Hour 2 student page</a>
+      </nav>
+      <p>Instructor prep guide for the PMI Data Engineer Future Skills class · Project HORIZON is fictional and training-only</p>
+    </footer>
+  </main>
+</div>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>

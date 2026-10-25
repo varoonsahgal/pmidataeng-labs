@@ -1,0 +1,792 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Hour 1 prep guide · Project HORIZON lab guides</title>
+<meta name="description" content="Learn Lab 1 (No vibe pipelines) from zero before you teach it: the point, the PMI words, the tables drawn out with real rows, every step walked, a dry run with expected output, and the questions students ask. Project HORIZON is fictional and training-only.">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#0C2040">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/prep.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230C2040'/%3E%3Crect x='6' y='6' width='9' height='9' rx='2' fill='%23FF4A00'/%3E%3Crect x='17' y='17' width='9' height='9' rx='2' fill='%2300C9A7'/%3E%3C/svg%3E">
+</head>
+<body class="prep prep-1">
+
+<header class="mast">
+  <div class="mast-in">
+    <nav class="sitenav" aria-label="Lab guides">
+      <a class="brand" href="index.html">Project HORIZON</a>
+      <a href="prep.html">Prep basics</a>
+      <a href="prep-hour1.html" aria-current="page">Hour 1</a>
+      <a href="prep-hour2.html">Hour 2</a>
+      <a href="prep-hour3.html">Hour 3</a>
+      <a href="prep-hour4.html">Hour 4</a>
+      <a href="hour1.html">Student page</a>
+      <a href="instructor-hour1.html">Run of show</a>
+    </nav>
+    <div class="mast-grid">
+      <div class="mast-copy">
+        <div class="eyebrow">Prep guide · Hour 1 · WA3903 · read in 18 minutes</div>
+        <h1>No vibe pipelines, <span>from zero</span><small>Everything you need to understand, run and teach Lab 1, assuming you have never written SQL, never used dbt and never worked at PMI.</small></h1>
+        <p class="lede">Read it top to bottom once. Then do the <a href="#dryrun" style="color:var(--lab)">dry run</a> (20 minutes at the keyboard). After that, the <a href="instructor-hour1.html" style="color:var(--lab)">run-of-show guide</a> tells you what to say minute by minute. <strong>Every number here was checked against the HORIZON warehouse on 25 October 2026.</strong></p>
+        <div class="guides" aria-label="Prep guides">
+          <a href="prep.html">0 · Basics</a>
+          <a href="prep-hour1.html" aria-current="page">1 · No vibe pipelines</a>
+          <a href="prep-hour2.html">2 · Green ≠ right</a>
+          <a href="prep-hour3.html">3 · Shift left</a>
+          <a href="prep-hour4.html">4 · You are the gate</a>
+        </div>
+      </div>
+      <div class="mfd" role="img" aria-label="The point of Hour 1, and its numbers: 794 Italy conversions is the right row count; a careless draft gives 1,988; person 3552 must come out true; 8 people with no permission yet must come out false; 4 automatic tests pass at the end.">
+        <div class="hd"><b>The point of Hour 1</b><b>in one line</b></div>
+        <div class="pt">Code that runs without an error <b>can still be wrong.</b> You only know it is right when you check it against answers you already know.</div>
+        <div class="row"><span class="lbl">Italy conversions = right row count</span><span class="val">794</span></div>
+        <div class="row"><span class="lbl">what the careless draft gives</span><span class="was">1,988</span></div>
+        <div class="row"><span class="lbl">person 3552, checked by hand</span><span class="now">true</span></div>
+        <div class="row"><span class="lbl">no permission yet → must be false</span><span class="val">8</span></div>
+        <div class="row"><span class="lbl">automatic tests at the end</span><span class="now">4 PASS</span></div>
+        <div class="ft">The line to repeat: <span class="blink">the assistant drafts, the warehouse decides, you sign.</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="frame">
+  <details class="toc" id="toc" open>
+    <summary>On this page</summary>
+    <div class="pin"><b>The point, always</b>Code that runs can still be wrong. Prove it with answers you already know, then lock it with tests.</div>
+    <ol>
+      <li class="grp">Understand it · 11 min</li>
+      <li><a href="#route">Your 18 minutes</a></li>
+      <li><a href="#point">The point</a></li>
+      <li><a href="#story">The story, and the PMI words</a></li>
+      <li><a href="#words">The tech words</a></li>
+      <li><a href="#data">The data, drawn</a></li>
+      <li><a href="#trap">The trap, drawn</a></li>
+      <li><a href="#rule">The rule that fixes it</a></li>
+      <li class="grp">Walk the lab · 7 min</li>
+      <li><a href="#opener">Opener · how the AI works</a></li>
+      <li><a href="#s1">Step 1 · Draft</a></li>
+      <li><a href="#s2">Step 2 · Prove</a></li>
+      <li><a href="#s3">Step 3 · Fix</a></li>
+      <li><a href="#s4">Step 4 · Lock</a></li>
+      <li><a href="#challenges">The four challenges</a></li>
+      <li class="grp">Be ready</li>
+      <li><a href="#dryrun">Dry run on your Mac</a></li>
+      <li><a href="#asks">If a student asks…</a></li>
+      <li><a href="#recap">Teach it in 60 seconds</a></li>
+    </ol>
+  </details>
+
+  <main id="main">
+
+    <!-- ============================================================ ROUTE -->
+    <section class="part" id="route">
+      <div class="part-h">
+        <span class="eyebrow">Start here · 30 seconds</span>
+        <h2>Your <span>18 minutes</span></h2>
+        <p class="dek">The guide is built so each section answers one question you would otherwise have to ask someone. Skip nothing the first time.</p>
+      </div>
+      <div class="budget">
+        <div class="k"><span>Reading route</span><span>minutes</span></div>
+        <ol>
+          <li><div><a href="#point">The point</a><span>The one sentence the whole hour proves.</span></div><i>1</i></li>
+          <li><div><a href="#story">The story, and the PMI words</a><span>Who asked for what, and what "conversion" and "consent" mean.</span></div><i>2</i></li>
+          <li><div><a href="#words">The tech words</a><span>Table, row, SQL, join, NULL, dbt, test: each in plain English.</span></div><i>3</i></li>
+          <li><div><a href="#data">The data, drawn</a><span>The two tables with real rows. You meet person 3552.</span></div><i>2</i></li>
+          <li><div><a href="#trap">The trap, drawn</a><span>Why 794 rows turn into 1,988, as a picture.</span></div><i>2</i></li>
+          <li><div><a href="#rule">The rule that fixes it</a><span>"The newest permission slip on or before the day", drawn on a timeline.</span></div><i>1</i></li>
+          <li><div><a href="#opener">Walk the lab</a><span>Opener and the four steps: what students do, see, and what it means.</span></div><i>7</i></li>
+          <li class="tot"><div>Then, at the keyboard: <a href="#dryrun">the dry run</a><span>Do the lab yourself once, exactly like a student. Expected output for every command.</span></div><i>+20</i></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============================================================ POINT -->
+    <section class="part" id="point">
+      <div class="part-h">
+        <span class="eyebrow">Understand it · 1 minute</span>
+        <h2>The <span>point</span></h2>
+        <p class="dek">Every lab today has one sentence at its centre. This is Hour 1's. Every section below ends with a "Back to the point" box that ties what you just read to it.</p>
+      </div>
+      <p class="rule-line">Code that runs without an error <span class="w">can still be wrong.</span></p>
+      <p>Students ask an AI assistant (Claude) to write a piece of database code. The code runs. No red text, no warnings. And it is still wrong: it copies people and gives some of them the wrong answer. The lab teaches one habit to catch that: <strong>check the result against answers you already know</strong> (how many rows there should be, and one person you worked out by hand). Then write those checks down as automatic tests so it stays right.</p>
+      <p>The class has a name for the bad habit: <strong>"vibe coding"</strong> means accepting code because it <em>feels</em> right. (Collins Dictionary made it Word of the Year in 2025.) The theme of this hour is the opposite: <strong>no vibe pipelines.</strong></p>
+      <div class="bigs">
+        <div><span class="n">794</span><b>the right answer</b><p>Italy had 794 conversions, so the finished table must have exactly 794 rows.</p></div>
+        <div><span class="n bad">1,988</span><b>the classic mistake</b><p>What a careless draft produces. No error. Just wrong.</p></div>
+        <div><span class="n ok">true</span><b>person 3552</b><p>The one person students check by hand. The table must agree.</p></div>
+        <div><span class="n">4</span><b>tests at the end</b><p>Automatic checks that keep it right next month.</p></div>
+      </div>
+      <div class="point"><span class="k">Back to the point</span><p>If you remember one thing: <b>"it ran" is not the same as "it is right."</b> Everything else in this guide is detail that serves that sentence.</p></div>
+    </section>
+
+    <!-- ============================================================ STORY -->
+    <section class="part" id="story">
+      <div class="part-h">
+        <span class="eyebrow">Understand it · 2 minutes</span>
+        <h2>The story, and the <span>PMI words</span></h2>
+        <p class="dek">The lab is a little workplace drama in four panels. First the panels, then every company word in them, decoded.</p>
+      </div>
+      <div class="story">
+        <div><b>The ask</b><p>PMI's <span class="em">Italy marketing team</span> wants a list of everyone who recently switched to a smoke-free product, with a yes/no next to each: <em>may we send them offers?</em></p></div>
+        <div><b>The shortcut</b><p>A colleague asks Claude to write the code. It is done in a minute and <span class="em">runs with no errors.</span> "Can we ship it this afternoon?"</p></div>
+        <div><b>The catch</b><p>People in Italy have <span class="em">several permission slips each.</span> The code glues all of them on, so one person appears up to four times, sometimes with different answers.</p></div>
+        <div><b>The fix</b><p>Students <span class="em">prove</span> it is wrong with three checks, get Claude to <span class="em">fix</span> it, then <span class="em">lock</span> it with four automatic tests.</p></div>
+      </div>
+
+      <h3>The PMI words, decoded</h3>
+      <div class="terms">
+        <div class="wcard pmi"><h4>PMI <small>the company</small></h4><p>Philip Morris International, the tobacco company (Marlboro). Your students are PMI data engineers.</p><p class="here">Only background. The data is fictional ("Project HORIZON") and safe for training.</p></div>
+        <div class="wcard pmi"><h4>Smoke-free products <small>what PMI wants to sell</small></h4><p>PMI's strategy is to move adult smokers off cigarettes onto products that do not burn tobacco. Three brands: <b>IQOS</b> (a device that heats tobacco instead of burning it), <b>VEEV</b> (an e-cigarette, a "vape") and <b>ZYN</b> (nicotine pouches you put under your lip).</p><p class="here">The column <code>product_code</code> holds IQOS, VEEV or ZYN.</p></div>
+        <div class="wcard pmi"><h4>Conversion <small>the moment PMI cares about</small></h4><p>When a smoker <b>switches</b> to one of those products. "Converting" someone is the business goal.</p><p class="like">a gym calls it a "conversion" when a free-trial visitor buys a membership.</p><p class="here">a row in the diary table whose stage says <code>conversion</code>.</p></div>
+        <div class="wcard pmi"><h4>Lifecycle <small>a customer's journey</small></h4><p>Five stages, in order: <b>registration</b> (signs up) → <b>trial</b> (tries the product) → <b>conversion</b> (switches) → then either <b>retention</b> (keeps using it) or <b>churn</b> (gives up).</p><p class="here">the column <code>lifecycle_stage</code>.</p></div>
+        <div class="wcard pmi"><h4>Consent <small>permission to market</small></h4><p>A person's <b>yes or no</b> to receiving marketing, given separately for each way of contacting them: email, SMS (text), push (phone app notification) and postal (paper mail). Each one is dated.</p><p class="like">a signed permission slip. One person can sign up to four, one per channel.</p><p class="here">the table <code>mpl.consent_records</code>, column <code>marketing_allowed</code> (true or false).</p></div>
+        <div class="wcard pmi"><h4>Market · IT <small>a country</small></h4><p>PMI calls each country a "market", with a two-letter code: <b>IT</b> Italy, <b>JP</b> Japan, <b>ID</b> Indonesia.</p><p class="here">Italy only. Italian law: no marketing without permission, and <b>no marketing at all to under-25s</b>.</p></div>
+      </div>
+      <div class="point"><span class="k">Back to the point</span><p>The business question is simple: <b>"On the day this person switched, were we allowed to contact them?"</b> Getting it wrong is not a typo. It means contacting people who said no, which in Italy breaks the law. That is why "it ran" is not good enough.</p></div>
+    </section>
+
+    <!-- ============================================================ WORDS -->
+    <section class="part" id="words">
+      <div class="part-h">
+        <span class="eyebrow">Understand it · 3 minutes</span>
+        <h2>The <span>tech words</span></h2>
+        <p class="dek">Ten words, each with an everyday picture. If you already know one, skip it. The <a href="prep.html">basics guide</a> has the same words with more pictures.</p>
+      </div>
+      <div class="terms">
+        <div class="wcard"><h4>Database · table <small>where data lives</small></h4><p>A database is a collection of tables. A table is exactly like a spreadsheet tab: named columns across the top, one record per row.</p><p class="here">The database is called <b>HORIZON</b> (a Postgres database). Tables have two-part names like <code>clr.lifecycle_events</code>: folder <code>clr</code>, table <code>lifecycle_events</code>.</p></div>
+        <div class="wcard"><h4>Row · "one row means…" <small>a.k.a. the grain</small></h4><p>The single most useful sentence about any table is "<b>one row = one ___</b>". Engineers call that the <b>grain</b>.</p><p class="here">The table students build must be "one row = one conversion". If a person appears twice, the grain is broken.</p></div>
+        <div class="wcard"><h4>SQL · query <small>asking the database</small></h4><p>SQL is the language you use to ask a database questions. One question is a <b>query</b>. It reads almost like English: <code>select</code> these columns <code>from</code> this table <code>where</code> this is true.</p><p class="here">Students run small queries in <b>SQLTools</b>, a panel inside VS Code. Select the text, press <span class="kbd">Ctrl+E</span> <span class="kbd">Ctrl+E</span>.</p></div>
+        <div class="wcard"><h4><code>count(*)</code> <small>how many?</small></h4><p>"Don't show me the rows, just tell me how many there are." The single most important query in this course.</p><p class="here">Check 1 is just <code>count(*)</code>: should be 794.</p></div>
+        <div class="wcard"><h4>Join <small>gluing two tables</small></h4><p>Put rows from two tables side by side wherever a column matches (here: the same <code>consumer_id</code>). The catch: a row is glued to <b>every</b> match. One row matched to three rows becomes three rows.</p><p class="like">stapling a copy of a customer's order to each of their three permission slips. You now have three stapled bundles, not one.</p><p class="here">this is the whole trap. Drawn below.</p></div>
+        <div class="wcard"><h4>LEFT join <small>keep everyone</small></h4><p>A normal join drops a row that has no match. A <b>LEFT</b> join keeps it anyway and leaves the glued-on columns empty.</p><p class="here">keeps the 8 people who had no permission slip yet.</p></div>
+        <div class="wcard"><h4>NULL <small>empty / unknown</small></h4><p>A blank cell. Not true, not false, not zero: <b>unknown</b>. It silently disappears from "how many said yes?" reports.</p><p class="here">the 8 people with no slip yet come out NULL unless the SQL says "empty means no".</p></div>
+        <div class="wcard"><h4>dbt <small>the build tool</small></h4><p>dbt ("data build tool") takes a file that holds one SQL query and turns it into a saved, reusable table in the database. That file is called a <b>model</b>. <code>dbt run</code> builds it. <code>dbt test</code> checks it.</p><p class="like">a recipe card (the model file) and an oven (dbt run). The dish comes out under the name on the card.</p><p class="here">the model file is <code>italy_conversion_events.sql</code>; the dish is <code>analytics.italy_conversion_events</code>.</p></div>
+        <div class="wcard"><h4>View <small>a saved query</small></h4><p>What dbt builds here. It looks and behaves like a table, but it is really a saved query that re-runs each time you read it.</p><p class="here">students query it like any table: <code>select count(*) from analytics.italy_conversion_events</code>.</p></div>
+        <div class="wcard"><h4>dbt test <small>an automatic alarm</small></h4><p>A query that <b>hunts for bad rows</b>. Finds none: <b>PASS</b>. Finds some: <b>FAIL</b>, with the count. dbt runs every test each time you type <code>dbt test</code>.</p><p class="here">four tests: no duplicates, no empty ids, no empty yes/no, no under-25 marked "allowed".</p></div>
+      </div>
+      <h3>The four moves students repeat all day</h3>
+      <p>Students use <strong>Claude Desktop</strong>, a chat app. It <em>cannot</em> see the database or create files. So every step is the same four moves, and the human carries the code across:</p>
+      <ul class="flow">
+        <li><b>1 · Paste</b><strong>a prompt into Claude</strong><span>(the guide gives the exact text)</span></li>
+        <li><b>2 · Copy</b><strong>its code</strong><span>the Copy button on Claude's code block</span></li>
+        <li class="you"><b>3 · Paste</b><strong>into a file in VS Code</strong><span>the moment a human signs off</span></li>
+        <li><b>4 · Run</b><strong>dbt or a query</strong><span>the database gives the verdict</span></li>
+      </ul>
+      <p>The catchphrase for move 3: <strong>"the paste is you, signing."</strong> Nothing reaches the project unless a person put it there.</p>
+      <div class="point"><span class="k">Back to the point</span><p>Notice where the checking lives: <b>not in Claude, not in dbt.</b> dbt happily builds wrong code; Claude cannot see the data. The only one who can compare the result with a known answer is the person in the middle.</p></div>
+    </section>
+
+    <!-- ============================================================ DATA -->
+    <section class="part" id="data">
+      <div class="part-h">
+        <span class="eyebrow">Understand it · 2 minutes</span>
+        <h2>The data, <span>drawn</span></h2>
+        <p class="dek">Two tables matter. Here they are with real rows from the warehouse. Meet person <b>3552</b>: students will check this one person by hand.</p>
+      </div>
+
+      <h3>Table 1 · the diary: <code>clr.lifecycle_events</code></h3>
+      <figure class="drawn">
+        <div class="drawn-tab">clr.lifecycle_events <em>"the diary"</em></div>
+        <div class="drawn-box">
+          <div class="drawn-sub"><b>One row =</b> one thing one customer did, on one day. Here is person 3552's whole diary:</div>
+          <table>
+            <thead><tr><th>event_id</th><th>consumer_id</th><th>lifecycle_stage</th><th>event_date</th><th class="note">in plain English</th></tr></thead>
+            <tbody>
+              <tr class="dim"><td>9537</td><td>3552</td><td>registration</td><td>2024-10-26</td><td class="note">signed up</td></tr>
+              <tr class="dim"><td>9538</td><td>3552</td><td>trial</td><td>2024-11-10</td><td class="note">tried a VEEV</td></tr>
+              <tr class="hi"><td>9539</td><td>3552</td><td>conversion</td><td>2024-11-17</td><td class="note">switched on 17 Nov: the row we want</td></tr>
+              <tr class="dim"><td>9540</td><td>3552</td><td>churn</td><td>2024-12-27</td><td class="note">gave up later (does not matter here)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption class="drawn-cap">The column names are what students type in SQL. <code>event_id</code> is the diary entry's number; <code>consumer_id</code> is the person's number.</figcaption>
+      </figure>
+      <p>Count Italy's diary rows by stage and you get the first magic number:</p>
+      <figure class="drawn small">
+        <div class="drawn-tab">Italy rows, counted by stage</div>
+        <div class="drawn-box">
+          <table>
+            <thead><tr><th>lifecycle_stage</th><th class="n">rows</th><th class="note">for this lab</th></tr></thead>
+            <tbody>
+              <tr class="dim"><td>registration</td><td class="n">2,000</td><td class="note">ignore</td></tr>
+              <tr class="dim"><td>trial</td><td class="n">1,689</td><td class="note">ignore</td></tr>
+              <tr class="hi"><td>conversion</td><td class="n">794</td><td class="note">these are the rows the table is about</td></tr>
+              <tr class="dim"><td>retention</td><td class="n">537</td><td class="note">ignore</td></tr>
+              <tr class="dim"><td>churn</td><td class="n">159</td><td class="note">ignore</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption class="drawn-cap"><b>That is where 794 comes from.</b> One row per conversion means the finished table must have exactly 794 rows. Every person in Italy converts at most once, so 794 conversions = 794 people.</figcaption>
+      </figure>
+
+      <h3>Table 2 · the permission slips: <code>mpl.consent_records</code></h3>
+      <figure class="drawn">
+        <div class="drawn-tab">mpl.consent_records <em>"the permission slips"</em></div>
+        <div class="drawn-box">
+          <div class="drawn-sub"><b>One row =</b> one person's yes or no, for one way of contacting them, signed on one date. Person 3552's slips:</div>
+          <table>
+            <thead><tr><th>consent_id</th><th>consumer_id</th><th>comm_channel</th><th>marketing_allowed</th><th>consent_date</th><th class="note">in plain English</th></tr></thead>
+            <tbody>
+              <tr><td>8933</td><td>3552</td><td>email</td><td>true</td><td>2024-11-10</td><td class="note">yes to email, signed 10 Nov</td></tr>
+              <tr><td>8932</td><td>3552</td><td>push</td><td>true</td><td>2024-11-16</td><td class="note">yes to app notifications, 16 Nov</td></tr>
+              <tr><td>8931</td><td>3552</td><td>postal</td><td>false</td><td>2024-11-19</td><td class="note">no to paper mail, 19 Nov (two days <i>after</i> switching)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption class="drawn-cap">Three slips, two different answers, three different dates. Hold that thought.</figcaption>
+      </figure>
+      <p><strong>The tricky fact: people have different numbers of slips.</strong> Among Italy's 794 converters:</p>
+      <figure class="drawn small">
+        <div class="drawn-tab">slips per person, Italy converters</div>
+        <div class="drawn-box">
+          <table>
+            <thead><tr><th>slips</th><th class="n">people</th></tr></thead>
+            <tbody>
+              <tr><td>1 slip</td><td class="n">197</td></tr>
+              <tr><td>2 slips</td><td class="n">195</td></tr>
+              <tr><td>3 slips</td><td class="n">207</td></tr>
+              <tr><td>4 slips</td><td class="n">195</td></tr>
+              <tr class="total"><td>total</td><td class="n">794</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </figure>
+      <div class="point"><span class="k">Back to the point</span><p>Nothing here is broken. The data is fine. The danger is that <b>"one person" and "one slip" are not the same thing</b>, and code that forgets this still runs perfectly.</p></div>
+    </section>
+
+    <!-- ============================================================ TRAP -->
+    <section class="part" id="trap">
+      <div class="part-h">
+        <span class="eyebrow">Understand it · 2 minutes</span>
+        <h2>The trap, <span>drawn</span></h2>
+        <p class="dek">To put a yes/no next to each conversion, the code has to glue (join) the diary to the slips. A join glues a row to every match. Watch what that does to person 3552.</p>
+      </div>
+      <figure class="diagram" aria-label="One conversion row for person 3552 is joined to that person's three consent slips, producing three output rows: true, true and false.">
+        <svg viewBox="0 0 700 270" role="img">
+          <text class="d-h" x="20" y="22">THE DIARY</text>
+          <text class="d-h" x="265" y="22">THE SLIPS</text>
+          <text class="d-h" x="500" y="22">PLAIN JOIN RESULT</text>
+          <rect class="d-lab" x="20" y="105" width="190" height="62" rx="8"/>
+          <text class="d-lab-t" x="34" y="130">event 9539 · person 3552</text>
+          <text class="d-t" x="34" y="152">conversion · 17 Nov</text>
+          <rect class="d-box" x="265" y="40" width="190" height="56" rx="8"/>
+          <text class="d-tb" x="279" y="63">slip 8933 · email</text>
+          <text class="d-t" x="279" y="83">yes · signed 10 Nov</text>
+          <rect class="d-box" x="265" y="108" width="190" height="56" rx="8"/>
+          <text class="d-tb" x="279" y="131">slip 8932 · push</text>
+          <text class="d-t" x="279" y="151">yes · signed 16 Nov</text>
+          <rect class="d-box" x="265" y="176" width="190" height="56" rx="8"/>
+          <text class="d-tb" x="279" y="199">slip 8931 · postal</text>
+          <text class="d-t" x="279" y="219">no · signed 19 Nov</text>
+          <path class="d-line" d="M210 136 C 240 136, 240 68, 265 68"/>
+          <path class="d-line" d="M210 136 L 265 136"/>
+          <path class="d-line" d="M210 136 C 240 136, 240 204, 265 204"/>
+          <rect class="d-go" x="505" y="48" width="175" height="40" rx="6"/>
+          <text class="d-t" x="518" y="73">9539 · 3552 · true</text>
+          <rect class="d-go" x="505" y="116" width="175" height="40" rx="6"/>
+          <text class="d-t" x="518" y="141">9539 · 3552 · true</text>
+          <rect class="d-stop" x="505" y="184" width="175" height="40" rx="6"/>
+          <text class="d-t" x="518" y="209">9539 · 3552 · false</text>
+          <path class="d-line" d="M455 68 L 505 68"/><path class="d-line" d="M455 136 L 505 136"/><path class="d-line" d="M455 204 L 505 204"/>
+          <text class="d-stop-t" x="680" y="252" text-anchor="end">1 conversion → 3 rows, 2 answers</text>
+        </svg>
+        <figcaption>One conversion in, three rows out. Is 3552 allowed or not? The table now says both.</figcaption>
+      </figure>
+      <p>Do the same for everybody. Each person is copied once per slip:</p>
+      <figure class="drawn small">
+        <div class="drawn-tab">where 1,988 comes from</div>
+        <div class="drawn-box">
+          <table>
+            <thead><tr><th>slips per person</th><th class="n">people</th><th class="n">× copies</th><th class="n">= rows</th></tr></thead>
+            <tbody>
+              <tr><td>1 slip</td><td class="n">197</td><td class="n">× 1</td><td class="n">197</td></tr>
+              <tr><td>2 slips</td><td class="n">195</td><td class="n">× 2</td><td class="n">390</td></tr>
+              <tr><td>3 slips</td><td class="n">207</td><td class="n">× 3</td><td class="n">621</td></tr>
+              <tr><td>4 slips</td><td class="n">195</td><td class="n">× 4</td><td class="n">780</td></tr>
+              <tr class="total"><td>total</td><td class="n">794 people</td><td></td><td class="n">1,988 rows</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption class="drawn-cap"><b>That is where 1,988 comes from.</b> Engineers call this copying a <b>fan-out</b>. The database gives no warning, because to the database this is a perfectly normal join.</figcaption>
+      </figure>
+      <div class="box trap"><span class="k">Why Claude falls into it</span><p>The student prompt says "attach each event's marketing_allowed from <b>the</b> consent record". <b>The</b>, singular, as if there were only one. Claude has never seen the data, so it cannot know there are up to four. It has to guess, and every guess runs.</p></div>
+      <div class="point"><span class="k">Back to the point</span><p>This is the purest example of the hour's sentence: <b>1,988 rows, no error.</b> Nobody can spot it by reading the code quickly. You spot it by knowing the answer should be 794 and counting.</p></div>
+    </section>
+
+    <!-- ============================================================ RULE -->
+    <section class="part" id="rule">
+      <div class="part-h">
+        <span class="eyebrow">Understand it · 1 minute</span>
+        <h2>The rule that <span>fixes it</span></h2>
+        <p class="dek">Each conversion must get exactly one slip. Which one? The newest slip that already existed on the day of the conversion. Engineers call this a <b>point-in-time</b> rule.</p>
+      </div>
+      <figure class="diagram" aria-label="A timeline from 9 to 22 November. Email yes on 10 November and push yes on 16 November existed before the conversion on 17 November. Postal no on 19 November came after and is ignored. The newest slip before the conversion is push, so the answer is true.">
+        <svg viewBox="0 0 700 230" role="img">
+          <rect class="d-lab" x="30" y="38" width="345" height="140" rx="8" style="fill-opacity:.55"/>
+          <text class="d-lab-t" x="42" y="58">slips that existed on 17 Nov</text>
+          <line class="d-line" x1="30" y1="120" x2="680" y2="120"/>
+          <text class="d-lbl" x="70" y="140">10 Nov</text><line class="d-line" x1="90" y1="114" x2="90" y2="126"/>
+          <text class="d-lbl" x="295" y="140">16 Nov</text><line class="d-line" x1="315" y1="114" x2="315" y2="126"/>
+          <text class="d-lbl" x="475" y="140">19 Nov</text><line class="d-line" x1="495" y1="114" x2="495" y2="126"/>
+          <rect class="d-go" x="50" y="72" width="110" height="34" rx="6"/><text class="d-t" x="60" y="94">email · yes</text>
+          <rect class="d-go" x="255" y="72" width="110" height="34" rx="6" style="stroke-width:3"/><text class="d-tb" x="265" y="94">push · yes ✓</text>
+          <rect class="d-soft" x="440" y="72" width="120" height="34" rx="6" style="stroke-dasharray:4 3"/><text class="d-cap" x="450" y="94">postal · no</text>
+          <text class="d-cap" x="440" y="62">signed after: ignore</text>
+          <circle class="d-head-lab" cx="352" cy="120" r="9"/>
+          <text class="d-lab-t" x="300" y="200">★ conversion 17 Nov</text>
+          <path class="d-line-lab" d="M352 132 L352 182"/>
+          <text class="d-tb" x="30" y="222">Newest slip on or before 17 Nov = push (16 Nov) → answer: true</text>
+        </svg>
+        <figcaption>The rule looks backwards from the conversion day and takes the closest slip. Anything signed later did not exist yet.</figcaption>
+      </figure>
+      <p>Three ways a draft can handle 3552, and which is right:</p>
+      <div class="tbl stack wrap"><table>
+        <thead><tr><th>What the code does</th><th>Conversion 9539 comes out as</th><th>Verdict</th></tr></thead>
+        <tbody>
+          <tr><td data-th="What the code does">glues on every slip (plain join)</td><td data-th="Comes out as"><b>3 rows</b>: true, true, false</td><td data-th="Verdict"><span class="no">✕ one conversion became three</span></td></tr>
+          <tr><td data-th="What the code does">takes the newest slip on file, whatever its date</td><td data-th="Comes out as"><b>false</b> (the 19 Nov postal slip)</td><td data-th="Verdict"><span class="no">✕ used a slip signed after the switch</span></td></tr>
+          <tr><td data-th="What the code does">takes the newest slip dated <b>on or before</b> 17 Nov</td><td data-th="Comes out as"><b>true</b> (the 16 Nov push slip)</td><td data-th="Verdict"><span class="yes">✓ correct</span></td></tr>
+        </tbody>
+      </table></div>
+      <h3>And if there is no slip yet?</h3>
+      <div class="drawn-pair">
+        <figure class="drawn">
+          <div class="drawn-tab">diary · person 4036</div>
+          <div class="drawn-box"><table>
+            <thead><tr><th>event_id</th><th>stage</th><th>event_date</th></tr></thead>
+            <tbody><tr class="hi"><td>10762</td><td>conversion</td><td>2024-05-20</td></tr></tbody>
+          </table></div>
+        </figure>
+        <figure class="drawn">
+          <div class="drawn-tab">slips · person 4036</div>
+          <div class="drawn-box"><table>
+            <thead><tr><th>channel</th><th>allowed</th><th>consent_date</th></tr></thead>
+            <tbody><tr class="gone"><td>email</td><td>true</td><td>2024-05-28</td></tr></tbody>
+          </table></div>
+        </figure>
+      </div>
+      <p>Person 4036 switched on <b>20 May</b> but signed their only slip on <b>28 May</b>. On the day, there was <b>no slip</b>, so the code finds nothing and the answer comes out <b>NULL</b> (empty). <b>8 of the 794</b> are like this. The rule: <strong>unknown is not permission, so no slip = <code>false</code></strong>, with a comment in the code saying why.</p>
+      <p>Put together, the three rules the finished table must follow. Each comes with an answer students already know, which becomes a check in Step 2:</p>
+      <div class="tbl cards stack"><table>
+        <thead><tr><th>#</th><th>Rule</th><th>In plain English</th><th>The known answer</th></tr></thead>
+        <tbody>
+          <tr><td data-th="#">1</td><td data-th="Rule"><b>One row per conversion</b></td><td data-th="In plain English">no copies, nobody lost</td><td data-th="Known answer"><b>794</b> rows</td></tr>
+          <tr><td data-th="#">2</td><td data-th="Rule"><b>The slip from that day</b></td><td data-th="In plain English">newest slip on or before the conversion date</td><td data-th="Known answer">event 9539 is <b>one row, true</b></td></tr>
+          <tr><td data-th="#">3</td><td data-th="Rule"><b>No slip means no</b></td><td data-th="In plain English">never leave the yes/no empty</td><td data-th="Known answer"><b>0</b> empty rows</td></tr>
+        </tbody>
+      </table></div>
+      <p>What the finished table looks like (real rows):</p>
+      <figure class="drawn">
+        <div class="drawn-tab">analytics.italy_conversion_events <em>what students build</em></div>
+        <div class="drawn-box">
+          <div class="drawn-sub"><b>One row =</b> one Italy conversion, with the permission that was in force that day. 794 rows.</div>
+          <table>
+            <thead><tr><th>event_id</th><th>consumer_id</th><th>event_date</th><th>marketing_allowed</th><th class="note">in plain English</th></tr></thead>
+            <tbody>
+              <tr><td>8078</td><td>3001</td><td>2024-03-31</td><td>false</td><td class="note">do not contact</td></tr>
+              <tr><td>8100</td><td>3011</td><td>2024-07-23</td><td>true</td><td class="note">OK to contact</td></tr>
+              <tr class="hi"><td>9539</td><td>3552</td><td>2024-11-17</td><td>true</td><td class="note">the one students check by hand</td></tr>
+              <tr><td>10762</td><td>4036</td><td>2024-05-20</td><td>false</td><td class="note">no slip yet that day, so no</td></tr>
+              <tr class="more"><td colspan="5">… 790 more rows · 472 true, 322 false, 0 empty</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </figure>
+      <div class="point"><span class="k">Back to the point</span><p>Notice that every rule came with <b>an answer we can check</b>: 794, "3552 is true", 0. That is the method. A rule you cannot check is just a hope.</p></div>
+    </section>
+
+    <!-- ============================================================ OPENER -->
+    <section class="part" id="opener">
+      <div class="part-h">
+        <span class="eyebrow">Walk the lab · 1 minute · class time 0:12</span>
+        <h2>Opener · <span>how the AI works</span></h2>
+        <p class="dek">Before the lab, five minutes on what Claude actually is. It explains why Claude guesses in Step 1.</p>
+      </div>
+      <div class="lanes">
+        <div class="lane do"><span class="k">Students do</span><div><p>Finish this line in the chat with one word: <code>select count(*) from ___</code></p></div></div>
+        <div class="lane see"><span class="k">They see</span><div><p>Lots of different answers, none wrong. Then you type the same line into the <a href="https://poloclub.github.io/transformer-explainer/">Transformer Explainer</a> (a free website that shows a small AI model choosing its next word, with a probability bar for each option).</p></div></div>
+        <div class="lane mean"><span class="k">It means</span><div><p>An AI language model works the same way: it <b>scores every possible next word and picks one</b>. Each piece it picks is a <b>token</b> (roughly part of a word). It writes what <em>sounds</em> likely, not what it has checked.</p></div></div>
+      </div>
+      <p>The four facts students take into the lab:</p>
+      <ol class="steps">
+        <li><b>It predicts the next token.</b> It writes what sounds right. Checking is your job.</li>
+        <li><b>It only knows what you tell it.</b> It has never seen this database.</li>
+        <li><b>It samples.</b> Ask twice, get different code. So every student's draft differs.</li>
+        <li><b>It comes in sizes.</b> <b>Sonnet</b> (cheaper, $2 / $10 per million tokens in / out) does the typing; <b>Opus</b> (pricier, $4 / $20) does the thinking. This is "<b>premium planning, thrifty execution</b>": pay for the best thinker on the short, hard part (the fix plan in Step 3); let the cheaper one type the long, routine part.</li>
+      </ol>
+      <div class="point"><span class="k">Back to the point</span><p>Fact 1 and fact 2 together explain the whole lab: <b>a model that writes what sounds right, about data it has never seen, will sometimes be confidently wrong.</b> So someone has to check.</p></div>
+    </section>
+
+    <!-- ============================================================ STEP 1 -->
+    <section class="part" id="s1">
+      <div class="step"><span class="step-n">1</span><div class="step-t"><span class="step-k">Draft · Sonnet · 6 min · class 0:33</span><h3>Claude writes the code</h3></div><span class="step-min">2 min read</span></div>
+      <div class="lanes">
+        <div class="lane do"><span class="k">Students do</span><div>
+          <ol>
+            <li>In Claude Desktop: new chat, model picker (next to the send button) on <b>Sonnet</b>, paste the prompt below.</li>
+            <li>In VS Code: right-click <code>models</code> → New File → <code>analytics/italy_conversion_events.sql</code> → paste Claude's code → save. (Exactly one <code>{{ config(...) }}</code> line at the top, no <code>;</code> at the very end.)</li>
+            <li>In the VS Code terminal: <code>dbt run --select italy_conversion_events</code></li>
+          </ol>
+        </div></div>
+        <div class="lane see"><span class="k">They see</span><div><p>A green line: <code>OK created sql view model analytics.italy_conversion_events</code>. Everyone feels done.</p></div></div>
+        <div class="lane mean"><span class="k">It means</span><div><p>Green only means <b>"the SQL is valid"</b>. A table with 1,988 rows builds just as happily as one with 794. That is the set-up for Step 2.</p></div></div>
+      </div>
+      <div class="prompt" data-label="The Step 1 prompt · paste into Claude Desktop (Sonnet)">
+<pre>Context: I am a data engineer at PMI on Project HORIZON. We use dbt on a Postgres warehouse.
+Task: draft a dbt model called italy_conversion_events as one SQL SELECT. Draft only: do not run anything.
+Tables (read them as {{ source('clr','lifecycle_events') }} and {{ source('mpl','consent_records') }}):
+- clr.lifecycle_events: event_id, consumer_id, market_code, product_code, lifecycle_stage, event_date, campaign_id
+- mpl.consent_records: consent_id, consumer_id, marketing_allowed, consent_date
+Rules:
+- keep only market_code = 'IT' and lifecycle_stage = 'conversion'
+- attach each event's marketing_allowed from the consent record
+- explicit column list, no SELECT *, no trailing semicolon
+Output: the model SQL in one code block, starting with {{ config(materialized='view', schema='analytics') }}.
+Respond in Markdown only. Do not create any file.</pre>
+      </div>
+      <p>How to read that prompt (it has the same five parts all day: <b>Context · Task · Tables · Rules · Output</b>):</p>
+      <div class="tbl stack wrap"><table>
+        <thead><tr><th>Part</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td data-th="Part">Context</td><td data-th="What it does">who we are, so Claude writes the right kind of code (dbt, Postgres)</td></tr>
+          <tr><td data-th="Part">Tables</td><td data-th="What it does">only the <b>names</b> of tables and columns. Never real rows, never passwords ("prompt hygiene")</td></tr>
+          <tr><td data-th="Part"><code>{{ source('clr','lifecycle_events') }}</code></td><td data-th="What it does">dbt's way of writing <code>clr.lifecycle_events</code>: "the raw table called…"</td></tr>
+          <tr><td data-th="Part">"from <b>the</b> consent record"</td><td data-th="What it does"><b>the planted trap.</b> Singular, but people have up to four. Claude must guess which</td></tr>
+          <tr><td data-th="Part"><code>{{ config(materialized='view', schema='analytics') }}</code></td><td data-th="What it does">"save this as a <b>view</b> in the <code>analytics</code> folder"</td></tr>
+        </tbody>
+      </table></div>
+      <p>A typical draft, read line by line:</p>
+<pre><code>select e.event_id, e.consumer_id, e.event_date, c.marketing_allowed
+from {{ source('clr','lifecycle_events') }} e
+left join {{ source('mpl','consent_records') }} c
+  on c.consumer_id = e.consumer_id
+where e.market_code = 'IT' and e.lifecycle_stage = 'conversion'</code></pre>
+      <div class="tbl stack wrap"><table>
+        <thead><tr><th>Line</th><th>In plain English</th></tr></thead>
+        <tbody>
+          <tr><td data-th="Line"><code>select e.event_id, … c.marketing_allowed</code></td><td data-th="Plain English">show these columns. <code>e.</code> = from the diary, <code>c.</code> = from the slips (short nicknames)</td></tr>
+          <tr><td data-th="Line"><code>from … lifecycle_events e</code></td><td data-th="Plain English">start from the diary, nicknamed <code>e</code></td></tr>
+          <tr><td data-th="Line"><code>left join … consent_records c</code></td><td data-th="Plain English">glue on the slips, nicknamed <code>c</code></td></tr>
+          <tr><td data-th="Line"><code>on c.consumer_id = e.consumer_id</code></td><td data-th="Plain English">wherever the person matches. <b>Every</b> slip of that person gets glued on: the fan-out</td></tr>
+          <tr><td data-th="Line"><code>where … = 'IT' and … = 'conversion'</code></td><td data-th="Plain English">only Italy, only conversions</td></tr>
+        </tbody>
+      </table></div>
+      <div class="box chat"><span class="k">Chat poll</span><p><b>Predict:</b> Italy has 794 conversions. How many rows will your table have? <span class="opts">794 · more · fewer</span></p></div>
+      <div class="box tidbit"><span class="k">Heads-up: modern drafts are often right</span><p>Claude sometimes writes a correct version first time (794 rows). That is fine and even better for the lesson: <b>nobody knew it was right until they counted.</b> For your own demo, keep the canned wrong draft ready (<code>make s1-flawed</code>, see the dry run) so you can show 1,988 on screen.</p></div>
+      <div class="point"><span class="k">Back to the point</span><p>Step 1 produces the thing we must not trust yet: <b>code that ran.</b> Ask the room: "who is confident it is right?" Many hands. Good. Step 2 is where we find out.</p></div>
+    </section>
+
+    <!-- ============================================================ STEP 2 -->
+    <section class="part" id="s2">
+      <div class="step"><span class="step-n">2</span><div class="step-t"><span class="step-k">Prove · SQLTools · 8 min · class 0:39</span><h3>Three checks with answers we already know</h3></div><span class="step-min">2 min read</span></div>
+      <div class="lanes">
+        <div class="lane do"><span class="k">Students do</span><div><p>Run three short queries in SQLTools and write the answers on a scorecard: <b>rows?</b> · <b>what did 3552 get?</b> · <b>how many empty?</b></p></div></div>
+        <div class="lane see"><span class="k">They see</span><div><p>Different students get different scorecards, because their drafts guessed differently. Most often <code>1988 / 3 rows / 0</code>.</p></div></div>
+        <div class="lane mean"><span class="k">It means</span><div><p>Each check tests one rule. The answer we already know is the yardstick.</p></div></div>
+      </div>
+      <h3>Check 1 · "How many rows?" (rule 1)</h3>
+<pre><code>select count(*) as model_rows
+from analytics.italy_conversion_events;</code></pre>
+      <p>Count the rows of the table they built. <span class="expect ok">794 = right</span> <span class="expect bad">1,988 = every slip glued on</span> <span class="expect bad">786 = the 8 "no slip yet" people vanished</span></p>
+      <h3>Check 2 · "What did the table decide for 3552?" (rule 2)</h3>
+<pre><code>select event_id, marketing_allowed
+from analytics.italy_conversion_events
+where event_id = 9539;</code></pre>
+      <p>Show only person 3552's conversion. <span class="expect ok">1 row: true = right</span> <span class="expect bad">3 rows = fan-out</span> <span class="expect bad">1 row: false = used the 19 Nov slip, signed after the switch</span></p>
+      <p>Why check 2 matters even when check 1 passes: a table can have exactly 794 rows and still give wrong answers. Across Italy, "newest slip on file" picks a slip signed <em>after</em> the conversion for <b>31</b> people, and for <b>13</b> of them that flips the yes/no. Check 1 cannot see that. Check 2 can.</p>
+      <h3>Check 3 · "How many empty answers?" (rule 3)</h3>
+<pre><code>select count(*) as unknowns
+from analytics.italy_conversion_events
+where marketing_allowed is null;</code></pre>
+      <p>Count rows where the yes/no is blank. (In SQL you must write <code>is null</code>; <code>= null</code> never matches anything.) <span class="expect ok">0 = right</span> <span class="expect bad">8 = the "no slip yet" people are blank</span></p>
+      <h3>Reading the scorecard</h3>
+      <div class="tbl cards stack"><table>
+        <thead><tr><th>Check 1</th><th>Check 2</th><th>Check 3</th><th>What the draft did</th></tr></thead>
+        <tbody>
+          <tr><td data-th="Check 1"><span class="no">1,988</span></td><td data-th="Check 2"><span class="no">3 rows</span></td><td data-th="Check 3">0</td><td data-th="What the draft did">glued on every slip (rules 1 and 2 broken)</td></tr>
+          <tr><td data-th="Check 1">794</td><td data-th="Check 2"><span class="no">false</span></td><td data-th="Check 3">0</td><td data-th="What the draft did">used the newest slip on file, even from after the switch (rule 2)</td></tr>
+          <tr><td data-th="Check 1">794</td><td data-th="Check 2">true</td><td data-th="Check 3"><span class="no">8</span></td><td data-th="What the draft did">right slip, but left "no slip" empty (rule 3)</td></tr>
+          <tr><td data-th="Check 1"><span class="yes">794</span></td><td data-th="Check 2"><span class="yes">true</span></td><td data-th="Check 3"><span class="yes">0</span></td><td data-th="What the draft did">all three hold. Still do Steps 3 and 4 (comment + tests)</td></tr>
+        </tbody>
+      </table></div>
+      <div class="box chat"><span class="k">Chat poll</span><p>Post your three answers, like <code>1988 / 3 rows / 0</code>.</p></div>
+      <div class="point"><span class="k">Back to the point</span><p>This is the moment the hour's sentence lands. <b>Every draft on that scorecard ran without an error.</b> Only the known answers (794, true, 0) told them apart.</p></div>
+    </section>
+
+    <!-- ============================================================ STEP 3 -->
+    <section class="part" id="s3">
+      <div class="step"><span class="step-n">3</span><div class="step-t"><span class="step-k">Fix · Opus plans, Sonnet builds · 8 min · class 0:47</span><h3>Turn the scorecard into correct code</h3></div><span class="step-min">2 min read</span></div>
+      <div class="lanes">
+        <div class="lane do"><span class="k">Students do</span><div>
+          <ol>
+            <li><b>3a, plan:</b> switch the picker to <b>Opus</b> (under "More models"; if missing, stay on Sonnet). Paste the plan prompt with their scorecard numbers filled in. Read the plan: does it say the three things below?</li>
+            <li><b>3b, build:</b> switch back to <b>Sonnet</b>, send "The plan is approved. Implement it exactly…". Paste the new code over the file, save, <code>dbt run --select italy_conversion_events</code>, rerun the three checks.</li>
+          </ol>
+        </div></div>
+        <div class="lane see"><span class="k">They see</span><div><p>A short numbered plan (no code), then new code. The checks now read <b>794 · 1 row, true · 0</b>.</p></div></div>
+        <div class="lane mean"><span class="k">It means</span><div><p>Checking a 5-line plan takes one minute; checking 40 lines of code takes ten. So the expensive model writes the short plan, a human approves it, and the cheap model types the code. <b>Premium planning, thrifty execution.</b></p></div></div>
+      </div>
+      <details class="qa"><summary>Show the plan prompt (3a) to paste</summary><div>
+      <div class="prompt" data-label="Step 3a · paste into Claude Desktop (Opus) · fill in the three blanks">
+<pre>Context: I checked your draft of italy_conversion_events against the warehouse.
+The model must follow three rules:
+1. One row per conversion event: 794 events in, 794 rows out.
+2. Each event gets the consent in force ON its event_date: the newest mpl.consent_records row with consent_date &lt;= event_date. A consumer has several consent rows (one per channel). If two rows share that date, the higher consent_id wins.
+3. No consent before the event means marketing_allowed = false, with a comment saying why. Never NULL.
+My checks:
+- model rows: ___ (should be 794)
+- event 9539 (consumer 3552) got: ___ (should be one row, true)
+- NULL marketing_allowed rows: ___ (should be 0)
+Task: write a short fix plan, not code. For each rule the draft breaks: the change and why.
+Keep whatever already works. Add a one-line comment stating the grain.
+Rules: under 15 lines, numbered, Markdown. No SQL yet. Do not create any file.</pre>
+      </div>
+      <div class="prompt" data-label="Step 3b · paste into Claude Desktop (Sonnet)">
+<pre>The plan is approved. Implement it exactly: rewrite the complete model SQL, changing nothing else.
+Explicit column list, the one-line grain comment, no SELECT *, no trailing semicolon.
+Output: one code block starting with {{ config(materialized='view', schema='analytics') }}.
+Respond in Markdown only. Do not create any file.</pre>
+      </div>
+      </div></details>
+      <p><b>A good plan says three things</b> (students tick them off):</p>
+      <ul>
+        <li>one slip per conversion, dated <b>on or before</b> the conversion, newest first, ties broken by the higher <code>consent_id</code> (rules 1 and 2)</li>
+        <li>empty becomes <b>false</b> (<code>coalesce(…, false)</code>) <b>with a comment</b> (rule 3)</li>
+        <li>"one row per conversion" stated at the top (the <b>grain</b>)</li>
+      </ul>
+      <p>If the plan says "newest consent per consumer" (no date rule), students reply: <i>"No. It must be the newest row dated on or before each event_date. Revise the plan."</i> That reply is them being the gate.</p>
+      <h3>The correct code, read slowly</h3>
+      <p>Students do not have to write this; Claude does. But you should be able to explain each part. It is three small queries stacked, like a recipe with three steps:</p>
+<pre><code><span class="c">-- one row per Italy conversion event, with the permission in force on the day</span>
+{{ config(materialized='view', schema='analytics') }}
+
+with events as (                                   <span class="c">-- PART 1: the 794 conversions</span>
+    select event_id, consumer_id, market_code, product_code, lifecycle_stage, event_date, campaign_id
+    from {{ source('clr', 'lifecycle_events') }}
+    where market_code = 'IT' and lifecycle_stage = 'conversion'
+),
+consent_on_the_day as (                            <span class="c">-- PART 2: one slip per conversion</span>
+    select distinct on (e.event_id) e.event_id, m.marketing_allowed
+    from events e
+    join {{ source('mpl', 'consent_records') }} m
+      on m.consumer_id = e.consumer_id
+     and m.consent_date &lt;= e.event_date            <span class="c">-- only slips that existed on the day</span>
+    order by e.event_id, m.consent_date desc, m.consent_id desc
+)
+select e.event_id, e.consumer_id, e.market_code, e.product_code,   <span class="c">-- PART 3: put them together</span>
+       e.lifecycle_stage, e.event_date, e.campaign_id,
+       <span class="c">-- no consent recorded yet = unknown, and unknown is not "allowed"</span>
+       coalesce(c.marketing_allowed, false) as marketing_allowed
+from events e
+left join consent_on_the_day c using (event_id)</code></pre>
+      <div class="tbl stack wrap"><table>
+        <thead><tr><th>Piece</th><th>In plain English</th><th>For person 3552</th></tr></thead>
+        <tbody>
+          <tr><td data-th="Piece"><code>with events as ( … )</code></td><td data-th="Plain English">Part 1: make a temporary list of the 794 Italy conversions</td><td data-th="3552">event 9539, 17 Nov</td></tr>
+          <tr><td data-th="Piece"><code>and m.consent_date &lt;= e.event_date</code></td><td data-th="Plain English">glue on only slips that already existed that day (rule 2)</td><td data-th="3552">email and push; postal is left out</td></tr>
+          <tr><td data-th="Piece"><code>order by …, consent_date desc, consent_id desc</code></td><td data-th="Plain English">sort newest first; if two share a date, higher id first</td><td data-th="3552">push (16 Nov) is first</td></tr>
+          <tr><td data-th="Piece"><code>select distinct on (e.event_id)</code></td><td data-th="Plain English">keep only the first row for each conversion (rule 1). A Postgres feature</td><td data-th="3552">one row: push, true</td></tr>
+          <tr><td data-th="Piece"><code>from events e left join consent_on_the_day c</code></td><td data-th="Plain English">Part 3: each conversion next to its one slip. <b>Left</b> keeps the 8 with no slip</td><td data-th="3552">9539 + true</td></tr>
+          <tr><td data-th="Piece"><code>coalesce(c.marketing_allowed, false)</code></td><td data-th="Plain English">"use the answer; if it is empty, use false" (rule 3)</td><td data-th="3552">true (not empty)</td></tr>
+        </tbody>
+      </table></div>
+      <div class="box chat"><span class="k">Chat poll</span><p>One word: what did the plan have that the draft did not? <span class="opts">tie-break · comment · date rule · nothing</span></p></div>
+      <div class="point"><span class="k">Back to the point</span><p>The fix did not come from a smarter prompt out of nowhere. It came from <b>the numbers students measured</b> in Step 2. The checks are what made the fix possible, and they confirm it: 794 · true · 0.</p></div>
+    </section>
+
+    <!-- ============================================================ STEP 4 -->
+    <section class="part" id="s4">
+      <div class="step"><span class="step-n">4</span><div class="step-t"><span class="step-k">Lock · Sonnet · 6 min · class 0:55</span><h3>Four automatic tests</h3></div><span class="step-min">1 min read</span></div>
+      <div class="lanes">
+        <div class="lane do"><span class="k">Students do</span><div>
+          <ol>
+            <li>Ask Sonnet for two files (prompt below).</li>
+            <li>Create <code>models/analytics/schema.yml</code> (paste file 1) and <code>tests/no_underage_marketing_italy.sql</code> at the project's top level (paste file 2, no <code>;</code> at the end).</li>
+            <li>Run <code>dbt test --select italy_conversion_events</code>.</li>
+          </ol>
+        </div></div>
+        <div class="lane see"><span class="k">They see</span><div><pre>PASS  unique_italy_conversion_events_event_id
+PASS  not_null_italy_conversion_events_event_id
+PASS  no_underage_marketing_italy
+PASS  not_null_italy_conversion_events_marketing_allowed
+Done. PASS=4 WARN=0 ERROR=0 SKIP=0 TOTAL=4</pre></div></div>
+        <div class="lane mean"><span class="k">It means</span><div><p>The table is right <em>today</em>. Next month someone edits it and the copying comes back. Nobody reruns checks by hand. A test reruns itself every build and turns it red.</p></div></div>
+      </div>
+      <p><b>A test is a query that hunts for bad rows. None found = PASS.</b> The four:</p>
+      <div class="tbl cards stack"><table>
+        <thead><tr><th>Test</th><th>Hunts for</th><th>Guards</th></tr></thead>
+        <tbody>
+          <tr><td data-th="Test"><code>unique</code> on event_id</td><td data-th="Hunts for">any conversion appearing more than once</td><td data-th="Guards">rule 1 (like check 1)</td></tr>
+          <tr><td data-th="Test"><code>not_null</code> on event_id</td><td data-th="Hunts for">rows with no conversion id</td><td data-th="Guards">every row is a real conversion</td></tr>
+          <tr><td data-th="Test"><code>not_null</code> on marketing_allowed</td><td data-th="Hunts for">empty yes/no answers</td><td data-th="Guards">rule 3 (like check 3)</td></tr>
+          <tr><td data-th="Test"><code>no_underage_marketing_italy</code></td><td data-th="Hunts for">any Italian aged 18 to 24 marked allowed (93 of the converters are in that age group)</td><td data-th="Guards">the law, written as a test</td></tr>
+        </tbody>
+      </table></div>
+      <p>The first three are one-word tests listed in a settings file (<code>schema.yml</code>). The fourth is a hand-written query in the <code>tests/</code> folder that joins a third table, <code>clr.consumers</code> (one row per person, with their <code>age_band</code>, e.g. <code>'18-24'</code>).</p>
+      <details class="qa"><summary>Show the tests prompt to paste</summary><div>
+      <div class="prompt" data-label="Step 4 · paste into Claude Desktop (Sonnet)">
+<pre>The corrected model italy_conversion_events has one row per Italy conversion event. Write its tests.
+File 1, models/analytics/schema.yml: tests unique and not_null on event_id; not_null on marketing_allowed; and a one-line model description that states the grain.
+File 2, tests/no_underage_marketing_italy.sql: a singular test that returns rows only when an under-25 Italian is marked as allowed. Join {{ ref('italy_conversion_events') }} m to {{ source('clr','consumers') }} c on consumer_id; return rows where c.market_code = 'IT' and c.age_band = '18-24' and m.marketing_allowed = true. Prefix every column with m. or c.
+Rules: no trailing semicolons. Do not run anything.
+Output: two code blocks, each labelled with its file path. Respond in Markdown only. Do not create any file.</pre>
+      </div>
+      <p><code>{{ ref('italy_conversion_events') }}</code> is dbt's way of saying "the model we built" (whereas <code>source()</code> means "a raw table").</p>
+      </div></details>
+      <p>The same four tests on the copying draft from Step 1 (real output):</p>
+<pre>FAIL 597  unique_italy_conversion_events_event_id
+          Got 597 results, configured to fail if != 0
+Done. PASS=3 WARN=0 ERROR=1 SKIP=0 TOTAL=4</pre>
+      <p><b>Why 597?</b> The <code>unique</code> test lists every event id that appears more than once: the people with 2, 3 or 4 slips. 195 + 207 + 195 = <b>597</b>. The 197 one-slip people appear once, so they are not flagged.</p>
+      <div class="box trap"><span class="k">The rule students must hear</span><p><b>If a test fails, fix the code, never the test.</b> Deleting a failing test is like taking the battery out of a smoke alarm because it is beeping.</p></div>
+      <div class="box chat"><span class="k">Chat poll</span><p>Which test would have caught <em>your</em> draft from Step 1?</p></div>
+      <div class="point"><span class="k">Back to the point</span><p>Checks prove it is right now; tests keep proving it every day after. <b>Each check from Step 2 became a test</b>: the count became <code>unique</code>, the empty count became <code>not_null</code>. That is the full habit: draft, prove with known answers, fix, lock.</p></div>
+    </section>
+
+    <!-- ============================================================ CHALLENGES -->
+    <section class="part" id="challenges">
+      <div class="part-h">
+        <span class="eyebrow">Walk the lab · for fast finishers</span>
+        <h2>The four <span>challenges</span></h2>
+        <p class="dek">Students who finish early pick one. You only need to know the question, why it matters and the answer. Full SQL is in the <a href="instructor-hour1.html#solutions">run-of-show guide</a>.</p>
+      </div>
+      <div class="tbl cards stack wrap"><table>
+        <thead><tr><th>Challenge</th><th>The question in plain English</th><th>The answer</th><th>Why it matters</th></tr></thead>
+        <tbody>
+          <tr><td data-th="Challenge">⭐ 1 · The bug your tests can't see</td><td data-th="Question">Comment out the date rule (<code>consent_date &lt;= event_date</code>). Do the 4 tests notice?</td><td data-th="Answer"><b>No: PASS=4.</b> But check 2 now says false.</td><td data-th="Why">Tests only catch what someone wrote a test for.</td></tr>
+          <tr><td data-th="Challenge">⭐⭐ 2 · Write the test that would catch it</td><td data-th="Question">A test that re-checks every person the way check 2 checks 3552.</td><td data-th="Answer">Fixed table: <b>PASS=5</b>. Broken version: <b>FAIL 13</b>.</td><td data-th="Why">13 = the people whose answer flips (from the 31 above).</td></tr>
+          <tr><td data-th="Challenge">⭐⭐ 3 · Which channel?</td><td data-th="Question">Campaign 1 was an <b>email</b> campaign (74 Italy conversions). Should a "yes" to push or post count?</td><td data-th="Answer"><b>74 · 45 allowed on any channel · 29 on email only.</b></td><td data-th="Why">16 people would be emailed who never said yes to email. A business decision, not a coding one: it leads into Hour 3.</td></tr>
+          <tr><td data-th="Challenge">⭐⭐⭐ 4 · Indonesia</td><td data-th="Question">A join that is correct today and wrong tomorrow (shops missing from the shop list).</td><td data-th="Answer"><b>735 rows, 0 unmatched</b>; safe version passes 4 tests.</td><td data-th="Why">A test can guard a problem that has not happened yet.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="point"><span class="k">Back to the point</span><p>Challenge 1 is the hour's sentence one level deeper: <b>even tests that pass can be wrong</b>, if nobody wrote the test for that rule. Green tests are only as good as the questions behind them.</p></div>
+    </section>
+
+    <!-- ============================================================ DRY RUN -->
+    <section class="part" id="dryrun">
+      <div class="part-h">
+        <span class="eyebrow">Be ready · 20 minutes at the keyboard</span>
+        <h2>Dry run <span>on your Mac</span></h2>
+        <p class="dek">Do the lab once exactly as a student would, on your local copy of the warehouse. Every expected result below is real output from 25 October 2026. Two lanes: the full student path, or a 3-minute fast lane if time is short.</p>
+      </div>
+      <h3>Fast lane (3 minutes, no Claude)</h3>
+      <p>Proves the warehouse and the before/after numbers, using canned solution files. Open Terminal:</p>
+      <ol class="run">
+        <li><b>Go to the warehouse folder and check Docker is up</b>
+          <div class="prompt term" data-label="Mac Terminal"><pre>cd ~/pmidataeng/horizon-warehouse
+make status</pre></div>
+          <p><span class="expect ok">horizon-db … Up (healthy)</span> If not: open Docker Desktop, then <code>make up</code>.</p></li>
+        <li><b>Build the wrong draft</b>
+          <div class="prompt term" data-label="Mac Terminal"><pre>make s1-flawed</pre></div>
+          <p><span class="expect ok">source_events|794</span> <span class="expect bad">model_rows|1988</span></p></li>
+        <li><b>Build the fixed version with its 4 tests</b>
+          <div class="prompt term" data-label="Mac Terminal"><pre>make s1-fixed</pre></div>
+          <p><span class="expect ok">Done. PASS=4</span> <span class="expect ok">model_rows|794</span></p></li>
+        <li><b>Reset to the class starting state</b>
+          <div class="prompt term" data-label="Mac Terminal"><pre>make plant</pre></div>
+          <p><span class="expect ok">… rows (expect 945 planted…)|945</span> (945 is the Hour 2 starting state, which is correct.)</p></li>
+      </ol>
+      <h3>Student lane (20 minutes, with Claude Desktop)</h3>
+      <ol class="run">
+        <li><b>Clean slate</b> <span class="run-lane">Terminal tab 1</span>
+          <div class="prompt term" data-label="Mac Terminal"><pre>cd ~/pmidataeng/horizon-warehouse && make plant</pre></div></li>
+        <li><b>Open the dbt project and switch dbt on</b> <span class="run-lane">VS Code</span>
+          <p>VS Code → File → Open Folder → <code>~/pmidataeng/horizon-warehouse/horizon_dbt</code>. Open its terminal (<span class="kbd">Ctrl+`</span>) and run:</p>
+          <div class="prompt term" data-label="VS Code terminal"><pre>source ../.venv/bin/activate
+dbt debug</pre></div>
+          <p><span class="expect ok">All checks passed!</span> (On the student VMs dbt is already installed; this line only exists on your Mac.)</p></li>
+        <li><b>A place to run queries</b> <span class="run-lane">Terminal tab 2</span>
+          <p>Use SQLTools if you have a HORIZON connection (localhost · 5432 · horizon · postgres · <code>Horizon!Lab2026</code>). Otherwise, a plain SQL prompt:</p>
+          <div class="prompt term" data-label="Mac Terminal, second tab"><pre>cd ~/pmidataeng/horizon-warehouse && make psql</pre></div>
+          <p><span class="expect">horizon=#</span> Paste a query, press Enter. Type <code>\q</code> to leave.</p></li>
+        <li><b>Step 1 · Draft</b> <span class="run-lane">Claude Desktop</span>
+          <p>New chat, Sonnet, paste the <a href="#s1">Step 1 prompt</a>. Create <code>models/analytics/italy_conversion_events.sql</code>, paste, save. Then in the VS Code terminal:</p>
+          <div class="prompt term" data-label="VS Code terminal"><pre>dbt run --select italy_conversion_events</pre></div>
+          <p><span class="expect ok">OK created sql view model analytics.italy_conversion_events</span></p></li>
+        <li><b>Step 2 · Prove</b> <span class="run-lane">SQL prompt</span>
+          <p>Run the <a href="#s2">three checks</a>. Write your scorecard down. If your draft scored 794 / true / 0 straight away, note it: that happens. For the classroom demo, <code>make s1-flawed</code> gives you the 1,988 version on demand.</p></li>
+        <li><b>Step 3 · Fix</b> <span class="run-lane">Claude Desktop</span>
+          <p>Opus: the plan prompt with your numbers. Read the plan against the three-item list. Sonnet: "The plan is approved…". Paste over the file, save, <code>dbt run --select italy_conversion_events</code>, rerun the checks.</p>
+          <p><span class="expect ok">794</span> <span class="expect ok">9539 · t</span> <span class="expect ok">0</span></p></li>
+        <li><b>Step 4 · Lock</b> <span class="run-lane">Claude + VS Code</span>
+          <p>Tests prompt → create <code>models/analytics/schema.yml</code> and <code>tests/no_underage_marketing_italy.sql</code> → </p>
+          <div class="prompt term" data-label="VS Code terminal"><pre>dbt test --select italy_conversion_events</pre></div>
+          <p><span class="expect ok">Done. PASS=4 WARN=0 ERROR=0 SKIP=0 TOTAL=4</span></p></li>
+        <li><b>See a test fail (2 minutes, worth it)</b>
+          <p>Copy the canned wrong draft over your model and test again, so you have seen FAIL 597 with your own eyes:</p>
+          <div class="prompt term" data-label="VS Code terminal"><pre>cp ../solutions/3903_demo/italy_conversion_events_v1_flawed.sql models/analytics/italy_conversion_events.sql
+dbt run --select italy_conversion_events && dbt test --select italy_conversion_events</pre></div>
+          <p><span class="expect bad">FAIL 597 unique_italy_conversion_events_event_id</span> <span class="expect">PASS=3 ERROR=1</span></p></li>
+        <li><b>Reset for class</b> <span class="run-lane">Terminal tab 1</span>
+          <div class="prompt term" data-label="Mac Terminal"><pre>cd ~/pmidataeng/horizon-warehouse && make plant</pre></div>
+          <p><span class="expect ok">945</span> Your files are removed and the warehouse is back to the starting state.</p></li>
+      </ol>
+      <div class="box tidbit"><span class="k">On the student VMs</span><p>The project lives at <code>C:\Users\labadmin\Downloads\setup\horizon_dbt</code>, dbt is already on the path, and students query in SQLTools (select the query, <span class="kbd">Ctrl+E</span> <span class="kbd">Ctrl+E</span>). Pre-flight: <a href="index.html">Start here</a>.</p></div>
+    </section>
+
+    <!-- ============================================================ ASKS -->
+    <section class="part" id="asks">
+      <div class="part-h">
+        <span class="eyebrow">Be ready · 3 minutes</span>
+        <h2>If a student <span>asks…</span></h2>
+        <p class="dek">The questions that actually come up, with answers you can say out loud.</p>
+      </div>
+      <details class="qa"><summary>"My draft got 794 and true on the first try. Did I do it wrong?"</summary><div><p>No, you got a good draft. But you only <em>know</em> that because you counted. Your neighbour's draft looked just as good and returned 1,988. Do Steps 3 and 4 anyway: the comment and the tests are what keep it right.</p></div></details>
+      <details class="qa"><summary>"Why does a person have several consent rows?"</summary><div><p>One per channel: email, SMS, push and postal. Each records a yes or no for that way of contacting them, with its date. 15,052 slips for 6,000 people, about 2.5 each.</p></div></details>
+      <details class="qa"><summary>"Why not just take the newest slip?"</summary><div><p>Because it might be signed after the conversion. For 3552 the newest slip is the 19 Nov "no", but on 17 Nov they had said yes. Using it changes the answer for 13 Italians. We judge each conversion by what was true on that day.</p></div></details>
+      <details class="qa"><summary>"Why make empty into false? Isn't that hiding something?"</summary><div><p>The opposite: empty silently drops out of every "how many are allowed?" count. Writing <code>false</code> with a comment says it out loud: "no permission on record, so no". In marketing law, unknown is never permission.</p></div></details>
+      <details class="qa"><summary>"Shouldn't an email campaign only look at email consent?"</summary><div><p>Great catch, and probably yes. That is challenge 3: 45 of campaign 1's 74 conversions are allowed under "any channel", only 29 under "email only". Which rule is right is a business decision for the consent owner, not something to settle in SQL. That is exactly Hour 3's theme.</p></div></details>
+      <details class="qa"><summary>"Why does the under-25 test pass even on the bad draft?"</summary><div><p>Because in Italy no under-25 has a "yes" slip at all: the source data already applies the law (some of their slips even say <code>granted</code> but have <code>marketing_allowed = false</code>). The test does not find a bug today. It guards against one tomorrow, if the data or the code changes.</p></div></details>
+      <details class="qa"><summary>"Why use Opus for the plan if it costs twice as much?"</summary><div><p>The plan is a few hundred tokens, so the cost difference is pennies, and the plan is where mistakes hide. The code is long and routine, so the cheaper model types it. Premium planning, thrifty execution.</p></div></details>
+      <details class="qa"><summary>"Can't Claude just run the checks itself?"</summary><div><p>Not in Claude Desktop: it has no connection to the database. That is on purpose today: you carry every piece of code across, so you are the one who signs. (Hour 4 shows what changes when an AI <em>can</em> touch the database.)</p></div></details>
+      <details class="qa"><summary>"What's the difference between a view and a table?"</summary><div><p>A table stores rows. A view stores the query and runs it each time you read it, so it is always up to date and costs no storage. For this lab they behave the same.</p></div></details>
+      <details class="qa"><summary>"What is <code>distinct on</code>? I've never seen it."</summary><div><p>A Postgres shortcut: "after sorting, keep only the first row for each event_id". Other databases do the same job with <code>row_number()</code>. Either is fine; what matters is that the checks pass.</p></div></details>
+    </section>
+
+    <!-- ============================================================ RECAP -->
+    <section class="part" id="recap">
+      <div class="part-h">
+        <span class="eyebrow">Be ready · 1 minute</span>
+        <h2>Teach it in <span>60 seconds</span></h2>
+        <p class="dek">If you can say this card out loud without looking, you are ready.</p>
+      </div>
+      <div class="recap">
+        <p class="k">Hour 1 · No vibe pipelines</p>
+        <p class="big">Code that runs can still be wrong. Prove it with answers you already know, then lock it with tests.</p>
+        <ol>
+          <li><b>Draft:</b> Claude writes the Italy conversions-with-permission table. It runs green.</li>
+          <li><b>Prove:</b> three known answers: 794 rows, person 3552 is true, 0 empty. Most drafts fail one.</li>
+          <li><b>Fix:</b> Opus plans from the scorecard ("newest slip on or before the day, empty means no"), Sonnet types it.</li>
+          <li><b>Lock:</b> four dbt tests, PASS=4. On the bad draft, <code>unique</code> fails with 597.</li>
+        </ol>
+        <div class="nums"><span><b>794</b> right</span><span><b>1,988</b> fan-out</span><span><b>3552</b> → true</span><span><b>8</b> no slip → false</span><span><b>597</b> duplicates</span><span><b>4</b> tests</span></div>
+        <p class="line">The line: <b>the assistant drafts, the warehouse decides, you sign.</b></p>
+      </div>
+      <p style="margin-top:1.5rem">Next: <a href="instructor-hour1.html">the run-of-show guide</a> (what to say minute by minute) · <a href="prep-hour2.html">Hour 2 prep guide →</a></p>
+    </section>
+
+    <footer class="foot">
+      <nav aria-label="Prep guides">
+        <a href="prep.html">Prep basics</a>
+        <a href="prep-hour1.html">Hour 1 prep</a>
+        <a href="prep-hour2.html">Hour 2 prep</a>
+        <a href="prep-hour3.html">Hour 3 prep</a>
+        <a href="prep-hour4.html">Hour 4 prep</a>
+        <a href="instructor-hour1.html">Hour 1 run of show</a>
+        <a href="hour1.html">Hour 1 student page</a>
+      </nav>
+      <p>Instructor prep guide for the PMI Data Engineer Future Skills class · Project HORIZON is fictional and training-only</p>
+    </footer>
+  </main>
+</div>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>
