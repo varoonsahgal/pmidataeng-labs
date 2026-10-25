@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" role="img" aria-labelledby="t">
+<title id="t">The one rule: the assistant drafts, the warehouse decides, the engineer signs</title>
+<style>
+  text { white-space: pre; font-family: "DM Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+  .flow { stroke-dasharray: 5 6; animation: flow 1.4s linear infinite; }
+  @keyframes flow { to { stroke-dashoffset: -22; } }
+  @media (prefers-reduced-motion: reduce) { .flow { animation: none; } }
+</style>
+<path class="flow" d="M88 120 H136 M224 120 H272" stroke="#93A7C6" stroke-width="2" fill="none"/>
+<g>
+  <circle cx="54" cy="120" r="38" fill="#FF4A00" fill-opacity=".14" stroke="#FF7A3D" stroke-width="2"/>
+  <path d="M54 98 l5 -14 l5 14 l14 5 l-14 5 l-5 14 l-5 -14 l-14 -5z" transform="translate(-5 12)" fill="#FFB38A"/>
+  <text x="54" y="182" text-anchor="middle" font-size="11" fill="#FFB38A">drafts</text>
+</g>
+<g>
+  <circle cx="180" cy="120" r="44" fill="#00C9A7" fill-opacity=".14" stroke="#2EE6C5" stroke-width="2"/>
+  <ellipse cx="180" cy="104" rx="22" ry="7" fill="none" stroke="#2EE6C5" stroke-width="2"/>
+  <path d="M158 104 v30 a22 7 0 0 0 44 0 v-30" fill="none" stroke="#2EE6C5" stroke-width="2"/>
+  <text x="180" y="129" text-anchor="middle" font-size="14" font-weight="500" fill="#FFFFFF">794</text>
+  <text x="180" y="188" text-anchor="middle" font-size="11" fill="#3FE0C3">decides</text>
+</g>
+<g>
+  <circle cx="306" cy="120" r="38" fill="#7B66FF" fill-opacity=".16" stroke="#A99BFF" stroke-width="2"/>
+  <path d="M290 132 c6 -10 12 6 18 -4 s10 4 16 -6" fill="none" stroke="#C3B9FF" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M314 98 l10 10 l-18 18 l-12 3 l3 -12z" fill="#C3B9FF"/>
+  <text x="306" y="182" text-anchor="middle" font-size="11" fill="#C3B9FF">signs</text>
+</g>
+<text x="180" y="40" text-anchor="middle" font-size="10" letter-spacing="2" fill="#93A7C6">THE ONE RULE</text>
+</svg>

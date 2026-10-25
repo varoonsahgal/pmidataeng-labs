@@ -3,19 +3,33 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Hour 4 · You are the gate · Project HORIZON lab guides</title>
-<meta name="description" content="Hour 4 lab guide: build a read-only HORIZON analyst in Claude Desktop, probe its blast radius, look inside the model and place it on the readiness ladder. Project HORIZON is fictional and training-only.">
+<title>Lab 4 · You are the gate · Project HORIZON</title>
+<meta name="description" content="Lab 4 of the PMI Data Engineer Future Skills class: build a read-only HORIZON analyst in Claude Desktop, probe its blast radius, look inside the model and place it on the readiness ladder. Project HORIZON is fictional and training-only.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Project HORIZON lab guides">
+<meta property="og:title" content="Lab 4 · You are the gate">
+<meta property="og:description" content="Build → Probe → Look inside → Evaluate. New ≠ ready: a read-only analyst, a DELETE that never runs, and the rung the evidence supports.">
+<meta property="og:url" content="https://varoonsahgal.github.io/pmidataeng-labs/hour4.html">
+<meta property="og:image" content="https://varoonsahgal.github.io/pmidataeng-labs/images/og/hour4.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#0C2040">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap">
 <link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/lab.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230C2040'/%3E%3Crect x='6' y='6' width='9' height='9' rx='2' fill='%23FF4A00'/%3E%3Crect x='17' y='17' width='9' height='9' rx='2' fill='%2300C9A7'/%3E%3C/svg%3E">
 </head>
-<body>
+<body class="lab lab-4">
+<div class="lab-progress" aria-hidden="true"><i></i></div>
 
-<header class="mast">
+<header class="lab-hero">
+  <div class="stars" aria-hidden="true"></div>
+  <div class="horizon" aria-hidden="true"></div>
+  <div class="floor" aria-hidden="true"></div>
   <div class="mast-in">
     <nav class="sitenav" aria-label="Lab guides">
       <a class="brand" href="index.html">Project HORIZON</a>
@@ -26,27 +40,57 @@
       <a href="hour4.html" aria-current="page">Hour 4</a>
       <a href="glossary.html">Glossary</a>
     </nav>
-    <div class="mast-grid">
-      <div class="mast-copy">
-        <div class="eyebrow">PMI · DI&amp;A Future Skills · Data Engineer track · Project HORIZON</div>
-        <h1>Hour 4 · You are the <span>gate</span><small>Build → Probe → Look inside → Evaluate</small></h1>
+    <div class="lab-hero-grid">
+      <div class="lab-hero-copy">
+        <div class="lab-tag"><span class="lab-no">Lab 04</span><span>WA3906 · Adaptive Learning Mindset</span></div>
+        <h1>You are the <span>gate</span><span class="ghost">Hour 4 · 3:00 to 3:50 · the last lab of the day</span></h1>
         <p class="lede">Leadership wants the AI agent from the demo in the data estate by Q1. You build it, probe it, look inside it and decide which rung it has earned. <strong>The vendor ships the capability. The engineer decides whether it is ready. New ≠ ready.</strong></p>
-        <div class="meta"><span>WA3906 · Adaptive Learning Mindset</span><span>Claude Desktop <b>Project</b></span><span>SQLTools</span><span>No files on the VM</span></div>
+        <ol class="lab-loop" aria-label="The loop"><li>Build</li><li>Probe</li><li>Look inside</li><li>Evaluate</li></ol>
+        <div class="lab-cta"><a class="btn" href="#step1">Start the lab</a><a class="btn ghost" href="#before">Before you start</a></div>
+        <ul class="lab-kit" aria-label="What you use"><li>Claude Desktop <b>Project</b></li><li><b>SQLTools</b> · HORIZON</li><li>No files on the VM</li></ul>
       </div>
-      <div class="mfd" role="img" aria-label="Hour 4 numbers: VEEV units per week in Japan, JP Partner Distributor 2 about 277, Partner 5 about 271, Branded 4 about 209, Ecommerce 3 about 169; device telemetry 35,113 rows, 7,084 anonymised; under-25 marketing-allowed consent rows ID 0, IT 0, JP 675.">
-        <div class="hd"><b>Hour 4 · the numbers you will check</b><b>value</b></div>
-        <div class="row"><span class="lbl">VEEV/week · JP Partner 2</span><span class="val">277</span></div>
-        <div class="row"><span class="lbl">VEEV/week · JP Partner 5</span><span class="val">271</span></div>
-        <div class="row"><span class="lbl">VEEV/week · JP Branded 4</span><span class="val">209</span></div>
-        <div class="row"><span class="lbl">VEEV/week · JP Ecommerce 3</span><span class="val">169</span></div>
-        <div class="row"><span class="lbl">det.device_telemetry rows</span><span class="val">35,113</span></div>
-        <div class="row"><span class="lbl">anonymised (NULL consumer_id)</span><span class="val">7,084</span></div>
-        <div class="row"><span class="lbl">under-25 allowed rows ID · IT · JP</span><span class="val">0 · 0 · 675</span></div>
-        <div class="ft">The model never runs a query in this lab. <span class="blink">You do, in SQLTools.</span></div>
-      </div>
+      <figure class="lab-hero-art"><img src="images/lab4-hero.svg" width="720" height="560" alt="A friendly AI agent, the HORIZON analyst, sends two requests toward a gate marked YOU: the aggregating SELECT passes through to the horizon warehouse, the DELETE is stopped and never runs. The answer you checked in SQLTools: JP Partner Distributor 2, 277 VEEV units per week. The readiness ladder shows Experimentation as today's rung."></figure>
     </div>
   </div>
 </header>
+
+<div class="brief-wrap">
+  <section class="brief" aria-label="Mission brief">
+    <div class="ticket">
+      <div class="ticket-h"><b>Incoming request</b><span>Project HORIZON · leadership · by Q1</span></div>
+      <blockquote>Leadership saw a demo of an AI agent that answers any question about HORIZON data in plain English. They want it in the data estate by Q1. Can you get it in?</blockquote>
+      <cite>Engineering request · Project HORIZON</cite>
+      <div class="ticket-stats">
+        <div><b>50 min</b><span>on the clock, about 35 of them hands-on</span></div>
+        <div><b>1 + 4</b><span>one analyst Project, one four-line recommendation</span></div>
+        <div><b class="hot" data-count="277">277</b><span>the number that decides: VEEV units a week, JP Partner Distributor 2</span></div>
+      </div>
+    </div>
+    <div class="mfd" role="img" aria-label="Hour 4 numbers: VEEV units per week in Japan, JP Partner Distributor 2 about 277, Partner 5 about 271, Branded 4 about 209, Ecommerce 3 about 169; device telemetry 35,113 rows, 7,084 anonymised; under-25 marketing-allowed consent rows ID 0, IT 0, JP 675.">
+      <div class="hd"><b>Hour 4 · the numbers you will check</b><b>value</b></div>
+      <div class="row"><span class="lbl">VEEV/week · JP Partner 2</span><span class="val">277</span></div>
+      <div class="row"><span class="lbl">VEEV/week · JP Partner 5</span><span class="val">271</span></div>
+      <div class="row"><span class="lbl">VEEV/week · JP Branded 4</span><span class="val">209</span></div>
+      <div class="row"><span class="lbl">VEEV/week · JP Ecommerce 3</span><span class="val">169</span></div>
+      <div class="row"><span class="lbl">det.device_telemetry rows</span><span class="val">35,113</span></div>
+      <div class="row"><span class="lbl">anonymised (NULL consumer_id)</span><span class="val">7,084</span></div>
+      <div class="row"><span class="lbl">under-25 allowed rows ID · IT · JP</span><span class="val">0 · 0 · 675</span></div>
+      <div class="ft">The model never runs a query in this lab. <span class="blink">You do, in SQLTools.</span></div>
+    </div>
+  </section>
+</div>
+
+<div class="route-wrap">
+  <nav class="route" aria-label="Lab route">
+    <a class="stn" href="#theme"><i>↘</i><b>Brief</b><span>the theme</span></a>
+    <a class="stn" href="#before"><i>0</i><b>Set-up</b><span>2 min</span></a>
+    <a class="stn" href="#step1"><i>1</i><b>Build</b><span>10 min · Project</span></a>
+    <a class="stn" href="#step2"><i>2</i><b>Probe</b><span>5 min · 3 asks</span></a>
+    <a class="stn" href="#step3"><i>3</i><b>Look inside</b><span>8 min · instructor</span></a>
+    <a class="stn" href="#step4"><i>4</i><b>Evaluate</b><span>12 min · ladder</span></a>
+    <a class="stn goal" href="#takeaways"><i>★</i><b>Signed</b><span>takeaways #4 · #5</span></a>
+  </nav>
+</div>
 
 <div class="frame">
   <details class="toc" id="toc" open>
@@ -82,12 +126,6 @@
 
   <p>A capability earns each rung, <strong>Exploration → Experimentation → Pilot → Adoption</strong>, and there is a human gate before every rung.</p>
   <p class="rule-line">The vendor ships the capability. <span class="w">The engineer decides whether it is ready.</span> New ≠ ready.</p>
-
-  <h3>The request that just landed</h3>
-  <blockquote class="request">
-    <p>"Leadership saw a demo of an AI agent that answers any question about HORIZON data in plain English. They want it in the data estate by Q1. Can you get it in?"</p>
-    <cite>Engineering request · Project HORIZON</cite>
-  </blockquote>
 
   <p>This hour you will <strong>build</strong> that capability in ten minutes (safely, on the Experimentation rung), <strong>probe</strong> what it can and cannot do to your estate, <strong>look inside</strong> the model to understand what it is actually doing, and then <strong>evaluate</strong> it the way a data engineer should: against the estate you run, with a number, and with a gate you own. Four steps: <strong>Build → Probe → Look inside → Evaluate.</strong></p>
   <p>Nothing you build this hour is a file. The "agent" is a Claude Desktop Project with instructions you write, and the only tool it has is you.</p>
@@ -159,13 +197,45 @@
     <p class="dek">Four steps, about 35 minutes. The analyst drafts. The warehouse decides. You sign, and this hour you are also the tool.</p>
   </div>
 
-  <!-- STEP 1 -->
-  <div class="step" id="step1">
-    <span class="step-n">1</span>
-    <div class="step-t"><span class="step-k">Build</span><h3>Build the analyst</h3></div>
-    <span class="step-min">10 min</span>
+  <div class="stage" id="step1" data-n="1">
+    <div class="stage-copy">
+      <span class="stage-k"><b>1</b>Build</span>
+      <h3>Build the analyst</h3>
+      <p>A Claude Desktop Project with a persona, a table list, a four-step loop and hard limits. It writes one aggregating query; you run it.</p>
+      <div class="stage-meta"><span class="t">10 min</span><span class="m">Sonnet</span><span class="">Project + SQLTools</span></div>
+    </div>
+    <div class="stage-art">
+      <svg viewBox="0 0 340 210" aria-hidden="true">
+  <rect x="6" y="10" width="226" height="190" rx="14" fill="#0F2547" stroke="#fff" stroke-opacity=".12"/>
+  <circle cx="24" cy="27" r="4" fill="#FF5F57"/><circle cx="37" cy="27" r="4" fill="#FEBC2E"/><circle cx="50" cy="27" r="4" fill="#28C840"/>
+  <text x="66" y="31" font-size="10" fill="#93A7C6">Projects › HORIZON analyst</text>
+  <text x="20" y="56" font-size="8.5" fill="#A99BFF" letter-spacing="1.2">PROJECT INSTRUCTIONS</text>
+  <g font-size="10">
+    <rect x="18" y="66" width="202" height="26" rx="7" fill="#061022" stroke="#fff" stroke-opacity=".08"/><rect x="18" y="66" width="4" height="26" rx="2" fill="#A99BFF"/><text x="32" y="83" fill="#DCE6F5">persona · careful engineer</text>
+    <rect x="18" y="98" width="202" height="26" rx="7" fill="#061022" stroke="#fff" stroke-opacity=".08"/><rect x="18" y="98" width="4" height="26" rx="2" fill="#2EE6C5"/><text x="32" y="115" fill="#DCE6F5">tables · schema only</text>
+    <rect x="18" y="130" width="202" height="26" rx="7" fill="#061022" stroke="#fff" stroke-opacity=".08"/><rect x="18" y="130" width="4" height="26" rx="2" fill="#FFB38A"/><text x="32" y="147" fill="#DCE6F5">4-step loop · you run it</text>
+    <rect x="18" y="162" width="202" height="26" rx="7" fill="#FF5A47" fill-opacity=".14" stroke="#FF8A7A" stroke-opacity=".5"/><rect x="18" y="162" width="4" height="26" rx="2" fill="#FF5A47"/><text x="32" y="179" fill="#FFB0A3">hard limits · read-only</text>
+  </g>
+  <path class="fx-dash" d="M238 112 H258" stroke="#A99BFF" stroke-width="2" fill="none"/>
+  <path d="M256 106 l8 6 l-8 6" fill="none" stroke="#A99BFF" stroke-width="2"/>
+  <g class="fx-float">
+    <path class="fx-pulse" d="M326 52 l3 -9 l3 9 l9 3 l-9 3 l-3 9 l-3 -9 l-9 -3z" fill="#C3B9FF"/>
+    <line x1="300" y1="70" x2="300" y2="58" stroke="#A99BFF" stroke-width="2.5"/><circle cx="300" cy="55" r="5" fill="#A99BFF"/>
+    <rect x="270" y="70" width="60" height="48" rx="15" fill="#1B2F5C" stroke="#A99BFF" stroke-width="1.6"/>
+    <rect x="278" y="79" width="44" height="30" rx="9" fill="#081428"/>
+    <rect x="287" y="87" width="8" height="11" rx="4" fill="#A99BFF"/><rect x="305" y="87" width="8" height="11" rx="4" fill="#A99BFF"/>
+    <rect x="280" y="122" width="40" height="30" rx="9" fill="#13305C"/><circle cx="300" cy="137" r="5" fill="#7B66FF"/>
+  </g>
+  <rect x="262" y="164" width="76" height="22" rx="11" fill="none" stroke="#A99BFF" stroke-opacity=".7"/>
+  <text x="300" y="179" text-anchor="middle" font-size="10" fill="#C3B9FF">Sonnet</text>
+</svg>
+    </div>
   </div>
-  <div class="expects"><span class="expect note">Experimentation rung, sandbox rules</span><span class="expect">expect JP Partner Distributor 2 ≈ 277</span></div>
+  <div class="tally" role="group" aria-label="What Step 1 builds">
+    <div class="tl hot"><span>expect JP Partner Distributor 2</span><b>≈ 277</b><small>VEEV units per week</small></div>
+    <div class="tl"><span>then</span><b>271 · 209 · 169</b><small>Partner 5 · Branded 4 · Ecommerce 3</small></div>
+  </div>
+  <div class="expects"><span class="expect note">Experimentation rung, sandbox rules</span></div>
 
   <h3 id="step1a">1a · Create the Project</h3>
   <ol class="steps">
@@ -263,13 +333,42 @@ group by d.distributor_name order by avg_weekly_units desc;
     <p>Did it get the number right? You checked it yourself in SQLTools; the analyst is a draft, like every other draft today.</p>
   </div>
 
-  <!-- STEP 2 -->
-  <div class="step" id="step2">
-    <span class="step-n">2</span>
-    <div class="step-t"><span class="step-k">Probe</span><h3>Probe the blast radius</h3></div>
-    <span class="step-min">5 min</span>
+  <div class="stage" id="step2" data-n="2">
+    <div class="stage-copy">
+      <span class="stage-k"><b>2</b>Probe</span>
+      <h3>Probe the blast radius</h3>
+      <p>Three asks a stakeholder would type. See what the analyst refuses, what the data refuses, and what only you can stop.</p>
+      <div class="stage-meta"><span class="t">5 min</span><span class="">3 asks</span><span class="">same Project chat</span></div>
+    </div>
+    <div class="stage-art">
+      <svg viewBox="0 0 340 210" aria-hidden="true">
+  <circle cx="84" cy="106" r="80" fill="none" stroke="#A99BFF" stroke-opacity=".25" stroke-dasharray="3 5"/>
+  <circle cx="84" cy="106" r="54" fill="none" stroke="#A99BFF" stroke-opacity=".4" stroke-dasharray="3 5"/>
+  <circle class="fx-pulse" cx="84" cy="106" r="30" fill="#7B66FF" fill-opacity=".35"/>
+  <circle cx="84" cy="106" r="22" fill="#A99BFF"/>
+  <text x="84" y="103" text-anchor="middle" font-size="7.5" fill="#061022" font-weight="500">READ</text>
+  <text x="84" y="113" text-anchor="middle" font-size="7.5" fill="#061022" font-weight="500">ONLY</text>
+  <text x="84" y="200" text-anchor="middle" font-size="8.5" fill="#93A7C6" letter-spacing="1.2">BLAST RADIUS</text>
+  <g font-size="9.5">
+    <rect x="176" y="22" width="160" height="46" rx="10" fill="#0F2547" stroke="#fff" stroke-opacity=".12"/>
+    <text x="188" y="40" fill="#93A7C6">list under-25 · IT</text>
+    <text x="188" y="58" fill="#6FE3A3">count instead → 0</text>
+    <rect x="176" y="82" width="160" height="46" rx="10" fill="#0F2547" stroke="#FF8A7A" stroke-opacity=".5"/>
+    <text x="188" y="100" fill="#93A7C6">delete ecommerce</text>
+    <text x="188" y="118" fill="#FF8A7A">✕ you do not run it</text>
+    <rect x="176" y="142" width="160" height="46" rx="10" fill="#0F2547" stroke="#fff" stroke-opacity=".12"/>
+    <text x="188" y="160" fill="#93A7C6">every telemetry row</text>
+    <text x="188" y="178" fill="#C3B9FF">Σ aggregate · not 35,113</text>
+  </g>
+  <path class="fx-dash" d="M138 60 L174 45 M140 106 L174 105 M138 152 L174 165" stroke="#A99BFF" stroke-opacity=".6" stroke-width="1.5" fill="none"/>
+</svg>
+    </div>
   </div>
-  <div class="expects"><span class="expect">IT under-25 marketing-allowed: 0</span><span class="expect bad">no DELETE runs</span><span class="expect note">35,113 rows: aggregate instead</span></div>
+  <div class="tally" role="group" aria-label="What Step 2 probes">
+    <div class="tl ok"><span>IT under-25</span><b>0</b><small>marketing-allowed · 0% by design</small></div>
+    <div class="tl bad"><span>DELETE</span><b>✕</b><small>no DELETE runs</small></div>
+    <div class="tl"><span>det.device_telemetry</span><b data-count="35113">35,113</b><small>rows: aggregate instead</small></div>
+  </div>
 
   <p>Three asks, typed into the same Project chat one at a time, that tell you what this capability can and cannot do to your estate. Type them exactly as written; they are deliberately the kind of thing a stakeholder would type.</p>
 
@@ -312,11 +411,45 @@ group by d.distributor_name order by avg_weekly_units desc;
     <p>If this analyst had write access and nobody between it and the warehouse, what is the worst thing it could do in sixty seconds?</p>
   </div>
 
-  <!-- STEP 3 -->
-  <div class="step" id="step3">
-    <span class="step-n">3</span>
-    <div class="step-t"><span class="step-k">Look inside</span><h3>Look inside the model</h3></div>
-    <span class="step-min">8 min · instructor-led</span>
+  <div class="stage" id="step3" data-n="3">
+    <div class="stage-copy">
+      <span class="stage-k"><b>3</b>Look inside</span>
+      <h3>Look inside the model</h3>
+      <p>Token, context, door: three facts about the thing you built, then the same analyst with a real read-only database door.</p>
+      <div class="stage-meta"><span class="t">8 min · instructor-led</span><span class="">MCP demo</span></div>
+    </div>
+    <div class="stage-art">
+      <svg viewBox="0 0 340 210" aria-hidden="true">
+  <rect x="4" y="10" width="104" height="190" rx="12" fill="#0F2547" stroke="#fff" stroke-opacity=".12"/>
+  <text x="16" y="32" font-size="9" fill="#A99BFF" letter-spacing="1.4">TOKEN</text>
+  <rect x="16" y="52" width="78" height="12" rx="3" fill="#A99BFF" fill-opacity="1"/><rect x="16" y="72" width="56" height="12" rx="3" fill="#A99BFF" fill-opacity="0.7"/><rect x="16" y="92" width="40" height="12" rx="3" fill="#A99BFF" fill-opacity="0.5"/><rect x="16" y="112" width="28" height="12" rx="3" fill="#A99BFF" fill-opacity="0.38"/><rect x="16" y="132" width="18" height="12" rx="3" fill="#A99BFF" fill-opacity="0.28"/>
+  <rect class="fx-blink" x="98" y="52" width="4" height="12" fill="#fff"/>
+  <text x="16" y="168" font-size="8.5" fill="#93A7C6">a spread of next</text>
+  <text x="16" y="182" font-size="8.5" fill="#93A7C6">tokens, sampled</text>
+  <rect x="118" y="10" width="104" height="190" rx="12" fill="#0F2547" stroke="#fff" stroke-opacity=".12"/>
+  <text x="130" y="32" font-size="9" fill="#A99BFF" letter-spacing="1.4">CONTEXT</text>
+  <path d="M130 160 H210" stroke="#93A7C6" stroke-opacity=".4"/>
+  <rect x="138" y="138" width="26" height="22" rx="3" fill="#3BE08A"/>
+  <rect x="176" y="50" width="26" height="110" rx="3" fill="#FF5A47" fill-opacity=".55"/>
+  <text x="151" y="130" text-anchor="middle" font-size="14" fill="#6FE3A3" font-weight="600">✓</text>
+  <text x="189" y="40" text-anchor="middle" font-size="14" fill="#FF8A7A" font-weight="600">✕</text>
+  <text x="151" y="176" text-anchor="middle" font-size="9" fill="#DCE6F5">~300</text>
+  <text x="189" y="176" text-anchor="middle" font-size="9" fill="#DCE6F5">~113k</text>
+  <text x="170" y="192" text-anchor="middle" font-size="8" fill="#93A7C6">tokens</text>
+  <rect x="232" y="10" width="104" height="190" rx="12" fill="#0F2547" stroke="#fff" stroke-opacity=".12"/>
+  <text x="244" y="32" font-size="9" fill="#A99BFF" letter-spacing="1.4">DOOR · MCP</text>
+  <rect x="256" y="46" width="56" height="86" rx="6" fill="#1B2F5C" stroke="#A99BFF" stroke-width="1.6"/>
+  <circle cx="300" cy="92" r="3.5" fill="#C3B9FF"/>
+  <g class="fx-float">
+    <path d="M276 86 v-6 a8 8 0 0 1 16 0 v6" fill="none" stroke="#DCE6F5" stroke-width="2.4"/>
+    <rect x="271" y="84" width="26" height="20" rx="4" fill="#A99BFF"/>
+  </g>
+  <text x="284" y="152" text-anchor="middle" font-size="9" fill="#C3B9FF">read-only</text>
+  <rect x="237" y="160" width="94" height="32" rx="6" fill="#FF5A47" fill-opacity=".16" stroke="#FF8A7A" stroke-opacity=".6"/>
+  <text x="284" y="174" text-anchor="middle" font-size="9" fill="#FF8A7A">DELETE ✕</text>
+  <text x="284" y="186" text-anchor="middle" font-size="7.6" fill="#FFB0A3">READONLY_VIOLATION</text>
+</svg>
+    </div>
   </div>
 
   <p>Three facts about the thing you just built, then a demo.</p>
@@ -382,13 +515,51 @@ group by d.distributor_name order by avg_weekly_units desc;
     <p>Which surprised you most today? <span class="opts">token (the Hour 1 opener) · context · door</span></p>
   </div>
 
-  <!-- STEP 4 -->
-  <div class="step" id="step4">
-    <span class="step-n">4</span>
-    <div class="step-t"><span class="step-k">Evaluate</span><h3>Evaluate it: the readiness ladder</h3></div>
-    <span class="step-min">12 min</span>
+  <div class="stage" id="step4" data-n="4">
+    <div class="stage-copy">
+      <span class="stage-k"><b>4</b>Evaluate</span>
+      <h3>Evaluate it: the readiness ladder</h3>
+      <p>Ground it with two warehouse facts, run the method, curate the output, then sign a four-line recommendation.</p>
+      <div class="stage-meta"><span class="t">12 min</span><span class="m">Opus if offered</span><span class="">SQLTools · 2 facts</span></div>
+    </div>
+    <div class="stage-art">
+      <svg viewBox="0 0 340 210" aria-hidden="true">
+  <path d="M34 22 V196 M146 22 V196" stroke="#A99BFF" stroke-opacity=".45" stroke-width="3"/>
+  <g font-size="9" letter-spacing=".4">
+    <rect x="22" y="28" width="136" height="26" rx="7" fill="#0B1D3A" stroke="#fff" stroke-opacity=".18"/><text x="90" y="45" text-anchor="middle" fill="#93A7C6">ADOPTION</text>
+    <rect x="22" y="72" width="136" height="26" rx="7" fill="#0B1D3A" stroke="#fff" stroke-opacity=".18"/><text x="90" y="89" text-anchor="middle" fill="#93A7C6">PILOT</text>
+    <rect class="fx-pulse" x="17" y="113" width="146" height="34" rx="9" fill="#7B66FF" fill-opacity=".35"/>
+    <rect x="22" y="117" width="136" height="26" rx="7" fill="#A99BFF"/><text x="90" y="134" text-anchor="middle" fill="#061022" font-weight="500">EXPERIMENTATION</text>
+    <rect x="22" y="162" width="136" height="26" rx="7" fill="#0B1D3A" stroke="#fff" stroke-opacity=".18"/><text x="90" y="179" text-anchor="middle" fill="#93A7C6">EXPLORATION</text>
+  </g>
+  <g fill="#C3B9FF">
+    <rect x="85" y="59" width="10" height="8" rx="1.5"/><path d="M87 59 v-3 a3 3 0 0 1 6 0 v3" fill="none" stroke="#C3B9FF" stroke-width="1.5"/>
+    <rect x="85" y="104" width="10" height="8" rx="1.5"/><path d="M87 104 v-3 a3 3 0 0 1 6 0 v3" fill="none" stroke="#C3B9FF" stroke-width="1.5"/>
+    <rect x="85" y="150" width="10" height="8" rx="1.5"/><path d="M87 150 v-3 a3 3 0 0 1 6 0 v3" fill="none" stroke="#C3B9FF" stroke-width="1.5"/>
+  </g>
+  <rect x="176" y="14" width="158" height="188" rx="12" fill="#F2F5FA"/>
+  <text x="190" y="34" font-size="8.5" fill="#5A6B80" letter-spacing="1.3">FOUR LINES</text>
+  <g font-size="8.2">
+    <text x="190" y="54" fill="#5A6B80">Rung</text><text x="190" y="66" fill="#102B53" font-weight="500">Experimentation</text>
+    <text x="190" y="86" fill="#5A6B80">Verdict</text><text x="190" y="98" fill="#102B53" font-weight="500">pilot-with-guardrails</text>
+    <text x="190" y="118" fill="#5A6B80">Guardrails</text><text x="190" y="130" fill="#102B53" font-weight="500">read-only · query log</text>
+    <text x="190" y="150" fill="#5A6B80">Gate owner</text><text x="190" y="162" fill="#102B53" font-weight="500">the data owner</text>
+  </g>
+  <path d="M190 186 c8 -10 14 4 22 -4 s12 6 22 -2 s10 4 16 0" fill="none" stroke="#102B53" stroke-width="1.6" stroke-linecap="round"/>
+  <g transform="rotate(-14 300 176)">
+    <circle cx="300" cy="176" r="22" fill="none" stroke="#7B66FF" stroke-width="2.4"/>
+    <circle cx="300" cy="176" r="17" fill="none" stroke="#7B66FF" stroke-width="1"/>
+    <text x="300" y="179" text-anchor="middle" font-size="8" fill="#7B66FF" font-weight="600" letter-spacing="1">SIGNED</text>
+  </g>
+</svg>
+    </div>
   </div>
-  <div class="expects"><span class="expect">35,113 / 7,084</span><span class="expect">ID 0 · IT 0 · JP 675</span><span class="expect note">vote the rung · four-line recommendation</span></div>
+  <div class="tally" role="group" aria-label="What Step 4 grounds">
+    <div class="tl"><span>Telemetry rows</span><b data-count="35113">35,113</b><small>det.device_telemetry</small></div>
+    <div class="tl hot"><span>Anonymised</span><b data-count="7084">7,084</b><small>NULL consumer_id, on purpose</small></div>
+    <div class="tl"><span>Under-25 allowed rows</span><b>0 · 0 · 675</b><small>ID · IT · JP (consent rows)</small></div>
+  </div>
+  <div class="expects"><span class="expect note">vote the rung · four-line recommendation</span></div>
 
   <p>Now evaluate the capability you built the way a data engineer should: against the estate, with numbers you ran yourself, on the rung the evidence supports.</p>
 
@@ -491,6 +662,28 @@ Gate owner:  &lt;the data owner who signs&gt;, stop criterion: any query that re
   </div>
   <p class="rule-line">The assistant drafts. <span class="w">The warehouse decides.</span> The engineer signs.</p>
 
+  <div class="earned">
+    <svg viewBox="0 0 160 160" aria-hidden="true">
+      <circle cx="80" cy="80" r="76" fill="none" style="stroke:var(--lab)" stroke-opacity=".45" stroke-width="1.5" stroke-dasharray="2 5"/>
+      <polygon points="80,18 133.7,49 133.7,111 80,142 26.3,111 26.3,49" style="fill:var(--lab-deep)"/>
+      <polygon points="80,30 123.3,55 123.3,105 80,130 36.7,105 36.7,55" fill="#081428"/>
+      <text x="80" y="58" text-anchor="middle" font-size="9" letter-spacing="2" style="fill:var(--lab)">LAB 04</text>
+      <path d="M60 114 V86 a20 20 0 0 1 40 0 V114" fill="none" stroke="#DCE6F5" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M70 97 l7 7 l13 -14" fill="none" style="stroke:var(--lab)" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="22" y="120" width="116" height="22" rx="5" style="fill:var(--lab)"/>
+      <text x="80" y="135" text-anchor="middle" font-size="9" letter-spacing="1.4" fill="#081428" font-weight="600">READINESS CALL</text>
+    </svg>
+    <div>
+      <span class="k">Artefact earned · Hour 4</span>
+      <h3>An analyst on the rung it earned, and your signature on the call</h3>
+      <ul>
+        <li><b>HORIZON analyst</b>: a Claude Desktop Project with a persona, a table list, a four-step loop and hard limits</li>
+        <li>a rung the evidence supports, <b>Experimentation</b>, grounded in numbers you ran yourself</li>
+        <li>a four-line recommendation: Rung · Verdict · Guardrails · Gate owner</li>
+      </ul>
+    </div>
+  </div>
+
   <div class="box try">
     <span class="k">On Monday</span>
     <p>Take one capability your team is excited about right now. Name the standing assumption it challenges. Find one grounded fact from your own estate. Define one gate criterion and one success metric before any experiment runs. Bring the four-line recommendation to your team.</p>
@@ -502,6 +695,11 @@ Gate owner:  &lt;the data owner who signs&gt;, stop criterion: any query that re
   </div>
 </section>
 
+
+    <nav class="lab-next" aria-label="Previous and next">
+      <a class="nx-3" href="hour3.html"><span><small>← Lab 03</small><b>Shift left</b><em>Unpack → Clarify → Prove → Specify</em></span><img src="images/lab3-hero.svg" alt="" loading="lazy"></a>
+      <a class="nx-0" href="index.html"><span><small>Back to the start →</small><b>The one rule</b><em>The assistant drafts. The warehouse decides. The engineer signs.</em></span><img src="images/lab0-card.svg" alt="" loading="lazy"></a>
+    </nav>
 
     <footer class="foot">
       <nav aria-label="All guides">
@@ -518,5 +716,6 @@ Gate owner:  &lt;the data owner who signs&gt;, stop criterion: any query that re
 </div>
 
 <script src="assets/site.js" defer></script>
+<script src="assets/lab.js" defer></script>
 </body>
 </html>

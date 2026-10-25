@@ -3,20 +3,34 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Hour 1 · No vibe pipelines · Project HORIZON lab guides</title>
-<meta name="description" content="Lab guides for the PMI Data Engineer Future Skills class. Project HORIZON is fictional and training-only.">
+<title>Lab 1 · No vibe pipelines · Project HORIZON</title>
+<meta name="description" content="Lab 1 of the PMI Data Engineer Future Skills class: draft a dbt model with Claude, prove it against the warehouse (794 events, not 1,988 rows) and lock it with 7 tests. Project HORIZON is fictional and training-only.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Project HORIZON lab guides">
+<meta property="og:title" content="Lab 1 · No vibe pipelines">
+<meta property="og:description" content="Draft → Prove → Lock. A runnable draft is not a correct one: 794 events, a 1,988-row draft, 7 tests.">
+<meta property="og:url" content="https://varoonsahgal.github.io/pmidataeng-labs/hour1.html">
+<meta property="og:image" content="https://varoonsahgal.github.io/pmidataeng-labs/images/og/hour1.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#0C2040">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap">
 <link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/lab.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230C2040'/%3E%3Crect x='6' y='6' width='9' height='9' rx='2' fill='%23FF4A00'/%3E%3Crect x='17' y='17' width='9' height='9' rx='2' fill='%2300C9A7'/%3E%3C/svg%3E">
 </head>
-<body>
+<body class="lab lab-1">
+<div class="lab-progress" aria-hidden="true"><i></i></div>
 
 
-<header class="mast">
+<header class="lab-hero">
+  <div class="stars" aria-hidden="true"></div>
+  <div class="horizon" aria-hidden="true"></div>
+  <div class="floor" aria-hidden="true"></div>
   <div class="mast-in">
     <nav class="sitenav" aria-label="Lab guides">
       <a class="brand" href="index.html">Project HORIZON</a>
@@ -27,26 +41,56 @@
       <a href="hour4.html">Hour 4</a>
       <a href="glossary.html">Glossary</a>
     </nav>
-    <div class="mast-grid">
-      <div class="mast-copy">
-        <div class="eyebrow">PMI · DI&amp;A Future Skills · Data Engineer track · Project HORIZON</div>
-        <h1>Hour 1 · No <span>vibe</span> pipelines<small>Data Engineering with AI Support (WA3903) · Draft → Prove → Lock</small></h1>
+    <div class="lab-hero-grid">
+      <div class="lab-hero-copy">
+        <div class="lab-tag"><span class="lab-no">Lab 01</span><span>WA3903 · Data Engineering with AI Support</span></div>
+        <h1>No <span>vibe</span> pipelines<span class="ghost">Hour 1 · 0:12 to 1:05 · follow along with the instructor</span></h1>
         <p class="lede">The assistant drafted the Italy consumer-events-to-consent model in under a minute. It runs clean. Before it ships, you prove it against the warehouse and lock it with tests. <strong>A runnable draft is not a correct one.</strong></p>
-        <div class="meta"><span>Hour 1 · 0:12 to 1:05</span><span>VS Code + SQLTools</span><span>dbt CLI</span><span>Claude Desktop · <b>Sonnet</b> + <b>Opus</b></span></div>
+        <ol class="lab-loop" aria-label="The loop"><li>Draft</li><li>Prove</li><li>Lock</li></ol>
+        <div class="lab-cta"><a class="btn" href="#step1">Start the lab</a><a class="btn ghost" href="#before">Pre-flight check</a></div>
+        <ul class="lab-kit" aria-label="What you use"><li>VS Code + <b>SQLTools</b></li><li><b>dbt</b> CLI</li><li>Claude Desktop · <b>Sonnet</b> + <b>Opus</b></li></ul>
       </div>
-      <div class="mfd" role="img" aria-label="Hour 1 in numbers: 794 Italy conversion events; the draft returns 1,988 rows, the fix returns 794; latest consent stamps 31 events with a future consent; 8 events have no consent in effect; 7 tests pass.">
-        <div class="hd"><b>Hour 1 · Italy conversions</b><b>rows</b></div>
-        <div class="row"><span class="lbl">source events (IT, conversion)</span><span class="val">794</span></div>
-        <div class="row"><span class="lbl">model rows, draft → fixed</span><span class="was">1,988</span><span class="now">794</span></div>
-        <div class="row"><span class="lbl">consent ledger rows / consumers</span><span class="val">15,052 / 6,000</span></div>
-        <div class="row"><span class="lbl">"latest consent" from the future</span><span class="was">31</span><span class="now">0</span></div>
-        <div class="row"><span class="lbl">no consent in effect → false</span><span class="val">8</span></div>
-        <div class="row"><span class="lbl">dbt tests</span><span class="now">7 PASS</span></div>
-        <div class="ft">Every number on this page comes from the HORIZON warehouse, and <span class="blink">you can check every one in SQLTools.</span></div>
-      </div>
+      <figure class="lab-hero-art"><img src="images/lab1-hero.svg" width="720" height="560" alt="An AI-drafted SQL model runs clean, but its join to the consent ledger fans each event out into several rows: the magnifier shows 1,988 draft rows against 794 source events. A padlock reads 7 of 7 tests pass."></figure>
     </div>
   </div>
 </header>
+
+<div class="brief-wrap">
+  <section class="brief" aria-label="Mission brief">
+    <div class="ticket">
+      <div class="ticket-h"><b>Incoming request</b><span>Project HORIZON · Italy · consent</span></div>
+      <blockquote>The AI assistant drafted the Italy consumer-events-to-consent model in under a minute. It runs clean, no errors. Can we ship it this afternoon?</blockquote>
+      <cite>Team request · Project HORIZON</cite>
+      <div class="ticket-stats">
+        <div><b>53 min</b><span>on the clock, 27 of them hands-on</span></div>
+        <div><b>1 + 7</b><span>you leave with one dbt model and seven tests</span></div>
+        <div><b class="hot" data-count="794">794</b><span>the number that decides: Italy conversion events</span></div>
+      </div>
+    </div>
+    <div class="mfd" role="img" aria-label="Hour 1 in numbers: 794 Italy conversion events; the draft returns 1,988 rows, the fix returns 794; latest consent stamps 31 events with a future consent; 8 events have no consent in effect; 7 tests pass.">
+      <div class="hd"><b>Hour 1 · Italy conversions</b><b>rows</b></div>
+      <div class="row"><span class="lbl">source events (IT, conversion)</span><span class="val">794</span></div>
+      <div class="row"><span class="lbl">model rows, draft → fixed</span><span class="was">1,988</span><span class="now">794</span></div>
+      <div class="row"><span class="lbl">consent ledger rows / consumers</span><span class="val">15,052 / 6,000</span></div>
+      <div class="row"><span class="lbl">"latest consent" from the future</span><span class="was">31</span><span class="now">0</span></div>
+      <div class="row"><span class="lbl">no consent in effect → false</span><span class="val">8</span></div>
+      <div class="row"><span class="lbl">dbt tests</span><span class="now">7 PASS</span></div>
+      <div class="ft">Every number on this page comes from the HORIZON warehouse, and <span class="blink">you can check every one in SQLTools.</span></div>
+    </div>
+  </section>
+</div>
+
+<div class="route-wrap">
+  <nav class="route" aria-label="Lab route">
+    <a class="stn" href="#why"><i>↘</i><b>Brief</b><span>the request</span></a>
+    <a class="stn" href="#before"><i>0</i><b>Pre-flight</b><span>1 min</span></a>
+    <a class="stn" href="#step1"><i>1</i><b>Draft</b><span>8 min · Sonnet</span></a>
+    <a class="stn" href="#step2"><i>2</i><b>Prove</b><span>9 min · SQLTools</span></a>
+    <a class="stn" href="#step2b"><i>2b</i><b>Plan</b><span>5 min · Opus</span></a>
+    <a class="stn" href="#step3"><i>3</i><b>Lock</b><span>5 min · dbt test</span></a>
+    <a class="stn goal" href="#takeaway"><i>★</i><b>Signed</b><span>takeaway #1</span></a>
+  </nav>
+</div>
 
 <div class="frame">
   <details class="toc" id="toc" open>
@@ -83,12 +127,6 @@
 
       <blockquote>
         <p>"Vibe coding" was the Collins Dictionary Word of the Year 2025: <em>programming by vibes, not variables.</em> Fine for a weekend app. Not fine for a model that stamps a marketing permission on 794 real conversion events.</p>
-      </blockquote>
-
-      <p><b>The request that just landed:</b></p>
-      <blockquote class="request">
-        <p>"The AI assistant drafted the Italy consumer-events-to-consent model in under a minute. It runs clean, no errors. Can we ship it this afternoon?"</p>
-        <cite>Team request · Project HORIZON</cite>
       </blockquote>
 
       <p class="rule-line">A runnable draft is not a correct one. The assistant drafts. <span class="w">The warehouse decides.</span> You sign.</p>
@@ -244,11 +282,42 @@
         <p class="dek">The assistant drafts the Italy model. The warehouse tells you what it really does. Then you make the correction permanent with tests.</p>
       </div>
 
-      <!-- STEP 1 -->
-      <div class="step" id="step1">
-        <span class="step-n">1</span>
-        <div class="step-t"><span class="step-k">Draft</span><h3>Draft with AI, on the thrifty model</h3></div>
-        <span class="step-min">8 min</span>
+      <div class="stage" id="step1" data-n="1">
+        <div class="stage-copy">
+          <span class="stage-k"><b>1</b>Draft</span>
+          <h3>Draft with AI, on the thrifty model</h3>
+          <p>Sonnet writes the first version of the Italy model from the schema alone. You paste it into the project, then read it like a reviewer.</p>
+          <div class="stage-meta"><span class="t">8 min</span><span class="m">Sonnet</span><span class="">Claude Desktop → VS Code</span></div>
+        </div>
+        <div class="stage-art">
+          <svg viewBox="0 0 340 210" aria-hidden="true">
+  <rect x="6" y="10" width="222" height="190" rx="14" fill="#0F2547" stroke="#fff" stroke-opacity=".12"/>
+  <circle cx="24" cy="27" r="4" fill="#FF5F57"/><circle cx="37" cy="27" r="4" fill="#FEBC2E"/><circle cx="50" cy="27" r="4" fill="#28C840"/>
+  <text x="66" y="31" font-size="10" fill="#93A7C6">Claude Desktop · Sonnet</text>
+  <rect x="74" y="46" width="142" height="36" rx="10" fill="#FF4A00"/>
+  <text x="84" y="61" font-size="9" fill="#061022">Context … Task: draft</text>
+  <text x="84" y="74" font-size="9" fill="#061022">italy_conversion_events</text>
+  <path class="fx-pulse" d="M28 104 l3 -9 l3 9 l9 3 l-9 3 l-3 9 l-3 -9 l-9 -3z" fill="#FFB38A"/>
+  <rect x="48" y="92" width="168" height="96" rx="8" fill="#061022" stroke="#fff" stroke-opacity=".1"/>
+  <rect x="176" y="98" width="34" height="14" rx="4" fill="none" stroke="#FF7A3D"/><text x="193" y="108" text-anchor="middle" font-size="7.5" fill="#FF9A6B">Copy</text>
+  <rect x="58" y="104" width="96" height="6" rx="3" fill="#A99BFF"/>
+  <rect x="58" y="120" width="34" height="6" rx="3" fill="#2EE6C5"/><rect x="96" y="120" width="80" height="6" rx="3" fill="#DCE6F5" opacity=".45"/>
+  <rect x="72" y="136" width="100" height="6" rx="3" fill="#FFB38A"/>
+  <rect x="58" y="152" width="26" height="6" rx="3" fill="#2EE6C5"/><rect x="88" y="152" width="90" height="6" rx="3" fill="#DCE6F5" opacity=".45"/>
+  <rect x="54" y="164" width="156" height="14" rx="3" fill="#FF4A00" fill-opacity=".18"/>
+  <rect x="58" y="168" width="26" height="6" rx="3" fill="#2EE6C5"/><rect x="88" y="168" width="104" height="6" rx="3" fill="#FF7A3D"/>
+  <path class="fx-dash" d="M232 118 H268" stroke="#FF7A3D" stroke-width="2" fill="none"/>
+  <path d="M266 112 l8 6 l-8 6" fill="none" stroke="#FF7A3D" stroke-width="2"/>
+  <g class="fx-float">
+    <path d="M280 72 h40 l14 14 v86 a6 6 0 0 1 -6 6 h-48 a6 6 0 0 1 -6 -6 v-94 a6 6 0 0 1 6 -6z" fill="#13305C" stroke="#fff" stroke-opacity=".25"/>
+    <path d="M320 72 v14 h14" fill="none" stroke="#fff" stroke-opacity=".25"/>
+    <text x="304" y="112" text-anchor="middle" font-size="13" fill="#FF7A3D" font-weight="500">.sql</text>
+    <rect x="286" y="124" width="36" height="4" rx="2" fill="#DCE6F5" opacity=".35"/><rect x="286" y="134" width="28" height="4" rx="2" fill="#DCE6F5" opacity=".35"/><rect x="286" y="144" width="34" height="4" rx="2" fill="#DCE6F5" opacity=".35"/>
+  </g>
+  <path d="M276 196 c10 -8 18 4 28 -4 s16 6 30 -2" fill="none" stroke="#FFB38A" stroke-width="2" stroke-linecap="round"/>
+  <text x="306" y="62" text-anchor="middle" font-size="9" fill="#93A7C6" letter-spacing="1">YOU PASTE</text>
+</svg>
+        </div>
       </div>
 
       <p>Check the picker says <b>Sonnet</b>. A draft is cheap by design: you are about to review it anyway.</p>
@@ -317,17 +386,45 @@ Respond in Markdown only. Do not create any file.</code></pre>
         </table>
       </div>
 
-      <!-- STEP 2 -->
-      <div class="step" id="step2">
-        <span class="step-n">2</span>
-        <div class="step-t"><span class="step-k">Prove</span><h3>Prove it against the warehouse</h3></div>
-        <span class="step-min">9 min</span>
+      <div class="stage" id="step2" data-n="2">
+        <div class="stage-copy">
+          <span class="stage-k"><b>2</b>Prove</span>
+          <h3>Prove it against the warehouse</h3>
+          <p>Predict the row count, build the draft, then let four SQLTools queries tell you what it really does.</p>
+          <div class="stage-meta"><span class="t">9 min</span><span class="">dbt run</span><span class="">SQLTools · 4 checks</span></div>
+        </div>
+        <div class="stage-art">
+          <svg viewBox="0 0 340 210" aria-hidden="true">
+  <rect x="6" y="10" width="216" height="128" rx="14" fill="#0F2547" stroke="#fff" stroke-opacity=".12"/>
+  <text x="20" y="31" font-size="10" fill="#93A7C6">SQLTools · HORIZON · results</text>
+  <path d="M6 42 h216" stroke="#fff" stroke-opacity=".1"/>
+  <text x="22" y="62" font-size="9.5" fill="#2EE6C5" letter-spacing=".5">source_events</text>
+  <text x="122" y="62" font-size="9.5" fill="#2EE6C5" letter-spacing=".5">model_rows</text>
+  <path d="M14 70 h200" stroke="#fff" stroke-opacity=".1"/>
+  <text x="22" y="104" font-size="30" font-weight="700" fill="#FFFFFF">794</text>
+  <text x="122" y="104" font-size="30" font-weight="700" fill="#FF8A7A" class="fx-blink">1,988</text>
+  <text x="22" y="126" font-size="9" fill="#93A7C6">expected one row per event</text>
+  <g font-size="9.5">
+    <rect x="6" y="152" width="96" height="22" rx="11" fill="#FF4A00" fill-opacity=".16" stroke="#FF7A3D" stroke-opacity=".6"/><text x="54" y="167" text-anchor="middle" fill="#FFB38A">ledger · 2.51</text>
+    <rect x="108" y="152" width="74" height="22" rx="11" fill="#FF4A00" fill-opacity=".16" stroke="#FF7A3D" stroke-opacity=".6"/><text x="145" y="167" text-anchor="middle" fill="#FFB38A">31 future</text>
+    <rect x="6" y="180" width="74" height="22" rx="11" fill="#FF4A00" fill-opacity=".16" stroke="#FF7A3D" stroke-opacity=".6"/><text x="43" y="195" text-anchor="middle" fill="#FFB38A">8 NULL</text>
+  </g>
+  <path d="M240 190 H334" stroke="#93A7C6" stroke-opacity=".4"/>
+  <rect x="250" y="130" width="30" height="60" rx="4" fill="#2EE6C5" fill-opacity=".85"/>
+  <rect x="294" y="40" width="30" height="150" rx="4" fill="#FF4A00"/>
+  <text x="265" y="122" text-anchor="middle" font-size="11" fill="#FFFFFF" font-weight="500">794</text>
+  <text x="309" y="32" text-anchor="middle" font-size="11" fill="#FF9A6B" font-weight="500">1,988</text>
+  <text x="265" y="204" text-anchor="middle" font-size="8.5" fill="#93A7C6">source</text>
+  <text x="309" y="204" text-anchor="middle" font-size="8.5" fill="#93A7C6">draft</text>
+</svg>
+        </div>
       </div>
-      <div class="expects">
-        <span class="expect">794 source events</span>
-        <span class="expect bad">draft returns 1,988</span>
-        <span class="expect bad">31 future consents</span>
-        <span class="expect bad">8 with no consent</span>
+      <div class="tally" role="group" aria-label="What Step 2 proves">
+        <div class="tl"><span>Source events</span><b data-count="794">794</b><small>Italy · conversion</small></div>
+        <span class="op" aria-hidden="true">vs</span>
+        <div class="tl bad"><span>Draft rows</span><b data-count="1988">1,988</b><small>a 2.5× fan-out</small></div>
+        <div class="tl bad"><span>Future consents</span><b data-count="31">31</b><small>"latest" is not point-in-time</small></div>
+        <div class="tl bad"><span>No consent</span><b data-count="8">8</b><small>NULL, gone from = true and = false</small></div>
       </div>
 
       <div class="box chat">
@@ -411,14 +508,45 @@ where e.market_code = 'IT' and e.lifecycle_stage = 'conversion'
         </ul>
       </div>
 
-      <!-- STEP 2b -->
-      <div class="step" id="step2b">
-        <span class="step-n">2b</span>
-        <div class="step-t"><span class="step-k">Plan · Implement</span><h3>Plan the fix on the premium model, implement it on the thrifty one</h3></div>
-        <span class="step-min">5 min</span>
+      <div class="stage" id="step2b" data-n="2b">
+        <div class="stage-copy">
+          <span class="stage-k"><b>2b</b>Plan · Implement</span>
+          <h3>Plan the fix on the premium model, implement it on the thrifty one</h3>
+          <p>Opus turns your three proven facts into a twenty-line plan you review. Sonnet types it. The warehouse confirms it.</p>
+          <div class="stage-meta"><span class="t">5 min</span><span class="m">Opus plans</span><span class="m">Sonnet builds</span></div>
+        </div>
+        <div class="stage-art">
+          <svg viewBox="0 0 340 210" aria-hidden="true">
+  <rect x="8" y="22" width="142" height="178" rx="12" fill="#F2F5FA"/>
+  <rect x="48" y="12" width="62" height="20" rx="6" fill="#93A7C6"/>
+  <text x="20" y="54" font-size="9" fill="#5A6B80" letter-spacing="1.4">OPUS · THE PLAN</text>
+  <g font-size="9.5" fill="#102B53">
+    <circle cx="25" cy="76" r="8" fill="#FF4A00"/><text x="25" y="79.5" text-anchor="middle" fill="#fff" font-size="9">1</text><text x="39" y="80">one consent / event</text>
+    <circle cx="25" cy="102" r="8" fill="#FF4A00"/><text x="25" y="105.5" text-anchor="middle" fill="#fff" font-size="9">2</text><text x="39" y="106">≤ event_date</text>
+    <circle cx="25" cy="128" r="8" fill="#FF4A00"/><text x="25" y="131.5" text-anchor="middle" fill="#fff" font-size="9">3</text><text x="39" y="132">coalesce → false</text>
+    <circle cx="25" cy="154" r="8" fill="#FF4A00"/><text x="25" y="157.5" text-anchor="middle" fill="#fff" font-size="9">4</text><text x="39" y="158">unique · not_null</text>
+  </g>
+  <text x="20" y="186" font-size="9" fill="#5A6B80">under 20 lines</text>
+  <path class="fx-dash" d="M156 110 H190" stroke="#FF7A3D" stroke-width="2" fill="none"/>
+  <path d="M188 104 l8 6 l-8 6" fill="none" stroke="#FF7A3D" stroke-width="2"/>
+  <rect x="200" y="30" width="134" height="120" rx="12" fill="#0F2547" stroke="#fff" stroke-opacity=".14"/>
+  <text x="212" y="50" font-size="9" fill="#93A7C6" letter-spacing="1.4">SONNET · BUILD</text>
+  <rect x="212" y="62" width="90" height="6" rx="3" fill="#A99BFF"/>
+  <rect x="212" y="76" width="30" height="6" rx="3" fill="#2EE6C5"/><rect x="246" y="76" width="70" height="6" rx="3" fill="#DCE6F5" opacity=".45"/>
+  <rect x="224" y="90" width="96" height="6" rx="3" fill="#2EE6C5" opacity=".75"/>
+  <rect x="224" y="104" width="78" height="6" rx="3" fill="#FFB38A"/>
+  <rect x="212" y="118" width="40" height="6" rx="3" fill="#2EE6C5"/><rect x="256" y="118" width="60" height="6" rx="3" fill="#DCE6F5" opacity=".45"/>
+  <g class="fx-float">
+    <rect x="200" y="162" width="134" height="38" rx="19" fill="#12B865" fill-opacity=".2" stroke="#3BE08A"/>
+    <text x="267" y="186" text-anchor="middle" font-size="15" font-weight="600" fill="#6FE3A3">794 = 794 ✓</text>
+  </g>
+</svg>
+        </div>
       </div>
-      <div class="expects">
-        <span class="expect ok">794 = 794</span>
+      <div class="tally" role="group" aria-label="What Step 2b fixes">
+        <div class="tl bad"><span>Draft</span><b class="x">1,988</b><small>rows, before the plan</small></div>
+        <span class="op" aria-hidden="true">→</span>
+        <div class="tl ok"><span>Fixed model</span><b data-count="794">794</b><small>= 794 source events</small></div>
       </div>
 
       <p>You now hold three proven facts. Turning them into a correction plan is judgment; turning the plan into SQL is typing. Split the work. Stay in the same chat: Claude needs its own draft in view.</p>
@@ -508,15 +636,35 @@ Respond in Markdown only. Do not create any file.</code></pre>
         <p class="good"><b>What a good answer looks like</b>The same shape as above: a filtered events part, a one-consent-per-event part using <code>distinct on</code>, and a final <code>select</code> with the <code>coalesce</code> and its comment. Paste it over the file (no trailing <code>;</code>), <code>dbt run</code>, re-run check 2): <span class="expect ok">794</span></p>
       </div>
 
-      <!-- STEP 3 -->
-      <div class="step" id="step3">
-        <span class="step-n">3</span>
-        <div class="step-t"><span class="step-k">Lock</span><h3>Lock it down with tests</h3></div>
-        <span class="step-min">5 min</span>
+      <div class="stage" id="step3" data-n="3">
+        <div class="stage-copy">
+          <span class="stage-k"><b>3</b>Lock</span>
+          <h3>Lock it down with tests</h3>
+          <p>Turn every contract you proved into a test, so the bug fails the build the day it comes back.</p>
+          <div class="stage-meta"><span class="t">5 min</span><span class="m">Sonnet</span><span class="">dbt test</span></div>
+        </div>
+        <div class="stage-art">
+          <svg viewBox="0 0 340 210" aria-hidden="true">
+  <circle cx="170" cy="110" r="86" fill="none" stroke="#3BE08A" stroke-opacity=".3" stroke-width="1.5" stroke-dasharray="3 5"/>
+  <circle cx="170" cy="110" r="64" fill="#3BE08A" fill-opacity=".08"/>
+  <path d="M146 100 v-16 a24 24 0 0 1 48 0 v16" fill="none" stroke="#DCE6F5" stroke-width="7" stroke-linecap="round"/>
+  <rect x="128" y="96" width="84" height="62" rx="12" fill="#FF4A00"/>
+  <rect x="128" y="96" width="84" height="62" rx="12" fill="none" stroke="#FFB38A" stroke-opacity=".6"/>
+  <text x="170" y="124" text-anchor="middle" font-size="10" fill="#061022" letter-spacing="1.2">PASS</text>
+  <text x="170" y="148" text-anchor="middle" font-size="22" font-weight="700" fill="#061022">7/7</text>
+  <g class="fx-pulse" style="animation-delay:0.0s"><circle cx="170.0" cy="24.0" r="11" fill="#12B865"/><path d="M165.5 24.0 l3 3 l6 -6" fill="none" stroke="#061022" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <g class="fx-pulse" style="animation-delay:0.3s"><circle cx="237.2" cy="56.4" r="11" fill="#12B865"/><path d="M232.7 56.4 l3 3 l6 -6" fill="none" stroke="#061022" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <g class="fx-pulse" style="animation-delay:0.6s"><circle cx="253.8" cy="129.1" r="11" fill="#12B865"/><path d="M249.3 129.1 l3 3 l6 -6" fill="none" stroke="#061022" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <g class="fx-pulse" style="animation-delay:0.9s"><circle cx="207.3" cy="187.5" r="11" fill="#12B865"/><path d="M202.8 187.5 l3 3 l6 -6" fill="none" stroke="#061022" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <g class="fx-pulse" style="animation-delay:1.2s"><circle cx="132.7" cy="187.5" r="11" fill="#12B865"/><path d="M128.2 187.5 l3 3 l6 -6" fill="none" stroke="#061022" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <g class="fx-pulse" style="animation-delay:1.5s"><circle cx="86.2" cy="129.1" r="11" fill="#12B865"/><path d="M81.7 129.1 l3 3 l6 -6" fill="none" stroke="#061022" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <g class="fx-pulse" style="animation-delay:1.8s"><circle cx="102.8" cy="56.4" r="11" fill="#12B865"/><path d="M98.3 56.4 l3 3 l6 -6" fill="none" stroke="#061022" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g>
+</svg>
+        </div>
       </div>
-      <div class="expects">
-        <span class="expect ok">7 tests PASS</span>
-        <span class="expect note">PASS=7 WARN=0 ERROR=0</span>
+      <div class="tally" role="group" aria-label="What Step 3 locks">
+        <div class="tl ok"><span>dbt test</span><b data-count="7">7</b><small>tests PASS</small></div>
+        <div class="tl"><span>Warnings · errors</span><b>0 · 0</b><small>PASS=7 WARN=0 ERROR=0</small></div>
       </div>
 
       <p>The corrections are in your head and in a chat window. Make them permanent. <b>Stay on Sonnet:</b> tests from a precise list are typing, not judgment.</p>
@@ -612,6 +760,29 @@ dbt test --select italy_conversion_events</code></pre>
 
       <p><b>Premium planning, thrifty execution.</b> Spend the expensive model on judgment (the plan) and the cheap one on typing (the draft, the implementation, the tests). Review the plan; it is shorter than the diff and it is where the mistakes are.</p>
 
+      <div class="earned">
+        <svg viewBox="0 0 160 160" aria-hidden="true">
+          <circle cx="80" cy="80" r="76" fill="none" style="stroke:var(--lab)" stroke-opacity=".45" stroke-width="1.5" stroke-dasharray="2 5"/>
+          <polygon points="80,18 133.7,49 133.7,111 80,142 26.3,111 26.3,49" style="fill:var(--lab-deep)"/>
+          <polygon points="80,30 123.3,55 123.3,105 80,130 36.7,105 36.7,55" fill="#081428"/>
+          <text x="80" y="58" text-anchor="middle" font-size="9" letter-spacing="2" style="fill:var(--lab)">LAB 01</text>
+          <path d="M66 84 v-8 a14 14 0 0 1 28 0 v8" fill="none" stroke="#DCE6F5" stroke-width="4"/>
+          <rect x="60" y="82" width="40" height="30" rx="6" style="fill:var(--lab)"/>
+          <path d="M71 97 l6 6 l12 -12" fill="none" stroke="#081428" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="22" y="120" width="116" height="22" rx="5" style="fill:var(--lab)"/>
+          <text x="80" y="135" text-anchor="middle" font-size="9.5" letter-spacing="1.6" fill="#081428" font-weight="600">TESTED MODEL</text>
+        </svg>
+        <div>
+          <span class="k">Artefact earned · Hour 1</span>
+          <h3>A tested dbt model you could defend on Monday</h3>
+          <ul>
+            <li><code>analytics.italy_conversion_events</code>: 794 rows, one per conversion event</li>
+            <li>consent resolved point-in-time; 8 unknowns coalesced to false, with the reason in a comment</li>
+            <li>7 tests that fail the build if anyone breaks the contract</li>
+          </ul>
+        </div>
+      </div>
+
       <div class="box try">
         <span class="k">On Monday</span>
         <p>Pick one transformation you would let an assistant draft. Write down the one contract rule it would most likely miss, the row-count check that proves it, and the single test that would fail the build.</p>
@@ -699,6 +870,11 @@ Respond in Markdown only. Do not create any file.</code></pre>
       <p>Every query and test you need is above; if you finish early, compare your model with your neighbour's: same 735, different SQL, same contract.</p>
     </section>
 
+    <nav class="lab-next" aria-label="Previous and next">
+      <a class="nx-0" href="index.html"><span><small>← Before class</small><b>Start here</b><em>The one rule, your kit, the pre-flight</em></span><img src="images/lab0-card.svg" alt="" loading="lazy"></a>
+      <a class="nx-2" href="hour2.html"><span><small>Next · Lab 02 →</small><b>Green ≠ right</b><em>Detect → Diagnose → Correct → Prevent</em></span><img src="images/lab2-hero.svg" alt="" loading="lazy"></a>
+    </nav>
+
     <footer class="foot">
       <nav aria-label="All guides">
         <a href="index.html">Start here</a>
@@ -714,5 +890,6 @@ Respond in Markdown only. Do not create any file.</code></pre>
 </div>
 
 <script src="assets/site.js" defer></script>
+<script src="assets/lab.js" defer></script>
 </body>
 </html>

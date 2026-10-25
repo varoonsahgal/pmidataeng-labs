@@ -3,20 +3,34 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Hour 3 · Shift left · Project HORIZON lab guides</title>
-<meta name="description" content="Lab guides for the PMI Data Engineer Future Skills class. Project HORIZON is fictional and training-only.">
+<title>Lab 3 · Shift left · Project HORIZON</title>
+<meta name="description" content="Lab 3 of the PMI Data Engineer Future Skills class: unpack a Marketing request with Claude, curate the clarifying questions, prove feasibility against the warehouse (105 Mondays; under-25 marketing ID 0% · IT 0% · JP 73%) and specify what Marketing never said. Project HORIZON is fictional and training-only.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Project HORIZON lab guides">
+<meta property="og:title" content="Lab 3 · Shift left">
+<meta property="og:description" content="Unpack → Clarify → Prove → Specify. A request is intent, not a specification: 105 Mondays, 0% · 0% · 73%.">
+<meta property="og:url" content="https://varoonsahgal.github.io/pmidataeng-labs/hour3.html">
+<meta property="og:image" content="https://varoonsahgal.github.io/pmidataeng-labs/images/og/hour3.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#0C2040">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap">
 <link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/lab.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230C2040'/%3E%3Crect x='6' y='6' width='9' height='9' rx='2' fill='%23FF4A00'/%3E%3Crect x='17' y='17' width='9' height='9' rx='2' fill='%2300C9A7'/%3E%3C/svg%3E">
 </head>
-<body>
+<body class="lab lab-3">
+<div class="lab-progress" aria-hidden="true"><i></i></div>
 
 
-<header class="mast">
+<header class="lab-hero">
+  <div class="stars" aria-hidden="true"></div>
+  <div class="horizon" aria-hidden="true"></div>
+  <div class="floor" aria-hidden="true"></div>
   <div class="mast-in">
     <nav class="sitenav" aria-label="Lab guides">
       <a class="brand" href="index.html">Project HORIZON</a>
@@ -27,27 +41,58 @@
       <a href="hour4.html">Hour 4</a>
       <a href="glossary.html">Glossary</a>
     </nav>
-    <div class="mast-grid">
-      <div class="mast-copy">
-        <div class="eyebrow">PMI · DI&amp;A Future Skills · Data Engineer track · Project HORIZON</div>
-        <h1>Hour 3 · <span>Shift left</span><small>Cross-Functional Co-Design &amp; Feasibility Alignment (WA3908)</small></h1>
+    <div class="lab-hero-grid">
+      <div class="lab-hero-copy">
+        <div class="lab-tag"><span class="lab-no">Lab 03</span><span>WA3908 · Cross-Functional Co-Design &amp; Feasibility</span></div>
+        <h1>Shift <span>left</span><span class="ghost">Hour 3 · 2:07 to 2:57 · follow along with the instructor</span></h1>
         <p class="lede">A request is intent, not a specification. Bring engineering reality to a Marketing request before a line of code is written: <strong>Unpack → Clarify → Prove → Specify.</strong> Align first, build once.</p>
-        <div class="meta"><span>Claude Desktop · <b>Sonnet</b></span><span>SQLTools · HORIZON</span><span>No dbt, no files</span><span>2:07 to 2:57</span></div>
+        <ol class="lab-loop" aria-label="The loop"><li>Unpack</li><li>Clarify</li><li>Prove</li><li>Specify</li></ol>
+        <div class="lab-cta"><a class="btn" href="#step1">Start the lab</a><a class="btn ghost" href="#setup">How this hour works</a></div>
+        <ul class="lab-kit" aria-label="What you use"><li>Claude Desktop · <b>Sonnet</b></li><li>SQLTools · <b>HORIZON</b></li><li><b>No dbt, no files</b></li></ul>
       </div>
-      <div class="mfd" role="img" aria-label="Hour 3 feasibility numbers: rst.sell_through 2,730 rows over 105 distinct Mondays, 0 non-Monday rows; under-25 marketing-allowed consent rows: Indonesia 0%, Italy 0%, Japan 73%; rfr.filings 112.">
-        <div class="hd"><b>Hour 3 · what the warehouse says</b><b>value</b></div>
-        <div class="row"><span class="lbl">rst.sell_through rows</span><span class="val">2,730</span></div>
-        <div class="row"><span class="lbl">distinct weeks (Mondays)</span><span class="val">105</span></div>
-        <div class="row"><span class="lbl">non-Monday rows</span><span class="val">0</span></div>
-        <div class="row"><span class="lbl">under-25 mktg allowed · ID</span><span class="val">0%</span></div>
-        <div class="row"><span class="lbl">under-25 mktg allowed · IT</span><span class="val">0%</span></div>
-        <div class="row"><span class="lbl">under-25 mktg allowed · JP</span><span class="val">73%</span></div>
-        <div class="row"><span class="lbl">rfr.filings</span><span class="val">112</span></div>
-        <div class="ft">"Real-time" meets a weekly feed. "All markets" meets the under-25 rule. <span class="blink">Check both in SQLTools.</span></div>
-      </div>
+      <figure class="lab-hero-art"><img src="images/lab3-hero.svg" width="720" height="560" alt="A Marketing request for real-time dashboards across all markets meets the warehouse: sell-through arrives on 105 Mondays, and under-25 marketing is allowed in 0% of Indonesian and Italian consent rows but 73% in Japan. Three verdicts: buildable as asked, with a change, not as asked. The cost of a fix rises from 1x at Request to about 100x at Operate, so the check moves left to Request."></figure>
     </div>
   </div>
 </header>
+
+<div class="brief-wrap">
+  <section class="brief" aria-label="Mission brief">
+    <div class="ticket">
+      <div class="ticket-h"><b>Incoming request</b><span>Project HORIZON · Marketing · all markets</span></div>
+      <blockquote>Can you build us real-time conversion dashboards in Power BI, across all our markets, so we can watch the smoke-free transition as it happens?</blockquote>
+      <cite>Marketing request · Project HORIZON</cite>
+      <div class="ticket-stats">
+        <div><b>50 min</b><span>on the clock, 37 of them in the lab</span></div>
+        <div><b>5 + 4</b><span>you leave with five questions and a four-line feasibility gate</span></div>
+        <div><b class="hot" data-count="105">105</b><span>the number that decides: Mondays, a weekly feed</span></div>
+      </div>
+    </div>
+    <div class="mfd" role="img" aria-label="Hour 3 feasibility numbers: rst.sell_through 2,730 rows over 105 distinct Mondays, 0 non-Monday rows; under-25 marketing-allowed consent rows: Indonesia 0%, Italy 0%, Japan 73%; rfr.filings 112.">
+      <div class="hd"><b>Hour 3 · what the warehouse says</b><b>value</b></div>
+      <div class="row"><span class="lbl">rst.sell_through rows</span><span class="val">2,730</span></div>
+      <div class="row"><span class="lbl">distinct weeks (Mondays)</span><span class="val">105</span></div>
+      <div class="row"><span class="lbl">non-Monday rows</span><span class="val">0</span></div>
+      <div class="row"><span class="lbl">under-25 mktg allowed · ID</span><span class="val">0%</span></div>
+      <div class="row"><span class="lbl">under-25 mktg allowed · IT</span><span class="val">0%</span></div>
+      <div class="row"><span class="lbl">under-25 mktg allowed · JP</span><span class="val">73%</span></div>
+      <div class="row"><span class="lbl">rfr.filings</span><span class="val">112</span></div>
+      <div class="ft">"Real-time" meets a weekly feed. "All markets" meets the under-25 rule. <span class="blink">Check both in SQLTools.</span></div>
+    </div>
+  </section>
+</div>
+
+<div class="route-wrap">
+  <nav class="route" aria-label="Lab route">
+    <a class="stn" href="#theme"><i>↘</i><b>Brief</b><span>the request</span></a>
+    <a class="stn" href="#icebreaker"><i>?</i><b>Icebreaker</b><span>4 min · chat</span></a>
+    <a class="stn" href="#setup"><i>0</i><b>Set-up</b><span>5 min</span></a>
+    <a class="stn" href="#step1"><i>1</i><b>Unpack</b><span>9 min · Sonnet</span></a>
+    <a class="stn" href="#step2"><i>2</i><b>Clarify</b><span>9 min · Sonnet</span></a>
+    <a class="stn" href="#step3"><i>3</i><b>Prove</b><span>11 min · SQLTools</span></a>
+    <a class="stn" href="#step4"><i>4</i><b>Specify</b><span>8 min · Sonnet</span></a>
+    <a class="stn goal" href="#takeaway"><i>★</i><b>Aligned</b><span>takeaway #3</span></a>
+  </nav>
+</div>
 
 <div class="frame">
   <details class="toc" id="toc" open>
@@ -80,11 +125,6 @@
         <p class="dek">Both bugs from Hours 1 and 2 were "reasonable scoping rules" that someone added without asking anyone. The cheapest place to catch a wrong assumption is before the code exists.</p>
       </div>
       <p class="rule-line"><span class="w">A request is intent, not a specification.</span> Align first, build once.</p>
-
-      <blockquote class="request">
-        <p>"Can you build us real-time conversion dashboards in Power BI, across all our markets, so we can watch the smoke-free transition as it happens?"</p>
-        <cite>Marketing request · Project HORIZON</cite>
-      </blockquote>
 
       <p>Follow along. You will not build anything this hour. You will bring engineering reality to a request before a line of code is written, and prove two things against the warehouse. Four steps: <strong>Unpack → Clarify → Prove → Specify.</strong></p>
 
@@ -163,10 +203,49 @@
         <p class="dek">Three prompts in one Sonnet chat, two queries in SQLTools, one feasibility gate.</p>
       </div>
 
-      <div class="step" id="step1">
-        <span class="step-n">1</span>
-        <div class="step-t"><span class="step-k">Unpack</span><h3>Unpack the request</h3></div>
-        <span class="step-min">9 min</span>
+      <div class="stage" id="step1" data-n="1">
+        <div class="stage-copy">
+          <span class="stage-k"><b>1</b>Unpack</span>
+          <h3>Unpack the request</h3>
+          <p>Four ordinary words, four buried assumptions. Separate the feature Marketing named from the objective they actually have.</p>
+          <div class="stage-meta"><span class="t">9 min</span><span class="m">Sonnet</span><span class="">fresh chat</span></div>
+        </div>
+        <div class="stage-art">
+          <svg viewBox="0 0 340 210" aria-hidden="true">
+  <rect x="8" y="10" width="324" height="48" rx="12" fill="#FFFFFF" fill-opacity=".07" stroke="#FFFFFF" stroke-opacity=".16"/>
+  <circle cx="24" cy="26" r="3.5" fill="#FF4A00"/><text x="33" y="29" font-size="8" fill="#93A7C6" letter-spacing="1.2">MARKETING</text>
+  <text x="20" y="48" font-size="10.5" fill="#FFFFFF">“real-time … conversion … all markets … Power BI”</text>
+  <path class="fx-dash" d="M46 58 V94" stroke="#FF7A3D" stroke-width="1.6" fill="none"/>
+  <rect x="8" y="94" width="76" height="24" rx="12" fill="#FF4A00" fill-opacity=".16" stroke="#FF7A3D"/>
+  <text x="46" y="110" text-anchor="middle" font-size="9.5" fill="#FFB38A">real-time</text>
+  <path d="M46 118 V136" stroke="#2EE6C5" stroke-opacity=".6" stroke-width="1.4"/>
+  <rect x="8" y="136" width="76" height="58" rx="9" fill="#061022" stroke="#2EE6C5" stroke-opacity=".45"/>
+  <text x="46" y="156" text-anchor="middle" font-size="7.5" fill="#6F86A8" letter-spacing="1.2">ASSUMES</text>
+  <text x="46" y="176" text-anchor="middle" font-size="9.5" fill="#7EF0DA">batch-fed?</text>
+  <path class="fx-dash" d="M130 58 V94" stroke="#FF7A3D" stroke-width="1.6" fill="none"/>
+  <rect x="92" y="94" width="76" height="24" rx="12" fill="#FF4A00" fill-opacity=".16" stroke="#FF7A3D"/>
+  <text x="130" y="110" text-anchor="middle" font-size="9.5" fill="#FFB38A">conversion</text>
+  <path d="M130 118 V136" stroke="#2EE6C5" stroke-opacity=".6" stroke-width="1.4"/>
+  <rect x="92" y="136" width="76" height="58" rx="9" fill="#061022" stroke="#2EE6C5" stroke-opacity=".45"/>
+  <text x="130" y="156" text-anchor="middle" font-size="7.5" fill="#6F86A8" letter-spacing="1.2">ASSUMES</text>
+  <text x="130" y="176" text-anchor="middle" font-size="9.5" fill="#7EF0DA">which stage?</text>
+  <path class="fx-dash" d="M214 58 V94" stroke="#FF7A3D" stroke-width="1.6" fill="none"/>
+  <rect x="176" y="94" width="76" height="24" rx="12" fill="#FF4A00" fill-opacity=".16" stroke="#FF7A3D"/>
+  <text x="214" y="110" text-anchor="middle" font-size="9.5" fill="#FFB38A">all markets</text>
+  <path d="M214 118 V136" stroke="#2EE6C5" stroke-opacity=".6" stroke-width="1.4"/>
+  <rect x="176" y="136" width="76" height="58" rx="9" fill="#061022" stroke="#2EE6C5" stroke-opacity=".45"/>
+  <text x="214" y="156" text-anchor="middle" font-size="7.5" fill="#6F86A8" letter-spacing="1.2">ASSUMES</text>
+  <text x="214" y="176" text-anchor="middle" font-size="9.5" fill="#7EF0DA">legal?</text>
+  <path class="fx-dash" d="M298 58 V94" stroke="#FF7A3D" stroke-width="1.6" fill="none"/>
+  <rect x="260" y="94" width="76" height="24" rx="12" fill="#FF4A00" fill-opacity=".16" stroke="#FF7A3D"/>
+  <text x="298" y="110" text-anchor="middle" font-size="9.5" fill="#FFB38A">Power BI</text>
+  <path d="M298 118 V136" stroke="#2EE6C5" stroke-opacity=".6" stroke-width="1.4"/>
+  <rect x="260" y="136" width="76" height="58" rx="9" fill="#061022" stroke="#2EE6C5" stroke-opacity=".45"/>
+  <text x="298" y="156" text-anchor="middle" font-size="7.5" fill="#6F86A8" letter-spacing="1.2">ASSUMES</text>
+  <text x="298" y="176" text-anchor="middle" font-size="9.5" fill="#7EF0DA">Desktop only</text>
+  <g class="fx-float"><circle cx="322" cy="14" r="11" fill="#2EE6C5"/><text x="322" y="18.5" text-anchor="middle" font-size="13" font-weight="700" fill="#061022">?</text></g>
+</svg>
+        </div>
       </div>
       <p>Four ordinary words, four buried assumptions. Write them on your own sheet with room under each:</p>
       <div class="tbl cards">
@@ -198,10 +277,57 @@ Respond in Markdown only. Do not create any file.</code></pre>
       </div>
       <p>Pick <strong>one</strong> objective with the class. Reject "watch it as it happens" out loud: that is a feeling, not an objective. If Claude's stakeholder list omits governance or regulatory, add it yourself; that omission is itself the lesson.</p>
 
-      <div class="step" id="step2">
-        <span class="step-n">2</span>
-        <div class="step-t"><span class="step-k">Clarify</span><h3>Clarify, then curate</h3></div>
-        <span class="step-min">9 min</span>
+      <div class="stage" id="step2" data-n="2">
+        <div class="stage-copy">
+          <span class="stage-k"><b>2</b>Clarify</span>
+          <h3>Clarify, then curate</h3>
+          <p>Claude is good at generating clarifying questions. Your job is to choose: keep the five whose answers change what you build.</p>
+          <div class="stage-meta"><span class="t">9 min</span><span class="m">Sonnet</span><span class="">same chat</span></div>
+        </div>
+        <div class="stage-art">
+          <svg viewBox="0 0 340 210" aria-hidden="true">
+  <text x="12" y="26" font-size="8.5" fill="#93A7C6" letter-spacing="1.2">CLAUDE · 15–20 QUESTIONS</text>
+  <rect x="12" y="40" width="34" height="12" rx="4" fill="#2EE6C5" fill-opacity=".95"/>
+  <rect x="52" y="40" width="34" height="12" rx="4" fill="#93A7C6" fill-opacity=".18"/>
+  <path d="M50 46 H88" stroke="#FF8A7A" stroke-width="1.4"/>
+  <rect x="92" y="40" width="34" height="12" rx="4" fill="#93A7C6" fill-opacity=".38"/>
+  <rect x="12" y="62" width="34" height="12" rx="4" fill="#93A7C6" fill-opacity=".38"/>
+  <rect x="52" y="62" width="34" height="12" rx="4" fill="#2EE6C5" fill-opacity=".95"/>
+  <rect x="92" y="62" width="34" height="12" rx="4" fill="#93A7C6" fill-opacity=".18"/>
+  <path d="M90 68 H128" stroke="#FF8A7A" stroke-width="1.4"/>
+  <rect x="12" y="84" width="34" height="12" rx="4" fill="#93A7C6" fill-opacity=".38"/>
+  <rect x="52" y="84" width="34" height="12" rx="4" fill="#93A7C6" fill-opacity=".18"/>
+  <path d="M50 90 H88" stroke="#FF8A7A" stroke-width="1.4"/>
+  <rect x="92" y="84" width="34" height="12" rx="4" fill="#2EE6C5" fill-opacity=".95"/>
+  <rect x="12" y="106" width="34" height="12" rx="4" fill="#93A7C6" fill-opacity=".38"/>
+  <rect x="52" y="106" width="34" height="12" rx="4" fill="#93A7C6" fill-opacity=".18"/>
+  <path d="M50 112 H88" stroke="#FF8A7A" stroke-width="1.4"/>
+  <rect x="92" y="106" width="34" height="12" rx="4" fill="#2EE6C5" fill-opacity=".95"/>
+  <rect x="12" y="128" width="34" height="12" rx="4" fill="#93A7C6" fill-opacity=".18"/>
+  <path d="M10 134 H48" stroke="#FF8A7A" stroke-width="1.4"/>
+  <rect x="52" y="128" width="34" height="12" rx="4" fill="#93A7C6" fill-opacity=".38"/>
+  <rect x="92" y="128" width="34" height="12" rx="4" fill="#93A7C6" fill-opacity=".18"/>
+  <path d="M90 134 H128" stroke="#FF8A7A" stroke-width="1.4"/>
+  <rect x="12" y="150" width="34" height="12" rx="4" fill="#2EE6C5" fill-opacity=".95"/>
+  <rect x="52" y="150" width="34" height="12" rx="4" fill="#93A7C6" fill-opacity=".18"/>
+  <path d="M50 156 H88" stroke="#FF8A7A" stroke-width="1.4"/>
+  <rect x="92" y="150" width="34" height="12" rx="4" fill="#93A7C6" fill-opacity=".38"/>
+  <path d="M136 44 L196 92 L196 120 L136 168 Z" fill="#2EE6C5" fill-opacity=".1" stroke="#2EE6C5" stroke-opacity=".5"/>
+  <path class="fx-dash" d="M140 106 H198" stroke="#2EE6C5" stroke-width="2" fill="none"/>
+  <text x="166" y="190" text-anchor="middle" font-size="8.5" fill="#7EF0DA" letter-spacing="1">CURATE</text>
+  <text x="206" y="26" font-size="8.5" fill="#7EF0DA" letter-spacing="1.2">YOU KEEP 5</text>
+  <g class="fx-pulse" style="animation-delay:0.00s"><circle cx="214" cy="51" r="8" fill="#00C9A7"/><path d="M210 51 l3 3 l5 -6" fill="none" stroke="#061022" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <rect x="226" y="40" width="108" height="22" rx="6" fill="#061022" stroke="#2EE6C5" stroke-opacity=".5"/><text x="233" y="55" font-size="8.6" fill="#DCE6F5">define conversion</text>
+  <g class="fx-pulse" style="animation-delay:0.35s"><circle cx="214" cy="81" r="8" fill="#00C9A7"/><path d="M210 81 l3 3 l5 -6" fill="none" stroke="#061022" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <rect x="226" y="70" width="108" height="22" rx="6" fill="#061022" stroke="#2EE6C5" stroke-opacity=".5"/><text x="233" y="85" font-size="8.6" fill="#DCE6F5">how fresh, really?</text>
+  <g class="fx-pulse" style="animation-delay:0.70s"><circle cx="214" cy="111" r="8" fill="#00C9A7"/><path d="M210 111 l3 3 l5 -6" fill="none" stroke="#061022" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <rect x="226" y="100" width="108" height="22" rx="6" fill="#061022" stroke="#2EE6C5" stroke-opacity=".5"/><text x="233" y="115" font-size="8.6" fill="#DCE6F5">under-25 in scope?</text>
+  <g class="fx-pulse" style="animation-delay:1.05s"><circle cx="214" cy="141" r="8" fill="#00C9A7"/><path d="M210 141 l3 3 l5 -6" fill="none" stroke="#061022" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <rect x="226" y="130" width="108" height="22" rx="6" fill="#061022" stroke="#2EE6C5" stroke-opacity=".5"/><text x="233" y="145" font-size="8.6" fill="#DCE6F5">who may see it?</text>
+  <g class="fx-pulse" style="animation-delay:1.40s"><circle cx="214" cy="171" r="8" fill="#00C9A7"/><path d="M210 171 l3 3 l5 -6" fill="none" stroke="#061022" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <rect x="226" y="160" width="108" height="22" rx="6" fill="#061022" stroke="#2EE6C5" stroke-opacity=".5"/><text x="233" y="175" font-size="8.6" fill="#DCE6F5">what decision?</text>
+</svg>
+        </div>
       </div>
       <p>Stay in the same chat. A <strong>clarifying question</strong> is a question whose answer changes what you build. Claude is good at generating them. <strong>Your job is to choose.</strong> To <strong>curate</strong> is to keep the few that matter and cut the rest; twenty questions is a way of not deciding.</p>
 
@@ -231,12 +357,80 @@ Respond in Markdown only. Do not create any file.</code></pre>
       </div>
       <div class="box chat"><span class="k">Post in the chat</span><p>One question from Claude's list you would <strong>cut</strong>, and why.</p></div>
 
-      <div class="step" id="step3">
-        <span class="step-n">3</span>
-        <div class="step-t"><span class="step-k">Prove</span><h3>Prove feasibility against the warehouse</h3></div>
-        <span class="step-min">11 min</span>
+      <div class="stage" id="step3" data-n="3">
+        <div class="stage-copy">
+          <span class="stage-k"><b>3</b>Prove</span>
+          <h3>Prove feasibility against the warehouse</h3>
+          <p>Demonstrate, don't assert. Two queries settle two arguments: is "real-time" possible, and is a cross-market view legal?</p>
+          <div class="stage-meta"><span class="t">11 min</span><span class="">SQLTools · 2 queries</span><span class="">feasibility gate</span></div>
+        </div>
+        <div class="stage-art">
+          <svg viewBox="0 0 340 210" aria-hidden="true">
+  <rect x="4" y="10" width="166" height="190" rx="12" fill="#0F2547" stroke="#fff" stroke-opacity=".12"/>
+  <text x="14" y="30" font-size="8.5" fill="#93A7C6" letter-spacing=".8">rst.sell_through · sale_date</text>
+  <text x="22.5" y="54" text-anchor="middle" font-size="8" fill="#7EF0DA">M</text><text x="43.5" y="54" text-anchor="middle" font-size="8" fill="#6F86A8">T</text><text x="64.5" y="54" text-anchor="middle" font-size="8" fill="#6F86A8">W</text><text x="85.5" y="54" text-anchor="middle" font-size="8" fill="#6F86A8">T</text><text x="106.5" y="54" text-anchor="middle" font-size="8" fill="#6F86A8">F</text><text x="127.5" y="54" text-anchor="middle" font-size="8" fill="#6F86A8">S</text><text x="148.5" y="54" text-anchor="middle" font-size="8" fill="#6F86A8">S</text>
+  <rect x="14" y="62" width="17" height="14" rx="3" fill="#00C9A7"/>
+  <rect x="35" y="62" width="17" height="14" rx="3" fill="none" stroke="#93A7C6" stroke-opacity=".25"/>
+  <rect x="56" y="62" width="17" height="14" rx="3" fill="none" stroke="#93A7C6" stroke-opacity=".25"/>
+  <rect x="77" y="62" width="17" height="14" rx="3" fill="none" stroke="#93A7C6" stroke-opacity=".25"/>
+  <rect x="98" y="62" width="17" height="14" rx="3" fill="none" stroke="#93A7C6" stroke-opacity=".25"/>
+  <rect x="119" y="62" width="17" height="14" rx="3" fill="none" stroke="#93A7C6" stroke-opacity=".25"/>
+  <rect x="140" y="62" width="17" height="14" rx="3" fill="none" stroke="#93A7C6" stroke-opacity=".25"/>
+  <rect x="14" y="81" width="17" height="14" rx="3" fill="#00C9A7"/>
+  <rect x="35" y="81" width="17" height="14" rx="3" fill="none" stroke="#93A7C6" stroke-opacity=".25"/>
+  <rect x="56" y="81" width="17" height="14" rx="3" fill="none" stroke="#93A7C6" stroke-opacity=".25"/>
+  <rect x="77" y="81" width="17" height="14" rx="3" fill="none" stroke="#93A7C6" stroke-opacity=".25"/>
+  <rect x="98" y="81" width="17" height="14" rx="3" fill="none" stroke="#93A7C6" stroke-opacity=".25"/>
+  <rect x="119" y="81" width="17" height="14" rx="3" fill="none" stroke="#93A7C6" stroke-opacity=".25"/>
+  <rect x="140" y="81" width="17" height="14" rx="3" fill="none" stroke="#93A7C6" stroke-opacity=".25"/>
+  <rect x="14" y="100" width="17" height="14" rx="3" fill="#00C9A7"/>
+  <rect x="35" y="100" width="17" height="14" rx="3" fill="none" stroke="#93A7C6" stroke-opacity=".25"/>
+  <rect x="56" y="100" width="17" height="14" rx="3" fill="none" stroke="#93A7C6" stroke-opacity=".25"/>
+  <rect x="77" y="100" width="17" height="14" rx="3" fill="none" stroke="#93A7C6" stroke-opacity=".25"/>
+  <rect x="98" y="100" width="17" height="14" rx="3" fill="none" stroke="#93A7C6" stroke-opacity=".25"/>
+  <rect x="119" y="100" width="17" height="14" rx="3" fill="none" stroke="#93A7C6" stroke-opacity=".25"/>
+  <rect x="140" y="100" width="17" height="14" rx="3" fill="none" stroke="#93A7C6" stroke-opacity=".25"/>
+  <rect x="14" y="119" width="17" height="14" rx="3" fill="#00C9A7"/>
+  <rect x="35" y="119" width="17" height="14" rx="3" fill="none" stroke="#93A7C6" stroke-opacity=".25"/>
+  <rect x="56" y="119" width="17" height="14" rx="3" fill="none" stroke="#93A7C6" stroke-opacity=".25"/>
+  <rect x="77" y="119" width="17" height="14" rx="3" fill="none" stroke="#93A7C6" stroke-opacity=".25"/>
+  <rect x="98" y="119" width="17" height="14" rx="3" fill="none" stroke="#93A7C6" stroke-opacity=".25"/>
+  <rect x="119" y="119" width="17" height="14" rx="3" fill="none" stroke="#93A7C6" stroke-opacity=".25"/>
+  <rect x="140" y="119" width="17" height="14" rx="3" fill="none" stroke="#93A7C6" stroke-opacity=".25"/>
+  <rect x="14" y="138" width="17" height="14" rx="3" fill="#00C9A7"/>
+  <rect x="35" y="138" width="17" height="14" rx="3" fill="none" stroke="#93A7C6" stroke-opacity=".25"/>
+  <rect x="56" y="138" width="17" height="14" rx="3" fill="none" stroke="#93A7C6" stroke-opacity=".25"/>
+  <rect x="77" y="138" width="17" height="14" rx="3" fill="none" stroke="#93A7C6" stroke-opacity=".25"/>
+  <rect x="98" y="138" width="17" height="14" rx="3" fill="none" stroke="#93A7C6" stroke-opacity=".25"/>
+  <rect x="119" y="138" width="17" height="14" rx="3" fill="none" stroke="#93A7C6" stroke-opacity=".25"/>
+  <rect x="140" y="138" width="17" height="14" rx="3" fill="none" stroke="#93A7C6" stroke-opacity=".25"/>
+  <text x="14" y="176" font-size="20" font-weight="700" fill="#FFFFFF">105</text>
+  <text x="58" y="170" font-size="8.5" fill="#7EF0DA">Mondays</text>
+  <text x="58" y="182" font-size="8.5" fill="#93A7C6">0 other days</text>
+  <rect x="180" y="10" width="156" height="190" rx="12" fill="#0F2547" stroke="#fff" stroke-opacity=".12"/>
+  <text x="190" y="30" font-size="8.5" fill="#93A7C6" letter-spacing=".8">under-25 mktg allowed</text>
+  <path d="M190 170 H326" stroke="#93A7C6" stroke-opacity=".4"/>
+  <path d="M190 60 H326" stroke="#93A7C6" stroke-opacity=".15" stroke-dasharray="3 3"/>
+  <rect x="198" y="167" width="34" height="3" rx="1.5" fill="#FF8A7A"/>
+  <rect x="242" y="167" width="34" height="3" rx="1.5" fill="#FF8A7A"/>
+  <rect class="fx-float" x="286" y="90" width="34" height="80" rx="4" fill="#00C9A7"/>
+  <text x="215" y="158" text-anchor="middle" font-size="12" font-weight="700" fill="#FF8A7A">0%</text>
+  <text x="259" y="158" text-anchor="middle" font-size="12" font-weight="700" fill="#FF8A7A">0%</text>
+  <text x="303" y="82" text-anchor="middle" font-size="12" font-weight="700" fill="#7EF0DA">73%</text>
+  <text x="215" y="188" text-anchor="middle" font-size="9" fill="#93A7C6">ID</text>
+  <text x="259" y="188" text-anchor="middle" font-size="9" fill="#93A7C6">IT</text>
+  <text x="303" y="188" text-anchor="middle" font-size="9" fill="#93A7C6">JP</text>
+</svg>
+        </div>
       </div>
-      <div class="expects"><span class="expect">expect 105 weeks · 0 non-Mondays</span><span class="expect">expect ID 0% · IT 0% · JP 73%</span></div>
+      <div class="tally" role="group" aria-label="What Step 3 proves">
+        <div class="tl hot"><span>Distinct weeks</span><b data-count="105">105</b><small>every sale_date a Monday</small></div>
+        <div class="tl"><span>Non-Mondays</span><b>0</b><small>a weekly batch feed</small></div>
+        <span class="op" aria-hidden="true">·</span>
+        <div class="tl bad"><span>Under-25 · ID</span><b>0%</b><small>marketing allowed</small></div>
+        <div class="tl bad"><span>Under-25 · IT</span><b>0%</b><small>marketing allowed</small></div>
+        <div class="tl"><span>Under-25 · JP</span><b data-count="73">73%</b><small>675 of 924 consent rows</small></div>
+      </div>
       <p>Demonstrate, don't assert. Two queries settle two arguments.</p>
       <div class="box try"><span class="k">Running a query in SQLTools</span><p>In the VS Code sidebar open SQLTools (the database icon); if <strong>HORIZON</strong> shows as disconnected, right-click it → <strong>Connect</strong>; then right-click <strong>HORIZON</strong> → <strong>New SQL File</strong>, paste the query, then click <strong>Run on active connection</strong> just above it (or select the text and press <kbd>Ctrl</kbd>+<kbd>E</kbd> twice). The result opens in a new tab. Copy the numbers into your notes next to the verdict they support.</p></div>
 
@@ -285,10 +479,44 @@ group by 1 order by 1;
       <div class="box note"><span class="k">Role cards</span><p>The instructor may have given three volunteers a role card (Marketing, Legal or the Vendor). If you hold one, this is where you speak: Marketing pushes back on the verdicts, Legal asks the under-25 question, the Vendor offers a streaming platform. Everyone else: judge who has a number.</p></div>
       <div class="box chat"><span class="k">Post in the chat</span><p>Which verdict would Marketing push back on hardest, and what number do you show them?</p></div>
 
-      <div class="step" id="step4">
-        <span class="step-n">4</span>
-        <div class="step-t"><span class="step-k">Specify</span><h3>The requirements Marketing never said</h3></div>
-        <span class="step-min">8 min</span>
+      <div class="stage" id="step4" data-n="4">
+        <div class="stage-copy">
+          <span class="stage-k"><b>4</b>Specify</span>
+          <h3>The requirements Marketing never said</h3>
+          <p>Turn Marketing's answers into testable requirements, plus the non-functional ones they will assume and never state.</p>
+          <div class="stage-meta"><span class="t">8 min</span><span class="m">Sonnet</span><span class="">same chat</span></div>
+        </div>
+        <div class="stage-art">
+          <svg viewBox="0 0 340 210" aria-hidden="true">
+  <rect x="6" y="20" width="136" height="180" rx="12" fill="#F2F5FA"/>
+  <rect x="44" y="10" width="60" height="20" rx="6" fill="#93A7C6"/>
+  <text x="18" y="52" font-size="8.5" fill="#5A6B80" letter-spacing="1.2">FUNCTIONAL</text>
+  <g font-size="9.5" fill="#102B53">
+    <circle cx="25" cy="76" r="7" fill="#00C9A7"/><path d="M21.5 76 l2.5 2.5 l4.5 -5" fill="none" stroke="#061022" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><text x="38" y="79.5">weekly count</text>
+    <circle cx="25" cy="102" r="7" fill="#00C9A7"/><path d="M21.5 102 l2.5 2.5 l4.5 -5" fill="none" stroke="#061022" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><text x="38" y="105.5">per market</text>
+    <circle cx="25" cy="128" r="7" fill="#00C9A7"/><path d="M21.5 128 l2.5 2.5 l4.5 -5" fill="none" stroke="#061022" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><text x="38" y="131.5">Monday-dated</text>
+    <circle cx="25" cy="154" r="7" fill="#00C9A7"/><path d="M21.5 154 l2.5 2.5 l4.5 -5" fill="none" stroke="#061022" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><text x="38" y="157.5">JP · IT · ID</text>
+  </g>
+  <text x="18" y="184" font-size="8.5" fill="#5A6B80">testable with a query</text>
+  <rect x="154" y="10" width="182" height="190" rx="12" fill="#0F2547" stroke="#fff" stroke-opacity=".14"/>
+  <text x="166" y="30" font-size="8.5" fill="#93A7C6" letter-spacing="1.2">NFRs NOBODY SAID</text>
+  <g font-size="9">
+    <path d="M162 40 H328" stroke="#fff" stroke-opacity=".08"/>
+    <text x="166" y="58" fill="#7EF0DA">refresh</text><text x="324" y="58" text-anchor="end" fill="#DCE6F5">each morning</text>
+    <path d="M162 68 H328" stroke="#fff" stroke-opacity=".08"/>
+    <text x="166" y="86" fill="#7EF0DA">access</text><text x="324" y="86" text-anchor="end" fill="#DCE6F5">analytics team</text>
+    <path d="M162 96 H328" stroke="#fff" stroke-opacity=".08"/>
+    <text x="166" y="114" fill="#7EF0DA">residency</text><text x="324" y="114" text-anchor="end" fill="#DCE6F5">per market</text>
+    <path d="M162 124 H328" stroke="#fff" stroke-opacity=".08"/>
+    <text x="166" y="142" fill="#7EF0DA">regulatory</text><text x="324" y="142" text-anchor="end" fill="#DCE6F5">no under-25</text>
+  </g>
+  <g class="fx-pulse">
+    <rect x="160" y="156" width="170" height="30" rx="8" fill="#FF4A00" fill-opacity=".2" stroke="#FF7A3D"/>
+  </g>
+  <text x="170" y="175" font-size="10" font-weight="500" fill="#FFB38A">+ as-of date</text>
+  <text x="322" y="175" text-anchor="end" font-size="8.5" fill="#FFB38A">the usual miss</text>
+</svg>
+        </div>
       </div>
       <p>Imagine Marketing has answered your five questions. Now turn the answers into two lists. <strong>Functional requirements</strong> say what the dashboard shows, in words you could test with a query. <strong>Non-functional requirements (NFRs)</strong> say how it must behave: how often it refreshes, what it costs, who may see it, where the data lives, which regulation applies. Marketing will state none of these and assume all of them.</p>
 
@@ -332,6 +560,28 @@ Respond in Markdown only. Do not create any file.</code></pre>
       </div>
       <p><strong>A request is intent, not a specification.</strong> Every ambiguous word is a fork in the design; left unresolved you silently pick a branch. Use AI to surface the forks fast, curate to the questions whose answers change the build, confirm feasibility against the warehouse, and bring back a design both sides agree on. <em>Align first, build once. Shift left.</em></p>
       <p><strong>Numbers to remember:</strong> 105 Mondays · 0% · 0% · 73% (and, if you ran the regulatory variant below, filing acceptance 14 / 65 / 69).</p>
+      <div class="earned">
+        <svg viewBox="0 0 160 160" aria-hidden="true">
+          <circle cx="80" cy="80" r="76" fill="none" style="stroke:var(--lab)" stroke-opacity=".45" stroke-width="1.5" stroke-dasharray="2 5"/>
+          <polygon points="80,18 133.7,49 133.7,111 80,142 26.3,111 26.3,49" style="fill:var(--lab-deep)"/>
+          <polygon points="80,30 123.3,55 123.3,105 80,130 36.7,105 36.7,55" fill="#081428"/>
+          <text x="80" y="58" text-anchor="middle" font-size="9" letter-spacing="2" style="fill:var(--lab)">LAB 03</text>
+          <path d="M96 80 H62 M74 68 L62 80 L74 92" fill="none" style="stroke:var(--lab)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="66" cy="104" r="4.5" fill="#3BE08A"/><circle cx="80" cy="104" r="4.5" fill="#F1B85B"/><circle cx="94" cy="104" r="4.5" fill="#FF8A7A"/>
+          <rect x="22" y="120" width="116" height="22" rx="5" style="fill:var(--lab)"/>
+          <text x="80" y="135" text-anchor="middle" font-size="8.6" letter-spacing="1.2" fill="#081428" font-weight="600">FEASIBILITY GATE</text>
+        </svg>
+        <div>
+          <span class="k">Artefact earned · Hour 3</span>
+          <h3>A design both sides agree on, before any code exists</h3>
+          <ul>
+            <li>five clarifying questions, each one changing what you build</li>
+            <li>a four-line feasibility gate: one verdict and one warehouse number per requirement</li>
+            <li>the requirements Marketing never said, with the as-of date on every number</li>
+          </ul>
+        </div>
+      </div>
+
       <div class="box try"><span class="k">On Monday</span><p>Take one ambiguous request you are sitting on (a DCA classification scope, an MCTS brief or a REEV integration ask, three of your internal systems, or a compliance query). Write three clarifying questions whose answers would change the design, one non-functional requirement it assumed but never stated, and a one-line feasibility verdict, before writing any code.</p></div>
     </section>
 
@@ -355,6 +605,11 @@ from rfr.filings f join ref.markets m using (market_code) group by 1, 2 order by
       <p>Verdict on a single "posture" number: <span class="v v-change">buildable with a change</span> one number per market, each with its regulator and its as-of date. A blended number is not as asked, because it hides the market that is far behind.</p>
     </section>
 
+    <nav class="lab-next" aria-label="Previous and next">
+      <a class="nx-2" href="hour2.html"><span><small>← Previous · Lab 02</small><b>Green ≠ right</b><em>Detect → Diagnose → Correct → Prevent</em></span><img src="images/lab2-hero.svg" alt="" loading="lazy"></a>
+      <a class="nx-4" href="hour4.html"><span><small>Next · Lab 04 →</small><b>You are the gate</b><em>Build → Probe → Look inside → Evaluate</em></span><img src="images/lab4-hero.svg" alt="" loading="lazy"></a>
+    </nav>
+
     <footer class="foot">
       <nav aria-label="All guides">
         <a href="index.html">Start here</a>
@@ -370,5 +625,6 @@ from rfr.filings f join ref.markets m using (market_code) group by 1, 2 order by
 </div>
 
 <script src="assets/site.js" defer></script>
+<script src="assets/lab.js" defer></script>
 </body>
 </html>

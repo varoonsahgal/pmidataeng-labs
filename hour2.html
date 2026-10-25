@@ -3,20 +3,34 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Hour 2 · Green ≠ right · Project HORIZON lab guides</title>
-<meta name="description" content="Lab guides for the PMI Data Engineer Future Skills class. Project HORIZON is fictional and training-only.">
+<title>Lab 2 · Green ≠ right · Project HORIZON</title>
+<meta name="description" content="Lab 2 of the PMI Data Engineer Future Skills class: reconcile a green pipeline to its source, prove why 105 Japan rows vanished, fix the rule and leave a dbt guard you watch fail once. Project HORIZON is fictional and training-only.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Project HORIZON lab guides">
+<meta property="og:title" content="Lab 2 · Green ≠ right">
+<meta property="og:description" content="Detect → Diagnose → Correct → Prevent. The job is green every night; 105 rows are still missing. 945 becomes 1,050.">
+<meta property="og:url" content="https://varoonsahgal.github.io/pmidataeng-labs/hour2.html">
+<meta property="og:image" content="https://varoonsahgal.github.io/pmidataeng-labs/images/og/hour2.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#0C2040">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap">
 <link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/lab.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230C2040'/%3E%3Crect x='6' y='6' width='9' height='9' rx='2' fill='%23FF4A00'/%3E%3Crect x='17' y='17' width='9' height='9' rx='2' fill='%2300C9A7'/%3E%3C/svg%3E">
 </head>
-<body>
+<body class="lab lab-2">
+<div class="lab-progress" aria-hidden="true"><i></i></div>
 
 
-<header class="mast">
+<header class="lab-hero">
+  <div class="stars" aria-hidden="true"></div>
+  <div class="horizon" aria-hidden="true"></div>
+  <div class="floor" aria-hidden="true"></div>
   <div class="mast-in">
     <nav class="sitenav" aria-label="Lab guides">
       <a class="brand" href="index.html">Project HORIZON</a>
@@ -27,26 +41,57 @@
       <a href="hour4.html">Hour 4</a>
       <a href="glossary.html">Glossary</a>
     </nav>
-    <div class="mast-grid">
-      <div class="mast-copy">
-        <div class="eyebrow">PMI · DI&amp;A Future Skills · Data Engineer track · Project HORIZON</div>
-        <h1>Hour 2 · <span>Green ≠ right</span><small>Accountability in Automation</small></h1>
+    <div class="lab-hero-grid">
+      <div class="lab-hero-copy">
+        <div class="lab-tag"><span class="lab-no">Lab 02</span><span>WA3904 · Accountability in Automation</span></div>
+        <h1>Green <span>≠</span> right<span class="ghost">Hour 2 · 1:08 to 1:55 · follow along with the instructor</span></h1>
         <p class="lede">The nightly job has been green for weeks. No error, no alert, a plausible row count. One distributor's sales are still missing. <strong>Automation does the work. You own the outcome.</strong></p>
-        <div class="meta"><span>1:08 to 1:55</span><span>VS Code + SQLTools</span><span>dbt CLI</span><span>Claude Desktop on <b>Sonnet</b></span></div>
+        <ol class="lab-loop" aria-label="The loop"><li>Detect</li><li>Diagnose</li><li>Correct</li><li>Prevent</li></ol>
+        <div class="lab-cta"><a class="btn" href="#step1">Start the lab</a><a class="btn ghost" href="#before">Pre-flight check</a></div>
+        <ul class="lab-kit" aria-label="What you use"><li>VS Code + <b>SQLTools</b></li><li><b>dbt</b> CLI</li><li>Claude Desktop · <b>Sonnet</b></li></ul>
       </div>
-      <div class="mfd" role="img" aria-label="Hour 2 numbers: Japan staged rows 945 before the fix, 1,050 after; JP Ecommerce Distributor 3 has 105 source rows and 0 staged; IT Partner Distributor 2 has 210 source rows and 0 staged; campaign_id &lt;&gt; 1 returns 0, IS DISTINCT FROM 1 returns 15,523.">
-        <div class="hd"><b>Hour 2 · reconcile to the source</b><b>rows</b></div>
-        <div class="row"><span class="lbl">rst.sell_through, JP</span><span class="val">1,050</span></div>
-        <div class="row"><span class="lbl">analytics.japan_sell_through</span><span class="was">945</span><span class="now">1,050</span></div>
-        <div class="row"><span class="lbl">JP Ecommerce Distributor 3 staged</span><span class="was">0</span><span class="now">105</span></div>
-        <div class="row"><span class="lbl">IT Partner Distributor 2 staged</span><span class="val">0 of 210</span></div>
-        <div class="row"><span class="lbl">campaign_id &lt;&gt; 1</span><span class="val">0</span></div>
-        <div class="row"><span class="lbl">campaign_id is distinct from 1</span><span class="val">15,523</span></div>
-        <div class="ft">Job status every night: green. <span class="blink">Green tells you the code ran, not that the number is right.</span></div>
-      </div>
+      <figure class="lab-hero-art"><img src="images/lab2-hero.svg" width="720" height="560" alt="The nightly job dashboard shows a green SUCCESS with 0 alerts, night after night. Underneath, 1,050 Japan source rows pass a join with the condition channel_type &lt;&gt; 'ecommerce'; 105 rows from JP Ecommerce Distributor 3 fall out the side with no error, and only 945 arrive in the staged table."></figure>
     </div>
   </div>
 </header>
+
+<div class="brief-wrap">
+  <section class="brief" aria-label="Mission brief">
+    <div class="ticket">
+      <div class="ticket-h"><b>Incoming request</b><span>Project HORIZON · Italy · sell-through</span></div>
+      <blockquote>The Italy retail sell-through number on our dashboard looks too low. The pipeline has been green for weeks and no alert has fired. Can you confirm it is fine?</blockquote>
+      <cite>Marketing query · Project HORIZON</cite>
+      <div class="ticket-stats">
+        <div><b>47 min</b><span>on the clock, 32 of them hands-on</span></div>
+        <div><b>1 + 1</b><span>you leave with a reconciliation query and a dbt guard</span></div>
+        <div><b class="hot" data-count="105">105</b><span>the rows nobody missed: JP Ecommerce Distributor 3</span></div>
+      </div>
+    </div>
+    <div class="mfd" role="img" aria-label="Hour 2 numbers: Japan staged rows 945 before the fix, 1,050 after; JP Ecommerce Distributor 3 has 105 source rows and 0 staged; IT Partner Distributor 2 has 210 source rows and 0 staged; campaign_id &lt;&gt; 1 returns 0, IS DISTINCT FROM 1 returns 15,523.">
+      <div class="hd"><b>Hour 2 · reconcile to the source</b><b>rows</b></div>
+      <div class="row"><span class="lbl">rst.sell_through, JP</span><span class="val">1,050</span></div>
+      <div class="row"><span class="lbl">analytics.japan_sell_through</span><span class="was">945</span><span class="now">1,050</span></div>
+      <div class="row"><span class="lbl">JP Ecommerce Distributor 3 staged</span><span class="was">0</span><span class="now">105</span></div>
+      <div class="row"><span class="lbl">IT Partner Distributor 2 staged</span><span class="val">0 of 210</span></div>
+      <div class="row"><span class="lbl">campaign_id &lt;&gt; 1</span><span class="val">0</span></div>
+      <div class="row"><span class="lbl">campaign_id is distinct from 1</span><span class="val">15,523</span></div>
+      <div class="ft">Job status every night: green. <span class="blink">Green tells you the code ran, not that the number is right.</span></div>
+    </div>
+  </section>
+</div>
+
+<div class="route-wrap">
+  <nav class="route" aria-label="Lab route">
+    <a class="stn" href="#request"><i>↘</i><b>Brief</b><span>the request</span></a>
+    <a class="stn" href="#before"><i>0</i><b>Pre-flight</b><span>3 min</span></a>
+    <a class="stn" href="#opener"><i>≠</i><b>Opener</b><span>3 min · NULL</span></a>
+    <a class="stn" href="#step1"><i>1</i><b>Detect</b><span>10 min · SQLTools</span></a>
+    <a class="stn" href="#step2"><i>2</i><b>Diagnose</b><span>8 min · the join</span></a>
+    <a class="stn" href="#step3"><i>3</i><b>Correct · Prevent</b><span>14 min · dbt test</span></a>
+    <a class="stn" href="#stretch"><i>+</i><b>Stretch</b><span>5 min · threshold</span></a>
+    <a class="stn goal" href="#takeaway"><i>★</i><b>Signed</b><span>takeaway #2</span></a>
+  </nav>
+</div>
 
 <div class="frame">
   <details class="toc" id="toc" open>
@@ -81,12 +126,6 @@
 
   <p class="rule-line">Automation does the work. <span class="w">You own the outcome.</span></p>
   <p>The loop for this hour: <strong>Detect → Diagnose → Correct → Prevent.</strong></p>
-
-  <p><strong>The request that just landed:</strong></p>
-  <blockquote class="request">
-    <p>"The Italy retail sell-through number on our dashboard looks too low. The pipeline has been green for weeks and no alert has fired. Can you confirm it is fine?"</p>
-    <cite>Marketing query · Project HORIZON</cite>
-  </blockquote>
 
   <p>Hands-on: you will harden the <strong>Japan</strong> pipeline with the instructor. Italy is the story; Japan is the one nobody noticed.</p>
 
@@ -238,13 +277,52 @@ select count(*) from clr.lifecycle_events where campaign_id &lt;&gt; 1;
     <figcaption>Detect, Diagnose, Correct, Prevent (reconcile to the source). 1,050 Japan source rows pass a join condition <code>and d.channel_type &lt;&gt; 'ecommerce'</code>, 945 come out, 105 fall out silently, and <code>dbt run</code> stays green (the model has no tests yet).</figcaption>
   </figure>
 
-  <!-- STEP 1 -->
-  <div class="step" id="step1">
-    <span class="step-n">1</span>
-    <div class="step-t"><span class="step-k">Detect</span><h3>Reconcile to the source</h3></div>
-    <span class="step-min">10 min</span>
+  <div class="stage" id="step1" data-n="1">
+    <div class="stage-copy">
+      <span class="stage-k"><b>1</b>Detect</span>
+      <h3>Reconcile to the source</h3>
+      <p>Claude drafts one query that counts source and staged rows per distributor, for Italy and Japan at once. You read the join type, then you run it.</p>
+      <div class="stage-meta"><span class="t">10 min</span><span class="m">Sonnet</span><span class="">SQLTools</span></div>
+    </div>
+    <div class="stage-art">
+      <svg viewBox="0 0 340 210" aria-hidden="true">
+  <rect x="6" y="10" width="248" height="190" rx="14" fill="#0F2547" stroke="#fff" stroke-opacity=".12"/>
+  <circle cx="24" cy="27" r="4" fill="#FF5F57"/><circle cx="37" cy="27" r="4" fill="#FEBC2E"/><circle cx="50" cy="27" r="4" fill="#28C840"/>
+  <text x="64" y="31" font-size="9.5" fill="#93A7C6">SQLTools · reconcile to source</text>
+  <path d="M6 42 h248" stroke="#fff" stroke-opacity=".1"/>
+  <g font-size="9" fill="#2EE6C5" letter-spacing=".4">
+    <text x="18" y="60">distributor</text><text x="150" y="60" text-anchor="end">src</text><text x="184" y="60" text-anchor="end">stg</text><text x="240" y="60" text-anchor="end">dropped</text>
+  </g>
+  <path d="M14 67 h232" stroke="#fff" stroke-opacity=".1"/>
+  <rect x="12" y="74" width="236" height="22" rx="4" fill="#FF5A47" fill-opacity=".16"/>
+  <rect x="12" y="74" width="3" height="22" fill="#FF5A47"/>
+  <g font-size="10">
+    <text x="20" y="89" fill="#DCE6F5">IT Partner 2</text><text x="150" y="89" text-anchor="end" fill="#DCE6F5">210</text><text x="184" y="89" text-anchor="end" fill="#FF8A7A">0</text><text x="240" y="89" text-anchor="end" fill="#FF8A7A" font-weight="600">210</text>
+  </g>
+  <rect class="fx-blink" x="12" y="100" width="236" height="22" rx="4" fill="#FF5A47" fill-opacity=".22"/>
+  <rect x="12" y="100" width="3" height="22" fill="#FF5A47"/>
+  <g font-size="10">
+    <text x="20" y="115" fill="#DCE6F5">JP Ecommerce 3</text><text x="150" y="115" text-anchor="end" fill="#DCE6F5">105</text><text x="184" y="115" text-anchor="end" fill="#FF8A7A">0</text><text x="240" y="115" text-anchor="end" fill="#FF8A7A" font-weight="600">105</text>
+  </g>
+  <g font-size="10" fill="#93A7C6">
+    <text x="20" y="143">every other distributor</text><text x="240" y="143" text-anchor="end" fill="#6FE3A3">0</text>
+    <text x="20" y="163">(seven rows)</text><text x="240" y="163" text-anchor="end" fill="#6FE3A3">0</text>
+  </g>
+  <text x="18" y="189" font-size="9" fill="#93A7C6" letter-spacing="1">9 ROWS · SORTED BY DROPPED</text>
+  <circle cx="286" cy="78" r="24" fill="#3BE08A" fill-opacity=".85"/>
+  <circle cx="314" cy="78" r="24" fill="none" stroke="#DCE6F5" stroke-opacity=".55" stroke-width="1.6"/>
+  <text x="300" y="126" text-anchor="middle" font-size="10.5" fill="#6FE3A3" font-weight="500" letter-spacing="1">LEFT JOIN</text>
+  <text x="300" y="142" text-anchor="middle" font-size="9" fill="#93A7C6">keeps the zeros</text>
+  <rect x="264" y="158" width="72" height="22" rx="11" fill="#12B865" fill-opacity=".18" stroke="#3BE08A" stroke-opacity=".7"/>
+  <text x="300" y="173" text-anchor="middle" font-size="8.5" fill="#8FF0BC">coalesce(…, 0)</text>
+</svg>
+    </div>
   </div>
-  <div class="expects"><span class="expect">expect 9 rows</span><span class="expect bad">IT dropped 210</span><span class="expect bad">JP dropped 105</span></div>
+  <div class="tally" role="group" aria-label="What Step 1 detects">
+    <div class="tl"><span>Reconciliation</span><b data-count="9">9</b><small>rows, one per distributor</small></div>
+    <div class="tl bad"><span>IT dropped</span><b data-count="210">210</b><small>IT Partner Distributor 2</small></div>
+    <div class="tl bad"><span>JP dropped</span><b data-count="105">105</b><small>JP Ecommerce Distributor 3</small></div>
+  </div>
 
   <p>A green run is not proof. The check that is proof: compare what the source has with what the pipeline produced, <strong>per distributor</strong>, for both markets at once. Let Claude draft the query; you read it, then you run it.</p>
 
@@ -323,13 +401,47 @@ order by dropped desc, d.market_code, d.distributor_name;
     <p>Marketing noticed Italy because the number looked low. Who noticed Japan? <span class="opts">(Nobody. That is the point.)</span></p>
   </div>
 
-  <!-- STEP 2 -->
-  <div class="step" id="step2">
-    <span class="step-n">2</span>
-    <div class="step-t"><span class="step-k">Diagnose</span><h3>Find the rule, prove the cause</h3></div>
-    <span class="step-min">8 min</span>
+  <div class="stage" id="step2" data-n="2">
+    <div class="stage-copy">
+      <span class="stage-k"><b>2</b>Diagnose</span>
+      <h3>Find the rule, prove the cause</h3>
+      <p>Read the join condition, not just the key. Then prove the cause with a count that matches the gap exactly.</p>
+      <div class="stage-meta"><span class="t">8 min</span><span class="">models/japan_sell_through.sql</span><span class="">SQLTools</span></div>
+    </div>
+    <div class="stage-art">
+      <svg viewBox="0 0 340 210" aria-hidden="true">
+  <rect x="6" y="10" width="256" height="128" rx="14" fill="#0F2547" stroke="#fff" stroke-opacity=".12"/>
+  <text x="18" y="31" font-size="9.5" fill="#93A7C6">models/japan_sell_through.sql</text>
+  <path d="M6 42 h256" stroke="#fff" stroke-opacity=".1"/>
+  <g font-size="9.5">
+    <text x="18" y="62"><tspan fill="#2EE6C5">join</tspan><tspan fill="#DCE6F5"> rst.distributors d</tspan></text>
+    <text x="18" y="82"><tspan fill="#2EE6C5">  on</tspan><tspan fill="#DCE6F5"> d.distributor_id = s.distributor_id</tspan></text>
+    <rect x="12" y="90" width="244" height="20" rx="4" fill="#FF5A47" fill-opacity=".2"/>
+    <rect x="12" y="90" width="3" height="20" fill="#FF5A47"/>
+    <text x="18" y="104"><tspan fill="#2EE6C5"> and</tspan><tspan fill="#FF8A7A"> d.channel_type &lt;&gt; 'ecommerce'</tspan></text>
+    <text x="18" y="126" fill="#6F86A8">  -- exclude non-store channels</text>
+  </g>
+  <path d="M66 112 q4 4 8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0 t8 0" fill="none" stroke="#FF5A47" stroke-width="1.4"/>
+  <rect x="6" y="150" width="138" height="52" rx="12" fill="#1A1220" stroke="#FF8A7A" stroke-opacity=".7"/>
+  <text x="18" y="170" font-size="9" fill="#93A7C6" letter-spacing=".6">suppressed_rows</text>
+  <text x="18" y="194" font-size="22" font-weight="700" fill="#FF8A7A">105</text>
+  <text x="156" y="172" font-size="10" fill="#FFB0A4">= exactly the gap</text>
+  <text x="156" y="188" font-size="10" fill="#FFB0A4">  Detect found</text>
+  <rect x="284" y="22" width="40" height="52" rx="10" fill="#0B1D3A" stroke="#FF5A47" stroke-width="2"/>
+  <path d="M292 34 h24 l-8 12 v12 l-8 6 v-18z" fill="#FF5A47"/>
+  <g class="fx-float"><rect x="284" y="90" width="40" height="13" rx="4" fill="#FF5A47"/></g>
+  <rect class="fx-blink" x="284" y="112" width="40" height="13" rx="4" fill="#FF5A47" fill-opacity=".65"/>
+  <rect x="284" y="134" width="40" height="13" rx="4" fill="#FF5A47" fill-opacity=".35"/>
+  <text x="304" y="166" text-anchor="middle" font-size="8.5" fill="#93A7C6">dist 3</text>
+</svg>
+    </div>
   </div>
-  <div class="expects"><span class="expect">expect 105 suppressed rows</span></div>
+  <div class="tally" role="group" aria-label="What Step 2 proves">
+    <div class="tl"><span>JP source</span><b data-count="1050">1,050</b><small>rows in rst.sell_through</small></div>
+    <span class="op" aria-hidden="true">→</span>
+    <div class="tl"><span>JP staged</span><b data-count="945">945</b><small>job status: green</small></div>
+    <div class="tl bad"><span>Suppressed</span><b data-count="105">105</b><small>rows the join condition drops</small></div>
+  </div>
 
   <p>Detect told you <em>which</em> distributor. Diagnose is finding <em>why</em>, and proving it with a count.</p>
   <p>In VS Code, open <code>models/japan_sell_through.sql</code>. Read the <code>from</code> / <code>join</code> block. Read the <strong>join condition, not just the key</strong>:</p>
@@ -375,13 +487,54 @@ where s.market_code = 'JP'
     <p>"The join carries a <code>channel_type &lt;&gt; 'ecommerce'</code> condition, so the one ecommerce distributor's 105 legitimate weekly rows never enter the staged model."</p>
   </div>
 
-  <!-- STEP 3 -->
-  <div class="step" id="step3">
-    <span class="step-n">3</span>
-    <div class="step-t"><span class="step-k">Correct, then Prevent</span><h3>Fix the rule, leave a guard, watch it bite</h3></div>
-    <span class="step-min">14 min</span>
+  <div class="stage" id="step3" data-n="3">
+    <div class="stage-copy">
+      <span class="stage-k"><b>3</b>Correct, then Prevent</span>
+      <h3>Fix the rule, leave a guard, watch it bite</h3>
+      <p>Delete one line and confirm the count. Then leave a singular test behind and break the pipeline on purpose, so you have seen the guard go red once.</p>
+      <div class="stage-meta"><span class="t">14 min</span><span class="">Correct 3 · Prevent 6 · Prove the guard bites 5</span><span class="m">Sonnet</span><span class="">dbt test</span></div>
+    </div>
+    <div class="stage-art">
+      <svg viewBox="0 0 340 210" aria-hidden="true">
+  <g font-size="8.5" letter-spacing="1.2" fill="#93A7C6">
+    <text x="10" y="20">CORRECT</text><text x="126" y="20">PREVENT</text><text x="240" y="20">PROVE IT BITES</text>
+  </g>
+  <rect x="6" y="28" width="102" height="104" rx="12" fill="#0F2547" stroke="#fff" stroke-opacity=".14"/>
+  <rect x="16" y="44" width="30" height="6" rx="3" fill="#2EE6C5"/><rect x="50" y="44" width="48" height="6" rx="3" fill="#DCE6F5" opacity=".45"/>
+  <rect x="22" y="60" width="76" height="6" rx="3" fill="#DCE6F5" opacity=".45"/>
+  <rect x="22" y="76" width="76" height="6" rx="3" fill="#FF5A47" opacity=".8"/>
+  <path d="M16 79 h88" stroke="#fff" stroke-width="2"/>
+  <rect x="16" y="92" width="36" height="6" rx="3" fill="#2EE6C5"/><rect x="56" y="92" width="40" height="6" rx="3" fill="#DCE6F5" opacity=".45"/>
+  <text x="57" y="122" text-anchor="middle" font-size="9" fill="#8FF0BC">1 line, by hand</text>
+  <path class="fx-dash" d="M110 80 H120" stroke="#3BE08A" stroke-width="2" fill="none"/>
+  <g class="fx-float">
+    <path d="M128 34 h62 l12 12 v80 a6 6 0 0 1 -6 6 h-68 a6 6 0 0 1 -6 -6 v-86 a6 6 0 0 1 6 -6z" fill="#13305C" stroke="#fff" stroke-opacity=".25"/>
+    <path d="M190 34 v12 h12" fill="none" stroke="#fff" stroke-opacity=".25"/>
+    <path d="M164 58 l20 7 v14 c0 12 -9 19 -20 23 c-11 -4 -20 -11 -20 -23 v-14z" fill="#3BE08A"/>
+    <path d="M155 80 l6 6 l12 -12" fill="none" stroke="#061022" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="164" y="122" text-anchor="middle" font-size="8.5" fill="#93A7C6">tests/assert_…</text>
+  </g>
+  <path class="fx-dash" d="M208 80 H226" stroke="#3BE08A" stroke-width="2" fill="none"/>
+  <rect x="234" y="34" width="100" height="40" rx="20" fill="#FF5A47" fill-opacity=".18" stroke="#FF5A47"/>
+  <text x="284" y="58" text-anchor="middle" font-size="12" font-weight="600" fill="#FF8A7A">FAIL 1</text>
+  <path d="M284 78 v12" stroke="#93A7C6" stroke-width="1.5"/><path d="M279 86 l5 6 l5 -6" fill="none" stroke="#93A7C6" stroke-width="1.5"/>
+  <g class="fx-pulse"><rect x="234" y="94" width="100" height="40" rx="20" fill="#12B865" fill-opacity=".22" stroke="#3BE08A"/>
+  <text x="284" y="118" text-anchor="middle" font-size="12" font-weight="600" fill="#6FE3A3">PASS ✓</text></g>
+  <text x="10" y="164" font-size="9" fill="#93A7C6" letter-spacing="1">JAPAN STAGED ROWS</text>
+  <text x="334" y="164" text-anchor="end" font-size="11" fill="#DCE6F5"><tspan fill="#FF8A7A" text-decoration="line-through">945</tspan>  →  <tspan fill="#6FE3A3" font-weight="600">1,050</tspan></text>
+  <rect x="6" y="176" width="328" height="12" rx="6" fill="#fff" fill-opacity=".08"/>
+  <rect x="6" y="176" width="328" height="12" rx="6" fill="#3BE08A"/>
+  <path d="M301 172 v20" stroke="#FF5A47" stroke-width="2" stroke-dasharray="3 2"/>
+  <text x="301" y="204" text-anchor="middle" font-size="8.5" fill="#FF8A7A">945</text>
+</svg>
+    </div>
   </div>
-  <div class="expects"><span class="expect">Correct 3 · Prevent 6 · Prove the guard bites 5</span><span class="expect ok">1,050 rows (was 945)</span><span class="expect ok">PASS=1</span></div>
+  <div class="tally" role="group" aria-label="What Step 3 fixes and guards">
+    <div class="tl bad"><span>Before</span><b class="x">945</b><small>Japan staged rows</small></div>
+    <span class="op" aria-hidden="true">→</span>
+    <div class="tl ok"><span>After the fix</span><b data-count="1050">1,050</b><small>rows (was 945)</small></div>
+    <div class="tl ok"><span>The guard</span><b>PASS=1</b><small>after you watched it FAIL once</small></div>
+  </div>
 
   <h3 id="correct">Correct (one line, by hand)</h3>
   <p>In <code>models/japan_sell_through.sql</code>, delete the line <code>and d.channel_type &lt;&gt; 'ecommerce'   -- exclude non-store channels</code>. The join must match on the distributor key alone:</p>
@@ -485,7 +638,11 @@ where coalesce(stg.n_staged, 0) &lt; src.n_source</code></pre>
     <p class="dek">The second kind of silent failure: a threshold nobody calibrated (and, at the end, the third: over-trust in AI output). Ask Claude for an anomaly test, then do not paste its number until you have looked at the real data.</p>
   </div>
 
-  <div class="expects"><span class="expect">observed 0.41x to 1.57x</span><span class="expect bad">0.5x / 2x flags 6</span><span class="expect ok">0.35x / 1.75x: PASS=2</span></div>
+  <div class="tally" role="group" aria-label="What the stretch calibrates">
+    <div class="tl"><span>Observed spread</span><b class="sm">0.41–1.57×</b><small>observed 0.41x to 1.57x of each series' average</small></div>
+    <div class="tl bad"><span>0.5x / 2x</span><b data-count="6">6</b><small>normal weeks flagged</small></div>
+    <div class="tl ok"><span>0.35x / 1.75x</span><b>PASS=2</b><small>0 normal weeks flagged</small></div>
+  </div>
 
   <div class="prompt">
     <p class="asks"><b>What this asks Claude to do</b>Write a dbt singular test that flags any week whose <code>units_sold</code> is far above or below that distributor and product's own average, with the two tolerance factors on one editable line.</p>
@@ -559,6 +716,31 @@ from analytics.japan_sell_through group by 1, 2 order by 1, 2;
 
   <p>Silent suppression, threshold drift and over-trust in AI output throw no errors. Detect with a reconciliation to the source. Diagnose by proving the cause against the warehouse. Correct the rule. Prevent with a guard that fails loudly next time, and watch it fail once so you know it works. <em>Green ≠ right.</em></p>
 
+  <div class="earned">
+    <svg viewBox="0 0 160 160" aria-hidden="true">
+      <circle cx="80" cy="80" r="76" fill="none" style="stroke:var(--lab)" stroke-opacity=".45" stroke-width="1.5" stroke-dasharray="2 5"/>
+      <polygon points="80,18 133.7,49 133.7,111 80,142 26.3,111 26.3,49" style="fill:var(--lab-deep)"/>
+      <polygon points="80,30 123.3,55 123.3,105 80,130 36.7,105 36.7,55" fill="#081428"/>
+      <text x="80" y="58" text-anchor="middle" font-size="9" letter-spacing="2" style="fill:var(--lab)">LAB 02</text>
+      <path d="M80 68 v38 M68 108 h24 M56 74 h48" fill="none" stroke="#DCE6F5" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="80" cy="68" r="3.5" fill="#DCE6F5"/>
+      <path d="M56 74 l-9 17 M56 74 l9 17 M104 74 l-9 17 M104 74 l9 17" stroke="#DCE6F5" stroke-width="1.4" opacity=".7"/>
+      <path d="M44 91 a12 7 0 0 0 24 0z" style="fill:var(--lab)"/>
+      <path d="M92 91 a12 7 0 0 0 24 0z" style="fill:var(--lab)"/>
+      <rect x="22" y="120" width="116" height="22" rx="5" style="fill:var(--lab)"/>
+      <text x="80" y="135" text-anchor="middle" font-size="9.5" letter-spacing="1.6" fill="#081428" font-weight="600">RECONCILED</text>
+    </svg>
+    <div>
+      <span class="k">Artefact earned · Hour 2</span>
+      <h3>A reconciled pipeline with a guard you watched fail</h3>
+      <ul>
+        <li>a source-vs-staged reconciliation per distributor, for Italy and Japan in one query</li>
+        <li><code>analytics.japan_sell_through</code> fixed: 1,050 rows (was 945), every Japan distributor at dropped = 0</li>
+        <li><code>tests/assert_japan_no_dropped_distributors.sql</code>, seen to FAIL once, then PASS</li>
+      </ul>
+    </div>
+  </div>
+
   <div class="box try">
     <span class="k">On Monday</span>
     <p>Write the reconciliation that proves one of your pipelines matches its source. Pick one KPI-level check ("this number should never do X", like under-25 marketing in Italy must always be zero). Name one automated decision in your estate that deserves a human approval gate.</p>
@@ -568,6 +750,11 @@ from analytics.japan_sell_through group by 1, 2 order by 1, 2;
   <p>Next: <a href="hour3.html">Hour 3 · Shift left</a> · Back: <a href="hour1.html">Hour 1 · No vibe pipelines</a></p>
 </section>
 
+
+    <nav class="lab-next" aria-label="Previous and next">
+      <a class="nx-1" href="hour1.html"><span><small>← Lab 01</small><b>No vibe pipelines</b><em>Draft → Prove → Lock</em></span><img src="images/lab1-hero.svg" alt="" loading="lazy"></a>
+      <a class="nx-3" href="hour3.html"><span><small>Next · Lab 03 →</small><b>Shift left</b><em>Unpack → Clarify → Prove → Specify</em></span><img src="images/lab3-hero.svg" alt="" loading="lazy"></a>
+    </nav>
 
     <footer class="foot">
       <nav aria-label="All guides">
@@ -584,5 +771,6 @@ from analytics.japan_sell_through group by 1, 2 order by 1, 2;
 </div>
 
 <script src="assets/site.js" defer></script>
+<script src="assets/lab.js" defer></script>
 </body>
 </html>
