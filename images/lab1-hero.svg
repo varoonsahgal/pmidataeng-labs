@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 560" role="img" aria-labelledby="t d">
 <title id="t">Hour 1 · No vibe pipelines</title>
-<desc id="d">An AI-drafted SQL model runs clean, but its join to the consent ledger fans one event out into several rows: the magnifier shows 1,988 rows where 794 were expected. A padlock reads 7 of 7 tests pass once the fix is locked in.</desc>
+<desc id="d">An AI-drafted SQL model runs clean, but its join to the consent ledger fans one event out into several rows: the magnifier shows 1,988 rows where 794 were expected. A padlock reads 4 of 4 tests pass once the fix is locked in.</desc>
 <defs>
   <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14305C" stop-opacity=".92"/><stop offset="1" stop-color="#0A1A36" stop-opacity=".94"/></linearGradient>
   <linearGradient id="hot" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FF4A00"/><stop offset="1" stop-color="#FFB38A"/></linearGradient>
@@ -118,14 +118,14 @@
 <path d="M655 380 l42 42" stroke="#FFB38A" stroke-width="16" stroke-linecap="round"/>
 <path d="M655 380 l42 42" stroke="#FF4A00" stroke-width="7" stroke-linecap="round"/>
 
-<!-- the lock: 7 tests pass -->
+<!-- the lock: 4 tests pass -->
 <g class="bob2">
   <rect x="418" y="448" width="224" height="64" rx="16" fill="#0B1D3A" stroke="#3BE08A" stroke-opacity=".6"/>
   <path d="M446 474 v-8 a12 12 0 0 1 24 0 v8" fill="none" stroke="#3BE08A" stroke-width="3.2"/>
   <rect x="440" y="472" width="36" height="28" rx="6" fill="#3BE08A"/>
   <circle cx="458" cy="484" r="3.6" fill="#0B1D3A"/><rect x="456.6" y="485" width="2.8" height="8" rx="1.2" fill="#0B1D3A"/>
   <text x="492" y="476" font-size="10.5" fill="#93A7C6" letter-spacing="1.2">DBT TEST</text>
-  <text x="492" y="499" class="sans" font-size="20" font-weight="700" fill="#FFFFFF">7 / 7 <tspan fill="#3BE08A">PASS</tspan></text>
+  <text x="492" y="499" class="sans" font-size="20" font-weight="700" fill="#FFFFFF">4 / 4 <tspan fill="#3BE08A">PASS</tspan></text>
 </g>
 
 <!-- prompt bubble: the request -->

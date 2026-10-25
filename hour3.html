@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Lab 3 · Shift left · Project HORIZON</title>
-<meta name="description" content="Lab 3 of the PMI Data Engineer Future Skills class: unpack a Marketing request with Claude, curate the clarifying questions, prove feasibility against the warehouse (105 Mondays; under-25 marketing ID 0% · IT 0% · JP 73%) and specify what Marketing never said. Project HORIZON is fictional and training-only.">
+<meta name="description" content="Lab 3 of the PMI Data Engineer Future Skills class: unpack a Marketing request with Claude, curate the clarifying questions, prove feasibility against the warehouse (105 Mondays; under-25s who may be marketed to: Indonesia 0, Italy 0, Japan 319 of 359) and specify what Marketing never said. Project HORIZON is fictional and training-only.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Project HORIZON lab guides">
 <meta property="og:title" content="Lab 3 · Shift left">
-<meta property="og:description" content="Unpack → Clarify → Prove → Specify. A request is intent, not a specification: 105 Mondays, 0% · 0% · 73%.">
+<meta property="og:description" content="Unpack → Clarify → Prove → Specify. A request is intent, not a specification: 105 Mondays, and 0 under-25s allowed in Italy and Indonesia.">
 <meta property="og:url" content="https://varoonsahgal.github.io/pmidataeng-labs/hour3.html">
 <meta property="og:image" content="https://varoonsahgal.github.io/pmidataeng-labs/images/og/hour3.png">
 <meta property="og:image:width" content="1200">
@@ -47,10 +47,10 @@
         <h1>Shift <span>left</span><span class="ghost">Hour 3 · 2:07 to 2:57 · follow along with the instructor</span></h1>
         <p class="lede">A request is intent, not a specification. Bring engineering reality to a Marketing request before a line of code is written: <strong>Unpack → Clarify → Prove → Specify.</strong> Align first, build once.</p>
         <ol class="lab-loop" aria-label="The loop"><li>Unpack</li><li>Clarify</li><li>Prove</li><li>Specify</li></ol>
-        <div class="lab-cta"><a class="btn" href="#step1">Start the lab</a><a class="btn ghost" href="#setup">How this hour works</a></div>
+        <div class="lab-cta"><a class="btn" href="#why">Start the lab</a><a class="btn ghost" href="#how">How this hour works</a></div>
         <ul class="lab-kit" aria-label="What you use"><li>Claude Desktop · <b>Sonnet</b></li><li>SQLTools · <b>HORIZON</b></li><li><b>No dbt, no files</b></li></ul>
       </div>
-      <figure class="lab-hero-art"><img src="images/lab3-hero.svg" width="720" height="560" alt="A Marketing request for real-time dashboards across all markets meets the warehouse: sell-through arrives on 105 Mondays, and under-25 marketing is allowed in 0% of Indonesian and Italian consent rows but 73% in Japan. Three verdicts: buildable as asked, with a change, not as asked. The cost of a fix rises from 1x at Request to about 100x at Operate, so the check moves left to Request."></figure>
+      <figure class="lab-hero-art"><img src="images/lab3-hero.svg" width="720" height="560" alt="A Marketing request for real-time dashboards across all markets meets the warehouse: sell-through arrives on 105 Mondays, and no under-25 Indonesian or Italian may be marketed to (0 people), while 89% of under-25 Japanese have said yes. Three verdicts: buildable as asked, with a change, not as asked. The cost of a fix rises from 1x at Request to about 100x at Operate, so the check moves left to Request."></figure>
     </div>
   </div>
 </header>
@@ -67,15 +67,14 @@
         <div><b class="hot" data-count="105">105</b><span>the number that decides: Mondays, a weekly feed</span></div>
       </div>
     </div>
-    <div class="mfd" role="img" aria-label="Hour 3 feasibility numbers: rst.sell_through 2,730 rows over 105 distinct Mondays, 0 non-Monday rows; under-25 marketing-allowed consent rows: Indonesia 0%, Italy 0%, Japan 73%; rfr.filings 112.">
+    <div class="mfd" role="img" aria-label="Hour 3 feasibility numbers: rst.sell_through 2,730 rows over 105 distinct Mondays, 0 non-Monday rows; under-25s who may be marketed to: Indonesia 0 of 191, Italy 0 of 249, Japan 319 of 359.">
       <div class="hd"><b>Hour 3 · what the warehouse says</b><b>value</b></div>
       <div class="row"><span class="lbl">rst.sell_through rows</span><span class="val">2,730</span></div>
       <div class="row"><span class="lbl">distinct weeks (Mondays)</span><span class="val">105</span></div>
       <div class="row"><span class="lbl">non-Monday rows</span><span class="val">0</span></div>
-      <div class="row"><span class="lbl">under-25 mktg allowed · ID</span><span class="val">0%</span></div>
-      <div class="row"><span class="lbl">under-25 mktg allowed · IT</span><span class="val">0%</span></div>
-      <div class="row"><span class="lbl">under-25 mktg allowed · JP</span><span class="val">73%</span></div>
-      <div class="row"><span class="lbl">rfr.filings</span><span class="val">112</span></div>
+      <div class="row"><span class="lbl">under-25s allowed · ID</span><span class="val">0 of 191</span></div>
+      <div class="row"><span class="lbl">under-25s allowed · IT</span><span class="val">0 of 249</span></div>
+      <div class="row"><span class="lbl">under-25s allowed · JP</span><span class="val">319 of 359</span></div>
       <div class="ft">"Real-time" meets a weekly feed. "All markets" meets the under-25 rule. <span class="blink">Check both in SQLTools.</span></div>
     </div>
   </section>
@@ -83,14 +82,14 @@
 
 <div class="route-wrap">
   <nav class="route" aria-label="Lab route">
-    <a class="stn" href="#theme"><i>↘</i><b>Brief</b><span>the request</span></a>
+    <a class="stn" href="#why"><i>↘</i><b>Mission</b><span>60 seconds</span></a>
     <a class="stn" href="#icebreaker"><i>?</i><b>Icebreaker</b><span>4 min · chat</span></a>
-    <a class="stn" href="#setup"><i>0</i><b>Set-up</b><span>5 min</span></a>
+    <a class="stn" href="#data"><i>◇</i><b>The data</b><span>4 min read</span></a>
     <a class="stn" href="#step1"><i>1</i><b>Unpack</b><span>9 min · Sonnet</span></a>
     <a class="stn" href="#step2"><i>2</i><b>Clarify</b><span>9 min · Sonnet</span></a>
     <a class="stn" href="#step3"><i>3</i><b>Prove</b><span>11 min · SQLTools</span></a>
     <a class="stn" href="#step4"><i>4</i><b>Specify</b><span>8 min · Sonnet</span></a>
-    <a class="stn goal" href="#takeaway"><i>★</i><b>Aligned</b><span>takeaway #3</span></a>
+    <a class="stn goal" href="#challenges"><i>★</i><b>Challenges</b><span>finished early?</span></a>
   </nav>
 </div>
 
@@ -98,117 +97,270 @@
   <details class="toc" id="toc" open>
     <summary>On this page</summary>
     <ol>
-      <li><a href="#theme">Shift left</a></li>
-      <li><a href="#words">Words you will hear</a></li>
-      <li><a href="#icebreaker">Icebreaker 2 · real-time</a></li>
-      <li><a href="#setup">How this hour works</a></li>
+      <li class="grp">The big picture</li>
+      <li><a href="#why">The mission in 60 seconds</a></li>
+      <li><a href="#shift">What "shift left" means</a></li>
+      <li><a href="#icebreaker">Icebreaker · real-time</a></li>
+      <li><a href="#how">How this hour works</a></li>
+      <li><a href="#words">Six words for this hour</a></li>
+      <li class="grp">Understand the data</li>
+      <li><a href="#data">What the warehouse holds</a></li>
+      <li class="sub"><a href="#t-markets">The three markets</a></li>
+      <li class="sub"><a href="#t-sales">Weekly sales</a></li>
+      <li class="sub"><a href="#t-people">People and their age</a></li>
+      <li class="sub"><a href="#t-conv">Conversions</a></li>
       <li class="grp">The lab</li>
       <li><a href="#step1">Step 1 · Unpack</a></li>
-      <li><a href="#step2">Step 2 · Clarify, curate</a></li>
+      <li><a href="#step2">Step 2 · Clarify</a></li>
       <li><a href="#step3">Step 3 · Prove</a></li>
-      <li class="sub"><a href="#step3a">(a) Is real-time possible?</a></li>
-      <li class="sub"><a href="#step3b">(b) Is cross-market legal?</a></li>
+      <li class="sub"><a href="#proofA">Proof A · real-time?</a></li>
+      <li class="sub"><a href="#proofB">Proof B · legal?</a></li>
       <li class="sub"><a href="#gate">The feasibility gate</a></li>
       <li><a href="#step4">Step 4 · Specify</a></li>
-      <li class="grp">Close</li>
+      <li class="grp">Wrap-up</li>
       <li><a href="#parking">Parking lot</a></li>
+      <li><a href="#recap">What just happened</a></li>
       <li><a href="#takeaway">Takeaway #3</a></li>
-      <li><a href="#regulatory">Regulatory variant</a></li>
+      <li><a href="#challenges">Challenges</a></li>
     </ol>
   </details>
 
   <main id="main">
-    <section class="part" id="theme">
+
+    <!-- ============================================================ MISSION -->
+    <section class="part" id="why">
       <div class="part-h">
-        <span class="eyebrow">Hour 3 · WA3908 · Unpack → Clarify → Prove → Specify</span>
-        <h2>Theme: <span>shift left</span></h2>
-        <p class="dek">Both bugs from Hours 1 and 2 were "reasonable scoping rules" that someone added without asking anyone. The cheapest place to catch a wrong assumption is before the code exists.</p>
+        <span class="eyebrow">The big picture · read this first</span>
+        <h2>The mission in <span>60 seconds</span></h2>
+        <p class="dek">One sentence from Marketing, four hidden assumptions, and the two numbers that decide what can be built.</p>
       </div>
-      <p class="rule-line"><span class="w">A request is intent, not a specification.</span> Align first, build once.</p>
 
-      <p>Follow along. You will not build anything this hour. You will bring engineering reality to a request before a line of code is written, and prove two things against the warehouse. Four steps: <strong>Unpack → Clarify → Prove → Specify.</strong></p>
+      <h3>The situation</h3>
+      <p>Marketing sends you this request:</p>
+      <blockquote class="request"><p>"Can you build us <b>real-time</b> <b>conversion</b> dashboards in <b>Power BI</b>, <b>across all our markets</b>, so we can watch the smoke-free transition as it happens?"</p></blockquote>
+      <p>It sounds clear. It is not. Each of the four words in bold hides a guess about how things work, and two of those guesses are simply wrong. Build it exactly as asked and you get a project that cannot work, or one that breaks the law.</p>
 
-      <p><strong>Shift left</strong> means moving the checking to the left of the project timeline (Request, Design) instead of the right (Test, Operate). In Hour 1 the consent-ledger bug was caught in review, 25 minutes after the draft. In Hour 2 the ecommerce filter was caught in Operate, months later, 105 rows short. This hour the same class of mistake gets caught before anyone opens an editor. A wrong assumption fixed at Request costs 1x; after delivery it can cost up to 100x. What moves left is not the test suite. It is the questions.</p>
-
-      <figure class="hero wide">
-        <img src="images/shift-left-curve.svg" alt="Cost to fix a defect rises from about 1x at Request to about 100x at Operate. The Hour 1 fan-out was caught in review; the Hour 2 missing rows were found in Operate. The four words to ask about before the code exists: real-time, conversion, across all markets, Power BI.">
-        <figcaption>Cost to fix rises from about 1x at Request to about 100x at Operate (Boehm and Basili, 2001). The Hour 1 fan-out was caught in review in 25 minutes; the Hour 2 missing rows were found months later. Ask before the code exists: real-time, conversion, across all markets, Power BI.</figcaption>
-      </figure>
-
-      <div class="box note"><span class="k">What you leave with</span><p>Five clarifying questions, a four-line feasibility gate, and the requirements Marketing never said.</p></div>
-    </section>
-
-    <section class="part" id="words">
-      <div class="part-h">
-        <span class="eyebrow">Before you start</span>
-        <h2>Words you will <span>hear</span></h2>
-        <p class="dek">Every term this hour uses, in plain English. Each one links to the full glossary.</p>
+      <div class="box analogy">
+        <span class="k">Your mission</span>
+        <p>Before anyone writes a line of code, turn the request into a plan that Marketing and engineering both agree on.</p>
+        <p style="font-size:1.12rem"><b>You will not build anything this hour. You will find out what should be built.</b></p>
       </div>
-      <div class="words">
-        <div class="k">Words you will hear <a href="glossary.html">Full glossary →</a></div>
+
+      <h3>The two numbers that decide this hour</h3>
+      <div class="bignum">
+        <div class="warn"><span>"Real-time"?</span><b>105</b><p>Sales data arrives on <b>105 Mondays</b>, once a week, never in between. A dashboard cannot be fresher than the data feeding it.</p></div>
+        <div class="warn"><span>"All markets"?</span><b>0</b><p>Under-25s in Italy and Indonesia who may be marketed to: <b>zero</b>. The law forbids it. An under-25 view across all markets would be illegal in two of three.</p></div>
+      </div>
+      <p>You will prove both numbers yourself in Step 3, with two short queries.</p>
+
+      <h3>What you leave with</h3>
+      <div class="tbl cards wrap">
         <table>
-          <thead><tr><th>Term</th><th>Plain English</th></tr></thead>
+          <thead><tr><th class="n">#</th><th>Step</th><th>What you do</th><th>What you write down</th></tr></thead>
           <tbody>
-            <tr><td><a href="glossary.html#request-vs-specification">Request vs specification</a></td><td>A request says what someone wants, in their words ("real-time"). A specification says exactly what will be built, in terms you can test ("refreshed by 07:00 each morning, as-of date shown on every number").</td></tr>
-            <tr><td><a href="glossary.html#shift-left">Shift left</a></td><td>Do the checking at Request and Design, before any code exists, instead of at Test and Operate. The thing that moves left is the questions.</td></tr>
-            <tr><td><a href="glossary.html#feasibility-verdict">Feasibility verdict</a></td><td>The only three answers you give on a requirement: <strong>buildable as asked</strong> · <strong>buildable with a change</strong> · <strong>not as asked</strong>. Each one comes with a number from the warehouse.</td></tr>
-            <tr><td><a href="glossary.html#nfr">Functional requirement</a></td><td>What the thing must do: "show the weekly conversion count per market".</td></tr>
-            <tr><td><a href="glossary.html#nfr">NFR (non-functional requirement)</a></td><td>How the thing must behave: refresh cadence, cost, reliability, who may see it, where the data lives, which regulation applies. Nobody states these. Everybody assumes them.</td></tr>
-            <tr><td><a href="glossary.html#conversion">Conversion · lifecycle stage</a></td><td>In PMI usage, an adult smoker switching to a smoke-free product. In HORIZON a consumer's journey is recorded as lifecycle stages, registration → trial → conversion → retention → churn, in <code>clr.lifecycle_events.lifecycle_stage</code>. The word "conversion" in a request does not say which stage, or how to count it.</td></tr>
-            <tr><td><a href="glossary.html#consent">Consent · marketing permission</a></td><td><code>mpl.consent_records</code>: whether a consumer allowed marketing (<code>marketing_allowed</code>) and from when (<code>consent_date</code>). It is a <strong>ledger</strong>, a table that keeps history, about 2.5 rows per consumer, so a join to it multiplies rows (Hour 1).</td></tr>
-            <tr><td><a href="glossary.html#age-band">Age band · the under-25 rule</a></td><td><code>clr.consumers.age_band</code>; <code>'18-24'</code> is the under-25 band. In HORIZON, marketing to under-25s is forbidden in Italy and Indonesia (0% marketing-allowed, by design) and allowed in Japan.</td></tr>
-            <tr><td><a href="glossary.html#sell-through">Sell-through</a></td><td>Retail sales from the distributor or retailer to the end consumer (as opposed to sell-in: PMI's shipments to the distributor). <code>rst.sell_through</code> holds one row per distributor, product and week; every <code>sale_date</code> is a Monday.</td></tr>
-            <tr><td><a href="glossary.html#grain">Grain</a></td><td>What one row represents. Sell-through's grain is one distributor, one product, one week.</td></tr>
-            <tr><td><a href="glossary.html#batch-fed-vs-real-time">Batch-fed vs real-time</a></td><td>Batch: data arrives in scheduled loads (nightly, weekly). Real-time: each event arrives within seconds through a stream. HORIZON is batch-fed.</td></tr>
-            <tr><td><a href="glossary.html#power-bi-desktop-vs-service">Power BI Desktop vs Service</a></td><td>Desktop is the free authoring app on a Windows PC: you open a <code>.pbix</code> file and refresh it yourself. Service is Microsoft's cloud workspace with scheduled refresh, sharing and access control. In the HORIZON scenario Marketing has Desktop on their PCs and there is no shared Service workspace, so "a dashboard" today means a file someone refreshes and emails. You will not open Power BI this hour.</td></tr>
-            <tr><td><a href="glossary.html#data-residency">Data residency</a></td><td>The rule that data about a market's consumers stays in an approved jurisdiction. A dashboard that joins three markets is a residency decision, not just a join.</td></tr>
-            <tr><td><a href="glossary.html#regulator">Regulators</a></td><td>MHLW (Japan's Ministry of Health, Labour and Welfare), AAMS/EU (Italy's tobacco monopolies authority, plus EU-level rules), BPOM (Indonesia's drug and food control agency). Three regulators, two regions (APAC, EU).</td></tr>
-            <tr><td><a href="glossary.html#as-of-date">As-of date</a></td><td>The date the source data was last loaded, printed on every number. "Refreshed each morning" describes the report. The as-of date describes the data.</td></tr>
+            <tr><td class="n">1</td><td><b>Unpack</b></td><td>find the guess hiding in each of the four words</td><td>4 assumptions + the real goal</td></tr>
+            <tr><td class="n">2</td><td><b>Clarify</b></td><td>Claude drafts 15 to 20 questions; you keep only the 5 that matter</td><td>5 questions for Marketing</td></tr>
+            <tr><td class="n">3</td><td><b>Prove</b></td><td>two queries settle the two big arguments</td><td>a 4-line feasibility gate</td></tr>
+            <tr><td class="n">4</td><td><b>Specify</b></td><td>write the requirements, including the ones nobody said</td><td>a short requirements list</td></tr>
           </tbody>
         </table>
       </div>
-      <p>Full list for the whole day: <a href="glossary.html">glossary</a>.</p>
+
+      <p class="rule-line">A request is intent, <span class="w">not a specification.</span> Align first, build once.</p>
     </section>
 
+    <!-- ============================================================ SHIFT LEFT -->
+    <section class="part" id="shift">
+      <div class="part-h">
+        <span class="eyebrow">The theme</span>
+        <h2>What "shift <span>left</span>" means</h2>
+        <p class="dek">Catch the mistake before the code exists, because that is when it is cheapest.</p>
+      </div>
+
+      <p>Every project moves from left to right along a timeline: <b>Request → Design → Build → Test → Operate</b>. The further right a mistake is found, the more it costs to fix, because more has been built on top of it. "Shift left" means moving the checking towards the start: <b>asking the questions before anyone builds.</b></p>
+
+      <figure class="hero wide">
+        <img src="images/shift-left-curve.svg" alt="Cost to fix a defect rises from about 1x at Request to about 100x at Operate. The Hour 1 fan-out was caught in review; the Hour 2 missing rows were found in Operate. The four words to ask about before the code exists: real-time, conversion, across all markets, Power BI." loading="lazy">
+        <figcaption>Cost to fix rises from about 1× at Request to about 100× at Operate (Boehm and Basili, 2001).</figcaption>
+      </figure>
+
+      <p>You have already seen this today. All three hours had the same kind of mistake: a guess nobody checked.</p>
+      <div class="tbl stack wrap">
+        <table>
+          <thead><tr><th>Hour</th><th>The unchecked guess</th><th>Where it was caught</th><th>Cost</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Hour"><b>Hour 1</b></td><td data-label="Guess">"attach <em>the</em> consent record" (there were up to four)</td><td data-label="Caught">in review, 25 minutes after the draft</td><td data-label="Cost">a rewrite of one model</td></tr>
+            <tr><td data-label="Hour"><b>Hour 2</b></td><td data-label="Guess">"ecommerce is not a store, so drop it"</td><td data-label="Caught">in production, months later</td><td data-label="Cost">105 missing rows on every dashboard</td></tr>
+            <tr><td data-label="Hour"><b>Hour 3</b></td><td data-label="Guess">"real-time", "all markets"…</td><td data-label="Caught"><b>now, before any code</b></td><td data-label="Cost"><b>five questions</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="rule-line">What moves left is not the testing. <span class="w">It is the questions.</span></p>
+    </section>
+
+    <!-- ============================================================ ICEBREAKER -->
     <section class="part" id="icebreaker">
       <div class="part-h">
         <span class="eyebrow">Icebreaker 2 · 4 min</span>
         <h2>How many seconds is <span>"real-time"</span>?</h2>
         <p class="dek">One word, a room full of different systems.</p>
       </div>
-      <div class="box chat"><span class="k">Type one number in the chat</span><p>How many seconds of delay does Marketing mean by "real-time"?</p></div>
-      <p>Look at the spread. Everyone in the room heard the same word and pictured a different system. 1 second is an event stream and a budget nobody approved. 900 seconds is "refresh every fifteen minutes". 86,400 seconds is "when I open it in the morning it is today's". That spread is the cost of building without asking: three builds instead of one.</p>
-    </section>
-
-    <section class="part" id="setup">
-      <div class="part-h">
-        <span class="eyebrow">5 min</span>
-        <h2>How this hour works with <span>Claude Desktop</span></h2>
-        <p class="dek">A chat window, two SQL checks, and your own notes. No dbt, no files.</p>
+      <div class="box chat"><span class="k">Type one number in the chat</span><p><strong>Marketing asked for "real-time". How many seconds of delay do they mean?</strong><span class="opts">just a number</span></p></div>
+      <p>Look at the spread. Everyone heard the same word and pictured a different system:</p>
+      <div class="tbl cards">
+        <table>
+          <thead><tr><th>If "real-time" means…</th><th>you would build…</th><th>and it costs…</th></tr></thead>
+          <tbody>
+            <tr><td><b>1 second</b></td><td>a live data stream</td><td>a new platform and a budget nobody approved</td></tr>
+            <tr><td><b>900 seconds</b> (15 min)</td><td>a refresh every quarter of an hour</td><td>a busy pipeline running all day</td></tr>
+            <tr><td><b>86,400 seconds</b> (1 day)</td><td>"fresh when I open it in the morning"</td><td>one overnight refresh</td></tr>
+          </tbody>
+        </table>
       </div>
-      <ul>
-        <li><strong>Claude Desktop</strong>, a fresh chat (<strong>New chat</strong>). Pick <strong>Sonnet</strong> in the model picker, next to the send button (Sonnet is the mid-price "thrifty" tier from Hour 1). The hard part of this hour is judgment, and the judgment is yours, not the model's, so the thrifty model is the right one all hour.</li>
-        <li><strong>No dbt project</strong> (dbt is the SQL build-and-test tool you used in Hours 1 and 2) and no files this hour. Claude Desktop is a chat window: you paste a prompt, Claude replies in Markdown, you read it and curate.</li>
-        <li><strong>SQLTools</strong> (the VS Code extension you run SQL with) connected to <strong>HORIZON</strong>, the saved connection, for two short feasibility checks. If it is missing: PostgreSQL, host <code>localhost</code>, port <code>5432</code>, database <code>horizon</code>, user <code>postgres</code>, password <code>Horizon!Lab2026</code>.</li>
-        <li><strong>Prompt hygiene:</strong> everything you paste into Claude leaves the VM. Table and column names, grain and scope: yes. Rows, credentials, connection strings: never.</li>
-        <li><strong>The paste is you, signing. Nothing lands in the repo unless you put it there.</strong> This hour nothing lands in a repo at all. What you keep is what you write down.</li>
-      </ul>
-      <p>Each prompt below has a line above it saying what it asks for, and a line below saying what a good answer looks like. Claude will word things differently every time; judge the answer by the pattern, not by matching anyone's text.</p>
+      <p>Three answers, three different builds. Guess wrong and you build the wrong one. That spread is the whole lesson of this hour.</p>
     </section>
 
+    <!-- ============================================================ HOW -->
+    <section class="part" id="how">
+      <div class="part-h">
+        <span class="eyebrow">How this hour works · 1 min</span>
+        <h2>A chat, two queries, <span>your notes</span></h2>
+        <p class="dek">No dbt, no files, no code to write. Your thinking is the work.</p>
+      </div>
+
+      <div class="tbl cards wrap">
+        <table>
+          <thead><tr><th>Tool</th><th>What you use it for</th></tr></thead>
+          <tbody>
+            <tr><td><b>Claude Desktop</b> · <b>Sonnet</b></td><td>three prompts in one chat: unpack, draft questions, draft requirements. Click <b>New chat</b>; pick <b>Sonnet</b> next to the send button.</td></tr>
+            <tr><td><b>SQLTools</b> · HORIZON</td><td>two short queries that prove what is possible. Right-click <b>HORIZON</b> → <em>Connect</em> → <em>New SQL File</em>; to run, select the query and press <kbd>Ctrl+E</kbd> <kbd>Ctrl+E</kbd>.</td></tr>
+            <tr><td><b>A notes page</b> (paper or a text file)</td><td>where your five questions, your gate and your requirements end up. That page is what you leave with.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="box tidbit">
+        <span class="k">Why the cheaper model all hour?</span>
+        <p>In Hour 1 we paid for Opus to plan. This hour the hard part is <b>judgment</b>: which questions matter, which verdict is fair. That judgment is yours, not the model's. Claude only generates options, and Sonnet does that well.</p>
+      </div>
+
+      <div class="box note">
+        <span class="k">Prompt hygiene</span>
+        <p><b>Yes:</b> table names, column names, the request text. <b>Never:</b> real rows, passwords, connection details.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ WORDS -->
+    <section class="part" id="words">
+      <div class="part-h">
+        <span class="eyebrow">Before the first prompt</span>
+        <h2>Six words for <span>this hour</span></h2>
+        <p class="dek">Everything else is in the <a href="glossary.html">glossary</a>.</p>
+      </div>
+      <div class="words">
+        <div class="k">Six words <a href="glossary.html">Full glossary →</a></div>
+        <table>
+          <thead><tr><th>Word</th><th>Plain English</th></tr></thead>
+          <tbody>
+            <tr><td><a href="glossary.html#request-vs-specification">request vs specification</a></td><td>A request says what someone <em>wants</em>, in their words ("real-time"). A specification says exactly what will be <em>built</em>, so you can test it ("refreshed by 07:00 every morning").</td></tr>
+            <tr><td><a href="glossary.html#stakeholder">stakeholder</a></td><td>Anyone who asks for, uses, pays for or <b>governs</b> the thing. The one everybody forgets is the one who governs it (Legal, the data owner).</td></tr>
+            <tr><td><a href="glossary.html#feasibility-verdict">feasibility verdict</a></td><td>Our answer to one requirement. Only three are allowed: <span class="v v-as">buildable as asked</span> <span class="v v-change">buildable with a change</span> <span class="v v-not">not as asked</span>, each with a number from the warehouse.</td></tr>
+            <tr><td><a href="glossary.html#nfr">functional vs non-functional</a></td><td><b>Functional</b>: what it shows ("weekly conversions per market"). <b>Non-functional</b>: how it must behave (how fresh, who may see it, which law applies). Nobody says the second kind. Everybody expects it.</td></tr>
+            <tr><td><a href="glossary.html#batch-fed-vs-real-time">batch vs real-time</a></td><td><b>Batch</b>: data arrives in scheduled loads (nightly, weekly). <b>Real-time</b>: each event arrives within seconds. HORIZON is batch.</td></tr>
+            <tr><td><a href="glossary.html#as-of-date">as-of date</a></td><td>The date the data was last loaded, printed next to every number, so nobody mistakes last Monday's sales for today's.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============================================================ DATA -->
+    <section class="part" id="data">
+      <div class="part-h">
+        <span class="eyebrow">Understand the data · 4-minute read</span>
+        <h2>What the warehouse <span>actually holds</span></h2>
+        <p class="dek">You cannot judge a request without knowing the data. Four short looks, with real rows.</p>
+      </div>
+
+      <div class="trail" aria-label="Where you are"><span class="goal">Goal: one agreed plan</span><i>›</i><span class="on">The data</span><i>›</i><span>1 Unpack</span><i>›</i><span>2 Clarify</span><i>›</i><span>3 Prove</span><i>›</i><span>4 Specify</span></div>
+
+      <h3 id="t-markets">1 · Three markets, three rulebooks</h3>
+      <p>"Across all our markets" means these three. Each has its own regulator and its own law on marketing to young adults:</p>
+      <figure class="sample">
+        <figcaption><b>ref.markets</b> + the rules that apply to each</figcaption>
+        <div class="tbl"><table>
+          <thead><tr><th>market</th><th>name</th><th>region</th><th>regulator</th><th>people</th><th>marketing to under-25s</th></tr></thead>
+          <tbody>
+            <tr><td>JP</td><td>Japan</td><td>APAC</td><td>MHLW</td><td>3,000</td><td class="say">allowed</td></tr>
+            <tr class="x"><td>IT</td><td>Italy</td><td>EU</td><td>AAMS/EU</td><td>2,000</td><td class="say">forbidden</td></tr>
+            <tr class="x"><td>ID</td><td>Indonesia</td><td>APAC</td><td>BPOM</td><td>1,000</td><td class="say">forbidden</td></tr>
+          </tbody>
+        </table></div>
+        <p class="after">Three regulators, two regions, two different laws. "One dashboard for all markets" is not just a technical choice. It is a legal one.</p>
+      </figure>
+
+      <h3 id="t-sales">2 · Sales arrive once a week: <code>rst.sell_through</code></h3>
+      <p><b>One row = one distributor (shop chain), one product, one week.</b> Here are the very first rows. Look at the date column:</p>
+      <figure class="sample">
+        <figcaption><b>rst.sell_through</b> · the first rows, oldest first</figcaption>
+        <div class="tbl"><table>
+          <thead><tr><th>record_id</th><th>sale_date</th><th>day</th><th>market</th><th>distributor</th><th>product</th><th>units_sold</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>2024-01-01</td><td>Mon</td><td>JP</td><td>1</td><td>ZYN</td><td>260</td></tr>
+            <tr><td>106</td><td>2024-01-01</td><td>Mon</td><td>JP</td><td>2</td><td>IQOS</td><td>213</td></tr>
+            <tr><td>211</td><td>2024-01-01</td><td>Mon</td><td>JP</td><td>2</td><td>VEEV</td><td>218</td></tr>
+            <tr><td>316</td><td>2024-01-01</td><td>Mon</td><td>JP</td><td>2</td><td>ZYN</td><td>267</td></tr>
+            <tr><td colspan="7" class="say">… 26 rows arrive every Monday, for 105 Mondays: 2,730 rows</td></tr>
+          </tbody>
+        </table></div>
+        <p class="after">Each row is a whole week of sales, stamped with that week's Monday. Nothing arrives between Mondays. Keep this in mind when you hear "real-time".</p>
+      </figure>
+
+      <h3 id="t-people">3 · People and their age group: <code>clr.consumers</code></h3>
+      <p><b>One row = one person</b>, with their market and their age group (<code>age_band</code>). <code>'18-24'</code> is the under-25 group.</p>
+      <figure class="sample">
+        <figcaption><b>clr.consumers</b> · three example people</figcaption>
+        <div class="tbl"><table>
+          <thead><tr><th>consumer_id</th><th>market_code</th><th>age_band</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>24</td><td>JP</td><td>18-24</td><td class="say">under 25, in Japan: may be marketed to if they said yes</td></tr>
+            <tr class="x"><td>3006</td><td>IT</td><td>18-24</td><td class="say">under 25, in Italy: may never be marketed to</td></tr>
+            <tr><td>5001</td><td>ID</td><td>35-44</td><td class="say">not in the under-25 group</td></tr>
+          </tbody>
+        </table></div>
+      </figure>
+      <p>Whether a person said yes lives in <code>mpl.consent_records</code>, the permission slips from Hour 1 (one per contact channel). This hour we keep it simple: <b>a person counts as "allowed" if at least one of their slips says yes.</b></p>
+
+      <h3 id="t-conv">4 · Conversions: <code>clr.lifecycle_events</code></h3>
+      <p>The diary from Hour 1. "Conversion" is one of five stages (registration → trial → <b>conversion</b> → retention → churn). Every market has conversions, each with a date:</p>
+      <figure class="sample">
+        <figcaption><b>clr.lifecycle_events</b> · conversions per market</figcaption>
+        <div class="tbl"><table>
+          <thead><tr><th>market</th><th>conversions</th><th>weeks that had at least one</th></tr></thead>
+          <tbody>
+            <tr><td>JP</td><td>1,348</td><td>102</td></tr>
+            <tr><td>IT</td><td>794</td><td>98</td></tr>
+            <tr><td>ID</td><td>256</td><td>92</td></tr>
+          </tbody>
+        </table></div>
+        <p class="after">So "conversions per week, per market" can be built. But notice: the request never said <em>which</em> stage counts as a conversion. We had to assume.</p>
+      </figure>
+    </section>
+
+    <!-- ============================================================ LAB -->
     <section class="part" id="lab">
       <div class="part-h">
         <span class="eyebrow">The lab · 37 min</span>
-        <h2>Unpack, clarify, <span>prove</span>, specify</h2>
-        <p class="dek">Three prompts in one Sonnet chat, two queries in SQLTools, one feasibility gate.</p>
+        <h2>Unpack → <span>Clarify</span> → Prove → Specify</h2>
+        <p class="dek">Three prompts in one Sonnet chat, two queries in SQLTools, one page of notes that both sides can sign.</p>
       </div>
 
+      <!-- ===================== STEP 1 -->
       <div class="stage" id="step1" data-n="1">
         <div class="stage-copy">
           <span class="stage-k"><b>1</b>Unpack</span>
-          <h3>Unpack the request</h3>
-          <p>Four ordinary words, four buried assumptions. Separate the feature Marketing named from the objective they actually have.</p>
-          <div class="stage-meta"><span class="t">9 min</span><span class="m">Sonnet</span><span class="">fresh chat</span></div>
+          <h3>Find the guess inside each word</h3>
+          <p>Four ordinary words, four hidden assumptions. Then find the decision Marketing actually wants to make.</p>
+          <div class="stage-meta"><span class="t">9 min</span><span class="m">Sonnet</span><span class="">new chat</span></div>
         </div>
         <div class="stage-art">
           <svg viewBox="0 0 340 210" aria-hidden="true">
@@ -247,24 +399,36 @@
 </svg>
         </div>
       </div>
-      <p>Four ordinary words, four buried assumptions. Write them on your own sheet with room under each:</p>
-      <div class="tbl cards">
+
+      <div class="trail" aria-label="Where you are"><span class="goal">Goal: one agreed plan</span><i>›</i><span class="done">The data</span><i>›</i><span class="on">1 Unpack</span><i>›</i><span>2 Clarify</span><i>›</i><span>3 Prove</span><i>›</i><span>4 Specify</span></div>
+
+      <div class="box analogy">
+        <span class="k">Why this step</span>
+        <p>You cannot ask good questions until you see what is being assumed. Each word in the request is a fork in the road. Left alone, you silently pick a branch, maybe the wrong one.</p>
+      </div>
+
+      <h3>1a · Four words, four assumptions</h3>
+      <p>Copy this table onto your notes page. Fill the last column in your own words.</p>
+      <div class="tbl stack wrap">
         <table>
-          <thead><tr><th>Word</th><th>The assumption hiding underneath</th></tr></thead>
+          <thead><tr><th>The word</th><th>What Marketing pictures</th><th>What we already know</th><th>The question it raises</th></tr></thead>
           <tbody>
-            <tr><td><strong>real-time</strong></td><td>the warehouse is batch-fed; is real-time even possible?</td></tr>
-            <tr><td><strong>conversion</strong></td><td>which lifecycle stage? measured how?</td></tr>
-            <tr><td><strong>across all markets</strong></td><td>JP / IT / ID have different rules; is a uniform view even legal?</td></tr>
-            <tr><td><strong>Power BI</strong></td><td>Marketing has Desktop only: no shared Service workspace, no scheduled cloud refresh</td></tr>
+            <tr><td data-label="Word"><b>real-time</b></td><td data-label="They picture">numbers moving live on screen</td><td data-label="We know">sales arrive weekly, on Mondays</td><td data-label="Question">how fresh does it really need to be?</td></tr>
+            <tr><td data-label="Word"><b>conversion</b></td><td data-label="They picture">everyone agrees what that is</td><td data-label="We know">it is one of five stages, and could be counted many ways</td><td data-label="Question">which stage, counted how, per what period?</td></tr>
+            <tr><td data-label="Word"><b>across all markets</b></td><td data-label="They picture">one view of JP, IT and ID</td><td data-label="We know">three regulators, different laws on under-25s</td><td data-label="Question">is the same view even legal everywhere?</td></tr>
+            <tr><td data-label="Word"><b>Power BI</b></td><td data-label="They picture">a shared dashboard that updates itself</td><td data-label="We know">Marketing has Power BI Desktop only: files on PCs, no shared cloud service</td><td data-label="Question">who refreshes it, and who may see it?</td></tr>
           </tbody>
         </table>
       </div>
-      <div class="box chat"><span class="k">Post in the chat</span><p>Pick one word and post its buried assumption in the chat. Try to post one nobody has posted yet.</p></div>
-      <p>Now separate the <strong>feature</strong> Marketing named (a dashboard) from the <strong>objective</strong> they actually have (a decision they want to make). A <strong>stakeholder</strong> is anyone who asks for, uses, pays for or governs the thing. The one everybody forgets is the one who governs it.</p>
+      <div class="box chat"><span class="k">Post in the chat</span><p><strong>Pick one word and post the guess hiding underneath.</strong><span class="opts">try to post one nobody has posted yet</span></p></div>
+
+      <h3>1b · The feature is not the goal</h3>
+      <p>Marketing named a <b>feature</b>: a dashboard. Behind it is a <b>goal</b>: a decision they want to make. An old saying: <em>people do not want a drill, they want a hole in the wall.</em> If you know the hole, you might find a better tool than the drill.</p>
+      <p>Ask Claude to separate the two, and to list everyone who cares about this dashboard.</p>
 
       <div class="prompt">
-        <p class="model">Model: <b>Sonnet</b> · fresh chat</p>
-        <p class="asks"><b>What this asks Claude to do</b> List who cares about this dashboard and what they would measure with it, without designing anything.</p>
+        <p class="model">Model: <b>Sonnet</b> · new chat</p>
+        <p class="asks"><b>What this asks Claude to do</b>List who cares about this dashboard, and suggest three goals it might really serve. No design, no code.</p>
         <pre><code class="language-text">Context: I am a data engineer at PMI on Project HORIZON, a Postgres warehouse covering Japan, Italy and Indonesia. A Marketing stakeholder asked: "Can you build us real-time conversion dashboards in Power BI, across all our markets, so we can watch the smoke-free transition as it happens?"
 Task: separate the feature they named (a dashboard) from the business objective behind it.
 Tables: clr.lifecycle_events (consumer_id, market_code, lifecycle_stage, event_date); rst.sell_through (sale_date, market_code, distributor_id, product_code, units_sold).
@@ -273,15 +437,47 @@ Output:
 1. A short stakeholder list: who asked, who else would use this, who governs it.
 2. Three candidate measurable objectives this dashboard might really serve, each phrased so we could later verify whether it was met.
 Respond in Markdown only. Do not create any file.</code></pre>
-        <p class="good"><b>What a good answer looks like</b> A stakeholder list with a governance or regulatory owner on it, and three objectives that each contain a measure and a time window, for example <em>"weekly conversion rate by market, flag a market declining two weeks running."</em></p>
       </div>
-      <p>Pick <strong>one</strong> objective with the class. Reject "watch it as it happens" out loud: that is a feeling, not an objective. If Claude's stakeholder list omits governance or regulatory, add it yourself; that omission is itself the lesson.</p>
+      <div class="lines"><table><tbody>
+        <tr><td>Context: … A Marketing stakeholder asked: "…"</td><td>Who we are, plus the request word for word, so Claude works on the real wording.</td></tr>
+        <tr><td>Task: separate the feature … from the objective</td><td>The drill vs the hole.</td></tr>
+        <tr><td>Tables: …</td><td>Names only, so Claude's ideas stay inside what our data can measure.</td></tr>
+        <tr><td>Rules: no design and no SQL yet</td><td>Shift left, applied to Claude: no jumping ahead to building.</td></tr>
+        <tr><td>who governs it</td><td>We ask for this on purpose, because it is the stakeholder most often forgotten.</td></tr>
+        <tr><td>measurable objectives … verify whether it was met</td><td>A goal you can check later, not a feeling.</td></tr>
+      </tbody></table></div>
 
+      <p>An example of a good answer (Claude will word it differently):</p>
+      <div class="prompt file" data-label="Example answer · yours will be worded differently">
+        <pre><code>Stakeholders
+- Asked: Marketing leads, per market
+- Use it: market analytics teams, brand managers
+- Govern it: Legal / Regulatory (per market), the data owner of consent data
+
+Candidate objectives
+1. Weekly conversion count per market; flag any market that falls two weeks running.
+2. Conversions per campaign, compared with the four weeks before it started.
+3. Share of trial users who convert within 30 days, per market, per quarter.</code></pre>
+      </div>
+      <p><b>Check it:</b> does the stakeholder list include someone who <b>governs</b> (Legal, Regulatory, the data owner)? If not, add it yourself; that gap is the lesson. Does each objective have a <b>measure</b> and a <b>time window</b>? "Watch it as it happens" has neither: it is a feeling, not an objective.</p>
+
+      <div class="box chat"><span class="k">Vote in the chat</span><p><strong>Which of Claude's three objectives would you build first?</strong><span class="opts">1 · 2 · 3</span></p></div>
+
+      <div class="box try">
+        <span class="k">Step 1 is done when</span>
+        <ul class="checklist">
+          <li>your notes have the four words, each with its question</li>
+          <li>you wrote down <b>one</b> objective with a measure and a time window</li>
+          <li>your stakeholder list includes who governs it</li>
+        </ul>
+      </div>
+
+      <!-- ===================== STEP 2 -->
       <div class="stage" id="step2" data-n="2">
         <div class="stage-copy">
           <span class="stage-k"><b>2</b>Clarify</span>
-          <h3>Clarify, then curate</h3>
-          <p>Claude is good at generating clarifying questions. Your job is to choose: keep the five whose answers change what you build.</p>
+          <h3>Claude drafts twenty questions. You keep five.</h3>
+          <p>Generating questions is easy. Choosing the ones that change what you build is the skill.</p>
           <div class="stage-meta"><span class="t">9 min</span><span class="m">Sonnet</span><span class="">same chat</span></div>
         </div>
         <div class="stage-art">
@@ -329,40 +525,78 @@ Respond in Markdown only. Do not create any file.</code></pre>
 </svg>
         </div>
       </div>
-      <p>Stay in the same chat. A <strong>clarifying question</strong> is a question whose answer changes what you build. Claude is good at generating them. <strong>Your job is to choose.</strong> To <strong>curate</strong> is to keep the few that matter and cut the rest; twenty questions is a way of not deciding.</p>
 
+      <div class="trail" aria-label="Where you are"><span class="goal">Goal: one agreed plan</span><i>›</i><span class="done">The data</span><i>›</i><span class="done">1 Unpack</span><i>›</i><span class="on">2 Clarify</span><i>›</i><span>3 Prove</span><i>›</i><span>4 Specify</span></div>
+
+      <div class="box analogy">
+        <span class="k">Why this step</span>
+        <p>Marketing's time is limited. Send them twenty questions and you get no answers. Send them five that really matter and you get a design.</p>
+      </div>
+
+      <h3>The one rule for keeping a question</h3>
+      <p class="rule-line">Keep a question only if <span class="w">a different answer would change what you build.</span></p>
+      <p>Try the rule on three questions:</p>
+      <div class="tbl stack wrap">
+        <table>
+          <thead><tr><th>Question</th><th>If Marketing answers differently…</th><th>Keep?</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Question">"How fresh does it need to be?"</td><td data-label="Different answer">"live" means a stream; "each morning" means one overnight refresh. Completely different builds.</td><td data-label="Keep?"><span class="v v-as">keep</span></td></tr>
+            <tr><td data-label="Question">"Is an under-25 group in scope?"</td><td data-label="Different answer">"yes" is illegal in IT and ID; "no" is fine everywhere.</td><td data-label="Keep?"><span class="v v-as">keep</span></td></tr>
+            <tr><td data-label="Question">"Which colours do you like?"</td><td data-label="Different answer">same data, same pipeline, different paint.</td><td data-label="Keep?"><span class="v v-not">cut</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>2a · Let Claude generate</h3>
       <div class="prompt">
         <p class="model">Model: <b>Sonnet</b> · same chat</p>
-        <p class="asks"><b>What this asks Claude to do</b> Draft the questions you should put to Marketing before designing anything, grouped by theme, with a reason for each.</p>
+        <p class="asks"><b>What this asks Claude to do</b>Draft the questions to ask Marketing before any design, grouped by topic, each with a note on what a different answer would change.</p>
         <pre><code class="language-text">Context: the same Marketing request: "real-time conversion dashboards in Power BI across all our markets". I have not designed or built anything yet.
 Task: draft the clarifying questions I should ask Marketing before any design work.
 Tables: clr.lifecycle_events (consumer_id, market_code, lifecycle_stage, event_date); clr.consumers (consumer_id, market_code, age_band); mpl.consent_records (consumer_id, marketing_allowed, consent_date); rst.sell_through (sale_date, market_code, product_code, units_sold).
 Rules: group them under five headings: data scope and definitions; freshness and latency; markets and regulatory constraints; access and delivery; success criteria. Three or four questions per heading. Under each question add one line starting "A different answer changes:".
 Output: a Markdown list.
 Respond in Markdown only. Do not create any file.</code></pre>
-        <p class="good"><b>What a good answer looks like</b> Fifteen to twenty questions in five groups, each with its "A different answer changes:" line. That is more than you can ask Marketing. It is supposed to be.</p>
       </div>
-      <p>The rule: <em>a clarifying question is worth asking only if a different answer would change what you build.</em> Curate to five:</p>
-      <div class="tbl cards">
+      <div class="lines"><table><tbody>
+        <tr><td>I have not designed or built anything yet</td><td>Tells Claude we are at the very start of the timeline: far left.</td></tr>
+        <tr><td>five headings: …</td><td>Makes sure no area is forgotten: definitions, freshness, law, access, success.</td></tr>
+        <tr><td>"A different answer changes:"</td><td>Our keep-or-cut rule, built into the prompt. Each question must justify itself.</td></tr>
+      </tbody></table></div>
+      <p>Expect <b>15 to 20 questions</b>. That is more than Marketing will ever answer. It is supposed to be: now you choose.</p>
+
+      <h3>2b · You curate: keep five</h3>
+      <p>Read Claude's list with the rule in mind. Here are five a strong engineer would keep (yours may be worded differently):</p>
+      <div class="tbl stack wrap">
         <table>
-          <thead><tr><th>Keep</th><th>Because a different answer changes…</th></tr></thead>
+          <thead><tr><th class="n">#</th><th>Keep this question</th><th>Because a different answer changes…</th><th>Unpacks</th></tr></thead>
           <tbody>
-            <tr><td>Define "conversion"</td><td>which lifecycle stage you query</td></tr>
-            <tr><td>How fresh, really: as it happens, or each morning?</td><td>the entire architecture</td></tr>
-            <tr><td>Is an under-25 segment in scope?</td><td>legality in IT and ID (the under-25 rule)</td></tr>
-            <tr><td>Who may see it, and how is it delivered?</td><td>access controls, given Power BI Desktop</td></tr>
-            <tr><td>What decision will Marketing make from it?</td><td>the acceptance test</td></tr>
+            <tr><td class="n" data-label="">1</td><td data-label="Question">What exactly counts as a conversion: the <code>'conversion'</code> stage, counted per week, per market?</td><td data-label="Changes">which data we read and how we count it</td><td data-label="Word">conversion</td></tr>
+            <tr><td class="n" data-label="">2</td><td data-label="Question">How fresh does it really need to be: live, or current each morning?</td><td data-label="Changes">the entire design: stream vs overnight refresh</td><td data-label="Word">real-time</td></tr>
+            <tr><td class="n" data-label="">3</td><td data-label="Question">Is an under-25 group in scope, and in which markets?</td><td data-label="Changes">whether it is legal in IT and ID</td><td data-label="Word">all markets</td></tr>
+            <tr><td class="n" data-label="">4</td><td data-label="Question">Who may see it, and how will it reach them?</td><td data-label="Changes">access control and delivery (Desktop files travel by email)</td><td data-label="Word">Power BI</td></tr>
+            <tr><td class="n" data-label="">5</td><td data-label="Question">What decision will you make from it, and how will we know it worked?</td><td data-label="Changes">what "done" means: the acceptance test</td><td data-label="Word">the goal</td></tr>
           </tbody>
         </table>
       </div>
-      <div class="box chat"><span class="k">Post in the chat</span><p>One question from Claude's list you would <strong>cut</strong>, and why.</p></div>
 
+      <div class="box chat"><span class="k">Post in the chat</span><p><strong>One question from Claude's list you would cut, and why.</strong><span class="opts">use the rule: "a different answer would not change…"</span></p></div>
+
+      <div class="box try">
+        <span class="k">Step 2 is done when</span>
+        <ul class="checklist">
+          <li>you have exactly <b>five</b> questions on your notes page</li>
+          <li>you can say, for each, what a different answer would change</li>
+        </ul>
+      </div>
+
+      <!-- ===================== STEP 3 -->
       <div class="stage" id="step3" data-n="3">
         <div class="stage-copy">
           <span class="stage-k"><b>3</b>Prove</span>
-          <h3>Prove feasibility against the warehouse</h3>
-          <p>Demonstrate, don't assert. Two queries settle two arguments: is "real-time" possible, and is a cross-market view legal?</p>
-          <div class="stage-meta"><span class="t">11 min</span><span class="">SQLTools · 2 queries</span><span class="">feasibility gate</span></div>
+          <h3>Two queries settle two arguments</h3>
+          <p>Is "real-time" possible? Is "all markets" legal? Don't argue: show the warehouse's answer.</p>
+          <div class="stage-meta"><span class="t">11 min</span><span class="">SQLTools · 2 proofs</span><span class="">feasibility gate</span></div>
         </div>
         <div class="stage-art">
           <svg viewBox="0 0 340 210" aria-hidden="true">
@@ -408,82 +642,145 @@ Respond in Markdown only. Do not create any file.</code></pre>
   <text x="58" y="170" font-size="8.5" fill="#7EF0DA">Mondays</text>
   <text x="58" y="182" font-size="8.5" fill="#93A7C6">0 other days</text>
   <rect x="180" y="10" width="156" height="190" rx="12" fill="#0F2547" stroke="#fff" stroke-opacity=".12"/>
-  <text x="190" y="30" font-size="8.5" fill="#93A7C6" letter-spacing=".8">under-25 mktg allowed</text>
+  <text x="190" y="30" font-size="8.5" fill="#93A7C6" letter-spacing=".8">under-25s allowed (people)</text>
   <path d="M190 170 H326" stroke="#93A7C6" stroke-opacity=".4"/>
   <path d="M190 60 H326" stroke="#93A7C6" stroke-opacity=".15" stroke-dasharray="3 3"/>
   <rect x="198" y="167" width="34" height="3" rx="1.5" fill="#FF8A7A"/>
   <rect x="242" y="167" width="34" height="3" rx="1.5" fill="#FF8A7A"/>
-  <rect class="fx-float" x="286" y="90" width="34" height="80" rx="4" fill="#00C9A7"/>
+  <rect class="fx-float" x="286" y="72" width="34" height="98" rx="4" fill="#00C9A7"/>
   <text x="215" y="158" text-anchor="middle" font-size="12" font-weight="700" fill="#FF8A7A">0%</text>
   <text x="259" y="158" text-anchor="middle" font-size="12" font-weight="700" fill="#FF8A7A">0%</text>
-  <text x="303" y="82" text-anchor="middle" font-size="12" font-weight="700" fill="#7EF0DA">73%</text>
+  <text x="303" y="64" text-anchor="middle" font-size="12" font-weight="700" fill="#7EF0DA">89%</text>
   <text x="215" y="188" text-anchor="middle" font-size="9" fill="#93A7C6">ID</text>
   <text x="259" y="188" text-anchor="middle" font-size="9" fill="#93A7C6">IT</text>
   <text x="303" y="188" text-anchor="middle" font-size="9" fill="#93A7C6">JP</text>
 </svg>
         </div>
       </div>
+
+      <div class="trail" aria-label="Where you are"><span class="goal">Goal: one agreed plan</span><i>›</i><span class="done">The data</span><i>›</i><span class="done">1 Unpack</span><i>›</i><span class="done">2 Clarify</span><i>›</i><span class="on">3 Prove</span><i>›</i><span>4 Specify</span></div>
+
+      <div class="box analogy">
+        <span class="k">Why this step</span>
+        <p>"I don't think real-time is possible" starts an argument. "105 Mondays, zero exceptions" ends it. A number from the warehouse lets an engineer say "not like that, but like this" without a fight. <b>Demonstrate, don't assert.</b></p>
+      </div>
+
+      <!-- Proof A -->
+      <div class="qcard" id="proofA">
+        <header><span class="qn">A</span><span class="qk">Proof A · the word "real-time"</span><h4>"How often does sales data actually arrive?"</h4></header>
+        <div class="qb">
+          <span class="qlabel">Why we run it</span>
+          <p>A dashboard can only be as fresh as its data. If sales arrived every few seconds, "real-time" would be possible. If they arrive once a week, it is not.</p>
+          <span class="qlabel">Run this</span>
+          <div class="prompt sql"><pre><code class="language-sql">select count(*) as rows,
+       count(distinct sale_date) as weeks,
+       count(*) filter (where to_char(sale_date, 'Dy') &lt;&gt; 'Mon') as not_monday,
+       min(sale_date) as first_week,
+       max(sale_date) as last_week
+from rst.sell_through;</code></pre></div>
+          <span class="qlabel">Line by line</span>
+          <div class="lines"><table><tbody>
+            <tr><td>count(*) as rows</td><td>How many rows of sales are there in total?</td></tr>
+            <tr><td>count(distinct sale_date) as weeks</td><td>How many <b>different</b> dates? Each date is one delivery of data.</td></tr>
+            <tr><td>count(*) filter (where to_char(sale_date, 'Dy') &lt;&gt; 'Mon')</td><td>Count only the rows whose date is <b>not</b> a Monday. (<code>to_char(…, 'Dy')</code> turns a date into its day name, like <code>Mon</code>; <code>&lt;&gt;</code> means "is not".)</td></tr>
+            <tr><td>min(sale_date) / max(sale_date)</td><td>The first and the last delivery.</td></tr>
+            <tr><td>from rst.sell_through</td><td>…in the weekly sales table.</td></tr>
+          </tbody></table></div>
+          <span class="qlabel">What comes back, and what "real-time" would have looked like</span>
+          <div class="results">
+            <div class="res r-ok"><div class="rh">What HORIZON returns</div><table><thead><tr><th>rows</th><th>weeks</th><th>not Mon</th></tr></thead><tbody><tr><td>2730</td><td>105</td><td>0</td></tr></tbody></table><div class="rv"><b>Weekly, like clockwork.</b>105 deliveries in two years, from 2024-01-01 to 2025-12-29, every one a Monday.</div></div>
+            <div class="res r-bad"><div class="rh">What a live feed would return (imagined)</div><table><thead><tr><th>rows</th><th>timestamps</th></tr></thead><tbody><tr><td>millions</td><td>one every few seconds</td></tr></tbody></table><div class="rv"><b>Not our warehouse.</b>We would need a new streaming platform, and the shops would have to send data live.</div></div>
+          </div>
+          <p class="meaning"><b>What it means for the plan:</b> "real-time" is <span class="v v-change">buildable with a change</span>. The honest offer is "fresh every morning", with the <b>as-of date</b> next to every number, so nobody mistakes last Monday's sales for today's.</p>
+        </div>
+      </div>
+
+      <!-- Proof B -->
+      <div class="qcard" id="proofB">
+        <header><span class="qn">B</span><span class="qk">Proof B · the words "all markets"</span><h4>"In each market, how many under-25s may we market to?"</h4></header>
+        <div class="qb">
+          <span class="qlabel">Why we run it</span>
+          <p>If the dashboard shows one under-25 view for all markets, it must be legal in all of them. The law says Italy and Indonesia forbid it. Let's see if the data agrees.</p>
+          <span class="qlabel">Run this</span>
+          <div class="prompt sql"><pre><code class="language-sql">select c.market_code,
+       count(*) as under25_people,
+       count(*) filter (where exists (
+           select 1
+           from mpl.consent_records m
+           where m.consumer_id = c.consumer_id
+             and m.marketing_allowed)) as allowed
+from clr.consumers c
+where c.age_band = '18-24'
+group by c.market_code
+order by c.market_code;</code></pre></div>
+          <span class="qlabel">Line by line</span>
+          <div class="lines"><table><tbody>
+            <tr><td>from clr.consumers c
+where c.age_band = '18-24'</td><td>Start from the people table, keep only under-25s.</td></tr>
+            <tr><td>group by c.market_code</td><td>Make one result row per market.</td></tr>
+            <tr><td>count(*) as under25_people</td><td>How many under-25s live in that market?</td></tr>
+            <tr><td>count(*) filter (where exists ( … ))</td><td>…and how many of them pass the test in brackets?</td></tr>
+            <tr><td>select 1 from mpl.consent_records m
+where m.consumer_id = c.consumer_id
+  and m.marketing_allowed</td><td>The test: "does this person have <b>at least one</b> permission slip that says yes?" (<code>exists</code> asks "is there at least one such row?")</td></tr>
+          </tbody></table></div>
+          <span class="qlabel">What comes back</span>
+          <figure class="sample">
+            <figcaption>The result</figcaption>
+            <div class="tbl"><table>
+              <thead><tr><th>market_code</th><th>under25_people</th><th>allowed</th><th></th></tr></thead>
+              <tbody>
+                <tr class="x"><td>ID</td><td>191</td><td>0</td><td class="say">forbidden by law: zero, not "low"</td></tr>
+                <tr class="x"><td>IT</td><td>249</td><td>0</td><td class="say">forbidden by law: zero, not "low"</td></tr>
+                <tr class="hl"><td>JP</td><td>359</td><td>319</td><td class="say">allowed in Japan: 89% said yes</td></tr>
+              </tbody>
+            </table></div>
+          </figure>
+          <p class="meaning"><b>What it means for the plan:</b> an under-25 view across all markets is <span class="v v-not">not as asked</span>: it would be illegal in Italy and Indonesia. What we <em>can</em> offer: Japan only, or no under-25 group at all. "Not as asked" always comes with what <em>is</em> buildable.</p>
+        </div>
+      </div>
+
       <div class="tally" role="group" aria-label="What Step 3 proves">
-        <div class="tl hot"><span>Distinct weeks</span><b data-count="105">105</b><small>every sale_date a Monday</small></div>
-        <div class="tl"><span>Non-Mondays</span><b>0</b><small>a weekly batch feed</small></div>
+        <div class="tl hot"><span>Deliveries</span><b data-count="105">105</b><small>all on Mondays</small></div>
+        <div class="tl"><span>Non-Mondays</span><b>0</b><small>a weekly batch</small></div>
         <span class="op" aria-hidden="true">·</span>
-        <div class="tl bad"><span>Under-25 · ID</span><b>0%</b><small>marketing allowed</small></div>
-        <div class="tl bad"><span>Under-25 · IT</span><b>0%</b><small>marketing allowed</small></div>
-        <div class="tl"><span>Under-25 · JP</span><b data-count="73">73%</b><small>675 of 924 consent rows</small></div>
+        <div class="tl bad"><span>Under-25 · ID</span><b>0</b><small>of 191 allowed</small></div>
+        <div class="tl bad"><span>Under-25 · IT</span><b>0</b><small>of 249 allowed</small></div>
+        <div class="tl"><span>Under-25 · JP</span><b data-count="319">319</b><small>of 359 allowed (89%)</small></div>
       </div>
-      <p>Demonstrate, don't assert. Two queries settle two arguments.</p>
-      <div class="box try"><span class="k">Running a query in SQLTools</span><p>In the VS Code sidebar open SQLTools (the database icon); if <strong>HORIZON</strong> shows as disconnected, right-click it → <strong>Connect</strong>; then right-click <strong>HORIZON</strong> → <strong>New SQL File</strong>, paste the query, then click <strong>Run on active connection</strong> just above it (or select the text and press <kbd>Ctrl</kbd>+<kbd>E</kbd> twice). The result opens in a new tab. Copy the numbers into your notes next to the verdict they support.</p></div>
 
-      <h3 id="step3a">(a) Is "real-time" possible? Sell-through is weekly.</h3>
-      <div class="prompt sql">
-        <p class="asks"><b>What this checks</b> How often sell-through data arrives: how many rows, how many distinct weeks, and whether any date is not a Monday.</p>
-        <pre><code class="language-sql">select count(*) as rows, count(distinct sale_date) as distinct_weeks,
-       count(*) filter (where extract(isodow from sale_date) &lt;&gt; 1) as non_monday_rows,
-       min(sale_date), max(sale_date)
-from rst.sell_through;
--- 2,730 rows · 105 distinct weeks · 0 non-Mondays · 2024-01-01 → 2025-12-29</code></pre>
-        <p class="good"><b>Expected result</b> <span class="expect ok">2,730 rows</span> <span class="expect ok">105 distinct weeks</span> <span class="expect ok">0 non-Mondays</span> <span class="expect note">2024-01-01 → 2025-12-29</span></p>
-      </div>
-      <p>Reading the query: <code>extract(isodow from sale_date)</code> is the ISO day of the week, Monday = 1 through Sunday = 7, so <code>non_monday_rows</code> counts rows whose date is not a Monday. <code>count(*) filter (where ...)</code> counts only the rows that match the condition. 0 non-Mondays and 105 distinct dates across two years means the feed is one row per distributor, product and <strong>week</strong>. There is no event stream to be real-time about.</p>
-      <p>Verdict on "real-time": <span class="v v-change">buildable with a change</span> Nothing arrives faster than weekly, so the honest offer is a refresh each morning (or weekly), with the as-of date on every number.</p>
-
-      <h3 id="step3b">(b) Is a uniform cross-market view legal? Under-25 marketing is forbidden in Italy and Indonesia.</h3>
-      <div class="prompt sql">
-        <p class="asks"><b>What this checks</b> Per market, what share of under-25 consent rows allow marketing.</p>
-        <pre><code class="language-sql">select c.market_code,
-       count(*) filter (where c.age_band = '18-24') as under25_rows,
-       count(*) filter (where c.age_band = '18-24' and m.marketing_allowed) as under25_mktg_ok,
-       round(100.0 * count(*) filter (where c.age_band = '18-24' and m.marketing_allowed)
-             / nullif(count(*) filter (where c.age_band = '18-24'), 0), 0) as pct
-from clr.consumers c left join mpl.consent_records m using (consumer_id)
-group by 1 order by 1;
--- ID 0% · IT 0% · JP 73%</code></pre>
-        <p class="good"><b>Expected result</b> <span class="expect ok">ID 0%</span> <span class="expect ok">IT 0%</span> <span class="expect">JP 73%</span> <span class="expect note">JP: 675 of 924 under-25 consent rows</span></p>
-      </div>
-      <p>Reading the query: <code>clr.consumers</code> is LEFT JOINed to the consent ledger on <code>consumer_id</code>, so each consumer appears once per consent row (about 2.5 times) and the counts are consent rows, not people (Japan: 675 of 924 under-25 consent rows allow marketing; counted as people, 319 of 359 under-25 consumers). A LEFT JOIN keeps every consumer even if no consent row matches (an INNER JOIN would drop those consumers). In HORIZON every consumer has at least one consent row, so the choice does not change these counts; it is there so a consumer with no consent would still appear, with <code>marketing_allowed</code> blank. For a legality check the rows-versus-people difference does not matter: the number that matters is zero or not zero. <code>nullif(..., 0)</code> stops a division by zero in a market with no under-25 rows.</p>
-      <p>Verdict on an under-25 cross-market segment: <span class="v v-not">not as asked</span> Non-compliant in IT and ID. Scope to Japan or drop the segment.</p>
-
-      <h3 id="gate">The feasibility gate</h3>
-      <p>One line per requirement, one verdict each, a number beside every verdict:</p>
-      <div class="tbl verdict">
+      <h3 id="gate">3c · The feasibility gate</h3>
+      <p>Now put it together: one line per requirement, one verdict each, <b>a number beside every verdict</b>. Copy it onto your notes page. This is what you would show Marketing.</p>
+      <div class="tbl stack wrap">
         <table>
-          <thead><tr><th>Requirement</th><th>Verdict</th><th>Evidence</th></tr></thead>
+          <thead><tr><th>Requirement</th><th>Verdict</th><th>The number that proves it</th><th>What we offer</th></tr></thead>
           <tbody>
-            <tr><td>Cross-market <strong>weekly</strong> conversion view</td><td><span class="v v-as">buildable as asked</span></td><td>conversion rows exist in every market in clr.lifecycle_events, each with an event_date, so rolling them up by week is one GROUP BY; the sell-through feed beside them is already weekly (every sale_date a Monday)</td></tr>
-            <tr><td>"Real-time" refresh</td><td><span class="v v-change">buildable with a change</span> each morning, not live</td><td>105 weekly periods, batch-fed</td></tr>
-            <tr><td>Under-25 cross-market segment</td><td><span class="v v-not">not as asked</span></td><td>0% marketing-allowed in IT and ID</td></tr>
-            <tr><td>Power BI delivery</td><td><span class="v v-change">buildable with a change</span> shared Desktop file</td><td>no Power BI Service workspace in HORIZON; Desktop files only</td></tr>
+            <tr><td data-label="Requirement"><b>Weekly conversions per market</b></td><td data-label="Verdict"><span class="v v-as">buildable as asked</span></td><td data-label="Evidence">conversions exist in every market: JP 1,348 · IT 794 · ID 256, each with a date</td><td data-label="Offer">exactly that, once "conversion" is defined</td></tr>
+            <tr><td data-label="Requirement"><b>"Real-time"</b></td><td data-label="Verdict"><span class="v v-change">buildable with a change</span></td><td data-label="Evidence">105 weekly deliveries, 0 on other days</td><td data-label="Offer">fresh every morning, as-of date on every number</td></tr>
+            <tr><td data-label="Requirement"><b>An under-25 group, all markets</b></td><td data-label="Verdict"><span class="v v-not">not as asked</span></td><td data-label="Evidence">0 allowed in IT (of 249) and ID (of 191)</td><td data-label="Offer">Japan only, or no under-25 group</td></tr>
+            <tr><td data-label="Requirement"><b>Power BI delivery</b></td><td data-label="Verdict"><span class="v v-change">buildable with a change</span></td><td data-label="Evidence">Desktop only: no shared Power BI cloud service in this setup</td><td data-label="Offer">a Desktop file shared with the analytics team only</td></tr>
           </tbody>
         </table>
       </div>
-      <div class="box note"><span class="k">Role cards</span><p>The instructor may have given three volunteers a role card (Marketing, Legal or the Vendor). If you hold one, this is where you speak: Marketing pushes back on the verdicts, Legal asks the under-25 question, the Vendor offers a streaming platform. Everyone else: judge who has a number.</p></div>
-      <div class="box chat"><span class="k">Post in the chat</span><p>Which verdict would Marketing push back on hardest, and what number do you show them?</p></div>
+      <div class="box tidbit"><span class="k">The three verdicts, and why there is no "no"</span><p><span class="v v-as">buildable as asked</span> we build what they said. <span class="v v-change">buildable with a change</span> we build something close, and say exactly what changes. <span class="v v-not">not as asked</span> we cannot build it that way, <b>and here is what we can build instead</b>. A bare "no" ends the conversation; these three keep it going.</p></div>
 
+      <div class="box note"><span class="k">Role cards</span><p>Three volunteers may hold a role card. <b>Marketing</b> pushes back on the verdicts. <b>Legal</b> asks the under-25 question. <b>The Vendor</b> pitches a streaming platform. Everyone else: judge who has a number.</p></div>
+      <div class="box chat"><span class="k">Post in the chat</span><p><strong>Which verdict will Marketing push back on hardest, and what number do you show them?</strong></p></div>
+
+      <div class="box try">
+        <span class="k">Step 3 is done when</span>
+        <ul class="checklist">
+          <li>you ran both proofs: <b>105 · 0</b> and <b>ID 0 · IT 0 · JP 319 of 359</b></li>
+          <li>your notes have the four-line gate, with a number on every line</li>
+        </ul>
+      </div>
+
+      <!-- ===================== STEP 4 -->
       <div class="stage" id="step4" data-n="4">
         <div class="stage-copy">
           <span class="stage-k"><b>4</b>Specify</span>
           <h3>The requirements Marketing never said</h3>
-          <p>Turn Marketing's answers into testable requirements, plus the non-functional ones they will assume and never state.</p>
+          <p>Turn Marketing's answers into requirements you could test, plus the hidden ones everybody assumes.</p>
           <div class="stage-meta"><span class="t">8 min</span><span class="m">Sonnet</span><span class="">same chat</span></div>
         </div>
         <div class="stage-art">
@@ -518,11 +815,31 @@ group by 1 order by 1;
 </svg>
         </div>
       </div>
-      <p>Imagine Marketing has answered your five questions. Now turn the answers into two lists. <strong>Functional requirements</strong> say what the dashboard shows, in words you could test with a query. <strong>Non-functional requirements (NFRs)</strong> say how it must behave: how often it refreshes, what it costs, who may see it, where the data lives, which regulation applies. Marketing will state none of these and assume all of them.</p>
 
+      <div class="trail" aria-label="Where you are"><span class="goal">Goal: one agreed plan</span><i>›</i><span class="done">The data</span><i>›</i><span class="done">1 Unpack</span><i>›</i><span class="done">2 Clarify</span><i>›</i><span class="done">3 Prove</span><i>›</i><span class="on">4 Specify</span></div>
+
+      <div class="box analogy">
+        <span class="k">Why this step</span>
+        <p>Answers in a chat are easy to forget and argue about later. A short written list of requirements is what both sides sign, and what the build is tested against.</p>
+      </div>
+
+      <h3>Two kinds of requirement, explained with a pizza</h3>
+      <div class="tbl cards wrap">
+        <table>
+          <thead><tr><th></th><th>Ordering a pizza</th><th>Our dashboard</th></tr></thead>
+          <tbody>
+            <tr><td><b>Functional</b><br><small>what it is</small></td><td>large, pepperoni, extra cheese</td><td>weekly conversions per market, Monday-dated</td></tr>
+            <tr><td><b>Non-functional</b><br><small>how it must behave</small></td><td>arrives hot, within 30 minutes, at the right address</td><td>fresh by 07:00, only the analytics team can see it, no under-25 view in IT or ID</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Nobody orders a pizza "hot, please". Everybody expects it. Non-functional requirements are the same: <b>nobody says them, everybody assumes them</b>, and the project fails if you miss one.</p>
+
+      <h3>4a · Let Claude draft both lists</h3>
+      <p>Imagine Marketing answered your five questions like this. Send it to Claude:</p>
       <div class="prompt">
         <p class="model">Model: <b>Sonnet</b> · same chat</p>
-        <p class="asks"><b>What this asks Claude to do</b> Turn Marketing's answers into a testable checklist of what the dashboard must do, plus the hidden requirements they will assume.</p>
+        <p class="asks"><b>What this asks Claude to do</b>Turn Marketing's answers into a short list of testable requirements, plus a table of the hidden ones.</p>
         <pre><code class="language-text">Context: Marketing has answered our clarifying questions about the HORIZON conversion dashboard:
 - conversion = rows where lifecycle_stage = 'conversion' in clr.lifecycle_events
 - "real-time" means refreshed each morning; the source feed, rst.sell_through, is weekly
@@ -535,21 +852,115 @@ Output:
 1. A short list of explicit, testable functional requirements (what the dashboard shows).
 2. A table of the non-functional requirements Marketing did not state but will assume, covering refresh cadence, cost, reliability, access control, data residency per market, and the regulatory constraint. Columns: requirement · why it matters here · one open question to confirm.
 Respond in Markdown only. Do not create any file.</code></pre>
-        <p class="good"><b>What a good answer looks like</b> Functional requirements you could check with a query ("weekly conversion count per market, Monday-dated"), and an NFR table of six or seven rows, each with a genuine open question. It will probably miss the as-of date.</p>
       </div>
-      <div class="box trap"><span class="k">Curate again</span><p>Delete one row that does not apply, and add the one Claude missed. The usual miss: every number must carry the <strong>as-of date</strong> of its source data, because "refreshed each morning" describes the report, not the data. A dashboard refreshed at 07:00 on Tuesday still shows last Monday's weekly feed.</p></div>
-      <div class="box chat"><span class="k">Post in the chat</span><p>What percentage of the "real-time" requests you have received actually needed under one minute of latency?</p></div>
-      <div class="box tidbit"><span class="k">The AI connection</span><p>Marketing's ambiguous request and a vague prompt fail the same way. "Build me a dashboard" gets you a plausible wrong build; "draft me a model" gets you plausible wrong SQL. In both cases the gap is filled with the most likely guess, silently; this morning the guess was "latest consent". A model only knows what is in its <a href="glossary.html#context-window"><strong>context window</strong></a> (everything it can see while it answers), and that window is a finite <a href="glossary.html#attention-budget"><strong>attention budget</strong></a>: it degrades as it fills. Requirements for humans are <strong>context</strong> for models. Shift left applies to prompts too: schema, grain, scope, constraints, before you ask. Look back at the three prompts above: each one carried its context, its tables and its rules before it asked for anything.</p></div>
+      <div class="lines"><table><tbody>
+        <tr><td>Marketing has answered … (4 lines)</td><td>The answers to our five questions. Everything Claude writes must come from these.</td></tr>
+        <tr><td>do not invent data volumes or costs</td><td>Stops Claude from making up numbers that sound real.</td></tr>
+        <tr><td>explicit, testable functional requirements</td><td>Each one should be checkable with a query later.</td></tr>
+        <tr><td>covering refresh cadence, cost, … regulatory</td><td>A checklist so no hidden requirement is skipped.</td></tr>
+        <tr><td>one open question to confirm</td><td>Every assumption gets a question, so it is confirmed instead of guessed.</td></tr>
+      </tbody></table></div>
+
+      <p>An example of a good answer (shortened; yours will differ):</p>
+      <div class="prompt file" data-label="Example answer · functional requirements">
+        <pre><code>1. Weekly conversion count per market (JP, IT, ID), each week dated by its Monday.
+2. Week-on-week change per market.
+3. A flag when a market declines two weeks running.
+4. Markets shown side by side, never blended into one total.
+5. No age breakdown below 25 outside Japan.</code></pre>
+      </div>
+      <div class="tbl stack wrap">
+        <table>
+          <thead><tr><th>Non-functional requirement</th><th>Why it matters here</th><th>Open question</th></tr></thead>
+          <tbody>
+            <tr><td data-label="NFR"><b>Refreshed by 07:00 each morning</b></td><td data-label="Why">the feed is weekly; daily refresh is honest, live is not</td><td data-label="Question">is a Monday-only refresh enough?</td></tr>
+            <tr><td data-label="NFR"><b>Access: Marketing analytics only</b></td><td data-label="Why">a Desktop file can be emailed to anyone</td><td data-label="Question">who owns the file, and where is it stored?</td></tr>
+            <tr><td data-label="NFR"><b>Data residency per market</b></td><td data-label="Why">JP and ID are APAC, IT is EU</td><td data-label="Question">may only totals leave each region?</td></tr>
+            <tr><td data-label="NFR"><b>No under-25 view in IT or ID</b></td><td data-label="Why">the law in both markets; 0 allowed</td><td data-label="Question">does Legal sign off the Japan-only group?</td></tr>
+            <tr><td data-label="NFR"><b>A missed load is visible</b></td><td data-label="Why">Hour 2: green is not right</td><td data-label="Question">who is told when the data goes stale?</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>4b · Curate again: add the one Claude usually misses</h3>
+      <p>Delete one row that does not apply, and add the one Claude almost always forgets: <b>the as-of date</b>. Here is why it matters:</p>
+      <figure class="sample">
+        <figcaption>Example: one week of a "refreshed every morning" dashboard</figcaption>
+        <div class="tbl"><table>
+          <thead><tr><th>dashboard refreshed</th><th>newest sales it can show</th><th>what a reader assumes</th></tr></thead>
+          <tbody>
+            <tr><td>Tue 07:00</td><td>week of Monday 22 Dec</td><td class="say">"these are this week's numbers"</td></tr>
+            <tr><td>Wed 07:00</td><td>week of Monday 22 Dec</td><td class="say">"still this week"</td></tr>
+            <tr class="x"><td>Sun 07:00</td><td>week of Monday 22 Dec</td><td class="say">six days old, and nothing on screen says so</td></tr>
+            <tr class="hl"><td>any day</td><td><b>"Data as of: week of 22 Dec"</b></td><td class="say">nobody can be misled</td></tr>
+          </tbody>
+        </table></div>
+        <p class="after">"Refreshed each morning" describes the <b>report</b>. The as-of date describes the <b>data</b>. Every number needs it.</p>
+      </figure>
+
+      <div class="box tidbit">
+        <span class="k">The AI connection: requirements for humans are context for models</span>
+        <p>A vague request to a person and a vague prompt to Claude fail the same way: the gap gets filled with the most likely guess, silently.</p>
+        <div class="tbl cards" style="margin:0.4rem 0 0.2rem">
+          <table>
+            <thead><tr><th></th><th>Vague</th><th>What fills the gap</th></tr></thead>
+            <tbody>
+              <tr><td>To a person</td><td>"build me a real-time dashboard"</td><td>their picture of "real-time" (1 second? 1 day?)</td></tr>
+              <tr><td>To Claude</td><td>"attach <em>the</em> consent record" (Hour 1)</td><td>the most likely guess: one of four slips</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>A model only knows what is in its <a href="glossary.html#context-window"><b>context window</b></a>, everything it can see while it answers. So shift left applies to prompts too: put the definitions, tables and rules in <em>before</em> you ask. Look back at this hour's three prompts: each one gave its context, its tables and its rules first.</p>
+      </div>
+
+      <div class="box chat"><span class="k">Post in the chat</span><p><strong>Of the "real-time" requests you have received, what percentage really needed under one minute?</strong></p></div>
+
+      <div class="box try">
+        <span class="k">Step 4 is done when</span>
+        <ul class="checklist">
+          <li>your notes have a short functional list you could test with queries</li>
+          <li>your hidden-requirements list includes <b>the as-of date</b></li>
+        </ul>
+      </div>
     </section>
 
+    <!-- ============================================================ PARKING -->
     <section class="part" id="parking">
       <div class="part-h">
         <span class="eyebrow">Parking lot · 4 min, with the instructor</span>
         <h2>Your own <span>requests</span></h2>
-        <p class="dek">Two real requests from the room, unpacked live.</p>
+        <p class="dek">Two real requests from the room, unpacked live in two minutes each.</p>
       </div>
-      <p>Before the break you were asked to add one real request from your own work to the parking lot (the shared board). The board link is posted in the chat at 1:55. If you cannot open it, post your request in the chat starting with <code>PARKING:</code>. If you did not post one, post it now in one line. The instructor picks two and runs the four-word unpack live: circle the four most dangerous words, name the assumption under each in five words, and give a one-line feasibility verdict before anyone would have written code. A two-minute sketch, and it is a design document.</p>
-      <div class="box chat"><span class="k">Post in the chat</span><p>The four words you would circle in your own request. That is your Monday artefact, drafted.</p></div>
+      <p>Before the break you posted one real request from your own work (on the shared board, or in the chat starting with <code>PARKING:</code>). Didn't post one? Post it now, in one line. The instructor picks two and runs the same method, fast:</p>
+      <ol class="steps">
+        <li><b>Circle</b> the four most dangerous words.</li>
+        <li><b>Name</b> the guess under each, in five words.</li>
+        <li><b>Give</b> a one-line verdict, before anyone writes code.</li>
+      </ol>
+      <p>Two minutes, and it is a design document.</p>
+      <div class="box chat"><span class="k">Post in the chat</span><p><strong>The four words you would circle in your own request.</strong><span class="opts">that is your Monday homework, already started</span></p></div>
+    </section>
+
+    <!-- ============================================================ RECAP -->
+    <section class="part" id="recap">
+      <div class="part-h">
+        <span class="eyebrow">Debrief</span>
+        <h2>What just <span>happened</span></h2>
+        <p class="dek">One hour, no code, and a project that will now be built once instead of three times.</p>
+      </div>
+      <div class="tbl cards">
+        <table>
+          <thead><tr><th></th><th>The request as written</th><th>Your plan</th></tr></thead>
+          <tbody>
+            <tr><td><b>"Real-time"</b></td><td>a live stream nobody can feed</td><td>fresh every morning, as-of date on every number <span class="yes">✓</span></td></tr>
+            <tr><td><b>"Conversion"</b></td><td>undefined</td><td>the <code>'conversion'</code> stage, weekly, per market <span class="yes">✓</span></td></tr>
+            <tr><td><b>"All markets"</b></td><td>an illegal under-25 view in IT and ID</td><td>markets side by side; under-25 in Japan only, or not at all <span class="yes">✓</span></td></tr>
+            <tr><td><b>"Power BI"</b></td><td>a shared cloud dashboard that does not exist</td><td>a Desktop file for the analytics team <span class="yes">✓</span></td></tr>
+            <tr><td><b>Evidence</b></td><td>opinions</td><td>105 Mondays · 0 · 0 · 319 of 359 <span class="yes">✓</span></td></tr>
+            <tr><td><b>Code written</b></td><td colspan="2">none, and that is the point</td></tr>
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <section class="part" id="takeaway">
@@ -558,8 +969,8 @@ Respond in Markdown only. Do not create any file.</code></pre>
         <h2>Align first, build once. <span>Shift left.</span></h2>
         <p class="dek">A request is intent, not a specification.</p>
       </div>
-      <p><strong>A request is intent, not a specification.</strong> Every ambiguous word is a fork in the design; left unresolved you silently pick a branch. Use AI to surface the forks fast, curate to the questions whose answers change the build, confirm feasibility against the warehouse, and bring back a design both sides agree on. <em>Align first, build once. Shift left.</em></p>
-      <p><strong>Numbers to remember:</strong> 105 Mondays · 0% · 0% · 73% (and, if you ran the regulatory variant below, filing acceptance 14 / 65 / 69).</p>
+      <p><b>A request is intent, not a specification.</b> Every vague word is a fork in the road; left alone, you silently pick a branch. Use AI to find the forks fast, keep only the questions whose answers change the build, prove what is possible with a number from the warehouse, and write down the requirements nobody said. <em>Align first, build once.</em></p>
+      <p><b>Numbers to remember:</b> 105 Mondays · 0 in Italy · 0 in Indonesia · 319 of 359 in Japan.</p>
       <div class="earned">
         <svg viewBox="0 0 160 160" aria-hidden="true">
           <circle cx="80" cy="80" r="76" fill="none" style="stroke:var(--lab)" stroke-opacity=".45" stroke-width="1.5" stroke-dasharray="2 5"/>
@@ -573,36 +984,62 @@ Respond in Markdown only. Do not create any file.</code></pre>
         </svg>
         <div>
           <span class="k">Artefact earned · Hour 3</span>
-          <h3>A design both sides agree on, before any code exists</h3>
+          <h3>A plan both sides can sign, before any code exists</h3>
           <ul>
-            <li>five clarifying questions, each one changing what you build</li>
+            <li>five clarifying questions, each one changing what gets built</li>
             <li>a four-line feasibility gate: one verdict and one warehouse number per requirement</li>
             <li>the requirements Marketing never said, with the as-of date on every number</li>
           </ul>
         </div>
       </div>
-
-      <div class="box try"><span class="k">On Monday</span><p>Take one ambiguous request you are sitting on (a DCA classification scope, an MCTS brief or a REEV integration ask, three of your internal systems, or a compliance query). Write three clarifying questions whose answers would change the design, one non-functional requirement it assumed but never stated, and a one-line feasibility verdict, before writing any code.</p></div>
+      <div class="box try"><span class="k">On Monday</span><p>Take one vague request you are sitting on. Circle its four most dangerous words. Write three questions whose answers would change the design, one hidden requirement nobody said, and a one-line verdict, before writing any code.</p></div>
     </section>
 
-    <section class="part" id="regulatory">
+    <!-- ============================================================ CHALLENGES -->
+    <section class="part" id="challenges">
       <div class="part-h">
-        <span class="eyebrow">Optional</span>
-        <h2>If you want the <span>regulatory</span> variant</h2>
-        <p class="dek">The original WA3908 lab: one more ambiguous request, one more query.</p>
+        <span class="eyebrow">Finished early? · pick one</span>
+        <h2><span>Challenges</span></h2>
+        <p class="dek">Four extras, easiest first. Each has a hint and the answer to check yourself against. Your instructor has the full solutions.</p>
       </div>
-      <blockquote class="request"><p>"Show me our marketing compliance posture across HORIZON."</p></blockquote>
-      <p><strong>Compliance posture</strong> is the regulatory team's phrase for "how compliant are we overall", and the request assumes it is one number. The warehouse says a single blended number is dishonest: three regulators, two regions, and one market far behind the others. <code>rfr.filings</code> holds 112 regulatory filings (a submission to a regulator about a product, with a <code>status</code> such as <code>accepted</code>). <code>string_agg(distinct f.regulator, ', ')</code> lists each market's regulators in one cell.</p>
-      <div class="prompt sql">
-        <p class="asks"><b>What this checks</b> Filing acceptance per market, with each market's region and regulators.</p>
-        <pre><code class="language-sql">select f.market_code, m.region, count(*) as filings,
-       round(100.0 * count(*) filter (where status = 'accepted') / count(*), 0) as pct_accepted,
-       string_agg(distinct f.regulator, ', ') as regulators
-from rfr.filings f join ref.markets m using (market_code) group by 1, 2 order by 1;
--- ID 14% (BPOM) · IT 65% (AAMS/EU) · JP 69% (MHLW): three regulators, two regions. Per-market is the only honest design.</code></pre>
-        <p class="good"><b>Expected result</b> <span class="expect">ID 14% (BPOM)</span> <span class="expect">IT 65% (AAMS/EU)</span> <span class="expect">JP 69% (MHLW)</span></p>
+
+      <div class="challenges">
+        <article class="challenge" id="c1">
+          <header><span class="lvl" aria-label="Level 1 of 3">★☆☆</span><h3>1 · What is the as-of date?</h3><span class="t">5 min</span></header>
+          <p><b>The question:</b> the dashboard will read from three tables. What date would you print next to each one's numbers? Find the newest date in <code>rst.sell_through</code> (<code>sale_date</code>), <code>clr.lifecycle_events</code> (<code>event_date</code>) and <code>mpl.consent_records</code> (<code>consent_date</code>).</p>
+          <details class="fold hint"><summary>Hint</summary><p><code>select max(sale_date) from rst.sell_through;</code> gives the newest date in one table. Do the same for the other two, or glue the three answers into one result with <code>union all</code>.</p></details>
+          <details class="fold answer"><summary>Check your answer</summary><p><b>Sales 2025-12-29 · conversions 2025-12-31 · consent 2025-10-29.</b> Three tables, three different as-of dates. The consent data is two months older than the rest, so a single "as of" stamp on the whole dashboard would mislead. That is a hidden requirement nobody said: <b>one as-of date per source</b>.</p></details>
+        </article>
+
+        <article class="challenge" id="c2">
+          <header><span class="lvl" aria-label="Level 2 of 3">★★☆</span><h3>2 · Prove the weekly view, then spot the hole</h3><span class="t">10 min</span></header>
+          <p><b>The question:</b> the gate says "weekly conversions per market" is buildable as asked. Prove it with one query: one row per week, per market, with the number of conversions. Then look closely. Is anything missing?</p>
+          <details class="fold hint"><summary>Hint</summary><p><code>date_trunc('week', event_date)</code> turns any date into the Monday of its week. Filter to <code>lifecycle_stage = 'conversion'</code>, then <code>group by</code> the week and <code>market_code</code>. Count your result rows. The data covers 105 weeks and 3 markets: how many rows would a complete chart need?</p></details>
+          <details class="fold answer"><summary>Check your answer</summary><p>The query returns <b>292 rows</b>, but a complete chart needs 105 × 3 = <b>315</b>. Weeks with zero conversions simply vanish: <b>JP 3, IT 7, ID 13</b>. On a line chart, a missing week is silently skipped, not shown as zero. Another hidden requirement: <b>every week appears, zero included</b>.</p></details>
+        </article>
+
+        <article class="challenge" id="c3">
+          <header><span class="lvl" aria-label="Level 2 of 3">★★☆</span><h3>3 · The "compliance posture" request</h3><span class="t">10 min</span></header>
+          <p><b>The question:</b> a second request arrives: <em>"Show me our marketing compliance posture across HORIZON."</em> It assumes compliance is <b>one number</b>. Use <code>rfr.filings</code> (one row per regulatory filing, with <code>market_code</code>, <code>regulator</code> and <code>status</code>) to find the share of filings with <code>status = 'accepted'</code>: for all markets together, then per market.</p>
+          <details class="fold hint"><summary>Hint</summary><p><code>round(100.0 * count(*) filter (where status = 'accepted') / count(*))</code> gives the accepted percentage. Run it once without grouping, then again with <code>group by market_code</code>. Compare.</p></details>
+          <details class="fold answer"><summary>Check your answer</summary><p><b>All together: 50%</b> (56 of 112). <b>Per market: ID 14% (BPOM) · IT 65% (AAMS/EU) · JP 69% (MHLW).</b> The blended 50% hides that Indonesia is far behind. Verdict on one number: <span class="v v-change">buildable with a change</span>: one number per market, each with its regulator and as-of date.</p></details>
+        </article>
+
+        <article class="challenge" id="c4">
+          <header><span class="lvl" aria-label="Level 3 of 3">★★★</span><h3>4 · Unpack your own request, then let Claude grade you</h3><span class="t">15 min</span></header>
+          <p><b>The question:</b> can you run the whole method on a real request from your work? Write it in one line. Circle four words, write five questions using the keep-or-cut rule, and give a one-line verdict. Then, in a <b>new chat</b>, paste this prompt with your work filled in:</p>
+          <div class="prompt">
+            <pre><code class="language-text">Context: I am a data engineer. A stakeholder asked: "[your request]".
+I circled these four words: [words]. My five clarifying questions are: [questions]. My verdict: [verdict].
+Task: critique my questions. For each, say whether a different answer would really change what gets built.
+Then name one hidden (non-functional) requirement I missed, and one stakeholder I forgot, especially anyone who governs this.
+Rules: under 20 lines. No design, no code. Do not rewrite my questions for me.
+Respond in Markdown only. Do not create any file.</code></pre>
+          </div>
+          <details class="fold hint"><summary>Hint</summary><p>Use the real wording of the request, not a summary: the dangerous words hide in the exact phrasing. Leave out names, customer data and anything confidential. The words and the shape of the request are enough.</p></details>
+          <details class="fold answer"><summary>Check your answer</summary><p>No single right answer. A strong result: Claude agrees most of your questions pass the rule, finds one hidden requirement you missed (often the as-of date, access or residency), and names one forgotten governor. If Claude says all five are perfect, ask it to be stricter: <em>Claude generates, you curate</em> works both ways.</p></details>
+        </article>
       </div>
-      <p>Verdict on a single "posture" number: <span class="v v-change">buildable with a change</span> one number per market, each with its regulator and its as-of date. A blended number is not as asked, because it hides the market that is far behind.</p>
     </section>
 
     <nav class="lab-next" aria-label="Previous and next">

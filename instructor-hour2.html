@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Hour 2 instructor guide · Project HORIZON lab guides</title>
+<meta name="description" content="Instructor guide for Lab 2 (Green is not right): what each table is, what every number means, what to say and click at each step, and the challenge solutions. Project HORIZON is fictional and training-only.">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#0C2040">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230C2040'/%3E%3Crect x='6' y='6' width='9' height='9' rx='2' fill='%23FF4A00'/%3E%3Crect x='17' y='17' width='9' height='9' rx='2' fill='%2300C9A7'/%3E%3C/svg%3E">
+<style>
+  /* Instructor-only helpers, built from the site's tokens */
+  .say { border-left-color: var(--teal); background: var(--teal-soft); }
+  .say > .k { color: var(--teal-ink); }
+  .say p { font-size: 1.05rem; line-height: 1.55; color: var(--head); }
+  .say p + p { margin-top: 0.5rem; }
+  .do { border-left-color: var(--blue); background: var(--blue-soft); }
+  .do > .k { color: var(--blue); }
+  .seen { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; margin: 0 0 1rem; max-width: var(--measure); }
+  .seen > b { font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 500; margin-right: 0.2rem; }
+  .tables3 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 0 0 1.5rem; }
+  .tcard { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius); padding: 1rem 1.1rem 1.1rem; display: grid; gap: 0.45rem; align-content: start; box-shadow: var(--shadow); }
+  .tcard .nm { font-family: var(--f-mono); font-size: 0.85rem; color: var(--accent-ink); font-weight: 500; }
+  .tcard .big { font-family: var(--f-display); font-weight: 700; font-size: 2.1rem; line-height: 1; color: var(--head); letter-spacing: -0.02em; }
+  .tcard .big small { font-size: 0.9rem; font-weight: 500; color: var(--muted); letter-spacing: 0; margin-left: 0.3rem; }
+  .tcard p { margin: 0; font-size: 0.95rem; line-height: 1.5; }
+  .tcard .like { font-size: 0.92rem; color: var(--muted); font-style: italic; }
+  @media (max-width: 760px) { .tables3 { grid-template-columns: minmax(0, 1fr); } }
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="mast-in">
+    <nav class="sitenav" aria-label="Lab guides">
+      <a class="brand" href="index.html">Project HORIZON</a>
+      <a href="index.html">Start here</a>
+      <a href="hour1.html">Hour 1</a>
+      <a href="hour2.html">Hour 2</a>
+      <a href="hour3.html">Hour 3</a>
+      <a href="hour4.html">Hour 4</a>
+      <a href="glossary.html">Glossary</a>
+    </nav>
+    <div class="mast-grid">
+      <div class="mast-copy">
+        <div class="eyebrow">Instructor guide · Hour 2 · WA3904 · 1:08 to 1:55</div>
+        <h1>Green ≠ right, <span>for the instructor</span><small>What each table is, what every number means, what to say and click at each step, and the challenge solutions.</small></h1>
+        <p class="lede">The student guide is <a href="hour2.html">hour2.html</a>. This page sits next to it: read it once the night before, keep it open on a second screen during class. <strong>Every number on it was checked against the HORIZON warehouse.</strong></p>
+        <p class="lede" style="font-size:0.95rem">Instructor guides: <a href="instructor-hour1.html">Hour 1</a> · <a href="instructor-hour2.html" aria-current="page"><b>Hour 2</b></a> · <a href="instructor-hour3.html">Hour 3</a> · <a href="instructor-hour4.html">Hour 4</a></p>
+        <div class="meta"><span>47 min</span><span>31 hands-on</span><span>Claude Desktop · Sonnet only</span><span>dbt · SQLTools</span></div>
+      </div>
+      <div class="mfd" role="img" aria-label="The numbers that carry Hour 2: where campaign_id is not 1 returns 0, not 15,523; Japan has 1,050 source rows but the pipeline stages 945; 105 rows of JP Ecommerce Distributor 3 are dropped; Italy drops 210 rows of IT Partner Distributor 2; the guard fails once with 1 result and then passes.">
+        <div class="hd"><b>The numbers that carry the hour</b><b>value</b></div>
+        <div class="row"><span class="lbl">where campaign_id &lt;&gt; 1 (room says 15,523)</span><span class="was">0</span></div>
+        <div class="row"><span class="lbl">Japan rows: source → pipeline</span><span class="val">1,050 → 945</span></div>
+        <div class="row"><span class="lbl">JP Ecommerce Distributor 3, dropped</span><span class="was">105</span></div>
+        <div class="row"><span class="lbl">IT Partner Distributor 2, dropped</span><span class="was">210</span></div>
+        <div class="row"><span class="lbl">Japan rows after the one-line fix</span><span class="now">1,050</span></div>
+        <div class="row"><span class="lbl">the test, line put back on purpose</span><span class="was">FAIL 1</span></div>
+        <div class="ft">If you remember nothing else: <span class="blink">green tells you it ran, not that it's right.</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="frame">
+  <details class="toc" id="toc" open>
+    <summary>On this page</summary>
+    <ol>
+      <li class="grp">Understand it</li>
+      <li><a href="#breath">The hour in one breath</a></li>
+      <li><a href="#emphasize">What to emphasize</a></li>
+      <li><a href="#tables">The tables, simply</a></li>
+      <li><a href="#problem">The problem, in plain words</a></li>
+      <li><a href="#numbers">Every number, and what it means</a></li>
+      <li><a href="#know">What you need to know</a></li>
+      <li class="grp">Teach it</li>
+      <li><a href="#before">Before class</a></li>
+      <li><a href="#run">Run of show, with script</a></li>
+      <li class="sub"><a href="#t108">1:08 Opener</a></li>
+      <li class="sub"><a href="#t112">1:12 Mission and the data</a></li>
+      <li class="sub"><a href="#t119">1:19 Step 1 · Detect</a></li>
+      <li class="sub"><a href="#t128">1:28 Step 2 · Diagnose</a></li>
+      <li class="sub"><a href="#t135">1:35 Step 3 · Correct</a></li>
+      <li class="sub"><a href="#t139">1:39 Step 4 · Prevent</a></li>
+      <li class="sub"><a href="#t150">1:50 Debrief</a></li>
+      <li><a href="#answers">Chat questions and the answers</a></li>
+      <li class="grp">Rescue it</li>
+      <li><a href="#trouble">When something breaks</a></li>
+      <li><a href="#behind">If you are behind</a></li>
+      <li><a href="#canned">Canned SQL to paste</a></li>
+      <li class="grp">Stretch it</li>
+      <li><a href="#solutions">Challenge solutions</a></li>
+    </ol>
+  </details>
+
+  <main id="main">
+
+    <section class="part" id="breath">
+      <div class="part-h">
+        <span class="eyebrow">Understand it · 1 minute</span>
+        <h2>The hour in <span>one breath</span></h2>
+      </div>
+      <ol class="steps">
+        <li><b>The request:</b> "Italy's sell-through number looks low. The pipeline has been green for weeks and no alert fired. Can you confirm it is fine?"</li>
+        <li><b>The catch:</b> two nightly pipelines each carry one reasonable-looking channel filter. Italy silently drops one distributor (210 rows); Japan silently drops another (105 rows). Nothing errors, so nobody noticed Japan at all.</li>
+        <li><b>What students do:</b> the loop <b>Detect → Diagnose → Correct → Prevent</b>. Count raw rows against pipeline rows per distributor (starting from the list of distributors that should exist), read the model and have Claude explain it, prove the cause with a count of exactly 105, delete one line, then have Claude write a dbt test and break the pipeline on purpose to watch it fail.</li>
+        <li><b>What they leave with:</b> a fixed <code>analytics.japan_sell_through</code> (1,050 rows, was 945) and a guard, <code>tests/assert_japan_no_dropped_distributors.sql</code>, that they have seen go red once.</li>
+      </ol>
+      <p class="rule-line">The line to repeat all hour: <span class="w">automation does the work, you own the outcome.</span></p>
+    </section>
+
+    <section class="part" id="emphasize">
+      <div class="part-h">
+        <span class="eyebrow">Understand it · the three things that must land</span>
+        <h2>What to <span>emphasize</span></h2>
+        <p class="dek">If the room forgets everything else, these three survive.</p>
+      </div>
+      <div class="tbl stack wrap">
+        <table>
+          <thead><tr><th class="n">#</th><th>Must land</th><th>Why it matters</th></tr></thead>
+          <tbody>
+            <tr><td class="n" data-label="">1</td><td data-label="Must land"><b>A green run is not a right number.</b> Job status tells you the SQL executed; only a reconciliation against the source tells you the number is right.</td><td data-label="Why">Every silent failure this hour (the NULL opener, both channel filters, the uncalibrated threshold) ran green. If they leave thinking "monitor the job", the hour failed.</td></tr>
+            <tr><td class="n" data-label="">2</td><td data-label="Must land"><b>Reconcile per key, starting from what should exist.</b> Start from the list of distributors, then count each one's rows in the source and in the pipeline, so a distributor with nothing in the pipeline shows up as a 0.</td><td data-label="Why">A check that starts from the pipeline's own rows never sees the missing distributor: it inherits the pipeline's blind spot. The guide's "Why start from the list matters" box says this in plain words; read it aloud.</td></tr>
+            <tr><td class="n" data-label="">3</td><td data-label="Must land"><b>A guard you have never seen fail is a guard you trust on faith.</b> Put the bad line back, watch the test go red, take it out again.</td><td data-label="Why">This is the beat people remember and the one you never cut. It turns "we added a test" into "we know the test works".</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="box tidbit"><span class="k">And the stance to model, not just say</span><p>Claude is an investigative companion, not an oracle. Run every query it writes against the warehouse before you believe it, out loud, every time.</p></div>
+    </section>
+
+    <section class="part" id="tables">
+      <div class="part-h">
+        <span class="eyebrow">Understand it · 3 minutes</span>
+        <h2>The tables, <span>simply</span></h2>
+        <p class="dek">One raw feed, one lookup, two pipelines built from them, and one table borrowed from Hour 1 for the opener.</p>
+      </div>
+
+      <div class="tables3">
+        <div class="tcard">
+          <span class="nm">rst.sell_through</span>
+          <span class="big">2,730 <small>rows · the source</small></span>
+          <p><b>What it is:</b> weekly retail sales. One row = one distributor, one product, one week. Every <code>sale_date</code> is a Monday: 105 Mondays, 2024-01-01 to 2025-12-29.</p>
+          <p><b>By market:</b> Japan 1,050 rows · Italy 945 · Indonesia 735. This is the truth the pipelines should copy.</p>
+          <p class="like">Like the till receipts: what actually got sold, before anyone filtered anything.</p>
+        </div>
+        <div class="tcard">
+          <span class="nm">rst.distributors</span>
+          <span class="big">12 <small>distributors</small></span>
+          <p><b>What it is:</b> who sells the product. One row per distributor, with a <code>channel_type</code>: <code>branded_retail</code> (PMI's own stores), <code>partner_retail</code> (third-party shops) or <code>ecommerce</code>.</p>
+          <p><b>Japan has 5:</b> Branded 1, Partner 2, <b>Ecommerce 3</b> (id 3), Branded 4, Partner 5. Italy has 4, including <b>Partner 2</b> (id 7).</p>
+          <p class="like">Like the supplier list: one row per partner, safe to join, and where the channel lives.</p>
+        </div>
+        <div class="tcard">
+          <span class="nm">analytics.japan_sell_through · analytics.italy_sell_through</span>
+          <span class="big">945 <small>Japan rows (should be 1,050)</small></span>
+          <p><b>What they are:</b> the two nightly pipelines (dbt views): sell-through for one market, with the distributor's name and channel attached. Same grain as the source.</p>
+          <p><b>Today:</b> Japan stages 945 of 1,050; Italy stages 735 of 945. Both have been "green" all along.</p>
+          <p class="like">Like the weekly report someone builds from the receipts: it looks complete, and nobody checks it against the till.</p>
+        </div>
+        <div class="tcard">
+          <span class="nm">clr.lifecycle_events</span>
+          <span class="big">15,597 <small>rows · opener only</small></span>
+          <p><b>What it is:</b> the consumer journey table from Hour 1. Used only for the three-minute NULL opener.</p>
+          <p><b>The fact:</b> only 74 rows have a <code>campaign_id</code> (all campaign 1); the other 15,523 are NULL.</p>
+          <p class="like">Like a form where most people left "campaign" blank: blank is not "not campaign 1", it is "unknown".</p>
+        </div>
+      </div>
+
+      <div class="box trap">
+        <span class="k">945 shows up twice: don't let it confuse you</span>
+        <p>Italy's <b>source</b> has 945 rows, and Japan's <b>planted pipeline</b> also has 945 rows. They are unrelated. When a student says "945", ask "Japan staged, or Italy source?"</p>
+      </div>
+    </section>
+
+    <section class="part" id="problem">
+      <div class="part-h">
+        <span class="eyebrow">Understand it · 3 minutes</span>
+        <h2>The problem, in <span>plain words</span></h2>
+        <p class="dek">Two pipelines, two one-line rules, two whole distributors gone.</p>
+      </div>
+
+      <h3>Japan (the lab): a rule hidden in the join</h3>
+      <div class="prompt sql" data-label="models/japan_sell_through.sql · the planted line">
+<pre><code class="language-sql">join {{ source('rst', 'distributors') }} d
+    on d.distributor_id = s.distributor_id
+   and d.channel_type &lt;&gt; 'ecommerce'   -- exclude non-store channels
+where s.market_code = 'JP'</code></pre>
+      </div>
+      <p>The join matches a sale to its distributor <b>and</b> requires the distributor not to be ecommerce. Japan has exactly one ecommerce distributor, JP Ecommerce Distributor 3, so every one of its 105 weekly rows fails the join and never enters the pipeline. That is 17,721 units and about €88,700 of sales, 6.9% of Japan's units, missing from every dashboard. No error: a join that matches nothing is perfectly legal SQL.</p>
+
+      <div class="tbl stack wrap">
+        <table>
+          <thead><tr><th>Stage</th><th>Rows</th><th>In plain words</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Stage">source, Japan</td><td data-label="Rows"><span class="expect">1,050</span></td><td data-label="Plain words">every weekly sale that happened</td></tr>
+            <tr><td data-label="Stage">the join's channel rule</td><td data-label="Rows"><span class="expect bad">−105</span></td><td data-label="Plain words">JP Ecommerce Distributor 3, all of it, on the floor</td></tr>
+            <tr><td data-label="Stage">pipeline, Japan</td><td data-label="Rows"><span class="expect note">945</span></td><td data-label="Plain words">what the dashboard shows. Job status: green</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Italy (the story Marketing noticed): a rule in the WHERE</h3>
+      <p><code>and d.channel_type in ('branded_retail', 'ecommerce')  -- limit to reportable retail channels</code> keeps two of three channels, so Italy's one <code>partner_retail</code> distributor, IT Partner Distributor 2, loses all 210 rows (25,461 units). Marketing noticed because the number looked low. Students only <em>detect</em> Italy in the main lab; they fix Japan. Fixing Italy is Challenge 1, and it comes with a sign-off question.</p>
+
+      <div class="box analogy">
+        <span class="k">Why this is the same bug as the opener</span>
+        <p>A plausible-looking condition quietly removes legitimate rows. In the opener it was <code>campaign_id &lt;&gt; 1</code> against NULLs; here it is a channel rule in a join. Different column, same class of failure: <b>a filter nobody questioned, and no error to tell you.</b></p>
+      </div>
+
+      <div class="box trap">
+        <span class="k">The fix is to delete the line, not move it</span>
+        <p>Moving <code>and d.channel_type &lt;&gt; 'ecommerce'</code> from the join into the <code>where</code> drops the same 105 rows from a different place. The rule is wrong, not misplaced. Whether ecommerce should count is a business decision nobody was asked about, which is the bridge to Hour 3.</p>
+      </div>
+    </section>
+
+    <section class="part" id="numbers">
+      <div class="part-h">
+        <span class="eyebrow">Understand it · reference</span>
+        <h2>Every number, and <span>what it means</span></h2>
+        <p class="dek">In the order they come up. The "say it as" column is the plain sentence for the room.</p>
+      </div>
+      <div class="tbl stack wrap">
+        <table>
+          <thead><tr><th>Number</th><th>What it is</th><th>Comes up</th><th>Say it as</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Number"><b>15,597</b></td><td data-label="What it is">all rows in <code>clr.lifecycle_events</code></td><td data-label="Comes up">opener</td><td data-label="Say it as">"The whole consumer journey table."</td></tr>
+            <tr><td data-label="Number"><b>74</b></td><td data-label="What it is">rows with <code>campaign_id = 1</code> (the only campaign that appears)</td><td data-label="Comes up">opener</td><td data-label="Say it as">"74 belong to campaign 1."</td></tr>
+            <tr><td data-label="Number"><b>15,523</b></td><td data-label="What it is">what the room predicts for <code>campaign_id &lt;&gt; 1</code>; also the real count of NULL campaign rows, and what <code>is distinct from 1</code> returns</td><td data-label="Comes up">opener</td><td data-label="Say it as">"The answer you expected, and the answer you only get with IS DISTINCT FROM."</td></tr>
+            <tr><td data-label="Number"><b>0</b></td><td data-label="What it is">what <code>where campaign_id &lt;&gt; 1</code> actually returns: <code>NULL &lt;&gt; 1</code> is unknown, and WHERE keeps only true</td><td data-label="Comes up">opener</td><td data-label="Say it as">"Zero. Green run, wrong by 15,523."</td></tr>
+            <tr><td data-label="Number"><b>945</b></td><td data-label="What it is">rows in <code>analytics.japan_sell_through</code> as planted (also, coincidentally, Italy's source row count)</td><td data-label="Comes up">pre-flight</td><td data-label="Say it as">"945: a plausible number. Plausible is the problem."</td></tr>
+            <tr><td data-label="Number"><b>9</b></td><td data-label="What it is">rows the Step 1 reconciliation returns: 4 Italy + 5 Japan distributors</td><td data-label="Comes up">Step 1</td><td data-label="Say it as">"Nine distributors, two of them with nothing staged."</td></tr>
+            <tr><td data-label="Number"><b>210</b></td><td data-label="What it is">IT Partner Distributor 2: 210 source rows, 0 staged (2 products × 105 weeks)</td><td data-label="Comes up">Step 1</td><td data-label="Say it as">"Marketing noticed this one because the number looked low."</td></tr>
+            <tr><td data-label="Number"><b>105</b></td><td data-label="What it is">JP Ecommerce Distributor 3: 105 source rows, 0 staged (1 product × 105 Mondays). Step 2's proof query returns exactly 105 too</td><td data-label="Comes up">Steps 1 and 2</td><td data-label="Say it as">"Nobody noticed this one. That silence is the hour."</td></tr>
+            <tr><td data-label="Number"><b>17,721 · 6.9%</b></td><td data-label="What it is">units missing from Japan (of 256,810), about €88,700 of revenue</td><td data-label="Comes up">Step 2, if asked "does it matter?"</td><td data-label="Say it as">"Seven percent of Japan's units, invisible, every night."</td></tr>
+            <tr><td data-label="Number"><b>1,050</b></td><td data-label="What it is">Japan source rows, and Japan pipeline rows after the fix</td><td data-label="Comes up">Step 3 · Correct</td><td data-label="Say it as">"1,050 in, 1,050 out. Reconcile again: every missing = 0."</td></tr>
+            <tr><td data-label="Number"><b>PASS=1</b></td><td data-label="What it is">the reconciliation guard passing on the fixed model</td><td data-label="Comes up">Step 4 · Prevent</td><td data-label="Say it as">"Green, but we have not earned it yet."</td></tr>
+            <tr><td data-label="Number"><b>FAIL 1 · Got 1 result</b></td><td data-label="What it is">the guard with the bad line put back: one row, JP Ecommerce Distributor 3, 105 source, 0 staged</td><td data-label="Comes up">Step 4 · prove the alarm rings</td><td data-label="Say it as">"That red line is what should have happened the day this filter shipped."</td></tr>
+            <tr><td data-label="Number"><b>10 series · 0.41× to 1.57×</b></td><td data-label="What it is">Japan's 10 distributor-and-product series; every week sits between 0.41 and 1.57 times its own average</td><td data-label="Comes up">Challenge 3</td><td data-label="Say it as">"Look at the real spread before you accept anyone's threshold."</td></tr>
+            <tr><td data-label="Number"><b>6</b> vs <b>0</b></td><td data-label="What it is">normal weeks flagged by Claude's usual 0.5×/2× factors vs by 0.35×/1.75× (on the fixed 1,050-row model)</td><td data-label="Comes up">Challenge 3</td><td data-label="Say it as">"Six false alarms and nobody trusts the test by Friday."</td></tr>
+            <tr><td data-label="Number"><b>€88,700 · €138,100</b></td><td data-label="What it is">sales missing from the pipelines: JP Ecommerce Distributor 3 (€88,694, 7.1% of Japan's revenue) and IT Partner Distributor 2 (€138,131)</td><td data-label="Comes up">the mission, Step 1</td><td data-label="Say it as">"Real money, invisible, every night."</td></tr>
+            <tr><td data-label="Number"><b>10 rows · 9 kept</b></td><td data-label="What it is">one Japan week (3 Mar 2025) in the raw data, and how many survive the planted join</td><td data-label="Comes up">the mission, Step 2a</td><td data-label="Say it as">"Ten in, nine out. Every week for 105 weeks."</td></tr>
+            <tr><td data-label="Number"><b>945 · 210</b></td><td data-label="What it is">Italy after Challenge 1 (was 735) · IT Partner Distributor 2 restored</td><td data-label="Comes up">Challenge 1</td><td data-label="Say it as">"Fixed. Now who signs off that partner shops count?"</td></tr>
+            <tr><td data-label="Number"><b>FAIL 1 → PASS</b></td><td data-label="What it is">the two-market test before and after Challenge 1</td><td data-label="Comes up">Challenge 2</td><td data-label="Say it as">"One alarm, every distributor, both markets."</td></tr>
+            <tr><td data-label="Number"><b>0 of 249 · 319 of 359</b></td><td data-label="What it is">under-25 consumers with marketing allowed (people, not consent rows): Italy · Japan, where it is legal</td><td data-label="Comes up">Challenge 4</td><td data-label="Say it as">"A test on the number the business cares about."</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="part" id="know">
+      <div class="part-h">
+        <span class="eyebrow">Understand it · gotchas</span>
+        <h2>What you need to <span>know</span></h2>
+      </div>
+      <ul>
+        <li><b>One folder for Hours 1 and 2.</b> On the VM it is <code>C:\Users\labadmin\Downloads\setup\horizon_dbt</code>. The profiles.yml, sources file and schema macro from the pre-flight all carry over; there is nothing new to configure.</li>
+        <li><b>The two pipelines may not exist on the VM.</b> Students check for <code>models\japan_sell_through.sql</code> and <code>models\italy_sell_through.sql</code> and paste them from the guide if missing. Tell them to paste <em>without</em> reading for the bug: finding it from the data is the lab.</li>
+        <li><b>Always <code>--select</code>.</b> <code>dbt run --select italy_sell_through japan_sell_through</code> (setup) and <code>dbt run --select japan_sell_through</code> (afterwards). A bare <code>dbt run</code> also rebuilds the Hour 1 model and any half-finished challenge model, which is noise at best and an error at worst.</li>
+        <li><b>The whole hour stays on Sonnet.</b> The fix is one line and the tests come from a precise list: typing, not judgment. Say it once so nobody hunts for Opus.</li>
+        <li><b>Students fix the model by hand.</b> No prompt for the fix: they delete one line themselves. Claude does two jobs this hour: explain the planted model in plain English (Step 2b) and write the test from a precise description (Step 4a). The reconciliation query is given in the guide, explained line by line.</li>
+        <li><b>The guard must fail before it is trusted.</b> The "prove the guard bites" beat is non-negotiable. Students who skip it have a test they have never seen work.</li>
+        <li><b>Challenge 3 numbers assume the fixed model.</b> On the planted 945-row model the spread query returns 9 series instead of 10, and 0.5×/2× flags 5 weeks, not 6. If a student reports 9 or 5, their Japan model still has the bad line in.</li>
+        <li><b>Trailing semicolons break dbt tests.</b> dbt wraps the test in its own query. Almost every "test errored" is a pasted <code>;</code>.</li>
+        <li><b>Reset between classes.</b> Once a student has fixed Japan, their view reads 1,050. On your Mac, <code>make plant</code> puts both defects back and removes lab artefacts.</li>
+      </ul>
+    </section>
+
+    <section class="part" id="before">
+      <div class="part-h">
+        <span class="eyebrow">Teach it · 10 minutes before 1:08</span>
+        <h2>Before <span>class</span></h2>
+      </div>
+      <ol class="steps">
+        <li><b>On your Mac:</b> <code>make plant</code> in <code>horizon-warehouse</code>. It prints the Japan row count: expect <span class="expect">945</span>. 1,050 means the fix from a rehearsal is still in; run it again.</li>
+        <li><b>On the VM you demo from:</b> VS Code → <code>C:\Users\labadmin\Downloads\setup\horizon_dbt</code>. Check <code>models\japan_sell_through.sql</code> and <code>models\italy_sell_through.sql</code> exist and still carry their planted lines (<a href="#canned-planted">canned below</a>). Delete any <code>tests\assert_*.sql</code> left from rehearsal.</li>
+        <li><b>Terminal:</b> <code>dbt debug</code> → <span class="expect ok">All checks passed!</span>, then <code>dbt run --select italy_sell_through japan_sell_through</code> → <span class="expect ok">2 of 2 OK</span>.</li>
+        <li><b>SQLTools:</b> connect HORIZON; <code>select count(*) from analytics.japan_sell_through;</code> → <span class="expect">945</span>. Keep one file open with the <a href="#canned-sql">canned queries</a> pasted in.</li>
+        <li><b>Claude Desktop:</b> a fresh chat, picker on <b>Sonnet</b>.</li>
+        <li><b>Have ready:</b> the trust-meter average from the welcome block (you re-vote at 1:52), and a whiteboard or draw.io for the four-node loop and the funnel.</li>
+      </ol>
+    </section>
+
+    <section class="part" id="run">
+      <div class="part-h">
+        <span class="eyebrow">Teach it · 1:08 to 1:55</span>
+        <h2>Run of show, <span>with script</span></h2>
+        <p class="dek">Each block: what you do, what you say (word for word if you like), what the room should see, and the chat moment. Times match the playbook.</p>
+      </div>
+
+      <div class="step" id="t108">
+        <span class="step-n">1:08</span>
+        <div class="step-t"><span class="step-k">Opener · 4 min</span><h3>The query that ran green</h3></div>
+        <span class="step-min">4 min</span>
+      </div>
+      <div class="box chat"><span class="k">Chat · predict</span><p><strong>"clr.lifecycle_events has 15,597 rows. 74 have campaign_id = 1. How many rows does <code>where campaign_id &lt;&gt; 1</code> return?"</strong><span class="opts">15,523 · 15,597 · 74 · 0 · something else</span></p></div>
+      <div class="box do"><span class="k">Do</span><p>Run the three opener queries in SQLTools one at a time: <span class="expect">74</span> <span class="expect bad">0</span> <span class="expect ok">15,523 with IS DISTINCT FROM</span>. Score it on the Room vs Warehouse board (the warehouse usually wins).</p></div>
+      <div class="box say"><span class="k">Say</span>
+        <p>"Zero. Every other row has a NULL campaign, and NULL not-equal-to 1 is not true, it is unknown. WHERE keeps only true. No error, no warning, a perfectly green run, and a number wrong by fifteen thousand."</p>
+        <p>"Keep that feeling. It is the whole hour. Green tells you the code ran. It tells you nothing about whether the number is right."</p>
+      </div>
+
+      <div class="step" id="t112">
+        <span class="step-n">1:12</span>
+        <div class="step-t"><span class="step-k">Mission and the data · 7 min</span><h3>"It's been green for weeks. Is it fine?"</h3></div>
+        <span class="step-min">7 min</span>
+      </div>
+      <div class="box say"><span class="k">Say, as Marketing</span><p>"The Italy retail sell-through number on our dashboard looks too low. The pipeline has been green for weeks and no alert has fired. Can you confirm it is fine?"</p></div>
+      <div class="box chat"><span class="k">Chat · one word</span><p><strong>"Think of a pipeline you own that was green but wrong. What finally told you?"</strong><span class="opts">analyst · dashboard · reconciliation · audit · luck</span></p></div>
+      <p>Count the "luck"s out loud.</p>
+      <div class="box do"><span class="k">Do</span><p>Scroll the guide's <a href="hour2.html#why">mission</a>: the one Japan week (10 rows in, row 482 missing), then the two big numbers (1,050 should arrive, 945 do). Then <a href="hour2.html#data">the data</a>: the 9-distributor table (point at the two red rows), rows per market, and the pipeline in three plain steps.</p></div>
+      <div class="box say"><span class="k">Say</span>
+        <p>"Automation does the work. You own the outcome. When it quietly goes wrong, the loop is four steps: <b>Detect</b>, count what went in against what came out. <b>Diagnose</b>, find the rule and prove it with a count. <b>Correct</b>, fix the rule. <b>Prevent</b>, leave an alarm that rings next time."</p>
+      </div>
+      <div class="box do"><span class="k">Do</span><p>Draw the four-node loop. Write "count in vs out" on the Detect arrow.</p></div>
+
+      <div class="step" id="t119">
+        <span class="step-n">1:19</span>
+        <div class="step-t"><span class="step-k">Step 1 · Detect · 9 min</span><h3>Count in vs out, per distributor</h3></div>
+        <span class="step-min">9 min</span>
+      </div>
+      <div class="box do"><span class="k">Do</span>
+        <ol>
+          <li>SQLTools: <a href="hour2.html#q-total">query 1</a> → <span class="expect">1,050</span> vs <span class="expect bad">945</span>. "Something is missing. A total cannot say what."</li>
+          <li><a href="hour2.html#q-recon">Query 2</a>, the reconciliation. Walk the line-by-line table aloud, inside out: start from the distributor list, count source, count pipeline, subtract.</li>
+          <li>Run it.</li>
+        </ol>
+      </div>
+      <div class="seen"><b>Expect</b><span class="expect">9 rows</span><span class="expect bad">IT Partner Distributor 2 · 210 / 0 / 210</span><span class="expect bad">JP Ecommerce Distributor 3 · 105 / 0 / 105</span><span class="expect ok">7 others · missing 0</span></div>
+      <div class="box say"><span class="k">Say</span><p>"Two distributors, two markets, zero errors, for as long as nobody counted. The other seven match exactly, which is why the totals looked plausible. And notice we started from the list of distributors: if we had started from the pipeline, Distributor 3 would not even be on the screen."</p></div>
+      <div class="box chat"><span class="k">Chat</span><p><strong>"Marketing noticed Italy because the number looked low. Who noticed Japan?"</strong><span class="opts">the answer: nobody</span></p></div>
+      <p>Let the silence sit. "That silence is the hour."</p>
+
+      <div class="step" id="t128">
+        <span class="step-n">1:28</span>
+        <div class="step-t"><span class="step-k">Step 2 · Diagnose · 7 min</span><h3>Read it, have Claude explain it, prove it</h3></div>
+        <span class="step-min">7 min</span>
+      </div>
+      <div class="box do"><span class="k">Do</span>
+        <ol>
+          <li>Open <code>models/japan_sell_through.sql</code> on screen. Point at the join, then at its second condition. Show the guide's "each raw row, put through the join" table: row 482 fails "not 'ecommerce'?".</li>
+          <li>Claude Desktop, new chat, Sonnet: paste the <a href="hour2.html#step2">explain prompt</a> with the model's SQL in it. Read Claude's answer aloud: it should name the ecommerce rows.</li>
+          <li>SQLTools: the <a href="hour2.html#q-proof">proof query</a> → <span class="expect bad">105</span>, exactly the gap.</li>
+        </ol>
+      </div>
+      <div class="box say"><span class="k">Say</span>
+        <p>"Claude explains. The warehouse proves. An explanation is a hypothesis; a count that matches the gap exactly is a diagnosis."</p>
+        <p>"In one sentence: the join carries a channel rule, so the ecommerce distributor's 105 legitimate rows never enter the model. About seven percent of Japan's sales, gone every night, no error."</p>
+      </div>
+      <div class="box chat"><span class="k">Unmute</span><p><strong>"Is this a bug or a feature? Who decided online stores are not a store? Who should have been asked?"</strong></p></div>
+      <p>Park the last question explicitly: "Hold that one. It is the first line of Hour 3."</p>
+      <div class="box chat"><span class="k">Chat · one word (optional)</span><p><strong>"What is the half-life of a wrong number at PMI?"</strong><span class="opts">a day · a quarter · forever</span></p></div>
+
+      <div class="step" id="t135">
+        <span class="step-n">1:35</span>
+        <div class="step-t"><span class="step-k">Step 3 · Correct · 4 min</span><h3>Delete one line, count again</h3></div>
+        <span class="step-min">4 min</span>
+      </div>
+      <div class="box do"><span class="k">Do</span>
+        <ol>
+          <li>Delete <code>and d.channel_type &lt;&gt; 'ecommerce'   -- exclude non-store channels</code>. Do not move it to the WHERE. Save.</li>
+          <li><code>dbt run --select japan_sell_through</code> → <span class="expect ok">1 of 1 OK</span>.</li>
+          <li>Re-run query 1 → <span class="expect ok">1,050 · 1,050</span>, and query 2: JP Ecommerce Distributor 3 reads 105 / 105 / 0. Italy still reads 210 missing (Challenge 1).</li>
+        </ol>
+      </div>
+      <div class="box say"><span class="k">Say</span><p>"We confirm the fix the same way we found the bug: against the source. Not 'it ran', but 'it reconciles'."</p></div>
+
+      <div class="step" id="t139">
+        <span class="step-n">1:39</span>
+        <div class="step-t"><span class="step-k">Step 4 · Prevent · 11 min</span><h3>Leave an alarm, then make it ring</h3></div>
+        <span class="step-min">11 min</span>
+      </div>
+      <div class="box do"><span class="k">Do · write the test (5 min)</span>
+        <ol>
+          <li>Paste the <a href="hour2.html#step4">Prevent prompt</a> (same chat). Read Claude's test against the reference in the guide: starts from <code>rst.distributors</code>? <code>ref()</code> for the model, <code>source()</code> for raw tables? no trailing semicolon?</li>
+          <li>Explorer → New File → <code>tests/assert_japan_no_dropped_distributors.sql</code>, paste, save.</li>
+          <li><code>dbt test --select japan_sell_through</code> → <span class="expect ok">PASS=1</span></li>
+        </ol>
+      </div>
+      <div class="box chat"><span class="k">Chat · predict before breaking it</span><p><strong>"When the bad line goes back in, will the test fail?"</strong><span class="opts">yes · no · it depends</span></p></div>
+      <div class="box do"><span class="k">Do · prove the alarm rings (6 min)</span>
+        <ol>
+          <li>Put the line back. Save. <code>dbt run --select japan_sell_through</code>, then <code>dbt test --select japan_sell_through</code>.</li>
+          <li>Red: <span class="expect bad">FAIL 1 assert_japan_no_dropped_distributors</span> and <code>Got 1 result, configured to fail if != 0</code>. That one row is JP Ecommerce Distributor 3, 105 / 0.</li>
+          <li>Remove the line again, run, test: <span class="expect ok">PASS=1</span>.</li>
+        </ol>
+      </div>
+      <div class="box say"><span class="k">Say</span>
+        <p>"That red line is what should have happened on the day this filter shipped. A test you have never seen fail is a test you are trusting on faith."</p>
+        <p>To anyone who said "it depends": "It depends on the test starting from the list of distributors. Which is the point."</p>
+      </div>
+
+      <div class="step" id="t150">
+        <span class="step-n">1:50</span>
+        <div class="step-t"><span class="step-k">Debrief, trust re-vote, bridge · 5 min</span><h3>Green, and honest</h3></div>
+        <span class="step-min">5 min</span>
+      </div>
+      <div class="box chat"><span class="k">Chat · re-vote</span><p><strong>"Trust meter, 1 to 10: a nightly pipeline has been green for weeks. How much do you trust the number?"</strong></p></div>
+      <p>Read the shift from the welcome-block average aloud. Then show the guide's "Four ways green hides wrong" table: the lab was the first; Challenge 3 is the second and third.</p>
+      <div class="box say"><span class="k">Say</span>
+        <p>"Takeaway two: a green run is not a right number. Detect with a count against the source, diagnose with a count that matches the gap, correct the rule, and prevent with an alarm you have watched ring once."</p>
+        <p>"PMI hook: the best checks guard a business number, not a job. Under-25 marketing in Italy and Indonesia must always be zero. Challenge 4 writes exactly that test."</p>
+        <p>"Both bugs today were reasonable rules nobody was asked about. After the break: how to have that conversation before the code exists." <em>(Bridge to Hour 3.)</em></p>
+      </div>
+      <div class="box chat"><span class="k">Chat</span><p><strong>"Name one pipeline you own that nobody has reconciled against its source lately."</strong></p></div>
+      <p>Screenshot the list: it is their homework. Early finishers: point them at the four challenges.</p>
+    </section>
+
+    <section class="part" id="answers">
+      <div class="part-h">
+        <span class="eyebrow">Teach it · cheat sheet</span>
+        <h2>Chat questions and <span>the answers</span></h2>
+      </div>
+      <div class="tbl stack wrap">
+        <table>
+          <thead><tr><th>When</th><th>Question</th><th>What you are hoping to see</th></tr></thead>
+          <tbody>
+            <tr><td data-label="When">1:08</td><td data-label="Question"><code>where campaign_id &lt;&gt; 1</code> returns how many?</td><td data-label="Hoping for">most say 15,523; the answer is 0. Score it for the warehouse</td></tr>
+            <tr><td data-label="When">1:12</td><td data-label="Question">what finally told you a green pipeline was wrong?</td><td data-label="Hoping for">analyst · dashboard · audit · luck. Count the "luck"s</td></tr>
+            <tr><td data-label="When">1:27</td><td data-label="Question">who noticed Japan?</td><td data-label="Hoping for">nobody. Let it land</td></tr>
+            <tr><td data-label="When">1:33</td><td data-label="Question">bug or feature? who decided? who should have been asked?</td><td data-label="Hoping for">a real disagreement about whether ecommerce counts; "Sales / Marketing / the data owner should have been asked". Park for Hour 3</td></tr>
+            <tr><td data-label="When">1:34</td><td data-label="Question">half-life of a wrong number?</td><td data-label="Hoping for">"forever": once it is in a board deck it never comes back out</td></tr>
+            <tr><td data-label="When">1:44</td><td data-label="Question">will the test fail when the line goes back?</td><td data-label="Hoping for">mostly "yes"; reward "it depends" (it depends on the test starting from the distributor list)</td></tr>
+            <tr><td data-label="When">1:50</td><td data-label="Question">trust meter, again</td><td data-label="Hoping for">a drop from the morning average</td></tr>
+            <tr><td data-label="When">1:54</td><td data-label="Question">a pipeline nobody reconciled lately?</td><td data-label="Hoping for">real pipeline names; screenshot them</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="part" id="trouble">
+      <div class="part-h">
+        <span class="eyebrow">Rescue it</span>
+        <h2>When something <span>breaks</span></h2>
+      </div>
+      <div class="tbl stack wrap">
+        <table>
+          <thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Symptom"><code>relation "analytics.japan_sell_through" does not exist</code></td><td data-label="Cause">the pipelines were never built on this VM</td><td data-label="Fix">paste the two model files if missing, then <code>dbt run --select italy_sell_through japan_sell_through</code></td></tr>
+            <tr><td data-label="Symptom">dbt run builds <code>analytics_analytics.japan_sell_through</code></td><td data-label="Cause">no schema macro in the project</td><td data-label="Fix">add <code>macros/generate_schema_name.sql</code> (<a href="index.html#pf2b">pre-flight 2b</a>)</td></tr>
+            <tr><td data-label="Symptom"><code>depends on a source named 'rst.sell_through' which was not found</code></td><td data-label="Cause">sources file missing <code>rst</code></td><td data-label="Fix">create or fix <code>models/sources.yml</code> (pre-flight 2b)</td></tr>
+            <tr><td data-label="Symptom">preflight count reads 1,050, not 945</td><td data-label="Cause">the model is already fixed (a rehearsal, or the student read ahead)</td><td data-label="Fix">paste the <a href="#canned-planted">planted Japan model</a> back over the file, run it</td></tr>
+            <tr><td data-label="Symptom">the reconciliation shows 0 missing everywhere</td><td data-label="Cause">the Japan and Italy models are already fixed</td><td data-label="Fix">paste the <a href="#canned-planted">planted Japan model</a> back, <code>dbt run --select japan_sell_through</code></td></tr>
+            <tr><td data-label="Symptom">query 2 errors: relation <code>analytics.italy_sell_through</code> does not exist</td><td data-label="Cause">only the Japan pipeline was built</td><td data-label="Fix"><code>dbt run --select italy_sell_through japan_sell_through</code></td></tr>
+            <tr><td data-label="Symptom"><code>dbt test</code> errors (not fails) at <code>;</code></td><td data-label="Cause">a trailing semicolon in the pasted test</td><td data-label="Fix">delete it; dbt wraps the test in its own query</td></tr>
+            <tr><td data-label="Symptom">the guard passes with the bad line back in</td><td data-label="Cause">forgot <code>dbt run</code> before <code>dbt test</code>, or Claude's test starts from the pipeline instead of the distributor list</td><td data-label="Fix">run, then test; compare with the reference test in the guide</td></tr>
+            <tr><td data-label="Symptom">Challenge 3 flags 5 weeks, not 6</td><td data-label="Cause">the Japan model still has the bad line (945 rows)</td><td data-label="Fix">remove the line, <code>dbt run --select japan_sell_through</code></td></tr>
+            <tr><td data-label="Symptom">a student "fixed" it by moving the line to WHERE</td><td data-label="Cause">same 105 rows dropped from a different place</td><td data-label="Fix">reconcile again: still 945. "The rule is wrong, not misplaced"</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>A student's generated SQL errors: don't fix it for them. Read the error together, refine the prompt, re-run. That loop is the lesson on supervising automated output.</p>
+    </section>
+
+    <section class="part" id="behind">
+      <div class="part-h">
+        <span class="eyebrow">Rescue it</span>
+        <h2>If you are <span>behind</span></h2>
+      </div>
+      <ol class="steps">
+        <li><b>Cut first:</b> Step 2b (asking Claude to explain the model). Read the join aloud yourself and go straight to the proof count.</li>
+        <li><b>Cut second:</b> the "half-life" chat question and the Italy discussion. Keep Japan only.</li>
+        <li><b>Shortcut:</b> if Claude's test is slow to land, everyone pastes the reference test from the guide's collapsed box.</li>
+        <li><b>Never cut:</b> running the reconciliation live, the 105 proof count, and the guard going red then green.</li>
+      </ol>
+    </section>
+
+    <section class="part" id="canned">
+      <div class="part-h">
+        <span class="eyebrow">Rescue it · copy and paste</span>
+        <h2>Canned <span>SQL</span></h2>
+        <p class="dek">Everything you might need to paste live, in one place.</p>
+      </div>
+
+      <h3 id="canned-sql">The hour's queries, as one SQLTools file</h3>
+      <p>Paste the whole block into one SQLTools file before class; select one query at a time and press <kbd>Ctrl+E</kbd> <kbd>Ctrl+E</kbd>.</p>
+      <div class="prompt sql">
+<pre><code class="language-sql">-- Opener                                                    expect 74 / 0 / 15,523
+select count(*) from clr.lifecycle_events where campaign_id = 1;
+select count(*) from clr.lifecycle_events where campaign_id &lt;&gt; 1;
+select count(*) from clr.lifecycle_events where campaign_id is distinct from 1;
+
+-- Pre-flight                                                expect 945 planted, 1,050 fixed
+select count(*) from analytics.japan_sell_through;
+
+-- Step 1 · query 1: totals                                   expect 1,050 / 945 planted (1,050 fixed)
+select
+  (select count(*) from rst.sell_through
+    where market_code = 'JP')                       as in_source,
+  (select count(*) from analytics.japan_sell_through) as in_pipeline;
+
+-- Step 1 · query 2: the reconciliation                        expect 9 rows; 210 (IT) and 105 (JP) missing
+select market_code, distributor_name, in_source, in_pipeline,
+       in_source - in_pipeline as missing
+from (
+  select d.market_code, d.distributor_name,
+         (select count(*) from rst.sell_through s
+           where s.distributor_id = d.distributor_id)         as in_source,
+         (select count(*) from analytics.japan_sell_through j
+           where j.distributor_id = d.distributor_id)
+       + (select count(*) from analytics.italy_sell_through i
+           where i.distributor_id = d.distributor_id)         as in_pipeline
+  from rst.distributors d
+  where d.market_code in ('JP', 'IT')
+) counts
+order by missing desc;
+
+-- Step 2 · the proof                                          expect 105
+select count(*) as rows_the_rule_removes
+from rst.sell_through s
+join rst.distributors d on d.distributor_id = s.distributor_id
+where s.market_code = 'JP'
+  and d.channel_type = 'ecommerce';
+
+-- Challenge 3 · the real spread (on the FIXED model)          expect 10 rows, 0.41x to 1.57x
+select distributor_id, product_code, min(units_sold), round(avg(units_sold)) as avg_units, max(units_sold),
+       round(max(units_sold)::numeric / avg(units_sold), 2) as max_over_avg,
+       round(min(units_sold)::numeric / avg(units_sold), 2) as min_over_avg
+from analytics.japan_sell_through group by 1, 2 order by 1, 2;</code></pre>
+      </div>
+
+      <h3 id="canned-planted">The planted Japan model (to reset a VM)</h3>
+      <div class="prompt file" data-label="Paste into models/japan_sell_through.sql">
+<pre><code class="language-sql">-- japan_sell_through — Japan (JP) retail sell-through staging model.
+-- One row per distributor, product and week, joined to rst.distributors.
+
+{{ config(materialized='view', schema='analytics') }}
+
+select
+    s.record_id,
+    s.sale_date,
+    s.market_code,
+    s.distributor_id,
+    d.distributor_name,
+    d.channel_type,
+    s.product_code,
+    s.units_sold,
+    s.gross_revenue_eur
+from {{ source('rst', 'sell_through') }} s
+join {{ source('rst', 'distributors') }} d
+    on d.distributor_id = s.distributor_id
+   and d.channel_type &lt;&gt; 'ecommerce'   -- exclude non-store channels
+where s.market_code = 'JP'</code></pre>
+      </div>
+
+      <h3 id="canned-fixed">The fixed Japan model</h3>
+      <p>Paste, <code>dbt run --select japan_sell_through</code>, and the count reads <span class="expect ok">1,050</span>.</p>
+      <div class="prompt file" data-label="Paste into models/japan_sell_through.sql">
+<pre><code class="language-sql">-- japan_sell_through — Japan (JP) retail sell-through staging model.
+-- One row per distributor, product and week, joined to rst.distributors.
+-- FIXED: the join matches on the distributor key alone.
+
+{{ config(materialized='view', schema='analytics') }}
+
+select
+    s.record_id,
+    s.sale_date,
+    s.market_code,
+    s.distributor_id,
+    d.distributor_name,
+    d.channel_type,
+    s.product_code,
+    s.units_sold,
+    s.gross_revenue_eur
+from {{ source('rst', 'sell_through') }} s
+join {{ source('rst', 'distributors') }} d
+    on d.distributor_id = s.distributor_id
+where s.market_code = 'JP'</code></pre>
+      </div>
+
+      <h3 id="canned-guard1">The Step 4 test</h3>
+      <p><code>dbt test --select japan_sell_through</code> → <span class="expect ok">PASS=1</span> on the fixed model; <span class="expect bad">FAIL 1</span> with the line back in.</p>
+      <div class="prompt file" data-label="Paste into tests/assert_japan_no_dropped_distributors.sql">
+<pre><code class="language-sql">-- Guard: fails (returns a row) for every Japan distributor whose rows did not all reach the pipeline.
+select distributor_name, in_source, in_pipeline
+from (
+    select d.distributor_name,
+           (select count(*) from {{ source('rst', 'sell_through') }} s
+             where s.distributor_id = d.distributor_id) as in_source,
+           (select count(*) from {{ ref('japan_sell_through') }} j
+             where j.distributor_id = d.distributor_id) as in_pipeline
+    from {{ source('rst', 'distributors') }} d
+    where d.market_code = 'JP'
+) counts
+where in_pipeline &lt; in_source</code></pre>
+      </div>
+
+    </section>
+
+    <section class="part" id="solutions">
+      <div class="part-h">
+        <span class="eyebrow">Stretch it · for early finishers</span>
+        <h2>Challenge <span>solutions</span></h2>
+        <p class="dek">The student page shows each task, a hint and the expected answer. The SQL lives here and in <code>horizon-warehouse/solutions/challenges/hour2/</code>. Every number was run against the warehouse on 2026-10-25.</p>
+      </div>
+
+      <h3 id="sol1">★ 1 · Fix Italy</h3>
+      <p>The rule is in the <code>where</code>: <code>and d.channel_type in ('branded_retail', 'ecommerce')</code> keeps two of three channels, so IT Partner Distributor 2 (<code>partner_retail</code>) loses all 210 rows. Delete the line, <code>dbt run --select italy_sell_through</code>: <span class="expect ok">945 rows</span> (was 735), query 2 shows IT Partner Distributor 2 at <span class="expect ok">210 / 210 / 0</span>.</p>
+      <div class="prompt file" data-label="solutions/challenges/hour2/italy_sell_through_fixed.sql (the end of the model)">
+        <pre><code>from {{ source('rst', 'sell_through') }} s
+join {{ source('rst', 'distributors') }} d
+    on d.distributor_id = s.distributor_id
+where s.market_code = 'IT'</code></pre>
+      </div>
+      <div class="box say"><span class="k">Say</span><p>"Fixed in a minute. But unlike Japan's, this rule has a comment that sounds deliberate: 'limit to reportable retail channels'. Maybe partner shops were left out on purpose. The engineer's job is to show the 210 rows and the €138,100, then get the owner of the Italy number to decide, in writing. That is Hour 3."</p></div>
+
+      <h3 id="sol2">★★ 2 · One alarm for both markets</h3>
+      <p>While Italy still has its rule: <span class="expect bad">FAIL 1</span> (IT Partner Distributor 2, 210 / 0). After Challenge 1: <span class="expect ok">PASS</span>.</p>
+      <div class="prompt file" data-label="tests/assert_no_dropped_distributors_jp_it.sql">
+        <pre><code>select market_code, distributor_name, in_source, in_pipeline
+from (
+    select d.market_code, d.distributor_name,
+           (select count(*) from {{ source('rst', 'sell_through') }} s
+             where s.distributor_id = d.distributor_id) as in_source,
+           (select count(*) from {{ ref('japan_sell_through') }} j
+             where j.distributor_id = d.distributor_id)
+         + (select count(*) from {{ ref('italy_sell_through') }} i
+             where i.distributor_id = d.distributor_id) as in_pipeline
+    from {{ source('rst', 'distributors') }} d
+    where d.market_code in ('JP', 'IT')
+) counts
+where in_pipeline &lt; in_source</code></pre>
+      </div>
+      <div class="box tidbit"><span class="k">Worth knowing</span><p>Because this test refers to <code>japan_sell_through</code>, it also runs under <code>dbt test --select japan_sell_through</code>. A student with Italy unfixed will see it fail there too: that is correct, not a bug.</p></div>
+
+      <h3 id="sol3">★★ 3 · Calibrate the alarm (automation bias)</h3>
+      <p>Spread on the fixed model: <span class="expect">10 series</span>, normal weeks from <span class="expect">0.41×</span> to <span class="expect">1.57×</span> of their own average. Claude's usual 0.5× / 2× → <span class="expect bad">FAIL 6</span> (all six are low weeks between 0.41× and 0.5×). 0.35× / 1.75× → <span class="expect ok">PASS</span>. With the Step 4 test also present, <code>dbt test --select japan_sell_through</code> → PASS=2 (PASS=3 if Challenge 2's test is there too).</p>
+      <div class="prompt file" data-label="tests/assert_japan_weekly_units_within_range.sql">
+        <pre><code>-- Flags any week above 1.75x (or below 0.35x) of that distributor/product's own average.
+-- Observed Japan range is 0.41x to 1.57x, so these limits sit just outside normal.
+with hist as (
+    select distributor_id, product_code, avg(units_sold) as avg_units
+    from {{ ref('japan_sell_through') }}
+    group by 1, 2
+)
+select s.distributor_id, s.product_code, s.sale_date, s.units_sold, round(h.avg_units) as avg_units
+from {{ ref('japan_sell_through') }} s
+join hist h using (distributor_id, product_code)
+where s.units_sold &gt; 1.75 * h.avg_units     -- limits: upper 1.75, lower 0.35
+   or s.units_sold &lt; 0.35 * h.avg_units</code></pre>
+      </div>
+      <div class="box say"><span class="k">Say</span><p>"A threshold copied from the assistant without this check is calibrated by luck. Automation bias: a confident number from a tool gets checked less than the same number from a colleague. The fix is boring: look at the real spread first."</p></div>
+
+      <h3 id="sol4">★★★ 4 · Guard a number that must never move</h3>
+      <p><span class="expect ok">PASS</span>: 0 of Italy's 249 under-25 consumers have any marketing-allowed consent row. (Japan, where it is legal: 319 of 359. Indonesia: 0 of 191.) <code>exists</code> counts each person once, however many consent rows they have.</p>
+      <div class="prompt file" data-label="tests/assert_no_underage_marketing_italy_people.sql">
+        <pre><code>select c.consumer_id
+from {{ source('clr', 'consumers') }} c
+where c.market_code = 'IT'
+  and c.age_band = '18-24'
+  and exists (
+        select 1
+        from {{ source('mpl', 'consent_records') }} m
+        where m.consumer_id = c.consumer_id
+          and m.marketing_allowed
+      )</code></pre>
+      </div>
+      <p>Run it by name: <code>dbt test --select assert_no_underage_marketing_italy_people</code>. It reads only sources, so <code>--select japan_sell_through</code> does not pick it up.</p>
+    </section>
+
+    <footer class="foot">
+      <nav aria-label="All guides">
+        <a href="index.html">Start here</a>
+        <a href="hour1.html">Hour 1 · No vibe pipelines</a>
+        <a href="hour2.html">Hour 2 · Green is not right</a>
+        <a href="hour3.html">Hour 3 · Shift left</a>
+        <a href="hour4.html">Hour 4 · You are the gate</a>
+        <a href="glossary.html">Glossary</a>
+      </nav>
+      <p>Instructor guide for the PMI Data Engineer Future Skills class · Project HORIZON is fictional and training-only</p>
+    </footer>
+  </main>
+</div>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>

@@ -63,7 +63,7 @@
       <li><a href="#kit">Your kit on the VM</a></li>
       <li class="sub"><a href="#connection">The HORIZON connection</a></li>
       <li class="sub"><a href="#dbt-connection">The connection for dbt</a></li>
-      <li class="sub"><a href="#projects">The two dbt projects</a></li>
+      <li class="sub"><a href="#projects">The dbt project</a></li>
       <li><a href="#preflight">Pre-flight checklist</a></li>
       <li class="sub"><a href="#pf1">SQLTools connects</a></li>
       <li class="sub"><a href="#pf2">dbt answers</a></li>
@@ -104,9 +104,9 @@
           <span class="n">1</span>
           <span class="s">No vibe pipelines</span>
           <span class="t">WA3903 · 0:12–1:05</span>
-          <span class="loop">Draft → Prove → Lock</span>
+          <span class="loop">Draft → Prove → Fix → Lock</span>
           <p>Data Engineering with AI Support. A runnable draft is not a correct one. You build a tested dbt model, <code>analytics.italy_conversion_events</code>.</p>
-          <span class="r">794 source events; the draft returns 1,988 rows; 7 tests pass</span>
+          <span class="r">794 source events; the draft returns 1,988 rows; 4 tests pass</span>
         </a>
         <a class="mod" role="listitem" href="hour2.html" style="--c:#3BE08A">
           <span class="mod-art"><img src="images/lab2-hero.svg" alt="" loading="lazy"><span class="mod-tag">Lab 02 · open the lab →</span></span>
@@ -124,7 +124,7 @@
           <span class="t">WA3908 · 2:07–2:57</span>
           <span class="loop">Unpack → Clarify → Prove → Specify</span>
           <p>Cross-Functional Co-Design &amp; Feasibility. A request is intent, not a specification. You build a curated question list, a feasibility gate (one verdict per requirement) and a requirements table (no files).</p>
-          <span class="r">105 Mondays; under-25 marketing allowed ID 0% · IT 0% · JP 73%</span>
+          <span class="r">105 Mondays; under-25s allowed ID 0 · IT 0 · JP 319 of 359</span>
         </a>
         <a class="mod" role="listitem" href="hour4.html" style="--c:#A99BFF">
           <span class="mod-art"><img src="images/lab4-hero.svg" alt="" loading="lazy"><span class="mod-tag">Lab 04 · open the lab →</span></span>
@@ -365,14 +365,14 @@ code "$HOME\.dbt\profiles.yml"</code></pre>
         <p><b>Tabs</b> (YAML needs spaces, two per level, exactly as shown) and <b>dropping the quotes</b> around the password (the <code>!</code> needs them). And because it holds the password, it goes into the file and <b>never into a Claude prompt</b>: if <code>dbt debug</code> complains, paste the <em>error message</em> into Claude, not the file.</p>
       </div>
 
-      <h3 id="projects">The two dbt projects, and the files you will create</h3>
-      <p>Open each project folder in VS Code with <strong>File → Open Folder</strong>, then create or edit the files listed next to it.</p>
+      <h3 id="projects">The dbt project, and the files you will create</h3>
+      <p>Hours 1 and 2 share one dbt project: open <code>C:\Users\labadmin\Downloads\setup\horizon_dbt</code> in VS Code with <strong>File → Open Folder</strong>, then create or edit the files listed for each hour.</p>
       <div class="tbl stack wrap projects">
         <table>
           <thead><tr><th>Hour</th><th>Project folder</th><th>Files you create or edit</th></tr></thead>
           <tbody>
             <tr><td data-label="Hour">1</td><td data-label="Project folder"><code><span class="seg">C:\</span><wbr><span class="seg">Users\</span><wbr><span class="seg">labadmin\</span><wbr><span class="seg">Downloads\</span><wbr><span class="seg">setup\</span><wbr><span class="seg">horizon_dbt</span></code></td><td data-label="Files you create or edit">create <code>models/analytics/italy_conversion_events.sql</code> (right-click <code>models</code> → New File → type <code>analytics/italy_conversion_events.sql</code>; first line <code>{{ config(materialized='view', schema='analytics') }}</code>) · <code>models/analytics/schema.yml</code> · <code>tests/no_underage_marketing_italy.sql</code></td></tr>
-            <tr><td data-label="Hour">2</td><td data-label="Project folder"><code><span class="seg">C:\</span><wbr><span class="seg">LabFiles\</span><wbr><span class="seg">hardening-a-japan-sell-through-pipeline\</span><wbr><span class="seg">horizon_dbt</span></code></td><td data-label="Files you create or edit">edit <code>models/japan_sell_through.sql</code> · create <code>tests/assert_japan_no_dropped_distributors.sql</code> (optional: <code>tests/assert_japan_weekly_units_within_range.sql</code>)</td></tr>
+            <tr><td data-label="Hour">2</td><td data-label="Project folder">the same folder as Hour 1</td><td data-label="Files you create or edit">create <code>models/japan_sell_through.sql</code> and <code>models/italy_sell_through.sql</code> from the Hour 2 guide if they are missing · edit <code>models/japan_sell_through.sql</code> · create <code>tests/assert_japan_no_dropped_distributors.sql</code> (optional: <code>tests/assert_japan_weekly_units_within_range.sql</code>)</td></tr>
             <tr><td data-label="Hour">3</td><td data-label="Project folder">none</td><td data-label="Files you create or edit">no files: SQLTools and Claude Desktop only</td></tr>
             <tr><td data-label="Hour">4</td><td data-label="Project folder">none</td><td data-label="Files you create or edit">no files on the VM: a Claude Desktop <b>Project</b> named "HORIZON analyst" (left sidebar → Projects → New project → <em>Set project instructions</em>; if your left sidebar has no Projects entry, Hour 4 shows you how to paste the same instructions as the first message of a fresh chat instead)</td></tr>
           </tbody>
@@ -551,8 +551,8 @@ Respond in Markdown only. Do not create any file.</code></pre>
       </div>
       <p>Output costs five times input on every tier, and a plan is twenty lines where an implementation is two hundred. That asymmetry is why we plan on the premium model and type on the thrifty one: <b>premium planning, thrifty execution.</b> On a subscription the same ratio shows up as how fast you use up your session limit. <em>(Anthropic pricing, October 2026.)</em></p>
       <figure class="hero wide">
-        <img src="images/premium-thrifty.svg" alt="Draft on Sonnet, prove with a count (1,988 vs 794), plan the fix on Opus, implement and test on Sonnet, ending in 794 = 794 with 7 tests passing. Prices per million tokens: Opus 4 and 20 dollars, Sonnet 2 and 10, Haiku 0.10 and 0.50.">
-        <figcaption>Draft on Sonnet, prove with a count, plan the fix on Opus (a 20-line plan you review), implement and test on Sonnet: 794 = 794, 7 tests pass. Prices per million tokens: Opus $4/$20, Sonnet $2/$10, Haiku $0.10/$0.50. Output costs 5x input.</figcaption>
+        <img src="images/premium-thrifty.svg" alt="Draft on Sonnet, prove with three checks (1,988 vs 794), plan the fix on Opus, build and test on Sonnet, ending in 794 = 794 with 4 tests passing. Prices per million tokens: Opus 4 and 20 dollars, Sonnet 2 and 10, Haiku 0.10 and 0.50.">
+        <figcaption>Draft on Sonnet, prove with three checks, plan the fix on Opus (a short plan you review), build and test on Sonnet: 794 = 794, 4 tests pass. Prices per million tokens: Opus $4/$20, Sonnet $2/$10, Haiku $0.10/$0.50. Output costs 5x input.</figcaption>
       </figure>
 
       <h3 id="hygiene">Prompt hygiene = data egress</h3>
@@ -606,7 +606,7 @@ Respond in Markdown only. Do not create any file.</code></pre>
       </div>
       <div class="agenda">
         <div class="agenda-row"><span class="agenda-time">0:00–0:12</span><span class="agenda-label">Welcome, HORIZON in one page, Icebreaker 1: which face is real?</span></div>
-        <div class="agenda-row"><span class="agenda-time">0:12–1:05</span><span class="agenda-label"><a href="hour1.html">Hour 1 · No vibe pipelines</a><span class="tag">Draft → Prove → Lock</span><span class="sub">First, how the assistant works: the room plays the language model. Then Draft → Prove → Lock on the Italy conversion and consent model.</span></span></div>
+        <div class="agenda-row"><span class="agenda-time">0:12–1:05</span><span class="agenda-label"><a href="hour1.html">Hour 1 · No vibe pipelines</a><span class="tag">Draft → Prove → Fix → Lock</span><span class="sub">First, how the assistant works: the room plays the language model. Then Draft → Prove → Fix → Lock on the Italy conversion and consent model.</span></span></div>
         <div class="agenda-row break"><span class="agenda-time">1:05–1:08</span><span class="agenda-label">Stretch</span></div>
         <div class="agenda-row"><span class="agenda-time">1:08–1:55</span><span class="agenda-label"><a href="hour2.html">Hour 2 · Green ≠ right</a><span class="tag">Detect → Diagnose → Correct → Prevent</span><span class="sub">Detect → Diagnose → Correct → Prevent on the Japan sell-through pipeline; watch the guard fail before you trust it.</span></span></div>
         <div class="agenda-row break"><span class="agenda-time">1:55–2:07</span><span class="agenda-label">Break. Add one real request from your own work to the parking lot before you go. The board link is posted in the chat at 1:55; if you cannot open it, post your request in the chat starting with <code>PARKING:</code></span></div>

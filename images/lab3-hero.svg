@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 560" role="img" aria-labelledby="t d">
 <title id="t">Hour 3 · Shift left</title>
-<desc id="d">A Marketing request for real-time dashboards across all markets meets the warehouse: sell-through arrives on 105 Mondays, a weekly batch feed, and under-25 marketing is allowed in 0% of Indonesian and Italian consent rows but 73% in Japan. Three verdicts: buildable as asked, buildable with a change, not as asked. Below, the cost of a fix rises from 1x at Request to about 100x at Operate, and the check moves left to Request.</desc>
+<desc id="d">A Marketing request for real-time dashboards across all markets meets the warehouse: sell-through arrives on 105 Mondays, a weekly batch feed, and no under-25 Indonesian or Italian may be marketed to (0 people), while 89% of under-25 Japanese have said yes. Three verdicts: buildable as asked, buildable with a change, not as asked. Below, the cost of a fix rises from 1x at Request to about 100x at Operate, and the check moves left to Request.</desc>
 <defs>
   <linearGradient id="cost" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2EE6C5" stop-opacity=".0"/><stop offset=".55" stop-color="#FF7A3D" stop-opacity=".18"/><stop offset="1" stop-color="#FF4A00" stop-opacity=".42"/></linearGradient>
   <linearGradient id="costline" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2EE6C5"/><stop offset=".5" stop-color="#FFB38A"/><stop offset="1" stop-color="#FF4A00"/></linearGradient>
@@ -80,7 +80,7 @@
   <text x="690" y="230" text-anchor="end" font-size="12.5" fill="#FFFFFF">0</text>
   <path d="M394 242 h302" stroke="#FFFFFF" stroke-opacity=".08"/>
   <text x="402" y="264" font-size="11.5" fill="#93A7C6">under-25 marketing allowed</text>
-  <text x="690" y="288" text-anchor="end" font-size="13"><tspan fill="#FF8A7A">ID 0%</tspan><tspan fill="#6F86A8">  ·  </tspan><tspan fill="#FF8A7A">IT 0%</tspan><tspan fill="#6F86A8">  ·  </tspan><tspan fill="#7EF0DA">JP 73%</tspan></text>
+  <text x="690" y="288" text-anchor="end" font-size="13"><tspan fill="#FF8A7A">ID 0%</tspan><tspan fill="#6F86A8">  ·  </tspan><tspan fill="#FF8A7A">IT 0%</tspan><tspan fill="#6F86A8">  ·  </tspan><tspan fill="#7EF0DA">JP 89%</tspan></text>
 </g>
 
 <!-- the only three answers -->
