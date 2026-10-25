@@ -62,10 +62,12 @@
       <li><a href="#life">The life of one request</a></li>
       <li><a href="#kit">Your kit on the VM</a></li>
       <li class="sub"><a href="#connection">The HORIZON connection</a></li>
+      <li class="sub"><a href="#dbt-connection">The connection for dbt</a></li>
       <li class="sub"><a href="#projects">The two dbt projects</a></li>
       <li><a href="#preflight">Pre-flight checklist</a></li>
       <li class="sub"><a href="#pf1">SQLTools connects</a></li>
       <li class="sub"><a href="#pf2">dbt answers</a></li>
+      <li class="sub"><a href="#pf2b">Two helper files</a></li>
       <li class="sub"><a href="#pf3">Claude Desktop is ready</a></li>
       <li class="sub"><a href="#pf4">Copy a code block</a></li>
       <li><a href="#claude">How we use Claude Desktop</a></li>
@@ -308,13 +310,68 @@ UNION ALL SELECT 'rfr.filings', count(*) FROM rfr.filings;</code></pre>
         <p>These are training-only credentials. They still never go into a Claude prompt (see <a href="#hygiene">prompt hygiene</a> below).</p>
       </div>
 
+      <h3 id="dbt-connection">The HORIZON connection for dbt (<code>profiles.yml</code>)</h3>
+      <p>SQLTools and dbt each keep their <strong>own</strong> copy of the connection. SQLTools saves its copy inside VS Code. dbt reads its copy from a file <strong>outside</strong> the project folder:</p>
+      <div class="prompt term" data-label="Where dbt looks for its connection">
+        <pre><code>C:\Users\labadmin\.dbt\profiles.yml</code></pre>
+      </div>
+      <p>On some VMs that file does not exist yet, and <code>dbt debug</code> fails until you create it. It takes two minutes, in the VS Code terminal, in the project folder (<code>C:\Users\labadmin\Downloads\setup\horizon_dbt</code>).</p>
+
+      <ol class="steps">
+        <li><b>See which profile name the project expects.</b> Run <code>Get-Content dbt_project.yml</code> and find the line that starts <code>profile:</code>. Its value (for example <code>horizon</code>) must be the first line of <code>profiles.yml</code>.</li>
+        <li><b>Create the folder and open the file</b> with the two commands below. (If <code>code</code> is not recognised, use <code>notepad "$HOME\.dbt\profiles.yml"</code> and click <b>Yes</b> to create the file.)</li>
+        <li><b>Paste the YAML below</b>, change the first line if your profile name differs, and save.</li>
+        <li><b>Run <code>dbt debug</code> again.</b> <a href="#pf2">Pre-flight step 2</a> shows what success looks like.</li>
+      </ol>
+
+      <div class="prompt term">
+        <p class="asks"><b>Step 2 · PowerShell</b>Create <code>C:\Users\labadmin\.dbt</code> and open an empty <code>profiles.yml</code> in VS Code.</p>
+        <pre><code>New-Item -ItemType Directory -Force "$HOME\.dbt" | Out-Null
+code "$HOME\.dbt\profiles.yml"</code></pre>
+      </div>
+
+      <div class="prompt file" data-label="Paste into C:\Users\labadmin\.dbt\profiles.yml · never into Claude">
+        <p class="asks"><b>Step 3 · profiles.yml</b>The same HORIZON values as SQLTools, in the shape dbt reads. Paste it unchanged: indentation matters.</p>
+        <pre><code>horizon:                      # must match the profile: line in dbt_project.yml
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: localhost
+      port: 5432
+      user: postgres
+      password: "Horizon!Lab2026"
+      dbname: horizon
+      schema: analytics
+      threads: 4</code></pre>
+      </div>
+
+      <div class="tbl cards">
+        <table>
+          <thead><tr><th>Line</th><th>What it means</th></tr></thead>
+          <tbody>
+            <tr><td><code>horizon:</code></td><td>the profile name; <code>dbt_project.yml</code> points at it</td></tr>
+            <tr><td><code>target: dev</code> · <code>outputs: dev:</code></td><td>one connection, called <code>dev</code>, and dbt uses it by default</td></tr>
+            <tr><td><code>type: postgres</code></td><td>which adapter dbt loads (<code>dbt debug</code> reports <code>adapter type: postgres</code>)</td></tr>
+            <tr><td><code>host</code> · <code>port</code> · <code>user</code> · <code>password</code> · <code>dbname</code></td><td>the same five values as the SQLTools connection above</td></tr>
+            <tr><td><code>schema: analytics</code></td><td>where dbt builds your views: <code>analytics.italy_conversion_events</code></td></tr>
+            <tr><td><code>threads: 4</code></td><td>how many models dbt may build at once</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="box trap">
+        <span class="k">Two things break this file</span>
+        <p><b>Tabs</b> (YAML needs spaces, two per level, exactly as shown) and <b>dropping the quotes</b> around the password (the <code>!</code> needs them). And because it holds the password, it goes into the file and <b>never into a Claude prompt</b>: if <code>dbt debug</code> complains, paste the <em>error message</em> into Claude, not the file.</p>
+      </div>
+
       <h3 id="projects">The two dbt projects, and the files you will create</h3>
       <p>Open each project folder in VS Code with <strong>File → Open Folder</strong>, then create or edit the files listed next to it.</p>
       <div class="tbl stack wrap projects">
         <table>
           <thead><tr><th>Hour</th><th>Project folder</th><th>Files you create or edit</th></tr></thead>
           <tbody>
-            <tr><td data-label="Hour">1</td><td data-label="Project folder"><code><span class="seg">C:\</span><wbr><span class="seg">LabFiles\</span><wbr><span class="seg">building-a-tested-rst-model-for-indonesia\</span><wbr><span class="seg">horizon_dbt</span></code></td><td data-label="Files you create or edit">create <code>models/analytics/italy_conversion_events.sql</code> (copy <code>models/analytics/MODEL_TEMPLATE.sql.example</code>, or New File; first line <code>{{ config(materialized='view', schema='analytics') }}</code>) · <code>models/analytics/schema.yml</code> · <code>tests/no_underage_marketing_italy.sql</code></td></tr>
+            <tr><td data-label="Hour">1</td><td data-label="Project folder"><code><span class="seg">C:\</span><wbr><span class="seg">Users\</span><wbr><span class="seg">labadmin\</span><wbr><span class="seg">Downloads\</span><wbr><span class="seg">setup\</span><wbr><span class="seg">horizon_dbt</span></code></td><td data-label="Files you create or edit">create <code>models/analytics/italy_conversion_events.sql</code> (right-click <code>models</code> → New File → type <code>analytics/italy_conversion_events.sql</code>; first line <code>{{ config(materialized='view', schema='analytics') }}</code>) · <code>models/analytics/schema.yml</code> · <code>tests/no_underage_marketing_italy.sql</code></td></tr>
             <tr><td data-label="Hour">2</td><td data-label="Project folder"><code><span class="seg">C:\</span><wbr><span class="seg">LabFiles\</span><wbr><span class="seg">hardening-a-japan-sell-through-pipeline\</span><wbr><span class="seg">horizon_dbt</span></code></td><td data-label="Files you create or edit">edit <code>models/japan_sell_through.sql</code> · create <code>tests/assert_japan_no_dropped_distributors.sql</code> (optional: <code>tests/assert_japan_weekly_units_within_range.sql</code>)</td></tr>
             <tr><td data-label="Hour">3</td><td data-label="Project folder">none</td><td data-label="Files you create or edit">no files: SQLTools and Claude Desktop only</td></tr>
             <tr><td data-label="Hour">4</td><td data-label="Project folder">none</td><td data-label="Files you create or edit">no files on the VM: a Claude Desktop <b>Project</b> named "HORIZON analyst" (left sidebar → Projects → New project → <em>Set project instructions</em>; if your left sidebar has no Projects entry, Hour 4 shows you how to paste the same instructions as the first message of a fresh chat instead)</td></tr>
@@ -346,10 +403,75 @@ UNION ALL SELECT 'rfr.filings', count(*) FROM rfr.filings;</code></pre>
         <div class="step-t"><span class="step-k">Check</span><h3>dbt answers</h3></div>
         <span class="expect ok">All checks passed!</span>
       </div>
-      <p><em>File → Open Folder</em> → <code>C:\LabFiles\building-a-tested-rst-model-for-indonesia\horizon_dbt</code>. Then <em>Terminal → New Terminal</em> and run:</p>
+      <p><em>File → Open Folder</em> → <code>C:\Users\labadmin\Downloads\setup\horizon_dbt</code>. The Explorer shows <code>logs</code>, <code>models</code>, <code>target</code> and <code>dbt_project.yml</code>. Then <em>Terminal → New Terminal</em> (the prompt should read <code>PS C:\Users\labadmin\Downloads\setup\horizon_dbt&gt;</code>) and run:</p>
       <div class="prompt term">
         <pre><code>dbt debug</code></pre>
-        <p class="good"><b>What a good answer looks like</b>The last line reads <strong>All checks passed!</strong> If dbt says it cannot find a profile or a project, check that the terminal prompt shows the <code>horizon_dbt</code> folder.</p>
+        <p class="good"><b>What a good answer looks like</b>The lines below, ending in <strong>All checks passed!</strong> (version numbers may differ).</p>
+      </div>
+      <div class="prompt term" data-label="What you should see in the terminal">
+        <pre><code>Running with dbt=1.13.0-b1
+Using profiles.yml file at C:\Users\labadmin\.dbt\profiles.yml
+Using dbt_project.yml file at C:\Users\labadmin\Downloads\setup\horizon_dbt\dbt_project.yml
+adapter type: postgres
+  profiles.yml file [OK found and valid]
+  dbt_project.yml file [OK found and valid]
+ - git [OK found]
+Connection:
+  host: localhost
+  port: 5432
+  user: postgres
+  database: horizon
+  schema: analytics
+  Connection test: [OK connection ok]
+All checks passed!</code></pre>
+      </div>
+      <div class="tbl stack wrap">
+        <table>
+          <thead><tr><th>If dbt says…</th><th>It means</th><th>Do this</th></tr></thead>
+          <tbody>
+            <tr><td data-label="If dbt says"><code>profiles.yml file [ERROR not found]</code>, or <code>Could not find profile named 'horizon'</code></td><td data-label="It means">dbt has no HORIZON connection yet</td><td data-label="Do this">create <code>C:\Users\labadmin\.dbt\profiles.yml</code>: <a href="#dbt-connection">The HORIZON connection for dbt</a>, above</td></tr>
+            <tr><td data-label="If dbt says"><code>dbt_project.yml file [ERROR not found]</code></td><td data-label="It means">the terminal is in the wrong folder</td><td data-label="Do this"><code>cd C:\Users\labadmin\Downloads\setup\horizon_dbt</code> and run it again</td></tr>
+            <tr><td data-label="If dbt says"><code>Connection test: [ERROR]</code></td><td data-label="It means">the file is found but a value is wrong</td><td data-label="Do this">compare the five values with the SQLTools table; check the password quotes</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="step" id="pf2b">
+        <span class="step-n">2b</span>
+        <div class="step-t"><span class="step-k">Check</span><h3>The project has its two helper files</h3></div>
+        <span class="expect note">1 minute</span>
+      </div>
+      <p>Hour 1's model reads its tables through dbt <em>sources</em> and builds into the <code>analytics</code> schema. Two small files make that work. Look in the Explorer.</p>
+      <p><b>A sources file</b> in <code>models</code> (usually <code>models\sources.yml</code>; any <code>.yml</code> with a <code>sources:</code> block counts) that declares <code>clr</code>, <code>mpl</code> and <code>rst</code>. Without it, <code>dbt run</code> fails with <em>"depends on a source named 'mpl.consent_records' which was not found"</em> (or another source name). If it is missing, create <code>models/sources.yml</code>:</p>
+      <div class="prompt file" data-label="Paste into models/sources.yml in VS Code">
+        <p class="asks"><b>models/sources.yml</b>Tells dbt which raw tables <code>{{ source('clr','lifecycle_events') }}</code> and friends point at.</p>
+        <pre><code>version: 2
+sources:
+  - name: clr
+    schema: clr
+    tables:
+      - name: lifecycle_events
+      - name: consumers
+  - name: mpl
+    schema: mpl
+    tables:
+      - name: consent_records
+  - name: rst
+    schema: rst
+    tables:
+      - name: sell_through
+      - name: distributors</code></pre>
+      </div>
+      <p><b>A <code>macros</code> folder with <code>generate_schema_name.sql</code>.</b> Without it, dbt glues the two schema names together and builds <code>analytics_analytics.italy_conversion_events</code>, so every SQLTools check in Hour 1 answers <em>relation "analytics.italy_conversion_events" does not exist</em>. If the <code>macros</code> folder is missing, right-click the empty space in the Explorer → New File → <code>macros/generate_schema_name.sql</code>, and paste:</p>
+      <div class="prompt file" data-label="Paste into macros/generate_schema_name.sql in VS Code">
+        <p class="asks"><b>macros/generate_schema_name.sql</b>When a model says <code>schema='analytics'</code>, use exactly <code>analytics</code>.</p>
+        <pre><code>{% macro generate_schema_name(custom_schema_name, node) -%}
+    {%- if custom_schema_name is none -%}
+        {{ target.schema }}
+    {%- else -%}
+        {{ custom_schema_name | trim }}
+    {%- endif -%}
+{%- endmacro %}</code></pre>
       </div>
 
       <div class="step" id="pf3">

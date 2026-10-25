@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 540" width="100%" class="hz" role="img" aria-labelledby="oc-title oc-desc">
+<title id="oc-title">One consumer, three ways to attach consent</title>
+<desc id="oc-desc">Timeline for consumer 3552, 8 to 21 November 2024. Email consent granted 10 November (true), push granted 16 November (true), postal withdrawn 19 November (false). The conversion event 9539 happened on 17 November. A shaded band covers everything dated on or before the event. Three cards: a plain join on consumer_id returns 3 rows for the one event (Italy: 794 events become 1,988 rows); the latest row on file returns false, postal withdrawn two days after the event (Italy: 31 events get a later decision); the latest row on or before 17 November returns true, push granted 16 November, one row (Italy: 794 rows).</desc>
+<style>
+.hz{
+  --navy:#102B53; --navy2:#0C2040; --orange:#FF4A00; --teal:#00C9A7; --ink:#1C2B40;
+  --tint:#F4F6FA; --muted:#5A6B80; --red:#C8402A;
+  --card:#FFFFFF; --line:#C9D3E0; --grid:#E4E9F1; --code:#F4F6FA;
+  --claude:#102B53; --on-claude:#FFFFFF;
+  --teal-ink:#00805F; --teal-soft:#D6F5EE;
+  --orange-ink:#D63D00; --orange-soft:#FFE6DA;
+  --red-ink:#B5361F; --red-soft:#FAE3DE;
+  --navy-soft:#E4EAF4; --mutedfill:#C3CDDA;
+}
+@media (prefers-color-scheme: dark){
+  .hz{
+    --ink:#F4F6FA; --muted:#AFBDD0; --card:#13305F; --line:#3C5884; --grid:#25416C; --code:#0B1B36;
+    --claude:#2F5FB4; --on-claude:#FFFFFF;
+    --teal-ink:#1FD9B9; --teal-soft:#0F3F3A;
+    --orange-ink:#FF8A5B; --orange-soft:#4B2514;
+    --red:#E8604A; --red-ink:#FF8B78; --red-soft:#4E1D17;
+    --navy-soft:#1B3B6E; --mutedfill:#4E6686; --tint:#0C2040;
+  }
+}
+.hz text{font-family:"Space Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;fill:var(--ink);font-size:16px}
+.hz .mono{font-family:"DM Mono",ui-monospace,Menlo,Consolas,monospace;font-size:14px}
+.hz .b{font-weight:700}
+.hz .i{font-style:italic}
+.hz .muted{fill:var(--muted)}
+.hz .teal-ink{fill:var(--teal-ink)}
+.hz .orange-ink{fill:var(--orange-ink)}
+.hz .red-ink{fill:var(--red-ink)}
+.hz .on{fill:var(--on-claude)}
+.hz .card{fill:var(--card);stroke:var(--line);stroke-width:1.5}
+.hz .soft-navy{fill:var(--navy-soft);stroke:var(--line);stroke-width:1.5}
+.hz .soft-teal{fill:var(--teal-soft);stroke:var(--teal);stroke-width:1.5}
+.hz .soft-orange{fill:var(--orange-soft);stroke:var(--orange);stroke-width:1.5}
+.hz .soft-red{fill:var(--red-soft);stroke:var(--red);stroke-width:1.5}
+.hz .claude{fill:var(--claude);stroke:none}
+.hz .code{fill:var(--code);stroke:var(--line);stroke-width:1}
+.hz .ln{stroke:var(--muted);stroke-width:2;fill:none}
+.hz .ln-ink{stroke:var(--ink);stroke-width:2;fill:none}
+.hz .ln-teal{stroke:var(--teal);stroke-width:2.5;fill:none}
+.hz .ln-orange{stroke:var(--orange);stroke-width:2.5;fill:none}
+.hz .ln-red{stroke:var(--red);stroke-width:2.5;fill:none}
+.hz .ln-claude{stroke:var(--claude);stroke-width:2;fill:none}
+.hz .dash{stroke-dasharray:7 6}
+.hz .grid{stroke:var(--grid);stroke-width:1;fill:none}
+.hz .f-teal{fill:var(--teal)}
+.hz .f-orange{fill:var(--orange)}
+.hz .f-red{fill:var(--red)}
+.hz .f-muted{fill:var(--mutedfill)}
+.hz .f-card{fill:var(--card)}
+.hz .f-line{fill:var(--line)}
+.hz .f-ink{fill:var(--ink)}
+.hz .f-navy{fill:var(--claude)}
+.hz .f-code{fill:var(--code)}
+.hz .f-teal-soft{fill:var(--teal-soft)}
+.hz .f-orange-soft{fill:var(--orange-soft)}
+.hz .f-red-soft{fill:var(--red-soft)}
+.hz .f-navy-soft{fill:var(--navy-soft)}
+.hz .mk-muted{fill:var(--muted)}
+.hz .mk-ink{fill:var(--ink)}
+.hz .mk-teal{fill:var(--teal)}
+.hz .mk-orange{fill:var(--orange)}
+.hz .mk-red{fill:var(--red)}
+.hz .mk-claude{fill:var(--claude)}
+</style>
+<defs>
+<marker id="oc-ar-muted" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-muted"/></marker>
+<marker id="oc-ar-ink" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-ink"/></marker>
+<marker id="oc-ar-teal" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-teal"/></marker>
+<marker id="oc-ar-orange" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-orange"/></marker>
+<marker id="oc-ar-red" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-red"/></marker>
+<marker id="oc-ar-claude" viewBox="0 0 14 14" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto-start-reverse"><path d="M1,1 L13,7 L1,13 Z" class="mk-claude"/></marker>
+</defs>
+<text x="40" y="44" class="b" style="font-size:20px">Consumer 3552: one conversion, three consent rows. Which one belongs to the event?</text>
+<text x="40" y="70" class="muted" style="font-size:15px">mpl.consent_records holds one row per consumer per channel, each dated when the decision was recorded (training data).</text>
+<rect x="90" y="196" width="705" height="68" rx="8" class="f-teal-soft" opacity=".75"/>
+<text x="300" y="216" class="mono teal-ink" style="font-size:13px">consent_date &lt;= event_date</text>
+<line x1="80" y1="230" x2="1140" y2="230" class="ln-ink" marker-end="url(#oc-ar-ink)"/>
+<line x1="120" y1="226" x2="120" y2="234" class="ln"/><line x1="195" y1="226" x2="195" y2="234" class="ln"/><line x1="270" y1="226" x2="270" y2="234" class="ln"/><line x1="345" y1="226" x2="345" y2="234" class="ln"/><line x1="420" y1="226" x2="420" y2="234" class="ln"/><line x1="495" y1="226" x2="495" y2="234" class="ln"/><line x1="570" y1="226" x2="570" y2="234" class="ln"/><line x1="645" y1="226" x2="645" y2="234" class="ln"/><line x1="720" y1="226" x2="720" y2="234" class="ln"/><line x1="795" y1="226" x2="795" y2="234" class="ln"/><line x1="870" y1="226" x2="870" y2="234" class="ln"/><line x1="945" y1="226" x2="945" y2="234" class="ln"/><line x1="1020" y1="226" x2="1020" y2="234" class="ln"/><line x1="1095" y1="226" x2="1095" y2="234" class="ln"/><text x="270" y="256" text-anchor="middle" class="muted" style="font-size:13px">10 Nov</text><text x="720" y="256" text-anchor="middle" class="muted" style="font-size:13px">16 Nov</text><text x="945" y="256" text-anchor="middle" class="muted" style="font-size:13px">19 Nov</text>
+<circle cx="270" cy="230" r="11" class="f-teal"/>
+<text x="270" y="140" text-anchor="middle" class="b" style="font-size:15px">10 Nov · email · granted</text>
+<text x="270" y="162" text-anchor="middle" class="mono teal-ink" style="font-size:14px">marketing_allowed = true</text>
+<line x1="270" y1="172" x2="270" y2="216" class="ln-teal"/>
+<circle cx="720" cy="230" r="17" fill="none" class="ln-teal" stroke-width="3"/>
+<circle cx="720" cy="230" r="11" class="f-teal"/>
+<text x="690" y="110" text-anchor="middle" class="b" style="font-size:15px">16 Nov · push · granted</text>
+<text x="690" y="132" text-anchor="middle" class="mono teal-ink" style="font-size:14px">marketing_allowed = true</text>
+<line x1="720" y1="142" x2="720" y2="210" class="ln-teal"/>
+<circle cx="945" cy="230" r="11" class="f-red"/>
+<text x="965" y="140" text-anchor="middle" class="b" style="font-size:15px">19 Nov · postal · withdrawn</text>
+<text x="965" y="162" text-anchor="middle" class="mono red-ink" style="font-size:14px">marketing_allowed = false</text>
+<line x1="945" y1="172" x2="945" y2="216" class="ln-red"/>
+<rect x="784" y="219" width="22" height="22" transform="rotate(45 795 230)" class="f-navy"/>
+<text x="795" y="290" text-anchor="middle" class="b" style="font-size:15px">17 Nov 2024 · conversion</text>
+<text x="795" y="310" text-anchor="middle" class="mono muted" style="font-size:14px">event_id 9539</text>
+
+<rect x="40" y="340" width="360" height="176" rx="12" class="soft-orange"/>
+<circle cx="66" cy="366" r="6" class="f-teal"/><circle cx="84" cy="366" r="6" class="f-teal"/><circle cx="102" cy="366" r="6" class="f-red"/>
+<text x="118" y="371" class="mono orange-ink b" style="font-size:13px">PLAIN JOIN ON consumer_id</text>
+<text x="60" y="414" class="b" style="font-size:34px">3 rows</text>
+<text x="60" y="444" style="font-size:15px">the one event, copied once per</text>
+<text x="60" y="465" style="font-size:15px">consent row: the grain is gone</text>
+<text x="60" y="496" class="mono muted" style="font-size:13px">Italy: 794 events → 1,988 rows</text>
+
+<rect x="420" y="340" width="360" height="176" rx="12" class="soft-red"/>
+<circle cx="446" cy="366" r="6" class="f-red"/>
+<text x="462" y="371" class="mono red-ink b" style="font-size:13px">LATEST ROW ON FILE</text>
+<text x="440" y="414" class="b red-ink" style="font-size:34px">false</text>
+<text x="440" y="444" style="font-size:15px">postal, withdrawn 19 Nov: decided</text>
+<text x="440" y="465" style="font-size:15px">two days after the event happened</text>
+<text x="440" y="496" class="mono muted" style="font-size:13px">Italy: 31 events get a later decision</text>
+
+<rect x="800" y="340" width="360" height="176" rx="12" class="soft-teal"/>
+<circle cx="826" cy="366" r="6" class="f-teal"/>
+<text x="842" y="371" class="mono teal-ink b" style="font-size:13px">LATEST ON OR BEFORE 17 NOV</text>
+<text x="820" y="414" class="b teal-ink" style="font-size:34px">true ✓</text>
+<text x="820" y="444" style="font-size:15px">push, granted 16 Nov: the decision</text>
+<text x="820" y="465" style="font-size:15px">in force on the day, one row</text>
+<text x="820" y="496" class="mono muted" style="font-size:13px">Italy: 794 events → 794 rows</text>
+</svg>
