@@ -452,3 +452,16 @@ body.lab .bignum p { margin: 0; font-size: 0.95rem; line-height: 1.5; color: var
 .lab-kit li { margin: 0; display: inline-flex; align-items: center; gap: 0.45rem; }
 .lab-kit li::before { content: ""; width: 0.4rem; height: 0.4rem; border-radius: 2px; background: var(--lab); opacity: 0.85; }
 .lab-kit b { color: #fff; font-weight: 500; }
+
+/* ============================================================ AI tidbits ===
+   Added 2026-10-25 (third pass): short, sourced AI facts tied to the step the
+   student is on, and a link list at the end of each lab. Both reuse .box.tidbit.
+     <div class="box tidbit ai"><span class="k">AI tidbit · …</span><p>…</p>
+       <p class="src">Source: <a>…</a></p></div>
+     <div class="box tidbit explore"><span class="k">Explore more · …</span>
+       <ul><li><a>title</a>: what it is</li></ul></div>
+   ========================================================================== */
+body.lab .box.tidbit.ai > .k::before { content: "✦ "; }
+body.lab .box .src { font-size: 0.84rem; color: var(--muted); overflow-wrap: anywhere; }
+body.lab .box.explore ul { display: grid; gap: 0.4rem; }
+body.lab .box.explore li { margin: 0; overflow-wrap: anywhere; }

@@ -235,6 +235,13 @@
       </div>
       <p>Why split? A plan is short but it is where mistakes hide, so pay for the best thinker there. Code is long but routine, so let the cheaper model type it. <em>(A third size, Haiku, $0.10 / $0.50, is for bulk work. Anthropic API pricing, October 2026.)</em></p>
 
+      <div class="box tidbit ai">
+        <span class="k">AI tidbit · what a token costs</span>
+        <p>The Step 1 prompt is about 850 characters. At roughly 4 characters per token that is a few hundred tokens, so at Sonnet's $2 per million it costs about a twentieth of a cent, and the whole draft well under one cent. Cost is not why we check the draft. Correctness is.</p>
+        <p>To see text split into tokens, paste a line of SQL into <a href="https://tiktokenizer.vercel.app/">Tiktokenizer</a>. It shows OpenAI's tokenizers (Claude splits text a little differently), but the idea is the same: words, column names and symbols break into pieces.</p>
+        <p class="src">Prices: the table above. "4 characters per token" is a rule of thumb for English, not an exact figure.</p>
+      </div>
+
       <figure class="hero wide">
         <img src="images/premium-thrifty.svg" alt="Draft on Sonnet, prove with three checks, plan the fix on Opus, build and test on Sonnet: 794 = 794, 4 tests pass." loading="lazy">
         <figcaption>Sonnet drafts, the warehouse proves, Opus plans the fix, Sonnet builds it and writes the tests.</figcaption>
@@ -549,9 +556,15 @@ Respond in Markdown only. Do not create any file.</code></pre>
         <tr><td>Output: … one code block …</td><td>A clean answer that is easy to copy.</td></tr>
       </tbody></table></div>
 
+      <div class="box tidbit ai">
+        <span class="k">AI tidbit · why Claude guesses instead of asking</span>
+        <p>Why doesn't Claude stop and ask "which consent record?" A 2025 paper, <em>Why Language Models Hallucinate</em>, compares models to students facing hard exam questions: when unsure, they guess, because training and scoring usually reward a confident guess over "I don't know". So a vague word in a prompt rarely comes back as a question. It comes back as a plausible answer.</p>
+        <p class="src">Source: Kalai, Nachum, Vempala and Zhang (2025), <a href="https://arxiv.org/abs/2509.04664">arXiv:2509.04664</a>.</p>
+      </div>
+
       <h3>1b · Put the SQL in the project</h3>
       <ol class="steps">
-        <li>VS Code Explorer → right-click the <code>models</code> folder → <b>New File</b> → type <code>analytics/italy_conversion_events.sql</code> → <kbd>Enter</kbd>.</li>
+        <li>VS Code Explorer → right-click the <code>models</code> folder → <b>New File</b> → type <code>analytics/italy_conversion_events.sql</code> → <kbd>Enter</kbd>. (The <code>analytics/</code> part creates the folder too.)</li>
         <li>In Claude, click <b>Copy</b> on the code block. Back in the file: <kbd>Ctrl+A</kbd>, then <kbd>Ctrl+V</kbd>.</li>
         <li>Check line 1 is the <code>{{ config(...) }}</code> line, and that it appears only once. Delete any <code>;</code> at the very end.</li>
         <li>Save (<kbd>Ctrl+S</kbd>).</li>
@@ -577,6 +590,12 @@ Respond in Markdown only. Do not create any file.</code></pre>
   and e.lifecycle_stage = 'conversion'</td><td>Only Italy conversions.</td></tr>
       </tbody></table></div>
       <p>Can you tell by reading whether yours is right? Usually not. That is why Step 2 exists.</p>
+
+      <div class="box tidbit ai">
+        <span class="k">AI tidbit · why your SQL differs from your neighbour's</span>
+        <p>At every step the model has a list of possible next tokens, each with a probability. It does not always take the top one: it <b>samples</b>, with a little randomness, so the same prompt can come back as different SQL. A setting called <b>temperature</b> controls how adventurous that pick is, and the <a href="https://poloclub.github.io/transformer-explainer/">Transformer Explainer</a> has a slider for it. That is why this lab never asks "did you get the same SQL?", only "does it pass the same checks?"</p>
+        <p class="src">Sources: Anthropic's <a href="https://platform.claude.com/docs/en/about-claude/glossary">glossary</a> (temperature); the Transformer Explainer <a href="https://arxiv.org/abs/2408.04619">paper</a>.</p>
+      </div>
 
       <h3>1d · Build it</h3>
       <div class="prompt term">
@@ -812,6 +831,12 @@ where marketing_allowed is null;</code></pre></div>
       <h3 id="plan">3a · Get a plan from Opus</h3>
       <p>Stay in the <b>same chat</b>, because Claude needs to see its own draft. Model picker → <b>Opus</b> (look under <b>More models</b>; if Opus is not there, stay on Sonnet). Fill the three blanks with your scorecard answers, then send.</p>
 
+      <div class="box tidbit ai">
+        <span class="k">AI tidbit · Claude has no memory between messages</span>
+        <p>The model itself keeps nothing from one message to the next. Each time you press send, the app hands it the conversation so far: your first prompt, its draft, and now your scorecard. Everything it can see at that moment is its <a href="glossary.html#context-window">context window</a>, its working memory. Same chat: it can see its draft. New chat: it starts from zero. That is also why switching to Opus mid-chat works: Opus reads the same conversation Sonnet wrote.</p>
+        <p class="src">Source: Anthropic's <a href="https://platform.claude.com/docs/en/about-claude/glossary">glossary</a> (context window).</p>
+      </div>
+
       <div class="prompt">
         <p class="model">Model: <b>Opus</b> · same chat</p>
         <p class="asks"><b>What this asks Claude to do</b>Compare its draft with the three rules and your scorecard, and write a short plan of what to change. A plan, not code.</p>
@@ -1016,7 +1041,7 @@ Output: two code blocks, each labelled with its file path. Respond in Markdown o
       <h3>4b · Create the two files</h3>
       <ol class="steps">
         <li>Right-click <code>models/analytics</code> → New File → <code>schema.yml</code> → paste the first block → save.</li>
-        <li>Right-click the empty space under the files in the Explorer (the project's top level) → New File → <code>tests/no_underage_marketing_italy.sql</code> → paste the second block (no <code>;</code> at the end) → save.</li>
+        <li>Right-click the empty space under the files in the Explorer (the project's top level) → New File → <code>tests/no_underage_marketing_italy.sql</code> (the <code>tests/</code> part creates the folder if it is missing) → paste the second block (no <code>;</code> at the end) → save.</li>
       </ol>
 
       <h3>4c · Run the tests</h3>
@@ -1115,6 +1140,18 @@ Done. PASS=3 WARN=0 <span class="bad">ERROR=1</span> SKIP=0 TOTAL=4</pre>
       <div class="box try">
         <span class="k">On Monday</span>
         <p>Pick one table you would let an assistant draft. Write down the rule it would most likely miss, and one answer you already know that would catch it.</p>
+      </div>
+
+      <div class="box tidbit explore">
+        <span class="k">Explore more · how the assistant works</span>
+        <ul>
+          <li><a href="https://poloclub.github.io/transformer-explainer/">Transformer Explainer</a>: type a sentence and watch the next-token scores and the temperature slider live (the opener's demo).</li>
+          <li><a href="https://bbycroft.net/llm">LLM Visualization</a> by Brendan Bycroft: a 3D walk through every step inside a small GPT model.</li>
+          <li><a href="https://www.3blue1brown.com/lessons/gpt">Transformers, the tech behind LLMs</a>: 3Blue1Brown's visual lesson, part of the Deep Learning series.</li>
+          <li><a href="https://tiktokenizer.vercel.app/">Tiktokenizer</a>: see any text split into tokens.</li>
+          <li><a href="https://www.youtube.com/watch?v=zjkBMFhNj_g">Intro to Large Language Models</a>: Andrej Karpathy's one-hour talk, no maths needed.</li>
+          <li><a href="https://docs.getdbt.com/docs/build/data-tests">dbt data tests</a>: the official guide to <code>unique</code>, <code>not_null</code> and singular tests like yours.</li>
+        </ul>
       </div>
     </section>
 

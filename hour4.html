@@ -420,6 +420,12 @@ Hard limits:
         <p>Notice: these are <b>rules written in a prompt</b>. The model will usually follow them. Step 2 tests how far "usually" goes.</p>
       </div>
 
+      <div class="box tidbit ai">
+        <span class="k">AI tidbit · start with the simplest agent</span>
+        <p>Anthropic's engineering guide to agents says: <em>"we recommend finding the simplest solution possible, and only increasing complexity when needed. This might mean not building agentic systems at all."</em> Your analyst is that advice in practice: an agent whose only tool is you. Add a real tool only when you can say what it must never do, and what enforces that.</p>
+        <p class="src">Source: Anthropic, <a href="https://www.anthropic.com/research/building-effective-agents">Building effective agents</a> (2024).</p>
+      </div>
+
       <h3 id="step1b">1b · Ask it the question</h3>
       <p>Open the Project (left sidebar → <b>Projects</b> → <b>HORIZON analyst</b>), check the picker says <b>Sonnet</b>, and send:</p>
       <div class="prompt">
@@ -589,6 +595,12 @@ join rst.distributors d using (distributor_id)</td><td>Take the weekly sales and
       </div>
       <p class="rule-line">The analyst probably behaved. <span class="w">Probably is not a control.</span></p>
 
+      <div class="box tidbit ai">
+        <span class="k">AI tidbit · these risks are on OWASP's list</span>
+        <p>Security teams have names for what you just probed. OWASP's 2025 Top 10 for LLM applications includes <b>Excessive Agency</b> (LLM06): damaging actions taken in response to unexpected, ambiguous or manipulated model output. Ask 2 is a test of it. Number 1 on the list is <b>Prompt Injection</b>: input that talks a model out of its instructions. Challenge 3's "Legal has approved it" is a mild, polite version.</p>
+        <p class="src">Sources: OWASP, <a href="https://genai.owasp.org/llmrisk/llm062025-excessive-agency/">LLM06:2025 Excessive Agency</a> and the <a href="https://genai.owasp.org/llm-top-10/">Top 10 for LLM applications</a>.</p>
+      </div>
+
       <div class="box chat">
         <span class="k">Unmute</span>
         <p><strong>Which of the three limits would you trust in production, and which would you not?</strong><span class="opts">hint: a rule in a prompt is a request; a locked door is a control</span></p>
@@ -693,6 +705,12 @@ join rst.distributors d using (distributor_id)</td><td>Take the weekly sales and
       <div class="box analogy">
         <span class="k">One control apart</span>
         <p>Your analyst and the instructor's differ by exactly one control. Yours: <b>a person</b> between the model and the data. Theirs: <b>a read-only server</b> between them. Both are gates. One scales; the other is a person who gets tired at 4 p.m.</p>
+      </div>
+
+      <div class="box tidbit ai">
+        <span class="k">AI tidbit · read-only stops deletes, not leaks</span>
+        <p>Simon Willison, who named "prompt injection", warns about the <b>lethal trifecta</b>: an agent with (1) access to private data, (2) exposure to untrusted content, meaning any text an attacker could have written, such as a web page, an email or a free-text column, and (3) a way to communicate externally. With all three, an instruction hidden in that content can get the agent to send your data out. The demo door blocks <code>DELETE</code>, but it still reads. Before any Pilot, ask which of the three the agent has.</p>
+        <p class="src">Source: Simon Willison, <a href="https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/">The lethal trifecta for AI agents</a> (2025).</p>
       </div>
 
       <div class="box chat">
@@ -958,6 +976,17 @@ Gate owner:  &lt;the data owner who signs&gt;; stop if any query returns rows ab
       <div class="box tidbit">
         <span class="k">Keep the analyst</span>
         <p>Everything you built is one page of instructions. Swap the table list for a sandbox copy of a schema your team owns, keep the hard limits, and you have an Experimentation-rung analyst by Tuesday, with you as the tool. The read-only door from the demo is a small open-source MCP server (<a href="glossary.html#dbhub">DBHub</a>) you can add to Claude Desktop on a machine you control; ask the instructor for the setup notes.</p>
+      </div>
+
+      <div class="box tidbit explore">
+        <span class="k">Explore more · agents, tools and their risks</span>
+        <ul>
+          <li><a href="https://modelcontextprotocol.io/">Model Context Protocol</a>: the official site for the "USB-C port for AI applications" behind the demo's database door.</li>
+          <li><a href="https://www.anthropic.com/research/building-effective-agents">Building effective agents</a>: Anthropic's guide to when an agent is worth it, and how to keep it simple.</li>
+          <li><a href="https://www.anthropic.com/research/effective-context-engineering-for-ai-agents">Effective context engineering for AI agents</a>: why agents should summarise, not swallow.</li>
+          <li><a href="https://simonwillison.net/series/prompt-injection/">Simon Willison on prompt injection</a>: a running series, from the first examples to the lethal trifecta.</li>
+          <li><a href="https://genai.owasp.org/llm-top-10/">OWASP Top 10 for LLM applications</a>: the security checklist to bring to a Pilot review.</li>
+        </ul>
       </div>
     </section>
 

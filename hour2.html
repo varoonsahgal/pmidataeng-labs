@@ -395,7 +395,7 @@ where s.market_code = 'IT'
             <tr><td>9</td><td>IT Branded Distributor 4</td><td>IT</td><td>branded_retail</td></tr>
           </tbody>
         </table></div>
-        <p class="after"><b>The three channels:</b> <code>branded_retail</code> = PMI's own stores · <code>partner_retail</code> = other companies' shops · <code>ecommerce</code> = online stores. Keep an eye on the two greyed-out rows.</p>
+        <p class="after"><b>The three channels:</b> <code>branded_retail</code> = PMI's own stores · <code>partner_retail</code> = other companies' shops · <code>ecommerce</code> = online stores. Keep an eye on the two rows highlighted in red: distributors 3 and 7.</p>
       </figure>
 
       <h3 id="t-sales">Table 2 · <code>rst.sell_through</code>: the weekly sales</h3>
@@ -663,6 +663,12 @@ Respond in Markdown only. Do not create any file.</code></pre>
       </div>
       <p><b>Claude explains. The warehouse proves.</b> An explanation is still a guess until a count matches.</p>
 
+      <div class="box tidbit ai">
+        <span class="k">AI tidbit · comments steer the model too</span>
+        <p>Claude reads everything you paste, comments included. The line says <code>-- exclude non-store channels</code>, which sounds like a decision someone made on purpose. Check whether Claude's explanation just repeats that reason, or says what the line actually does: it drops a whole distributor. Taken to the extreme, text inside pasted content that tells the model what to do is called <b>prompt injection</b>, number 1 on OWASP's 2025 list of risks for LLM applications. It comes back in Hour 4.</p>
+        <p class="src">Source: OWASP, <a href="https://genai.owasp.org/llmrisk/llm01-prompt-injection/">LLM01:2025 Prompt Injection</a>.</p>
+      </div>
+
       <div class="qcard" id="q-proof">
         <header><span class="qn">3</span><span class="qk">Diagnose · the proof</span><h4>"How many Japan rows does that one rule remove?"</h4></header>
         <div class="qb">
@@ -842,6 +848,12 @@ Output: the SQL in one code block. Respond in Markdown only. Do not create any f
         <tr><td>where in_pipeline &lt; in_source</td><td>Keep only the distributors that lost rows.</td></tr>
       </tbody></table></div>
 
+      <div class="box tidbit ai">
+        <span class="k">AI tidbit · one chat per task</span>
+        <p>This prompt goes in the same chat as 2b, so Claude can still see the pipeline SQL you pasted there. But a chat is not free memory. Anthropic's engineers describe a model's context as an <b>attention budget</b>: every extra token draws on it, and returns shrink as it fills. So keep one chat per task, and start a new one when the task changes, as you did in 2b.</p>
+        <p class="src">Source: Anthropic, <a href="https://www.anthropic.com/research/effective-context-engineering-for-ai-agents">Effective context engineering for AI agents</a> (2025).</p>
+      </div>
+
       <details class="fold" id="guard-ref">
         <summary>Compare with the reference test (or paste it if you are stuck)</summary>
         <div class="prompt file" data-label="tests/assert_japan_no_dropped_distributors.sql">
@@ -939,6 +951,12 @@ Done. PASS=0 WARN=0 <span class="bad">ERROR=1</span> SKIP=0 TOTAL=1</pre>
           </tbody>
         </table>
       </div>
+
+      <div class="box tidbit ai">
+        <span class="k">AI tidbit · "trusting AI output" has a name</span>
+        <p>It is called <b>automation bias</b>: accepting an automated answer without checking it, or missing a problem because the automation did not flag it. Human-factors researchers studied it long before chatbots. A 2010 review found it in experts as well as beginners, and found that training or instructions alone do not prevent it. What does work is what you did today: a check you run yourself.</p>
+        <p class="src">Source: Parasuraman and Manzey (2010), <em>Human Factors</em> 52(3), <a href="https://doi.org/10.1177/0018720810376055">doi:10.1177/0018720810376055</a>. Overview: <a href="https://en.wikipedia.org/wiki/Automation_bias">Automation bias</a> (Wikipedia).</p>
+      </div>
     </section>
 
     <section class="part" id="takeaway">
@@ -977,6 +995,17 @@ Done. PASS=0 WARN=0 <span class="bad">ERROR=1</span> SKIP=0 TOTAL=1</pre>
       <div class="box try">
         <span class="k">On Monday</span>
         <p>Pick one pipeline you own. Write the query that counts its rows in vs out, per key. Then name one number in your world that should <em>never</em> change (like "under-25 marketing in Italy is always zero") and write the test that guards it.</p>
+      </div>
+
+      <div class="box tidbit explore">
+        <span class="k">Explore more · NULLs, tests and trust</span>
+        <ul>
+          <li><a href="https://modern-sql.com/concept/null">Modern SQL: NULL</a>: why <code>NULL &lt;&gt; 1</code> is "unknown", explained with examples.</li>
+          <li><a href="https://modern-sql.com/feature/is-distinct-from">Modern SQL: IS DISTINCT FROM</a>: the opener's fix, and which databases support it.</li>
+          <li><a href="https://docs.getdbt.com/docs/build/data-tests">dbt data tests</a>: singular tests like your alarm, and the built-in generic ones.</li>
+          <li><a href="https://en.wikipedia.org/wiki/Automation_bias">Automation bias</a>: the human side of "the job was green, so it must be right".</li>
+          <li><a href="https://www.youtube.com/watch?v=7xTGNNLPyMI">Deep Dive into LLMs like ChatGPT</a>: Andrej Karpathy's long, friendly tour, including why models hallucinate.</li>
+        </ul>
       </div>
 
       <p class="rule-line">The assistant drafts. <span class="w">The warehouse decides.</span> The engineer signs.</p>

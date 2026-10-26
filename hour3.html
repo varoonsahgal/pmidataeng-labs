@@ -447,6 +447,12 @@ Respond in Markdown only. Do not create any file.</code></pre>
         <tr><td>measurable objectives … verify whether it was met</td><td>A goal you can check later, not a feeling.</td></tr>
       </tbody></table></div>
 
+      <div class="box tidbit ai">
+        <span class="k">AI tidbit · why every prompt starts with Context</span>
+        <p>All three prompts this hour open with Context, then Tables, then Rules. Anthropic's own prompting guide explains why: <em>"Think of Claude as a brilliant but new employee who lacks context on your norms and workflows. The more precisely you explain what you want, the better the result."</em> Marketing's request has the same gap in reverse: it assumes you already know what they mean.</p>
+        <p class="src">Source: Anthropic, <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices">Prompting best practices</a>.</p>
+      </div>
+
       <p>An example of a good answer (Claude will word it differently):</p>
       <div class="prompt file" data-label="Example answer · yours will be worded differently">
         <pre><code>Stakeholders
@@ -578,6 +584,12 @@ Respond in Markdown only. Do not create any file.</code></pre>
             <tr><td class="n" data-label="">5</td><td data-label="Question">What decision will you make from it, and how will we know it worked?</td><td data-label="Changes">what "done" means: the acceptance test</td><td data-label="Word">the goal</td></tr>
           </tbody>
         </table>
+      </div>
+
+      <div class="box tidbit ai">
+        <span class="k">AI tidbit · Claude tends to agree with you</span>
+        <p>Ask a model "are these good questions?" and it leans towards yes. Anthropic researchers found that five state-of-the-art AI assistants consistently showed this <b>sycophancy</b> (telling users what they seem to want to hear), likely driven in part by training on human preference ratings. So when you want critique, ask for it plainly: "which of these would you cut, and why?" Challenge 4 does exactly that.</p>
+        <p class="src">Source: Sharma et al. (2023), <a href="https://arxiv.org/abs/2310.13548">Towards Understanding Sycophancy in Language Models</a>.</p>
       </div>
 
       <div class="box chat"><span class="k">Post in the chat</span><p><strong>One question from Claude's list you would cut, and why.</strong><span class="opts">use the rule: "a different answer would not change…"</span></p></div>
@@ -861,6 +873,12 @@ Respond in Markdown only. Do not create any file.</code></pre>
         <tr><td>one open question to confirm</td><td>Every assumption gets a question, so it is confirmed instead of guessed.</td></tr>
       </tbody></table></div>
 
+      <div class="box tidbit ai">
+        <span class="k">AI tidbit · "do not invent" is a known technique</span>
+        <p>Anthropic's guide to reducing hallucinations recommends explicitly giving Claude permission to admit uncertainty, to say "I don't know". The rule <code>do not invent data volumes or costs</code> works the same way: it tells Claude that a gap is better than a made-up number. It lowers the risk; it does not remove it. You still check what comes back.</p>
+        <p class="src">Source: Anthropic, <a href="https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations">Reduce hallucinations</a>.</p>
+      </div>
+
       <p>An example of a good answer (shortened; yours will differ):</p>
       <div class="prompt file" data-label="Example answer · functional requirements">
         <pre><code>1. Weekly conversion count per market (JP, IT, ID), each week dated by its Monday.
@@ -993,6 +1011,17 @@ Respond in Markdown only. Do not create any file.</code></pre>
         </div>
       </div>
       <div class="box try"><span class="k">On Monday</span><p>Take one vague request you are sitting on. Circle its four most dangerous words. Write three questions whose answers would change the design, one hidden requirement nobody said, and a one-line verdict, before writing any code.</p></div>
+
+      <div class="box tidbit explore">
+        <span class="k">Explore more · context for people and for models</span>
+        <ul>
+          <li><a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices">Prompting best practices</a>: Anthropic's guide to clear, direct prompts with context first.</li>
+          <li><a href="https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations">Reduce hallucinations</a>: Anthropic's short list of techniques, including "allow Claude to say I don't know".</li>
+          <li><a href="https://arxiv.org/abs/2307.03172">Lost in the Middle</a> (Liu et al., 2023): models use information best at the start or end of a long input, worst in the middle.</li>
+          <li><a href="https://www.trychroma.com/research/context-rot">Context Rot</a> (Chroma, 2025): longer inputs make every model tested less reliable.</li>
+          <li><a href="https://www.anthropic.com/research/towards-understanding-sycophancy-in-language-models">Towards understanding sycophancy</a>: Anthropic's research summary on why assistants agree too easily.</li>
+        </ul>
+      </div>
     </section>
 
     <!-- ============================================================ CHALLENGES -->
