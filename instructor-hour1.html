@@ -31,6 +31,19 @@
   .tcard p { margin: 0; font-size: 0.95rem; line-height: 1.5; }
   .tcard .like { font-size: 0.92rem; color: var(--muted); font-style: italic; }
   @media (max-width: 760px) { .tables3 { grid-template-columns: minmax(0, 1fr); } }
+  /* Row highlights in the 3552 walk-through: win = the row that counts, out = rows that are produced but wrong or ignored */
+  .tbl tr.win td { background: var(--go-soft); }
+  .tbl tr.out td { color: var(--muted); }
+  .part h3[id] { margin-top: 2rem; scroll-margin-top: 1rem; }
+  .tbl td:first-child > code:only-child { white-space: nowrap; }
+  .aside { font-size: 0.95rem; color: var(--muted); max-width: var(--measure); }
+  .part h4 { margin: 1.5rem 0 0.5rem; font-family: var(--f-display); color: var(--head); }
+  .matrix th, .matrix td { padding-left: 0.45rem; padding-right: 0.45rem; text-align: center; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .matrix th:first-child, .matrix td:first-child { text-align: left; white-space: normal; min-width: 14rem; }
+  .matrix td.bad { color: var(--stop); background: var(--stop-soft); font-weight: 600; }
+  .matrix tr.sneak td:first-child { box-shadow: inset 4px 0 0 var(--orange); }
+  .matrix tr.sneak td { background: color-mix(in srgb, var(--accent-soft) 60%, transparent); }
+  .matrix tr.sneak td.bad { background: var(--stop-soft); }
 </style>
 </head>
 <body>
@@ -77,6 +90,17 @@
       <li><a href="#emphasize">What to emphasize</a></li>
       <li><a href="#tables">The three tables, simply</a></li>
       <li><a href="#problem">The problem, in plain words</a></li>
+      <li class="sub"><a href="#p-rows">1 · 3552's rows</a></li>
+      <li class="sub"><a href="#p-drawer">2 · The drawer, day by day</a></li>
+      <li class="sub"><a href="#p-traced">3 · Three drafts, traced</a></li>
+      <li class="sub"><a href="#p-noslip">4 · The 8 with no slip yet</a></li>
+      <li class="sub"><a href="#p-sameday">5 · Same-day slips (&lt;=)</a></li>
+      <li class="sub"><a href="#p-ties">6 · Ties (consent_id)</a></li>
+      <li class="sub"><a href="#p-channel">7 · Which channel?</a></li>
+      <li class="sub"><a href="#p-whiteboard">8 · 90 seconds for the room</a></li>
+      <li><a href="#mechanics">How the correct SQL works</a></li>
+      <li><a href="#matrix">Every draft, every check, every test</a></li>
+      <li><a href="#dbt">What dbt is actually doing</a></li>
       <li><a href="#numbers">Every number, and what it means</a></li>
       <li class="grp">Teach it</li>
       <li><a href="#know">What you need to know</a></li>
@@ -175,9 +199,14 @@
 
     <section class="part" id="problem">
       <div class="part-h">
-        <span class="eyebrow">Understand it · 3 minutes</span>
+        <span class="eyebrow">Understand it · 20 minutes, the night before</span>
         <h2>The problem, in <span>plain words</span></h2>
-        <p class="dek">If you can explain consumer 3552, you can teach this hour.</p>
+        <p class="dek">If you can explain consumer 3552, you can teach this hour. This section walks through 3552 slowly, using every real row, and then covers the three edge cases that sit behind the numbers 8, 32 and 5. Every row shown here was queried from the HORIZON warehouse on 2026-10-25.</p>
+      </div>
+
+      <div class="box tidbit">
+        <span class="k">The whole problem in four sentences</span>
+        <p>Marketing wants one yes/no per Italy conversion: "on the day this person converted, were we allowed to contact them?" The answer lives in a table of permission slips, and most people have several slips (one per channel, signed on different days). So for every conversion the SQL must pick <b>exactly one</b> slip, and it must be the right one: <b>the newest slip that already existed on the conversion day</b>. Every way of getting that wrong still runs without an error, which is the point of the hour.</p>
       </div>
 
       <figure class="hero wide">
@@ -185,27 +214,417 @@
         <figcaption>Consumer 3552 converted on 17 Nov 2024 and has three permission slips. Three ways of attaching consent give three different answers. Only the teal one is right.</figcaption>
       </figure>
 
-      <div class="tbl stack wrap">
+      <h3 id="p-rows">1 · Meet consumer 3552: every row we hold about them</h3>
+      <p>3552 was picked because one person shows all three failure modes: several slips (so a plain join copies them), a slip signed <em>after</em> the conversion (so "newest on file" gets it wrong), and a slip that disagrees with the others (so the wrong pick changes the answer). Here is everything the warehouse knows about them, across the three tables.</p>
+
+      <p><b>Who they are</b> (<code>clr.consumers</code>, one row per person):</p>
+      <div class="tbl wrap">
         <table>
-          <thead><tr><th>How the SQL attaches consent</th><th>What consumer 3552's conversion gets</th><th>In plain words</th></tr></thead>
+          <thead><tr><th>consumer_id</th><th>market_code</th><th>age_band</th><th>registration_date</th><th>primary_product_interest</th></tr></thead>
+          <tbody><tr><td>3552</td><td>IT</td><td>25-34</td><td>2024-10-26</td><td>VEEV</td></tr></tbody>
+        </table>
+      </div>
+      <p class="aside">Aged 25 to 34, so the under-25 law does not apply to them. They are only in this lab for the consent question.</p>
+
+      <p><b>What they did</b> (<code>clr.lifecycle_events</code>, the diary, one row per thing that happened):</p>
+      <div class="tbl wrap">
+        <table>
+          <thead><tr><th>event_id</th><th>lifecycle_stage</th><th>event_date</th><th>in the model?</th></tr></thead>
           <tbody>
-            <tr><td data-label="The SQL">join on <code>consumer_id</code>, nothing else</td><td data-label="Result"><span class="expect bad">3 rows</span></td><td data-label="Plain words">"One conversion now looks like three." Across Italy: 794 becomes 1,988. This is a <b>fan-out</b>.</td></tr>
-            <tr><td data-label="The SQL">each person's latest slip on file</td><td data-label="Result"><span class="expect bad">false</span></td><td data-label="Plain words">"We used a slip signed two days <em>after</em> they converted." Across Italy: 31 events. This breaks <b>point-in-time</b>.</td></tr>
-            <tr><td data-label="The SQL">the latest slip dated on or before 17 Nov</td><td data-label="Result"><span class="expect ok">true</span></td><td data-label="Plain words">"The slip that was in the drawer that day." One row. Correct.</td></tr>
+            <tr><td>9537</td><td>registration</td><td>2024-10-26</td><td>no, not a conversion</td></tr>
+            <tr><td>9538</td><td>trial</td><td>2024-11-10</td><td>no</td></tr>
+            <tr class="win"><td><b>9539</b></td><td><b>conversion</b></td><td><b>2024-11-17</b></td><td><b>yes: this is the row we judge</b></td></tr>
+            <tr><td>9540</td><td>churn</td><td>2024-12-27</td><td>no</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="aside">The model keeps only <code>market_code = 'IT'</code> and <code>lifecycle_stage = 'conversion'</code>, so 3552 contributes exactly one row: event 9539, dated 17 Nov 2024. That date is the "day" in "the consent in force on the day".</p>
+
+      <p><b>Their permission slips</b> (<code>mpl.consent_records</code>, every column):</p>
+      <div class="tbl wrap">
+        <table>
+          <thead><tr><th>consent_id</th><th>comm_channel</th><th>consent_status</th><th>marketing_allowed</th><th>age_gate_pass</th><th>consent_date</th><th>last_updated</th></tr></thead>
+          <tbody>
+            <tr><td>8933</td><td>email</td><td>granted</td><td>true</td><td>true</td><td>2024-11-10</td><td>2025-02-04</td></tr>
+            <tr><td>8932</td><td>push</td><td>granted</td><td>true</td><td>true</td><td>2024-11-16</td><td>2024-12-28</td></tr>
+            <tr><td>8931</td><td>postal</td><td>withdrawn</td><td>false</td><td>true</td><td>2024-11-19</td><td>2025-03-30</td></tr>
           </tbody>
         </table>
       </div>
 
-      <p>And the third problem: 8 Italian consumers had <b>no slip at all</b> before they converted (all their slips came later). With the correct rule they get NULL, which means "unknown". NULL silently drops out of both <code>= true</code> and <code>= false</code> filters, so a report counting "allowed" plus "not allowed" comes up 8 short. The fix is <code>coalesce(marketing_allowed, false)</code> with a comment: unknown is treated as not allowed.</p>
+      <p>Read that table column by column, because each column is a possible trap:</p>
+      <div class="tbl stack wrap">
+        <table>
+          <thead><tr><th>Column</th><th>What it really means</th><th>Use it?</th><th>The trap</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Column"><code>consent_date</code></td><td data-label="Means">the day the person gave or changed this permission</td><td data-label="Use it?"><span class="expect ok">yes: the date we compare</span></td><td data-label="Trap">none, as long as it is compared with <code>event_date</code></td></tr>
+            <tr><td data-label="Column"><code>marketing_allowed</code></td><td data-label="Means">the final yes/no for this slip, with the age gate and other rules already applied</td><td data-label="Use it?"><span class="expect ok">yes: the answer we copy</span></td><td data-label="Trap">none. It is the only column the student prompt gives Claude.</td></tr>
+            <tr><td data-label="Column"><code>comm_channel</code></td><td data-label="Means">which way of contacting them this slip covers: email, sms, push or postal</td><td data-label="Use it?">not in our rule</td><td data-label="Trap">it explains why people have several slips. Whether channel <em>should</em> matter is Challenge 3 and Hour 3 (<a href="#p-channel">see below</a>).</td></tr>
+            <tr><td data-label="Column"><code>consent_id</code></td><td data-label="Means">a row number the system assigned</td><td data-label="Use it?">only as a tie-break</td><td data-label="Trap"><b>It is not in time order.</b> 3552's <em>oldest</em> slip has the <em>highest</em> id (8933). A draft that takes "the highest consent_id" picks email (true) and passes check 2 by luck, while being wrong for 127 other people.</td></tr>
+            <tr><td data-label="Column"><code>last_updated</code></td><td data-label="Means">when someone last touched the row in the system</td><td data-label="Use it?"><span class="expect bad">never</span></td><td data-label="Trap">it says nothing about when consent was given. All three of 3552's are dated after the conversion. "Newest by last_updated" picks postal (false) and is wrong for 146 people.</td></tr>
+            <tr><td data-label="Column"><code>consent_status</code></td><td data-label="Means">the raw action: granted, denied or withdrawn</td><td data-label="Use it?"><span class="expect bad">no</span></td><td data-label="Trap">"granted" does not always mean allowed: 1,086 rows say granted with <code>marketing_allowed = false</code> (324 of them failed the age gate). A draft that uses <code>consent_status = 'granted'</code> is wrong for 86 Italy conversions, 71 of them under-25s. This is the only draft in the lab that makes the under-25 test fail.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="p-drawer">2 · The drawer, day by day</h3>
+      <p>The single most useful picture: imagine the slips go into a drawer on the day they are signed. On any given day, the drawer holds only the slips signed on or before that day, and the <b>newest slip in the drawer</b> is the current answer. The answer for the same person changes over time:</p>
+      <div class="tbl stack wrap">
+        <table>
+          <thead><tr><th>Date</th><th>What happened</th><th>Slips in the drawer that day</th><th>Newest slip in the drawer</th><th>Allowed that day?</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Date">26 Oct 2024</td><td data-label="Happened">registration (event 9537)</td><td data-label="In the drawer">none</td><td data-label="Newest">none</td><td data-label="Allowed?"><span class="expect note">unknown → false</span></td></tr>
+            <tr><td data-label="Date">10 Nov 2024</td><td data-label="Happened">email slip signed (yes); trial (event 9538)</td><td data-label="In the drawer">email</td><td data-label="Newest">email, true</td><td data-label="Allowed?"><span class="expect ok">true</span></td></tr>
+            <tr><td data-label="Date">16 Nov 2024</td><td data-label="Happened">push slip signed (yes)</td><td data-label="In the drawer">email, push</td><td data-label="Newest">push, true</td><td data-label="Allowed?"><span class="expect ok">true</span></td></tr>
+            <tr class="win"><td data-label="Date"><b>17 Nov 2024</b></td><td data-label="Happened"><b>conversion (event 9539)</b></td><td data-label="In the drawer"><b>email, push</b></td><td data-label="Newest"><b>push, true</b></td><td data-label="Allowed?"><span class="expect ok">true ← the answer we need</span></td></tr>
+            <tr><td data-label="Date">19 Nov 2024</td><td data-label="Happened">postal slip signed (withdrawn)</td><td data-label="In the drawer">email, push, postal</td><td data-label="Newest">postal, false</td><td data-label="Allowed?"><span class="expect bad">false</span></td></tr>
+            <tr><td data-label="Date">27 Dec 2024</td><td data-label="Happened">churn (event 9540)</td><td data-label="In the drawer">email, push, postal</td><td data-label="Newest">postal, false</td><td data-label="Allowed?"><span class="expect bad">false</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>So "is 3552 allowed?" has no single answer. It was unknown in October, true from 10 to 18 November, and false from 19 November on. The model answers it for <b>one specific day per row</b>, the conversion day. Today's answer (false) is the wrong one for a row dated 17 November. That is what "point-in-time" means: <b>use what was true at that point in time, not what is true now.</b></p>
 
       <div class="box analogy">
-        <span class="k">Joins, in one sentence for the room</span>
-        <p>A join pairs each row on the left with <b>every</b> match on the right. If the right side has one row per person, you get one row. If it has three, you get three, and nothing warns you. If it has none, an INNER join drops the person and a LEFT join keeps them with a blank.</p>
+        <span class="k">Why it matters outside the classroom</span>
+        <p>Suppose a regulator asks in March 2025: "on 17 November you sent 3552 an offer. Were you allowed to?" The honest answer is yes: they had said yes on push the day before. A model that says false is wrong in the safe direction for 3552, but the same mistake runs the other way for other people (below: 8 people marked allowed who were not). A model that cannot answer "what did we know on the day" fails the first question in an audit.</p>
+      </div>
+
+      <h3 id="p-traced">3 · Three drafts, traced row by row for 3552</h3>
+      <p>Here is what the database actually does with 3552 under each of the three common draft shapes. Read the middle column like a slow-motion replay.</p>
+
+      <h4>Draft A · the plain join (the classic mistake)</h4>
+      <div class="prompt sql"><pre><code class="language-sql">from lifecycle_events e
+left join consent_records m
+    on m.consumer_id = e.consumer_id      -- nothing else</code></pre></div>
+      <ol class="steps">
+        <li><b>The database takes event 9539</b> and looks for every slip where <code>consumer_id = 3552</code>. It finds three.</li>
+        <li><b>A join pairs the event with every match</b>, so it writes three output rows, one per slip:</li>
+      </ol>
+      <div class="tbl wrap">
+        <table>
+          <thead><tr><th>event_id</th><th>event_date</th><th>slip joined on</th><th>marketing_allowed</th></tr></thead>
+          <tbody>
+            <tr class="out"><td>9539</td><td>2024-11-17</td><td>email · 10 Nov</td><td>true</td></tr>
+            <tr class="out"><td>9539</td><td>2024-11-17</td><td>push · 16 Nov</td><td>true</td></tr>
+            <tr class="out"><td>9539</td><td>2024-11-17</td><td>postal · 19 Nov</td><td>false</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><b>Result for 3552:</b> <span class="expect bad">3 rows, two answers</span>. One conversion now looks like three conversions, and it is both allowed and not allowed. <b>Across Italy:</b> each of the 794 people is copied once per slip they own: 197×1 + 195×2 + 207×3 + 195×4 = <b>1,988 rows</b>. A report counting "allowed" rows would say 1,226, which is more people than Italy has conversions. This is a <b>fan-out</b>: the join silently changed what one row means (from "one conversion" to "one conversion × one slip"). <b>Caught by:</b> check 1 (1,988), check 2 (3 rows) and the <code>unique</code> test (<code>FAIL 597</code>).</p>
+      <div class="box tidbit"><span class="k">Why LEFT vs INNER does not matter here</span><p>Every Italy converter has at least one slip, so a plain INNER join also gives exactly 1,988. LEFT and INNER only differ for people with no matching slip, and with no date condition nobody is unmatched.</p></div>
+
+      <h4>Draft B · "newest slip on file" (the sneaky one)</h4>
+      <div class="prompt sql"><pre><code class="language-sql">select distinct on (e.event_id) e.event_id, m.marketing_allowed
+from lifecycle_events e
+join consent_records m on m.consumer_id = e.consumer_id   -- no date
+order by e.event_id, m.consent_date desc</code></pre></div>
+      <ol class="steps">
+        <li><b>Join:</b> as in draft A, 9539 is paired with all three slips (3 rows).</li>
+        <li><b>Sort</b> those three rows newest first by <code>consent_date</code>: postal (19 Nov), push (16 Nov), email (10 Nov).</li>
+        <li><b>Keep the first row per event</b> (<code>distinct on</code>): postal, 19 Nov, <b>false</b>.</li>
+      </ol>
+      <p><b>Result for 3552:</b> <span class="expect bad">1 row · false</span>. One row, so the count looks perfect, but the slip it used did not exist on 17 November. It was signed two days later. This draft looks <em>more</em> careful than draft A (it deduplicates), which is exactly why it is dangerous.</p>
+      <p><b>Across Italy:</b> 31 conversions get a slip signed after the conversion. For 18 of them the later slip happens to say the same thing, so the answer is right by luck. For <b>13</b> the answer flips:</p>
+      <div class="tbl stack wrap">
+        <table>
+          <thead><tr><th>Group</th><th>People</th><th>Who</th><th>What went wrong</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Group">true on the day → false</td><td data-label="People">5</td><td data-label="Who">3552, 3658, 3996, 4046, 4945</td><td data-label="Wrong">a later withdrawal or denial is applied backwards. 3552 is one of these.</td></tr>
+            <tr><td data-label="Group">false on the day → true</td><td data-label="People">2</td><td data-label="Who">3861, 4613</td><td data-label="Wrong">a later yes is applied backwards: marked allowed when they were not</td></tr>
+            <tr><td data-label="Group">no slip yet → true</td><td data-label="People">6</td><td data-label="Who">3068, 3311, 3456, 3887, 4036, 4514</td><td data-label="Wrong">they had no slip at all on the day; a yes signed later is used</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>So 8 people (2 + 6) are marked allowed when they were not. That is the dangerous direction: contacting people without permission. <b>Caught by:</b> check 2 only. Checks 1 and 3 pass (794 rows, 0 NULLs), and <b>all four dbt tests pass</b>. Challenge 1 makes students see this; Challenge 2's test catches it (<code>FAIL 13</code>).</p>
+
+      <h4>Draft C · "newest slip on or before the day" (correct)</h4>
+      <div class="prompt sql"><pre><code class="language-sql">select distinct on (e.event_id) e.event_id, m.marketing_allowed
+from lifecycle_events e
+join consent_records m on m.consumer_id = e.consumer_id
+                      and m.consent_date &lt;= e.event_date   -- the extra line
+order by e.event_id, m.consent_date desc, m.consent_id desc</code></pre></div>
+      <ol class="steps">
+        <li><b>Join, with the date condition:</b> 9539 (17 Nov) is paired only with slips dated on or before 17 Nov. Email (10 Nov) qualifies, push (16 Nov) qualifies, <b>postal (19 Nov) is filtered out before anything else happens</b>. Two rows.</li>
+        <li><b>Sort</b> newest first: push (16 Nov), then email (10 Nov).</li>
+        <li><b>Keep the first row:</b> push, 16 Nov, <b>true</b>.</li>
+      </ol>
+      <p><b>Result for 3552:</b> <span class="expect ok">1 row · true</span>. The whole difference between draft B and draft C is one line: <code>and m.consent_date &lt;= e.event_date</code>. It is the line Challenge 1 asks students to comment out.</p>
+
+      <div class="tbl stack wrap">
+        <table>
+          <thead><tr><th>Draft</th><th>Event 9539 gets</th><th>Across Italy</th><th>Caught by</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Draft">A · plain join</td><td data-label="9539"><span class="expect bad">3 rows: true, true, false</span></td><td data-label="Italy">1,988 rows</td><td data-label="Caught by">checks 1 and 2 · <code>unique</code> (597)</td></tr>
+            <tr><td data-label="Draft">B · newest on file</td><td data-label="9539"><span class="expect bad">1 row · false</span></td><td data-label="Italy">794 rows, 13 wrong answers</td><td data-label="Caught by">check 2 only · no dbt test</td></tr>
+            <tr class="win"><td data-label="Draft">C · newest on or before</td><td data-label="9539"><span class="expect ok">1 row · true</span></td><td data-label="Italy">794 rows, 8 NULLs to decide</td><td data-label="Caught by">check 3 (8) and <code>not_null</code> until the coalesce is added</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="p-noslip">4 · The 8 with no slip yet (why 786, why NULL, why false)</h3>
+      <p>Draft C has one more problem. For some people, <b>every</b> slip was signed after they converted. On their conversion day the drawer was empty. These are all 8 of them:</p>
+      <div class="tbl wrap">
+        <table>
+          <thead><tr><th>event_id</th><th>consumer_id</th><th>converted</th><th>their slips (all signed later)</th></tr></thead>
+          <tbody>
+            <tr><td>8272</td><td>3068</td><td>2024-09-25</td><td>sms true 2024-10-02</td></tr>
+            <tr><td>8917</td><td>3311</td><td>2024-06-21</td><td>postal true 06-27 · push true 06-29</td></tr>
+            <tr><td>9288</td><td>3456</td><td>2025-06-23</td><td>postal true 06-26 · email true 06-28</td></tr>
+            <tr><td>10384</td><td>3887</td><td>2025-09-20</td><td>postal true 2025-09-28</td></tr>
+            <tr><td>10576</td><td>3963</td><td>2025-02-21</td><td>postal false 2025-02-28</td></tr>
+            <tr><td>10762</td><td>4036</td><td>2024-05-20</td><td>email true 2024-05-28 (the student guide's example)</td></tr>
+            <tr><td>11983</td><td>4514</td><td>2024-07-24</td><td>sms true 2024-07-26</td></tr>
+            <tr><td>12716</td><td>4800</td><td>2025-10-10</td><td>sms false 2025-10-12</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Follow consumer 4036 through draft C step by step:</p>
+      <ol class="steps">
+        <li><b>The join with the date condition</b> looks for 4036's slips dated on or before 20 May 2024. The only slip is 28 May, so it finds <b>nothing</b>.</li>
+        <li><b>What happens next depends on the join type.</b> An INNER join drops event 10762 entirely: the conversion disappears from the model. A LEFT join keeps the event and fills <code>marketing_allowed</code> with <b>NULL</b> (empty, unknown).</li>
+        <li>With an INNER join the model has <span class="expect bad">786 rows</span>: 8 conversions gone, no error. With a LEFT join it has <span class="expect ok">794 rows</span>, of which <span class="expect bad">8 are NULL</span>.</li>
+      </ol>
+      <p><b>Why NULL is dangerous, with real counts.</b> Run these on a draft that left the 8 as NULL:</p>
+      <div class="tbl wrap">
+        <table>
+          <thead><tr><th>Query</th><th>Answer</th></tr></thead>
+          <tbody>
+            <tr><td><code>where marketing_allowed = true</code></td><td>472</td></tr>
+            <tr><td><code>where marketing_allowed = false</code></td><td>314</td></tr>
+            <tr><td>allowed + not allowed</td><td><span class="expect bad">786, not 794</span></td></tr>
+            <tr><td><code>where marketing_allowed is null</code></td><td>8: the ones that fell through both filters</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>In SQL, comparing NULL with anything (<code>NULL = true</code>, <code>NULL = false</code>) gives "unknown", and <code>where</code> keeps only rows that are definitely true. So the 8 vanish from both reports, and nobody sees them. That is why check 3 uses <code>is null</code>: <code>= null</code> never matches anything.</p>
+      <p><b>The fix:</b> <code>coalesce(marketing_allowed, false)</code> means "use the answer, and if it is empty use false". After it: 472 allowed + 322 not allowed (314 + the 8) = 794.</p>
+      <div class="box trap">
+        <span class="k">The question you will get: "but 4036 said yes eight days later, so why false?"</span>
+        <p>Because on 20 May we did not have that yes. Consent has to exist, and be provable, at the moment you use it (that is how GDPR works in Italy). "We had no permission on file" is the same as "not allowed", not "probably fine". The later yes would count for a conversion on or after 28 May. The comment in the SQL (<code>-- no consent recorded yet = unknown, and unknown is not "allowed"</code>) is the written record of that decision, which is why the plan prompt insists on it.</p>
+      </div>
+      <div class="box tidbit"><span class="k">A subtle point for the reference model</span><p>The reference model uses an INNER <code>join</code> <em>inside</em> the <code>consent_on_the_day</code> CTE, and sharp students ask "doesn't that drop the 8?" Yes, deliberately: the CTE is the list of events that <em>have</em> a slip on the day (786). The outer <code>left join</code> brings the other 8 back with NULL, and <code>coalesce</code> turns NULL into false. INNER inside, LEFT outside, coalesce on top. See <a href="#mechanics">How the correct SQL works</a>.</p></div>
+
+      <h3 id="p-sameday">5 · Same-day slips: why <code>&lt;=</code> and not <code>&lt;</code></h3>
+      <p>5 Italy conversions have a slip dated the same day as the conversion. The dates have no time of day, so we cannot tell which came first. Our contract says <b>a slip dated on the conversion day counts</b>, hence <code>&lt;=</code>.</p>
+      <div class="tbl wrap">
+        <table>
+          <thead><tr><th>event_id</th><th>consumer_id</th><th>date</th><th>same-day slip</th></tr></thead>
+          <tbody>
+            <tr><td>8291</td><td>3075</td><td>2024-11-03</td><td>email true</td></tr>
+            <tr><td>10662</td><td>3996</td><td>2024-09-19</td><td>sms true (their only slip on or before the day)</td></tr>
+            <tr><td>11333</td><td>4260</td><td>2024-05-01</td><td>push false</td></tr>
+            <tr><td>11487</td><td>4324</td><td>2025-07-15</td><td>postal true</td></tr>
+            <tr><td>11906</td><td>4486</td><td>2024-10-23</td><td>push false</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>If a draft writes <code>&lt;</code>, four of these still come out the same (an earlier slip gives the same answer), but consumer 3996 loses their only slip. <b>How it shows up:</b> check 3 reads <span class="expect bad">9</span> instead of 8 before the coalesce. After the coalesce the draft reads 794 · true · 0 and passes all four tests while being wrong for one person. If a student reports 9 NULLs, this is the cause.</p>
+
+      <h3 id="p-ties">6 · Two slips on the deciding day: why the <code>consent_id</code> tie-break</h3>
+      <p>For 32 conversions, the newest qualifying date has <b>two</b> slips on it. For 9 of those the two slips disagree. Example, consumer 3390, conversion event 9120 on 3 Aug 2025:</p>
+      <div class="tbl wrap">
+        <table>
+          <thead><tr><th>consent_id</th><th>comm_channel</th><th>marketing_allowed</th><th>consent_date</th><th>on 3 Aug…</th></tr></thead>
+          <tbody>
+            <tr class="out"><td>8504</td><td>sms</td><td>true</td><td>2025-06-04</td><td>older</td></tr>
+            <tr class="out"><td>8506</td><td>email</td><td>true</td><td>2025-06-06</td><td>older</td></tr>
+            <tr><td>8503</td><td>push</td><td>false</td><td>2025-06-23</td><td>newest date, lower id</td></tr>
+            <tr class="win"><td>8505</td><td>postal</td><td>true</td><td>2025-06-23</td><td>newest date, higher id: wins → true</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Three things can happen, depending on the draft:</p>
+      <ol class="steps">
+        <li><b>No tie-break</b> (<code>order by e.event_id, m.consent_date desc</code> only): Postgres keeps whichever of the two rows it happens to read first. The answer for those 9 people can change between runs or machines. So if two students with the same draft report slightly different results in a values comparison, this is why.</li>
+        <li><b><code>max(consent_date)</code> then join back on that date</b>: both rows match the max date, so the event appears twice. 794 + 32 = <span class="expect bad">826 rows</span>; <code>unique</code> fails with 32.</li>
+        <li><b>With the tie-break</b> (<code>…, m.consent_id desc</code>): always 8505, always true. Same answer every run.</li>
+      </ol>
+      <p><b>Be honest about what the tie-break is.</b> "Higher consent_id wins" is not "the later one wins": we just saw that consent_id is not in time order. It is an arbitrary but <em>stable</em> rule, chosen so the output is deterministic. The truly right answer for a same-day conflict is a business question (should a "no" win over a "yes"?), which is another Hour 3 bridge.</p>
+
+      <h3 id="p-channel">7 · The channel question (if a sharp student asks)</h3>
+      <p>Our rule ignores channel: the newest slip on <em>any</em> channel decides. A student may object: "3552 withdrew <em>postal</em> consent on 19 Nov. Why should that stop emails?" They are right that it is debatable. What to say:</p>
+      <ul class="steps">
+        <li><b>For 3552 on 17 Nov it does not matter.</b> Email said yes (10 Nov) and push said yes (16 Nov); postal did not exist yet. Every possible rule gives true, so check 2 is safe from this debate.</li>
+        <li><b>Across Italy it matters a lot.</b> For 278 of the 794 conversions, the person's channels disagree on the day. Campaign 1 was an email campaign: 45 of its 74 conversions are allowed under the any-channel rule, only 29 using email slips alone. 16 people would be emailed without an email yes.</li>
+        <li><b>It is not a SQL question.</b> The owner of the consent data decides the rule, ideally before anyone writes SQL. Today we follow the contract we were given (any channel). That is Challenge 3 and the whole of Hour 3: shift left.</li>
+      </ul>
+
+      <h3 id="p-whiteboard">8 · The 90-second version for the room</h3>
+      <div class="box say"><span class="k">Say, pointing at the 3552 tables on screen</span>
+        <p>"This is consumer 3552. They converted on 17 November. They have three permission slips: email yes on the 10th, push yes on the 16th, postal withdrawn on the 19th."</p>
+        <p>"Question: on the 17th, were we allowed to contact them? Look at the drawer on the 17th. The postal slip is not in it yet; it arrives two days later. The newest slip in the drawer is push, yes. So: <b>true</b>."</p>
+        <p>"Now three drafts. Glue on every slip: one conversion becomes three rows, two say yes, one says no. Take the newest slip on file: postal, no. Wrong, because that slip did not exist yet. Take the newest slip on or before the 17th: push, yes. Right."</p>
+        <p>"All three run green. The only way to know which one you got is to ask the table about someone whose answer you already know. That person is 3552, event 9539, and the answer is true."</p>
       </div>
 
       <div class="box trap">
         <span class="k">Why the AI gets it wrong (and why that is not its fault)</span>
         <p>The prompt says "attach each event's marketing_allowed from <b>the</b> consent record". There is no single consent record; there are up to four. Claude only sees the prompt, so it guesses. Modern models often guess right (see <a href="#shape">If your demo draft comes back right</a>). The lesson is not "the AI is bad". It is: <b>you cannot tell which guess you got by reading. You find out by counting.</b></p>
+      </div>
+    </section>
+
+    <section class="part" id="mechanics">
+      <div class="part-h">
+        <span class="eyebrow">Understand it · 10 minutes</span>
+        <h2>How the correct SQL <span>works</span></h2>
+        <p class="dek">The reference model from the student guide's Stuck? panel, with 3552 and 4036 traced through every part. You will be asked about at least one of these lines.</p>
+      </div>
+
+      <div class="prompt file" data-label="models/analytics/italy_conversion_events.sql (reference)">
+        <pre><code>-- italy_conversion_events: one row per Italy conversion event,
+-- with the marketing permission in force on the event date.
+{{ config(materialized='view', schema='analytics') }}
+
+-- PART 1: the 794 conversions
+with events as (
+    select event_id, consumer_id, market_code, product_code, lifecycle_stage, event_date, campaign_id
+    from {{ source('clr', 'lifecycle_events') }}
+    where market_code = 'IT'
+      and lifecycle_stage = 'conversion'
+),
+
+-- PART 2: one slip per event (786 events have one)
+consent_on_the_day as (
+    -- one row per event: the newest consent dated on or before the event
+    select distinct on (e.event_id)
+        e.event_id,
+        m.marketing_allowed
+    from events e
+    join {{ source('mpl', 'consent_records') }} m
+        on m.consumer_id = e.consumer_id
+       and m.consent_date &lt;= e.event_date
+    order by e.event_id, m.consent_date desc, m.consent_id desc
+)
+
+-- PART 3: every event, with its slip or false
+select
+    e.event_id, e.consumer_id, e.market_code, e.product_code,
+    e.lifecycle_stage, e.event_date, e.campaign_id,
+    -- no consent recorded yet = unknown, and unknown is not "allowed"
+    coalesce(c.marketing_allowed, false) as marketing_allowed
+from events e
+left join consent_on_the_day c using (event_id)</code></pre>
+      </div>
+
+      <div class="tbl stack wrap">
+        <table>
+          <thead><tr><th>Part</th><th>What it does</th><th>Rows it produces</th><th>3552 (event 9539)</th><th>4036 (event 10762)</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Part"><b>1 · events</b></td><td data-label="Does">keeps Italy conversions only. A <code>with … as ( )</code> block (a CTE) is a named temporary result, like a scratch table that exists only during this query.</td><td data-label="Rows">794</td><td data-label="3552">9539, 17 Nov</td><td data-label="4036">10762, 20 May</td></tr>
+            <tr><td data-label="Part"><b>2a · join … and consent_date &lt;= event_date</b></td><td data-label="Does">pairs each event with that person's slips <em>that already existed</em></td><td data-label="Rows">1,944 (event × slip pairs; only 44 of the 1,988 slips postdate their conversion, so this is still a fan-out until 2c)</td><td data-label="3552">2 rows: email 10 Nov, push 16 Nov (postal filtered out)</td><td data-label="4036">0 rows: the 28 May slip is later. INNER join, so 10762 is not in Part 2 at all</td></tr>
+            <tr><td data-label="Part"><b>2b · order by …</b></td><td data-label="Does">within each event, newest date first; on a tie, highest consent_id first</td><td data-label="Rows">same rows, sorted</td><td data-label="3552">push, then email</td><td data-label="4036">n/a</td></tr>
+            <tr><td data-label="Part"><b>2c · distinct on (e.event_id)</b></td><td data-label="Does">Postgres-only: keep the <b>first</b> row of each <code>event_id</code> group, in the <code>order by</code> order. The <code>order by</code> must start with the same column.</td><td data-label="Rows">786 (one per event that has a slip)</td><td data-label="3552">push, true</td><td data-label="4036">n/a</td></tr>
+            <tr><td data-label="Part"><b>3 · left join … using (event_id)</b></td><td data-label="Does">puts every event next to its slip. LEFT keeps events with no match. <code>using (event_id)</code> is shorthand for <code>on c.event_id = e.event_id</code>.</td><td data-label="Rows">794</td><td data-label="3552">true</td><td data-label="4036">NULL</td></tr>
+            <tr><td data-label="Part"><b>3 · coalesce(…, false)</b></td><td data-label="Does">"if empty, use false"</td><td data-label="Rows">794, 0 NULL</td><td data-label="3552"><span class="expect ok">true</span></td><td data-label="4036"><span class="expect ok">false</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="mech-alt">The same rule in other shapes (Claude may write any of these)</h3>
+      <p>Students' fixed models will differ. These two and the reference above are all correct, and all give 794 · true · 0 (with the coalesce). Accept any of them; check the date condition, the tie-break and the coalesce, not the shape.</p>
+      <div class="prompt sql"><pre><code class="language-sql">-- Shape 2: row_number(). Works on Snowflake, BigQuery, Databricks too, not just Postgres.
+ranked as (
+    select e.event_id, m.marketing_allowed,
+           row_number() over (partition by e.event_id
+                              order by m.consent_date desc, m.consent_id desc) as rn
+    from events e
+    join {{ source('mpl', 'consent_records') }} m
+      on m.consumer_id = e.consumer_id and m.consent_date &lt;= e.event_date
+)
+-- then: left join ranked c on c.event_id = e.event_id and c.rn = 1
+
+-- Shape 3: a lateral join (current Claude drafts often do this)
+from events e
+left join lateral (
+    select m.marketing_allowed
+    from {{ source('mpl', 'consent_records') }} m
+    where m.consumer_id = e.consumer_id and m.consent_date &lt;= e.event_date
+    order by m.consent_date desc, m.consent_id desc
+    limit 1
+) c on true</code></pre></div>
+      <div class="box trap"><span class="k">The row_number gotcha</span><p>With row_number, the <code>rn = 1</code> condition must go in the <code>on</code> clause of the outer LEFT join (or in a filtered CTE). If it goes in the outer <code>where</code>, the 8 NULL rows have <code>rn</code> NULL, get filtered out, and the model drops to 786.</p></div>
+
+      <h3 id="mech-jinja">The curly brackets, for when someone asks</h3>
+      <ul class="steps">
+        <li><code>{{ config(materialized='view', schema='analytics') }}</code>: "build this as a <b>view</b> in schema <code>analytics</code>". A view stores the query, not the data; every time you select from it, Postgres re-runs the query. That is why <code>dbt run</code> takes a second and why the checks always see the latest SQL.</li>
+        <li><code>{{ source('clr', 'lifecycle_events') }}</code>: becomes <code>"horizon"."clr"."lifecycle_events"</code>. It only works if a sources file declares <code>clr</code> (pre-flight 2b); otherwise "depends on a source named … which was not found".</li>
+        <li><code>{{ ref('italy_conversion_events') }}</code> (used in the tests): becomes <code>"horizon"."analytics"."italy_conversion_events"</code>, and tells dbt the test depends on the model.</li>
+        <li>To see the plain SQL dbt actually ran: <code>target/compiled/horizon_dbt/models/analytics/italy_conversion_events.sql</code>. Useful when a student's error message is confusing.</li>
+      </ul>
+    </section>
+
+    <section class="part" id="matrix">
+      <div class="part-h">
+        <span class="eyebrow">Understand it · reference</span>
+        <h2>Every draft, every check, <span>every test</span></h2>
+        <p class="dek">Every draft shape we have seen or can imagine, run against the real warehouse on 2026-10-25. Find a student's three check answers in the left columns and you know what their SQL did without reading it.</p>
+      </div>
+
+      <div class="tbl wrap">
+        <table class="matrix">
+          <thead>
+            <tr><th>Draft shape</th><th>Check 1<br>rows</th><th>Check 2<br>9539</th><th>Check 3<br>NULLs</th><th>unique<br>event_id</th><th>not_null<br>event_id</th><th>not_null<br>allowed</th><th>under<br>25</th><th>Ch. 2<br>values</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><b>A</b> · plain join</td><td class="bad">1,988</td><td class="bad">3 rows</td><td>0</td><td class="bad">FAIL 597</td><td>pass</td><td>pass</td><td>pass</td><td class="bad">FAIL 407</td></tr>
+            <tr><td><b>B</b> · newest on file</td><td>794</td><td class="bad">false</td><td>0</td><td>pass</td><td>pass</td><td>pass</td><td>pass</td><td class="bad">FAIL 13</td></tr>
+            <tr><td><b>C</b> · right day, LEFT, no coalesce</td><td>794</td><td>true</td><td class="bad">8</td><td>pass</td><td>pass</td><td class="bad">FAIL 8</td><td>pass</td><td>pass*</td></tr>
+            <tr><td><b>D</b> · right day, INNER join</td><td class="bad">786</td><td>true</td><td>0</td><td>pass</td><td>pass</td><td>pass</td><td>pass</td><td>pass*</td></tr>
+            <tr><td><b>E</b> · <code>max(consent_date)</code> then rejoin</td><td class="bad">826</td><td>true</td><td class="bad">8</td><td class="bad">FAIL 32</td><td>pass</td><td class="bad">FAIL 8</td><td>pass</td><td class="bad">FAIL 9</td></tr>
+            <tr><td><b>F</b> · <code>&lt;</code> instead of <code>&lt;=</code>, no coalesce</td><td>794</td><td>true</td><td class="bad">9</td><td>pass</td><td>pass</td><td class="bad">FAIL 9</td><td>pass</td><td>pass*</td></tr>
+            <tr class="sneak"><td><b>F′</b> · <code>&lt;</code> instead of <code>&lt;=</code>, with coalesce</td><td>794</td><td>true</td><td>0</td><td>pass</td><td>pass</td><td>pass</td><td>pass</td><td class="bad">FAIL 1</td></tr>
+            <tr class="sneak"><td><b>G</b> · highest <code>consent_id</code>, no date</td><td>794</td><td>true</td><td>0</td><td>pass</td><td>pass</td><td>pass</td><td>pass</td><td class="bad">FAIL 127</td></tr>
+            <tr class="sneak"><td><b>H</b> · "allowed if any slip ever said yes" (<code>bool_or</code>)</td><td>794</td><td>true</td><td>0</td><td>pass</td><td>pass</td><td>pass</td><td>pass</td><td class="bad">FAIL 137</td></tr>
+            <tr class="sneak"><td><b>I</b> · <code>consent_status = 'granted'</code> instead of <code>marketing_allowed</code></td><td>794</td><td>true</td><td>0</td><td>pass</td><td>pass</td><td>pass</td><td class="bad">FAIL 71</td><td class="bad">FAIL 86</td></tr>
+            <tr class="win"><td><b>✓</b> · correct (reference)</td><td>794</td><td>true</td><td>0</td><td>pass</td><td>pass</td><td>pass</td><td>pass</td><td>pass</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="aside">* The values test compares <code>marketing_allowed &lt;&gt; …</code>. A NULL compared with anything is "unknown", so NULL rows never come back and the test cannot see them; and rows that are missing (shape D) cannot be compared at all. That is why <code>not_null</code> and check 1 still matter even after Challenge 2.</p>
+
+      <h3 id="matrix-read">What this table teaches you (and what to say)</h3>
+      <ol class="steps">
+        <li><b>Check 1 is the only thing that catches shape D.</b> An INNER join gives 786 rows, a true for 3552, no NULLs, and passes all four tests. If someone reports 786, say: "Eight conversions disappeared and every test is green. Only the row count saw it."</li>
+        <li><b>Check 2 is the only thing among the four tests and three checks that catches shape B.</b> This is the headline of Step 4: "none of the four tests catches the newest-on-file draft".</li>
+        <li><b>The under-25 test passes on every draft except I.</b> Italy has 249 consumers aged 18 to 24 (93 of them converted), and every one of their 624 slips already says <code>marketing_allowed = false</code>. So no draft that copies <code>marketing_allowed</code> can break the law here. Do not tell the room the under-25 test "caught" anything. Say: "It is a tripwire. It fires the day someone switches to <code>consent_status</code>, or a bad slip is loaded." Shape I proves it: 71 under-25s marked allowed, because "granted" ignores the age gate.</li>
+        <li><b>The rows marked in amber pass all three checks and all four tests and are still wrong.</b> Check 2 tests one person, and 3552 happens to come out true under G, H and I. This is the honest limit of the method: three checks catch the common mistakes, not every mistake. The defences are (a) reading the plan for the date rule, the tie-break and the coalesce, which is why the Step 3 checklist exists, and (b) Challenge 2's values test, which checks every row the way check 2 checks one. If a student's plan says "any consent granted", "highest consent_id" or "consent_status", reject it even if their checks look perfect.</li>
+      </ol>
+      <div class="box tidbit"><span class="k">Why <code>unique</code> says 597 and not 1,194 or 1,988</span><p>dbt's <code>unique</code> test returns one row per <b>value that appears more than once</b>, not one row per copy. 597 event_ids are duplicated (195 people with 2 slips + 207 with 3 + 195 with 4). The 197 people with one slip are not duplicated, so they are not counted. Same logic for shape E: 32 event_ids appear twice, so <code>FAIL 32</code>.</p></div>
+    </section>
+
+    <section class="part" id="dbt">
+      <div class="part-h">
+        <span class="eyebrow">Understand it · 5 minutes</span>
+        <h2>What dbt is <span>actually doing</span></h2>
+        <p class="dek">Enough dbt to answer any question the room asks in Steps 1 and 4.</p>
+      </div>
+      <div class="tbl stack wrap">
+        <table>
+          <thead><tr><th>Command or file</th><th>What really happens</th><th>What it proves</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Command"><code>dbt debug</code></td><td data-label="Happens">reads <code>dbt_project.yml</code> in the current folder and <code>C:\Users\labadmin\.dbt\profiles.yml</code>, then opens a connection to Postgres</td><td data-label="Proves">dbt can reach the warehouse. Nothing about your SQL.</td></tr>
+            <tr><td data-label="Command"><code>dbt run --select italy_conversion_events</code></td><td data-label="Happens">replaces the <code>{{ }}</code> parts with real names, then sends <code>create view analytics.italy_conversion_events as (…your select…)</code> to Postgres</td><td data-label="Proves">the SQL is valid and the tables and columns exist. <b>Nothing</b> about whether the rows are right. "OK" on a 1,988-row view is normal.</td></tr>
+            <tr><td data-label="Command"><code>models/analytics/schema.yml</code></td><td data-label="Happens">lists generic tests by name (<code>unique</code>, <code>not_null</code>). dbt turns each into a query.</td><td data-label="Proves">nothing until <code>dbt test</code> runs it</td></tr>
+            <tr><td data-label="Command"><code>tests/no_underage_marketing_italy.sql</code></td><td data-label="Happens">a <b>singular</b> test: the file itself is the query. Any row it returns is a failure.</td><td data-label="Proves">the specific rule written in it</td></tr>
+            <tr><td data-label="Command"><code>dbt test --select italy_conversion_events</code></td><td data-label="Happens">runs every test attached to the model: the three from schema.yml plus the singular test (it is picked up because it uses <code>ref('italy_conversion_events')</code>). Each test counts the rows its query returns.</td><td data-label="Proves">0 rows = PASS; anything else = <code>FAIL n</code>, "Got n results, configured to fail if != 0"</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>What the generic tests turn into (simplified from what dbt writes under <code>target/compiled/</code>):</p>
+      <div class="prompt sql"><pre><code class="language-sql">-- unique on event_id: one row per duplicated value
+select event_id, count(*)
+from analytics.italy_conversion_events
+where event_id is not null
+group by event_id
+having count(*) &gt; 1;                     -- plain join: 597 rows → FAIL 597
+
+-- not_null on marketing_allowed
+select *
+from analytics.italy_conversion_events
+where marketing_allowed is null;         -- shape C: 8 rows → FAIL 8</code></pre></div>
+      <div class="box trap">
+        <span class="k">Why <code>analytics_analytics</code> happens (the most likely live failure)</span>
+        <p>dbt's default rule for a model that says <code>schema='analytics'</code> is to glue it onto the profile's schema: <code>&lt;profile schema&gt;_&lt;model schema&gt;</code> = <code>analytics_analytics</code>. The <code>macros/generate_schema_name.sql</code> file in pre-flight 2b replaces that rule with "use the model's schema exactly". Without it, <code>dbt run</code> succeeds but builds <code>analytics_analytics.italy_conversion_events</code>, and every check (which reads <code>analytics.italy_conversion_events</code>) says "relation does not exist". Look for <code>analytics_analytics</code> in the <code>dbt run</code> output line.</p>
       </div>
     </section>
 
@@ -229,7 +648,13 @@
             <tr><td data-label="Number"><b>93</b></td><td data-label="What it is">Italy converters aged 18 to 24; the under-25 test makes sure every one is <code>false</code></td><td data-label="Comes up">Step 4 test table</td><td data-label="Say it as">"93 people the law says we may not market to."</td></tr>
             <tr><td data-label="Number"><b>31</b></td><td data-label="What it is">conversions whose consumer's newest slip was recorded <em>after</em> the conversion</td><td data-label="Comes up">"The idea" tally; a "newest on file" draft shows it as 3552 = <code>false</code> in check 2</td><td data-label="Say it as">"31 events, about 4%, get a permission that did not exist yet. Too small for a smoke test, big enough for an audit."</td></tr>
             <tr><td data-label="Number"><b>8</b></td><td data-label="What it is">conversions with no slip dated on or before the conversion</td><td data-label="Comes up">check 3, Step 4 <code>not_null</code></td><td data-label="Say it as">"Eight people we knew nothing about on the day. Unknown is not yes."</td></tr>
-            <tr><td data-label="Number"><b>786</b></td><td data-label="What it is">rows if the correct rule uses an INNER join: the 8 vanish</td><td data-label="Comes up">only if a draft uses INNER (check 1 shows fewer than 794)</td><td data-label="Say it as">"Eight conversions disappeared without an error."</td></tr>
+            <tr><td data-label="Number"><b>786</b></td><td data-label="What it is">rows if the correct rule uses an INNER join: the 8 vanish. Passes all four tests; only check 1 sees it</td><td data-label="Comes up">only if a draft uses INNER (check 1 shows fewer than 794)</td><td data-label="Say it as">"Eight conversions disappeared without an error, and every test is green."</td></tr>
+            <tr><td data-label="Number"><b>18 · 13</b></td><td data-label="What it is">of the 31 "slip from after the conversion" events: 18 come out right by luck, 13 flip (5 true→false like 3552, 2 false→true, 6 no-slip→true)</td><td data-label="Comes up">check 2 on a "newest on file" draft; Challenges 1 and 2</td><td data-label="Say it as">"Eight people marked allowed who were not."</td></tr>
+            <tr><td data-label="Number"><b>5</b> · <b>9</b></td><td data-label="What it is">conversions with a slip dated the same day · NULLs if a draft writes <code>&lt;</code> instead of <code>&lt;=</code> (consumer 3996 loses their only slip)</td><td data-label="Comes up">only if check 3 shows 9</td><td data-label="Say it as">"A slip signed on the day counts. That is our contract."</td></tr>
+            <tr><td data-label="Number"><b>9</b> (ties)</td><td data-label="What it is">of the 32 same-day ties, the ones where the two slips disagree (e.g. 3390: push false vs postal true on 23 Jun 2025)</td><td data-label="Comes up">if someone asks why the tie-break matters</td><td data-label="Say it as">"Without the tie-break, nine people's answer depends on luck."</td></tr>
+            <tr><td data-label="Number"><b>127 · 137 · 86</b></td><td data-label="What it is">wrong rows in drafts that still pass all three checks: highest consent_id · any slip ever said yes · <code>consent_status = 'granted'</code></td><td data-label="Comes up">plan review in Step 3; the <a href="#matrix">matrix</a></td><td data-label="Say it as">"Three checks catch the common mistakes, not every mistake. That is why you read the plan."</td></tr>
+            <tr><td data-label="Number"><b>249 · 624 · 71</b></td><td data-label="What it is">Italian 18-to-24s · their slips (all <code>marketing_allowed = false</code>) · under-25s marked allowed if a draft uses <code>consent_status</code></td><td data-label="Comes up">Step 4, if asked why the under-25 test always passes</td><td data-label="Say it as">"The test is a tripwire for tomorrow, not a catch for today."</td></tr>
+            <tr><td data-label="Number"><b>1,944</b></td><td data-label="What it is">event × slip pairs after the date-filtered join, before <code>distinct on</code> keeps one per event (786)</td><td data-label="Comes up">only if you trace the reference model live</td><td data-label="Say it as">"The date filter alone does not stop the copying. Picking one does."</td></tr>
             <tr><td data-label="Number"><b>32</b> · <b>826</b></td><td data-label="What it is">events with two slips on the deciding date · rows from a <code>max(consent_date)</code>-then-rejoin draft</td><td data-label="Comes up">only if a draft does that (check 1 shows more than 794; <code>unique</code> fails)</td><td data-label="Say it as">"Two slips signed the same day. That is why the tie-break on <code>consent_id</code> exists."</td></tr>
             <tr><td data-label="Number"><b>472 · 322</b></td><td data-label="What it is">allowed · not allowed in the finished model (314 + the 8 unknowns)</td><td data-label="Comes up">debrief</td><td data-label="Say it as">"Every one of the 794 has a yes or a no, and we can say why."</td></tr>
             <tr><td data-label="Number"><b>0</b></td><td data-label="What it is">Italian 18 to 24 year olds marked allowed, in any correct model</td><td data-label="Comes up">Step 4 singular test</td><td data-label="Say it as">"The law, written as a test."</td></tr>
@@ -254,6 +679,9 @@
         <li><b>Your live draft may be correct.</b> Current models often get the day right and leave 8 NULLs (row 3 of the "three answers" table). Have the canned plain-join draft ready (<a href="#shape">see below</a>).</li>
         <li><b>Drafts differ between students.</b> That is sampling, not a mistake. Teach the pattern (join, grain, NULL), never the exact text.</li>
         <li><b>None of the 4 tests catches the "newest on file" bug.</b> Check 2 (consumer 3552) finds it; Challenges 1 and 2 make the point hands-on. Say it out loud in Step 4.</li>
+        <li><b>None of the 4 tests catches an INNER join either</b> (786 rows). Only check 1 does.</li>
+        <li><b>The under-25 test passes on every draft students will get.</b> Every slip of every Italian 18-to-24 already says false. Present it as a tripwire, never as "it caught your draft" (<a href="#matrix-read">why</a>).</li>
+        <li><b>Three checks are not proof.</b> Drafts using the highest <code>consent_id</code>, "any slip ever said yes" or <code>consent_status</code> read 794 · true · 0 and are still wrong. You catch those by reading the plan (<a href="#matrix">the matrix</a>).</li>
         <li><b>The consent table is per channel.</b> If a sharp student asks "which channel?", they are right: it is an open question for the data owner, and a perfect bridge to Hour 3.</li>
         <li><b>Prompt hygiene:</b> schema and column names go into Claude; query results, rows and the <code>profiles.yml</code> password never do.</li>
       </ul>
@@ -368,6 +796,7 @@
         </ol>
       </div>
       <div class="box trap"><span class="k">If the plan says "newest consent per consumer"</span><p>Reject it aloud: "No. It must be the newest row dated on or before each event_date. Revise the plan." Then: "The premium model is better at this, not infallible."</p></div>
+      <div class="box trap"><span class="k">Also reject, even if the three checks looked perfect</span><p>Any plan that decides with "the highest / latest <code>consent_id</code>", "allowed if any consent is granted" or <code>consent_status</code>. All three read 794 · true · 0 for this data and are wrong for 86 to 137 people (<a href="#matrix">matrix, amber rows</a>). And any plan with <code>&lt;</code> instead of <code>&lt;=</code>, or an INNER join without a LEFT join back to the events.</p></div>
       <div class="box say"><span class="k">Say</span><p>"You reviewed fifteen lines of plan instead of two hundred lines of SQL, and the expensive model wrote the fifteen. And we fixed the draft by telling the assistant precisely what was wrong, with our own numbers, in writing. The correction is reviewable too."</p></div>
       <div class="box chat"><span class="k">Chat · one word</span><p><strong>"What did the plan have that the draft did not?"</strong><span class="opts">tie-break · comment · date rule · nothing</span></p></div>
 
@@ -410,6 +839,8 @@
           <tbody>
             <tr><td data-label="Checks"><b>1,988 · 3 rows · 0</b></td><td data-label="Draft">plain join</td><td data-label="Do">Run the hour exactly as scripted. This is the textbook reveal.</td></tr>
             <tr><td data-label="Checks"><b>826</b> (or any count above 794 that is not 1,988)</td><td data-label="Draft"><code>max(consent_date)</code> then a rejoin</td><td data-label="Do">"32 too many: two slips on the same day." The tie-break in the plan fixes it; <code>unique</code> fails in Step 4 if it survives. Fix the model, never the test.</td></tr>
+            <tr><td data-label="Checks"><b>786 · true · 0</b></td><td data-label="Draft">right day, but an INNER join: the 8 with no slip yet are dropped</td><td data-label="Do">"Eight conversions vanished, no error, and all four tests would pass. Only the row count saw it." The fix is a LEFT join plus the coalesce.</td></tr>
+            <tr><td data-label="Checks"><b>794 · true · 9</b></td><td data-label="Draft"><code>&lt;</code> instead of <code>&lt;=</code></td><td data-label="Do">"A slip dated on the conversion day counts." Consumer 3996's only slip was signed that day. Ask for <code>&lt;=</code> in the plan.</td></tr>
             <tr><td data-label="Checks"><b>794 · false · 0</b></td><td data-label="Draft">newest slip on file</td><td data-label="Do">The best teaching moment of the hour: "794. Perfect count. Wrong answer for the one person we checked by hand." Spend an extra minute here.</td></tr>
             <tr><td data-label="Checks"><b>794 · true · 8</b></td><td data-label="Draft">right day, NULL left undecided</td><td data-label="Do">Celebrate it: "Would you have known it was right without checking?" The 8 NULLs are a decision Claude correctly handed back to us. Then, for the 1,988 moment, paste the <a href="#canned-flawed">canned plain-join draft</a> over the file: "This is what it gave the courseware authors." Run checks 1 and 2 again.</td></tr>
           </tbody>
