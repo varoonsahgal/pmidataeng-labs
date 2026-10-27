@@ -370,7 +370,7 @@
       <div class="lanes">
         <div class="lane do"><span class="k">Students do</span><div>
           <ol>
-            <li>Claude Desktop → left sidebar → <b>Projects</b> → <b>New project</b> → name it <b>HORIZON analyst</b> → <b>Set project instructions</b> → paste the block below → save. (No Projects on their plan? Paste it as the first message of a new chat.)</li>
+            <li>Claude Desktop → left sidebar → <b>Projects</b> → <b>New project</b> → name it <b>HORIZON analyst</b> → <b>Create project</b> → <b>Set project instructions</b> → paste the block below → save. (No Projects on their plan? Paste it as the first message of a new chat.)</li>
             <li>Inside the Project, model picker on <b>Sonnet</b>, ask the VEEV question.</li>
             <li>Read the query it writes like a gatekeeper. Run it in SQLTools (<span class="kbd">Ctrl+E</span> <span class="kbd">Ctrl+E</span>). Type the four names and numbers back into the chat.</li>
           </ol>
@@ -684,7 +684,7 @@ make verify-lite</pre></div>
           <div class="prompt term" data-label="Mac Terminal"><pre>cd ~/pmidataeng/horizon-warehouse && make psql</pre></div>
           <p><span class="expect">horizon=#</span> Paste a query, press Enter. <code>\q</code> to leave.</p></li>
         <li><b>Build the Project</b> <span class="run-lane">Claude Desktop</span>
-          <p>Projects → New project → <b>HORIZON analyst</b> → Set project instructions → paste the <a href="#s1">block from Step 1</a> (or <code>pbcopy &lt; agents/horizon-analyst-project-instructions.md</code> and paste).</p></li>
+          <p>Projects → New project → <b>HORIZON analyst</b> → Create project → Set project instructions → paste the <a href="#s1">block from Step 1</a> (or <code>pbcopy &lt; agents/horizon-analyst-project-instructions.md</code> and paste).</p></li>
         <li><b>Ask the VEEV question, be the tool</b> <span class="run-lane">Claude + SQL prompt</span>
           <p>Sonnet, send the question. Check it <b>stops and waits</b>. Read its SQL, run it, paste the four rows back.</p>
           <p><span class="expect ok">JP Partner Distributor 2 · 277</span> <span class="expect">271 · 209 · 169</span></p></li>

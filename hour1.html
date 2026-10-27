@@ -676,6 +676,10 @@ Respond in Markdown only. Do not create any file.</code></pre>
         </table>
       </div>
       <p>For each check: paste the query into your SQLTools file, select it, press <kbd>Ctrl+E</kbd> <kbd>Ctrl+E</kbd>.</p>
+      <div class="box note">
+        <span class="k">Error: relation "analytics.italy_conversion_events" does not exist?</span>
+        <p>Change <code>analytics.italy_conversion_events</code> to <code>analytics_analytics.italy_conversion_events</code> in all three checks. Both names are fine. Without the schema macro from <a href="index.html">Start Here</a>, dbt joins the profile's schema (<code>analytics</code>) to the model's schema (<code>analytics</code>), so your table is built in <code>analytics_analytics</code>. Same table, longer name.</p>
+      </div>
 
       <!-- Check 1 -->
       <div class="qcard" id="check1">

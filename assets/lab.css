@@ -257,8 +257,8 @@ body.lab figure.hero { position: relative; }
 .lab-next a small { color: var(--c); }
 
 /* --------------------------------------------------------- reveal on scroll --- */
-.js-reveal .rv { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(.2, .7, .2, 1); }
-.js-reveal .rv.in { opacity: 1; transform: none; }
+.js-reveal .rvl { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(.2, .7, .2, 1); }
+.js-reveal .rvl.in { opacity: 1; transform: none; }
 
 /* SVG motion helpers for the inline stage art */
 @keyframes lab-float { 50% { transform: translateY(-6px); } }
@@ -272,7 +272,7 @@ body.lab figure.hero { position: relative; }
 
 @media (prefers-reduced-motion: reduce) {
   .lab-hero .floor, .ticket-h b::before, body.lab .box.chat::before, .fx-float, .fx-dash, .fx-blink, .fx-pulse { animation: none !important; }
-  .js-reveal .rv { opacity: 1; transform: none; transition: none; }
+  .js-reveal .rvl { opacity: 1; transform: none; transition: none; }
   .btn, .lab-next a { transition: none; }
 }
 

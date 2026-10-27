@@ -480,6 +480,10 @@ where s.market_code = 'IT'
         <span class="k">Why this step</span>
         <p>A green job only means the code ran. The one check that tells you whether rows went missing is a <b>reconciliation</b>: count what went in, count what came out, and compare.</p>
       </div>
+      <div class="box note">
+        <span class="k">Error: relation "analytics.japan_sell_through" does not exist?</span>
+        <p>Change <code>analytics.</code> to <code>analytics_analytics.</code> in every query in this lab (for example <code>analytics_analytics.japan_sell_through</code>). Both names are fine. Without the schema macro from <a href="index.html">Start Here</a>, dbt joins the profile's schema (<code>analytics</code>) to the model's schema (<code>analytics</code>), so your tables are built in <code>analytics_analytics</code>. Same tables, longer name.</p>
+      </div>
 
       <div class="qcard" id="q-total">
         <header><span class="qn">1</span><span class="qk">Detect · query 1</span><h4>"Did every Japan row reach the pipeline?"</h4></header>

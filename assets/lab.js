@@ -72,13 +72,13 @@
   var reveal = reduce ? [] : document.querySelectorAll('.stage, .tally, main figure, .earned, .lab-next, .ticket, .brief .mfd');
   if (reveal.length) {
     document.documentElement.classList.add('js-reveal');
-    reveal.forEach(function (el) { el.classList.add('rv'); });
+    reveal.forEach(function (el) { el.classList.add('rvl'); });
   }
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (en) {
       if (!en.isIntersecting) return;
       var el = en.target;
-      if (el.classList.contains('rv')) el.classList.add('in');
+      if (el.classList.contains('rvl')) el.classList.add('in');
       if (el.hasAttribute('data-count')) countUp(el);
       io.unobserve(el);
     });
