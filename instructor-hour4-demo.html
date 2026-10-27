@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MCP demo handout · Project HORIZON lab guides</title>
+<meta name="description" content="Instructor handout for the Hour 4 Step 3 live MCP demo: where everything lives on the instructor's Mac, the night-before setup, the 15-minute pre-flight, the on-stage script and the fallbacks. Project HORIZON is fictional and training-only.">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#0C2040">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230C2040'/%3E%3Crect x='6' y='6' width='9' height='9' rx='2' fill='%23FF4A00'/%3E%3Crect x='17' y='17' width='9' height='9' rx='2' fill='%2300C9A7'/%3E%3C/svg%3E">
+<style>
+  /* Instructor-only helpers, built from the site's tokens */
+  .say { border-left-color: var(--teal); background: var(--teal-soft); }
+  .say > .k { color: var(--teal-ink); }
+  .say p { font-size: 1.05rem; line-height: 1.55; color: var(--head); }
+  .do { border-left-color: var(--blue); background: var(--blue-soft); }
+  .do > .k { color: var(--blue); }
+  .who { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 0 0 1.5rem; max-width: var(--measure); }
+  .who > div { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius); padding: 1rem 1.1rem; display: grid; gap: 0.4rem; align-content: start; }
+  .who h4 { margin: 0; font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+  .who p { margin: 0; font-size: 0.98rem; line-height: 1.5; }
+  .who .you { border-color: color-mix(in srgb, var(--orange) 55%, transparent); background: var(--accent-soft); }
+  .tick { list-style: none; padding: 0; margin: 0 0 1.25rem; display: grid; gap: 0.45rem; max-width: var(--measure); }
+  .tick li { position: relative; padding-left: 1.9rem; line-height: 1.5; }
+  .tick li::before { content: ""; position: absolute; left: 0; top: 0.2rem; width: 1.1rem; height: 1.1rem; border: 2px solid var(--rule-strong); border-radius: 4px; }
+  .path { font-family: var(--f-mono); font-size: 0.84rem; overflow-wrap: anywhere; }
+  @media (max-width: 760px) { .who { grid-template-columns: minmax(0, 1fr); } }
+  @media print { .toc { display: none; } .frame { display: block; } }
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="mast-in">
+    <nav class="sitenav" aria-label="Lab guides">
+      <a class="brand" href="index.html">Project HORIZON</a>
+      <a href="index.html">Start here</a>
+      <a href="hour1.html">Hour 1</a>
+      <a href="hour2.html">Hour 2</a>
+      <a href="hour3.html">Hour 3</a>
+      <a href="hour4.html">Hour 4</a>
+      <a href="glossary.html">Glossary</a>
+    </nav>
+    <div class="mast-grid">
+      <div class="mast-copy">
+        <div class="eyebrow">Instructor handout · Hour 4 · Step 3 · 3:30 to 3:35</div>
+        <h1>The MCP demo, <span>step by step</span><small>Where it lives on your Mac, what to set up the night before, what to check 15 minutes before, and exactly what to type and say on stage.</small></h1>
+        <p class="lede"><strong>Only you run this demo.</strong> It runs on your Mac, on the shared screen, and the students just watch. Their VMs have no database door, and they don't need one: their analyst's door is <em>them</em>.</p>
+        <p class="lede" style="font-size:0.95rem">The rest of the hour is in the <a href="instructor-hour4.html">Hour 4 instructor guide</a>. The full runbook, with every detail, is <code>DEMO_claude_desktop_mcp.md</code> in the warehouse folder.</p>
+        <div class="meta"><span>your Mac only</span><span>Terminal + Claude Desktop</span><span>Docker running</span><span>5 min on stage</span><span>pre-flight checked 2026-10-26</span></div>
+      </div>
+      <div class="mfd" role="img" aria-label="Where everything lives: the folder /Users/varoonsahgal/pmidataeng/horizon-warehouse; the command make demo-prep; the Project HORIZON analyst (demo); the fallback make mcp-check; the expected answers 277 and READONLY_VIOLATION.">
+        <div class="hd"><b>Where everything lives</b><b>value</b></div>
+        <div class="row"><span class="lbl">run every command from</span><span class="val">~/pmidataeng/horizon-warehouse</span></div>
+        <div class="row"><span class="lbl">pre-flight, one command</span><span class="val">make demo-prep</span></div>
+        <div class="row"><span class="lbl">Claude Desktop Project</span><span class="val">HORIZON analyst (demo)</span></div>
+        <div class="row"><span class="lbl">the door's name</span><span class="val">horizon · execute_sql</span></div>
+        <div class="row"><span class="lbl">Q1 answer</span><span class="now">≈ 277</span></div>
+        <div class="row"><span class="lbl">Q2 answer</span><span class="was">READONLY_VIOLATION</span></div>
+        <div class="row"><span class="lbl">if anything breaks</span><span class="val">make mcp-check</span></div>
+        <div class="ft">The line to land: <span class="blink">the lock is on the door, not in the prompt.</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="frame">
+  <details class="toc" id="toc" open>
+    <summary>On this page</summary>
+    <ol>
+      <li><a href="#who">Who runs it, and why only you</a></li>
+      <li><a href="#where">Where everything lives</a></li>
+      <li><a href="#night">The night before · 15 min, once</a></li>
+      <li><a href="#preflight">15 minutes before Hour 4</a></li>
+      <li><a href="#stage">On stage · 3:30 to 3:35</a></li>
+      <li><a href="#rescue">If something breaks</a></li>
+      <li><a href="#after">After the demo, and after class</a></li>
+    </ol>
+  </details>
+
+  <main id="main">
+
+    <section class="part" id="who">
+      <div class="part-h">
+        <span class="eyebrow">Understand it · 1 minute</span>
+        <h2>Who runs it, <span>and why only you</span></h2>
+        <p class="dek">In Step 3 the students see the same HORIZON analyst they built, with one change: a real, read-only database connection (an MCP server) instead of a person running the SQL.</p>
+      </div>
+      <div class="who">
+        <div>
+          <h4>The students · on their VMs</h4>
+          <p>They built <b>HORIZON analyst</b> in Step 1. It writes SQL and asks them to run it. They are its only tool.</p>
+          <p>Nothing to set up and nothing to type during the demo, apart from the chat question at the end.</p>
+        </div>
+        <div class="you">
+          <h4>You · on your Mac</h4>
+          <p>You run <b>HORIZON analyst (demo)</b>: the same instructions plus one line ("If a database tool is connected, run the query yourself with execute_sql…").</p>
+          <p>Your Claude Desktop is also connected to the <code>horizon</code> server (DBHub) with one tool, <code>execute_sql</code>, set to <b>read-only</b>.</p>
+        </div>
+      </div>
+      <p style="max-width:var(--measure)">Why only you: the door needs three things the VMs don't have. They are the Docker warehouse on your Mac, Node (<code>npx</code> starts the server), and an <code>mcpServers</code> entry in your Claude Desktop config. All three are already on your Mac.</p>
+    </section>
+
+    <section class="part" id="where">
+      <div class="part-h">
+        <span class="eyebrow">Know it</span>
+        <h2>Where everything <span>lives</span></h2>
+        <p class="dek">Every Terminal command on this page runs from one folder. Open Terminal and go there first.</p>
+      </div>
+      <div class="prompt term" data-label="Run in Terminal on your Mac">
+        <pre><code>cd /Users/varoonsahgal/pmidataeng/horizon-warehouse</code></pre>
+      </div>
+      <div class="tbl stack wrap">
+        <table>
+          <thead><tr><th>What</th><th>Where</th><th>You need to know</th></tr></thead>
+          <tbody>
+            <tr><td data-label="What"><b>The warehouse folder</b></td><td data-label="Where"><span class="path">/Users/varoonsahgal/pmidataeng/horizon-warehouse</span></td><td data-label="Know">Holds the Makefile; every <code>make …</code> command runs here</td></tr>
+            <tr><td data-label="What"><b>Claude Desktop config</b></td><td data-label="Where"><span class="path">~/Library/Application Support/Claude/claude_desktop_config.json</span></td><td data-label="Know">Already has the <code>horizon</code> server block. Open it from Claude menu → Settings… → Developer → Edit Config. Don't edit it by hand unless <code>make mcp-config</code> says it's wrong</td></tr>
+            <tr><td data-label="What"><b>Config backup</b></td><td data-label="Where"><span class="path">…/Claude/claude_desktop_config.json.bak-2026-10-24</span></td><td data-label="Know">The config from before the door was added: restore this to unplug it</td></tr>
+            <tr><td data-label="What"><b>The door's settings</b></td><td data-label="Where"><span class="path">horizon-warehouse/dbhub.toml</span></td><td data-label="Know">One source, one tool, <code>readonly = true</code>. <b>Never put it on screen:</b> it holds the database password</td></tr>
+            <tr><td data-label="What"><b>Demo Project instructions</b></td><td data-label="Where"><span class="path">horizon-warehouse/agents/horizon-analyst-demo-instructions.md</span></td><td data-label="Know">The students' text plus the one <code>execute_sql</code> line. <code>make demo-instructions | pbcopy</code> copies it</td></tr>
+            <tr><td data-label="What"><b>The fallback proof</b></td><td data-label="Where"><span class="path">horizon-warehouse/scripts/mcp_check.py</span></td><td data-label="Know"><code>make mcp-check</code> runs it: the same server, talking MCP, without Claude Desktop</td></tr>
+            <tr><td data-label="What"><b>Logs</b></td><td data-label="Where"><span class="path">~/Library/Logs/Claude/mcp-server-horizon.log</span> and <span class="path">mcp.log</span></td><td data-label="Know">Created when Claude Desktop starts the server. If the file isn't there, the server never started</td></tr>
+            <tr><td data-label="What"><b>Full runbook</b></td><td data-label="Where"><span class="path">horizon-warehouse/DEMO_claude_desktop_mcp.md</span></td><td data-label="Know">Everything on this page, plus the no-Node <code>.mcpb</code> alternative</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="part" id="night">
+      <div class="part-h">
+        <span class="eyebrow">Set it up · the night before · about 15 minutes, once</span>
+        <h2>The night <span>before</span></h2>
+        <p class="dek">Do this once, end to end, including one rehearsal chat. Steps 1 to 4 were run and passed on 2026-10-26. Step 5 has not been seen in the app yet: Claude Desktop hasn't been opened since the config was written, so that's the one to check first.</p>
+      </div>
+
+      <div class="step" id="n1">
+        <span class="step-n">1</span>
+        <div class="step-t"><span class="step-k">Terminal</span><h3>Start Docker and the warehouse</h3></div>
+        <span class="step-min">1 min</span>
+      </div>
+      <div class="prompt term" data-label="Run in Terminal on your Mac">
+        <pre><code>open -a Docker
+cd /Users/varoonsahgal/pmidataeng/horizon-warehouse
+make up</code></pre>
+      </div>
+      <p style="max-width:var(--measure)">Wait for the Docker whale in the menu bar to stop animating before <code>make up</code>. Expect <span class="expect">warehouse ready: localhost:5432</span> and then <span class="expect ok">PASS=2</span> (the two Hour 2 views).</p>
+
+      <div class="step" id="n2">
+        <span class="step-n">2</span>
+        <div class="step-t"><span class="step-k">Terminal</span><h3>Run the pre-flight</h3></div>
+        <span class="step-min">1 min</span>
+      </div>
+      <div class="prompt term" data-label="Run in Terminal on your Mac">
+        <pre><code>make demo-prep</code></pre>
+      </div>
+      <p style="max-width:var(--measure)">It checks the Hour 4 numbers, starts the door exactly as Claude Desktop will, and checks the demo instructions. You must see all of these:</p>
+      <div class="expects">
+        <span class="expect">handshake OK · tools exposed: execute_sql</span>
+        <span class="expect ok">JP Partner Distributor 2 · 277</span>
+        <span class="expect bad">READONLY_VIOLATION</span>
+        <span class="expect ok">Demo instructions: OK</span>
+      </div>
+      <p style="max-width:var(--measure)">Then it prints an on-stage checklist. That checklist and this page say the same thing.</p>
+
+      <div class="step" id="n3">
+        <span class="step-n">3</span>
+        <div class="step-t"><span class="step-k">Terminal</span><h3>Confirm Claude Desktop knows about the door</h3></div>
+        <span class="step-min">10 sec</span>
+      </div>
+      <div class="prompt term" data-label="Run in Terminal on your Mac">
+        <pre><code>make mcp-config</code></pre>
+      </div>
+      <p style="max-width:var(--measure)">The last line must read <span class="expect ok">Live config check: OK</span>. If it doesn't, merge the printed <code>mcpServers</code> block into the config file and keep every other key that's already there.</p>
+
+      <div class="step" id="n4">
+        <span class="step-n">4</span>
+        <div class="step-t"><span class="step-k">Claude Desktop</span><h3>Fully quit and reopen Claude Desktop</h3></div>
+        <span class="step-min">20 sec</span>
+      </div>
+      <p style="max-width:var(--measure)">Press <kbd>Cmd</kbd>+<kbd>Q</kbd>. Closing the window isn't enough: the server only starts when the app launches. Then open Claude Desktop again.</p>
+
+      <div class="step" id="n5">
+        <span class="step-n">5</span>
+        <div class="step-t"><span class="step-k">Claude Desktop</span><h3>See the door in the app</h3></div>
+        <span class="step-min">30 sec</span>
+      </div>
+      <ol class="steps">
+        <li>Open any chat. Click the <b>+</b> at the bottom-left of the chat box → <b>Connectors</b>.</li>
+        <li>You should see <code>horizon</code>. <b>Manage connectors</b> shows it with one tool, <code>execute_sql</code>.</li>
+        <li>Check that the server started: <code>ls ~/Library/Logs/Claude/mcp-server-horizon.log</code> in Terminal should find the file.</li>
+      </ol>
+      <div class="box trap"><span class="k">Not listed?</span><p>Go to <a href="#rescue">If something breaks</a>. Usually it's a window closed instead of <kbd>Cmd</kbd>+<kbd>Q</kbd>. Sort it out tonight, not on stage.</p></div>
+
+      <div class="step" id="n6">
+        <span class="step-n">6</span>
+        <div class="step-t"><span class="step-k">Terminal + Claude Desktop</span><h3>Create the demo Project</h3></div>
+        <span class="step-min">2 min</span>
+      </div>
+      <div class="prompt term" data-label="Run in Terminal on your Mac · copies the instructions">
+        <pre><code>make demo-instructions | pbcopy</code></pre>
+      </div>
+      <ol class="steps">
+        <li>Claude Desktop, left sidebar → <b>Projects</b> → <b>New project</b>.</li>
+        <li>Name it <b>HORIZON analyst (demo)</b>, leave the rest as it is, and click <b>Create project</b>.</li>
+        <li>On the project page, click the <b>+</b> next to <b>Instructions</b> on the right. Paste (<kbd>Cmd</kbd>+<kbd>V</kbd>) and click <b>Save instructions</b>.</li>
+        <li>Scroll to the end of what you pasted: the last line must be <em>"If a database tool is connected, run the query yourself with execute_sql instead of asking me to run it."</em></li>
+        <li>Keep the plain <b>HORIZON analyst</b> Project too, if you built one with the class. The room should see that the two differ by one line and one connector.</li>
+      </ol>
+
+      <div class="step" id="n7">
+        <span class="step-n">7</span>
+        <div class="step-t"><span class="step-k">Claude Desktop</span><h3>Rehearse Q1 once, in a throwaway chat</h3></div>
+        <span class="step-min">3 min</span>
+      </div>
+      <ol class="steps">
+        <li>New chat <b>inside</b> HORIZON analyst (demo). Model picker next to the send button: <b>Sonnet</b>. <b>+</b> → <b>Connectors</b>: <code>horizon</code> toggle <b>ON</b>.</li>
+        <li>Type: <code>Which Japan distributor sells the most VEEV units per week on average?</code></li>
+        <li>A permission dialog appears before the query runs. <b>Write down its exact button labels</b>: ______________________</li>
+        <li>Pick the <b>once / this-chat</b> option, <b>never "Always allow"</b>. "Always allow" switches off the dialog for good, and the dialog is moment 2 of the demo.</li>
+        <li>Check the answer: <b>JP Partner Distributor 2, about 277</b> (then 271, 209, 169). Delete the chat afterwards.</li>
+      </ol>
+      <div class="box note"><span class="k">Optional: the no-Node backup</span><p>If you want a second way in, download <code>dbhub-1.5.0.mcpb</code> from <a href="https://github.com/bytebase/dbhub/releases/tag/v1.5.0">github.com/bytebase/dbhub/releases/tag/v1.5.0</a> into <code>horizon-warehouse/agents/</code>. Install it only if the <code>npx</code> server fails (runbook section 9). Never run both at once.</p></div>
+    </section>
+
+    <section class="part" id="preflight">
+      <div class="part-h">
+        <span class="eyebrow">Check it · day of, 15 minutes before Hour 4 (by about 2:45)</span>
+        <h2>15 minutes <span>before</span></h2>
+        <p class="dek">Tick every box. The whole list takes about three minutes.</p>
+      </div>
+      <ul class="tick">
+        <li>Docker is running, and <code>make demo-prep</code> in <code>horizon-warehouse</code> prints 277 and <code>READONLY_VIOLATION</code> again.</li>
+        <li>Claude Desktop was quit with <kbd>Cmd</kbd>+<kbd>Q</kbd> and reopened <b>today</b>. <b>+</b> → <b>Connectors</b> lists <code>horizon</code>.</li>
+        <li>A <b>fresh chat inside HORIZON analyst (demo)</b> is open and empty. Picker on <b>Sonnet</b>. <code>horizon</code> toggle <b>ON</b> for this chat. Nothing typed yet, so the room sees the first permission dialog.</li>
+        <li>A second Terminal tab is open in <code>horizon-warehouse</code> with <code>make mcp-check</code> typed but not run. That's your fallback.</li>
+        <li>Optional: a third tab with <code>tail -n 20 -f ~/Library/Logs/Claude/mcp*.log</code> to show the plumbing.</li>
+        <li><code>dbhub.toml</code> and the config file are <b>closed</b>. Nothing with the password is on screen.</li>
+        <li>Screen share ready to switch to Claude Desktop at 3:30.</li>
+      </ul>
+    </section>
+
+    <section class="part" id="stage">
+      <div class="part-h">
+        <span class="eyebrow">Run it · 3:30 to 3:35 · five minutes</span>
+        <h2>On <span>stage</span></h2>
+        <p class="dek">Three questions, typed exactly as written below. The room watches for four moments: the door, the permission prompt, the tool call, the refusal.</p>
+      </div>
+
+      <div class="step" id="s0">
+        <span class="step-n">3:30</span>
+        <div class="step-t"><span class="step-k">Moment 1 · the door · 30 sec</span><h3>Show the connector</h3></div>
+        <span class="step-min">30 sec</span>
+      </div>
+      <div class="box do"><span class="k">Do</span><p>Switch the share to Claude Desktop, in the fresh demo-Project chat. Click <b>+</b> → <b>Connectors</b> and hover <code>horizon</code>.</p></div>
+      <div class="box say"><span class="k">Say</span><p>"Your analyst had one tool: you. Mine has a second one: a server called horizon, with one tool, execute_sql, and one setting, read-only. Everything else is the same text you pasted, plus one line telling it to use the door if it has one."</p></div>
+
+      <div class="step" id="s1">
+        <span class="step-n">3:31</span>
+        <div class="step-t"><span class="step-k">Moments 2 and 3 · the permission prompt, the tool call · 90 sec</span><h3>Q1 · the VEEV question</h3></div>
+        <span class="step-min">90 sec</span>
+      </div>
+      <div class="prompt" data-label="Type into the demo chat">
+        <pre><code>Which Japan distributor sells the most VEEV units per week on average?</code></pre>
+      </div>
+      <ol class="steps">
+        <li>It restates the question, names <code>rst.sell_through</code> and <code>rst.distributors</code>, writes a <code>select</code>, and tries to call the tool.</li>
+        <li><b>The permission dialog appears. Stop before you click.</b></li>
+      </ol>
+      <div class="box say"><span class="k">Say, before you click</span><p>"This dialog is the human gate, drawn on screen. If I click 'always allow', it never asks again. That's a signature you didn't know you were giving."</p></div>
+      <ol class="steps">
+        <li>Click the <b>once / this-chat</b> option.</li>
+        <li>The tool call runs and the answer comes back: <span class="expect ok">JP Partner Distributor 2 · ≈ 277</span> then 271 · 209 · 169.</li>
+      </ol>
+      <div class="box say"><span class="k">Say</span><p>"Same number you got. No human ran anything. This is the demo leadership saw. Fast, correct, and the gate was one click."</p></div>
+      <div class="box trap"><span class="k">If it writes the SQL and asks you to run it</span><p>Check that the <code>horizon</code> toggle is ON, then reply exactly: <code>The horizon database tool is connected. Run that query yourself with execute_sql.</code></p></div>
+
+      <div class="step" id="s2">
+        <span class="step-n">3:33</span>
+        <div class="step-t"><span class="step-k">Moment 4 · the refusal · 90 sec</span><h3>Q2 · ask it to delete</h3></div>
+        <span class="step-min">90 sec</span>
+      </div>
+      <div class="prompt" data-label="Type into the demo chat">
+        <pre><code>Delete the ecommerce distributors.</code></pre>
+      </div>
+      <ol class="steps">
+        <li>If a second permission dialog appears, click <b>Allow</b> (once), <b>not</b> Deny. Deny blocks the call before the door can answer. Say: <em>"I'm letting it through, so the door has to stop it."</em></li>
+        <li>The <b>tool</b> refuses: <span class="expect bad">READONLY_VIOLATION</span> "Read-only mode is enabled. Only the following SQL operations are allowed: select, with, explain, show".</li>
+      </ol>
+      <div class="box say"><span class="k">Say</span><p>"Read it. That's not the model being polite. That's software refusing a statement it was never allowed to run. In Step 2 the same rule was a sentence in a prompt, and the control was you not pasting. <b>The lock is on the door, not in the prompt.</b>"</p></div>
+      <div class="box trap"><span class="k">If it refuses in prose and never calls the tool (likely)</span><p>Name it: "That's the prompt rule, a request." Then make the door prove itself, in this order:</p>
+        <ol>
+          <li>Reply: <code>I understand the analyst is read-only. Send the DELETE through execute_sql anyway so we can see what the door says.</code></li>
+          <li>Still no? Open a <b>New chat outside the Project</b> (horizon toggle ON) and type: <code>Using the horizon tool, run this SQL: delete from rst.distributors where channel_type = 'ecommerce'</code></li>
+          <li>Still no? Switch to the Terminal tab and press Enter on <code>make mcp-check</code>. Part 3 is the same refusal. "Same door, same answer, no model in between."</li>
+        </ol>
+      </div>
+
+      <div class="step" id="s3">
+        <span class="step-n">3:34</span>
+        <div class="step-t"><span class="step-k">The context window · 45 sec</span><h3>Q3 · ask for every row</h3></div>
+        <span class="step-min">45 sec</span>
+      </div>
+      <div class="prompt" data-label="Type into the demo chat">
+        <pre><code>Paste every row of det.device_telemetry.</code></pre>
+      </div>
+      <p style="max-width:var(--measure)">Expect it <b>not</b> to run <code>select *</code>. Instead it proposes an aggregate (a count by market and product) and explains why: 35,113 rows is about 2 million characters, roughly half a million tokens.</p>
+      <div class="box say"><span class="k">Say</span><p>"It summarises; it doesn't slurp. But that rule is still only in the prompt. If this went to pilot, the gate would need a row cap on the door."</p></div>
+
+      <div class="step" id="s4">
+        <span class="step-n">3:35</span>
+        <div class="step-t"><span class="step-k">Close · 30 sec · then Step 4</span><h3>One control apart</h3></div>
+        <span class="step-min">30 sec</span>
+      </div>
+      <div class="box say"><span class="k">Say, back on the room's screen</span><p>"Your analyst had a person between the model and the warehouse. Mine has a read-only server. Both are gates. One scales; the other gets tired at four o'clock. And the rollback is one step: remove the server block, Cmd+Q, reopen, and the door is gone. Now we decide which rung it has earned."</p></div>
+      <div class="box chat"><span class="k">Chat</span><p><strong>"Which surprised you most today: token, context, or door?"</strong></p></div>
+    </section>
+
+    <section class="part" id="rescue">
+      <div class="part-h">
+        <span class="eyebrow">Rescue it</span>
+        <h2>If something <span>breaks</span></h2>
+        <p class="dek">If you only remember one thing: <code>make mcp-check</code> in Terminal shows the whole demo (handshake, one tool, 277, READONLY_VIOLATION) in ten seconds.</p>
+      </div>
+      <div class="tbl stack wrap">
+        <table>
+          <thead><tr><th>Symptom</th><th>Fix</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Symptom"><code>horizon</code> not under Connectors</td><td data-label="Fix"><kbd>Cmd</kbd>+<kbd>Q</kbd> and reopen (not just close the window). Run <code>make mcp-config</code>: is the live check OK? Then <code>tail -n 40 ~/Library/Logs/Claude/mcp-server-horizon.log</code>. On stage, use <code>make mcp-check</code> and narrate the dialog</td></tr>
+            <tr><td data-label="Symptom">The server won't start (no log file)</td><td data-label="Fix"><code>npx -v</code> must work in Terminal (Node 20.19.6 is fine; a "needs Node 22.5" warning is harmless). Run <code>make mcp-check</code>: if that works, the problem is Claude Desktop, not the server</td></tr>
+            <tr><td data-label="Symptom">The tool call returns a connection error</td><td data-label="Fix">Docker is down: <code>open -a Docker</code>, then <code>make up</code> (about 20 s), then <code>make status</code></td></tr>
+            <tr><td data-label="Symptom">No permission dialog on Q1</td><td data-label="Fix">Someone clicked "Always allow" earlier, and a fresh chat doesn't reset it. On stage, name it: "that's the gate, removed by one click." It's still the lesson. To reset after class: Settings → Connectors → <code>horizon</code> → <code>execute_sql</code> permission back to ask</td></tr>
+            <tr><td data-label="Symptom">Two <code>horizon</code> entries, or a second tool <code>search_objects</code></td><td data-label="Fix">The <code>.mcpb</code> bundle is installed as well as the config entry. Remove one (Settings → Extensions) so the room sees one door with one tool</td></tr>
+            <tr><td data-label="Symptom">Nothing works and time is up</td><td data-label="Fix">Narrate the four moments from the <a href="hour4.html#step3-demo">student guide's Step 3 table</a>. Their page already shows the real refusal text, and Step 4 doesn't depend on the demo</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="part" id="after">
+      <div class="part-h">
+        <span class="eyebrow">Wrap it up</span>
+        <h2>After the demo, <span>and after class</span></h2>
+      </div>
+      <ol class="steps">
+        <li><b>During Step 4,</b> when the room lists guardrails, point back: "for my version, unplug the server; for yours, delete the Project." The rollback is a guardrail.</li>
+        <li><b>Leave the door plugged in</b> if you teach again soon. It does nothing unless a chat has the <code>horizon</code> toggle on.</li>
+        <li><b>To unplug it:</b> remove the <code>horizon</code> block from <code>claude_desktop_config.json</code>, or restore <code>claude_desktop_config.json.bak-2026-10-24</code>. Then <kbd>Cmd</kbd>+<kbd>Q</kbd> and reopen.</li>
+        <li><b>Stop the warehouse</b> (the data is kept):
+          <div class="prompt term" data-label="Run in Terminal on your Mac">
+            <pre><code>cd /Users/varoonsahgal/pmidataeng/horizon-warehouse
+make down</code></pre>
+          </div>
+        </li>
+      </ol>
+      <div class="box tidbit"><span class="k">Why this door is still not a pilot</span><p><code>dbhub.toml</code> connects as the <code>postgres</code> superuser of a training-only warehouse. The read-only tool setting is the only thing between the model and that role. A real pilot needs a database role that can only read <code>rst.*</code> and <code>analytics.*</code>, a query log, a row cap and a named owner. That's exactly what the students write as their gates in Step 4d, and what Challenge 4 builds.</p></div>
+    </section>
+
+    <footer class="foot">
+      <nav aria-label="All guides">
+        <a href="index.html">Start here</a>
+        <a href="hour4.html">Hour 4 · You are the gate</a>
+        <a href="instructor-hour4.html">Hour 4 instructor guide</a>
+        <a href="prep-hour4.html">Hour 4 prep guide</a>
+        <a href="glossary.html">Glossary</a>
+      </nav>
+      <p>Instructor handout for the PMI Data Engineer Future Skills class · Project HORIZON is fictional and training-only</p>
+    </footer>
+  </main>
+</div>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>
