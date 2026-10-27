@@ -134,7 +134,7 @@
         <p class="dek">The lab is a little workplace drama in four panels. First the panels, then every company word in them, decoded.</p>
       </div>
       <div class="story">
-        <div><b>The ask</b><p>PMI's <span class="em">Italy marketing team</span> wants a list of everyone who recently switched to a smoke-free product, with a yes/no next to each: <em>may we send them offers?</em></p></div>
+        <div><b>The ask</b><p>PMI's <span class="em">Italy marketing team</span> ran the <b>Autumn Conversion Push</b> email campaign and wants to measure how well it worked. It needs a list of every conversion (a switch to a smoke-free product), with a yes/no next to each: <em>were we allowed to market to them that day?</em> A campaign only gets credit for people it was allowed to contact.</p></div>
         <div><b>The shortcut</b><p>A colleague asks Claude to write the code. It is done in a minute and <span class="em">runs with no errors.</span> "Can we ship it this afternoon?"</p></div>
         <div><b>The catch</b><p>People in Italy have <span class="em">several permission slips each.</span> The code glues all of them on, so one person appears up to four times, sometimes with different answers.</p></div>
         <div><b>The fix</b><p>Students <span class="em">prove</span> it is wrong with three checks, get Claude to <span class="em">fix</span> it, then <span class="em">lock</span> it with four automatic tests.</p></div>
@@ -149,7 +149,7 @@
         <div class="wcard pmi"><h4>Consent <small>permission to market</small></h4><p>A person's <b>yes or no</b> to receiving marketing, given separately for each way of contacting them: email, SMS (text), push (phone app notification) and postal (paper mail). Each one is dated.</p><p class="like">a signed permission slip. One person can sign up to four, one per channel.</p><p class="here">the table <code>mpl.consent_records</code>, column <code>marketing_allowed</code> (true or false).</p></div>
         <div class="wcard pmi"><h4>Market · IT <small>a country</small></h4><p>PMI calls each country a "market", with a two-letter code: <b>IT</b> Italy, <b>JP</b> Japan, <b>ID</b> Indonesia.</p><p class="here">Italy only. Italian law: no marketing without permission, and <b>no marketing at all to under-25s</b>.</p></div>
       </div>
-      <div class="point"><span class="k">Back to the point</span><p>The business question is simple: <b>"On the day this person switched, were we allowed to contact them?"</b> Getting it wrong is not a typo. It means contacting people who said no, which in Italy breaks the law. That is why "it ran" is not good enough.</p></div>
+      <div class="point"><span class="k">Back to the point</span><p>The business question is simple: <b>"On the day this person switched, were we allowed to market to them?"</b> Getting it wrong is not a typo. It means crediting the campaign with people who said no, and in Italy contacting them breaks the law. That is why "it ran" is not good enough.</p></div>
     </section>
 
     <!-- ============================================================ WORDS -->
@@ -390,8 +390,8 @@
           <table>
             <thead><tr><th>event_id</th><th>consumer_id</th><th>event_date</th><th>marketing_allowed</th><th class="note">in plain English</th></tr></thead>
             <tbody>
-              <tr><td>8078</td><td>3001</td><td>2024-03-31</td><td>false</td><td class="note">do not contact</td></tr>
-              <tr><td>8100</td><td>3011</td><td>2024-07-23</td><td>true</td><td class="note">OK to contact</td></tr>
+              <tr><td>8078</td><td>3001</td><td>2024-03-31</td><td>false</td><td class="note">not allowed: does not count</td></tr>
+              <tr><td>8100</td><td>3011</td><td>2024-07-23</td><td>true</td><td class="note">allowed: counts</td></tr>
               <tr class="hi"><td>9539</td><td>3552</td><td>2024-11-17</td><td>true</td><td class="note">the one students check by hand</td></tr>
               <tr><td>10762</td><td>4036</td><td>2024-05-20</td><td>false</td><td class="note">no slip yet that day, so no</td></tr>
               <tr class="more"><td colspan="5">… 790 more rows · 472 true, 322 false, 0 empty</td></tr>

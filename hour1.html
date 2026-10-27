@@ -133,7 +133,8 @@
       </div>
 
       <h3>The situation</h3>
-      <p>PMI's Italy marketing team wants to send offers to people who recently <b>switched to a smoke-free product</b> (a "conversion"). But in Italy you may only contact someone who gave you <b>permission</b> to. Contacting someone who said no, or who never said yes, breaks the law.</p>
+      <p>PMI Italy ran the <b>Autumn Conversion Push</b>, an email campaign to get people to <b>switch to a smoke-free product</b> (a "conversion"). Now Marketing wants to report how well it worked, comparing the campaign's conversions with all the others. But a campaign can only take credit for people it was <b>allowed</b> to contact, and in Italy that means people who had given <b>permission</b> on the day. A conversion from someone who said no, or who never said yes, is not a win. It is a problem for Legal.</p>
+      <p>So before anyone counts results, every conversion needs one flag.</p>
 
       <div class="box analogy">
         <span class="k">Your mission</span>
@@ -147,9 +148,9 @@
         <div class="tbl"><table>
           <thead><tr><th>event_id</th><th>consumer_id</th><th>event_date</th><th>marketing_allowed</th><th>in plain English</th></tr></thead>
           <tbody>
-            <tr><td>8078</td><td>3001</td><td>2024-03-31</td><td>false</td><td class="say">person 3001 converted on 31 Mar: do not contact</td></tr>
-            <tr><td>8100</td><td>3011</td><td>2024-07-23</td><td>true</td><td class="say">person 3011 converted on 23 Jul: OK to contact</td></tr>
-            <tr class="hl"><td>9539</td><td>3552</td><td>2024-11-17</td><td>true</td><td class="say">person 3552: OK to contact (you will check this one by hand)</td></tr>
+            <tr><td>8078</td><td>3001</td><td>2024-03-31</td><td>false</td><td class="say">person 3001 converted on 31 Mar: not allowed that day, so it does not count</td></tr>
+            <tr><td>8100</td><td>3011</td><td>2024-07-23</td><td>true</td><td class="say">person 3011 converted on 23 Jul: allowed that day, so it counts</td></tr>
+            <tr class="hl"><td>9539</td><td>3552</td><td>2024-11-17</td><td>true</td><td class="say">person 3552: allowed, counts (you will check this one by hand)</td></tr>
             <tr><td>10762</td><td>4036</td><td>2024-05-20</td><td>false</td><td class="say">person 4036: no permission yet that day, so no</td></tr>
             <tr><td colspan="5" class="say">… 790 more rows, one for every Italy conversion</td></tr>
           </tbody>
@@ -426,7 +427,7 @@ where market_code = 'IT'
             <tr class="x"><td>postal</td><td>false</td><td>2024-11-19</td><td class="say">did not exist yet: ignore</td></tr>
           </tbody>
         </table></div>
-        <p class="after">So the right answer for conversion 9539 is <b>true</b>: one row, OK to contact. Engineers call this rule <b>point-in-time</b>: use what was true at that point in time.</p>
+        <p class="after">So the right answer for conversion 9539 is <b>true</b>: one row, allowed. Engineers call this rule <b>point-in-time</b>: use what was true at that point in time.</p>
       </figure>
 
       <p>Three ways an AI draft might attach a slip, and what each one does to 3552:</p>
@@ -1186,7 +1187,7 @@ Done. PASS=3 WARN=0 <span class="bad">ERROR=1</span> SKIP=0 TOTAL=4</pre>
 
         <article class="challenge" id="c3">
           <header><span class="lvl" aria-label="Level 2 of 3">★★☆</span><h3>3 · Which channel?</h3><span class="t">8 min</span></header>
-          <p><b>The question:</b> campaign 1 was sent by <b>email</b>. Should a "yes" on push or post count?</p>
+          <p><b>The question:</b> campaign 1, the Autumn Conversion Push, was sent by <b>email</b>. Should a "yes" on push or post count?</p>
           <p><b>Do this:</b> 74 Italy conversions have <code>campaign_id = 1</code>. Count how many were allowed on their day using the newest slip on <em>any</em> channel (our rule today), and how many using <b>email</b> slips only.</p>
           <details class="fold hint"><summary>Hint</summary><p>Use the same "newest slip on or before the day" lookup as Challenge 2, twice: once as it is, once with <code>and comm_channel = 'email'</code> added. <code>count(*) filter (where …)</code> lets you count both in one query.</p></details>
           <details class="fold answer"><summary>Check your answer</summary><p><b>74 conversions · 45 allowed on any channel · 29 on email only.</b> So 16 people we would email never said yes to email. Which rule is right is not a SQL question: the owner of the consent data decides, before anyone writes SQL. That is Hour 3: <a href="hour3.html">shift left</a>.</p></details>
